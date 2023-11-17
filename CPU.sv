@@ -16,7 +16,7 @@ module CPU #(
     logic   ALUsrc, 
     logic   ImmSrc,
     logic   PCsrc,
-    logic   IMMOp,
+    logic   ImmOp,
     logic   instr,
 
     //output internal logic for "red" module 
@@ -29,6 +29,36 @@ module CPU #(
         //green
         //blue
         //red
+    //we can change the names 
 
+blue Myblue(
+    .clk(clk),
+    .rst(rst),
+    .PC(PC),
+    .PCsrc(PCsrc),
+    .ImmOp(ImmOp)
+);
+
+green Mygreen(
+    .EQ(EQ),
+    .RegWrite(RegWrite),
+    .ALUctrl(ALUctrl),
+    .ALUsrc(ALUsrc),
+    .ImmScr(ImmSrc),
+    .PCsrc(PCsrc),
+    .ImmOp(ImmOp),
+    .PC(PC)
+);
+
+red Myred(
+    .clk(clk),
+    .a0(a0),
+    .instr(instr),//we pass the whole instruction, and then we separate inside red
+    .RegWrite(RegWrite),
+    .EQ(EQ),
+    .ALUctrl(ALUctrl),
+    .ALUsrc(ALUsrc)
+    .ImmOp(ImmOp)
+)
     
 endmodule
