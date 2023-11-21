@@ -12,8 +12,7 @@ module green #(
     logic output[DATA_WIDTH-1:0]        ImmOp //32 bits
 );
 
-    logic [11:0]                        ImmSrc //not very sure how this goes
-                                                // now it has to be 12 i think, but later it can have differetent widths
+    logic [1:0]                        ImmSrc 
 
 ControlUnit MyControlUnit(
     .EQ(EQ),
@@ -31,6 +30,7 @@ InstrMem MyInstrMem(
 );
 
 SignExtend MySignExtend(
+    .instr(instr)
     .ImmSrc(ImmScr),
     .ImmOp(ImmOp)
 );
