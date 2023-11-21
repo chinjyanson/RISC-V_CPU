@@ -7,6 +7,6 @@ module SignExtend #(
     logic output[DATA_WIDTH-1:0]        ImmOp
 );
 
-
+assign ImmOp = {{(DATA_WIDTH-IMM_WIDTH){ImmSrc[IMM_WIDTH-1]}}, ImmSrc};
 
 endmodule
