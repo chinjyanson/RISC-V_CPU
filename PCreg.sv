@@ -1,4 +1,4 @@
-module PCReg #(
+module PCreg #(
     parameter ADDRESS_WIDTH = 8,
 
 )(
@@ -12,8 +12,9 @@ module PCReg #(
 
 
 //synchronous reset
-always_ff @(posedge clk) begin 
-    if(rst) PC <= {ADDRESS_WIDTH{1'b0}};
-    else PC <= next_PC;
-end 
+always_ff @(posedge clk) 
+    begin 
+        if(rst) PC <= {ADDRESS_WIDTH{1'b0}};
+        else PC <= next_PC;
+    end 
 endmodule 
