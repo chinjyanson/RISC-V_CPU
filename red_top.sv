@@ -33,7 +33,7 @@ mux2 ALUMux(
 .ALUop2(ALUop2)
 );
 
-ALU ALU(
+alu ALU(
 .ALUctrl(ALUctrl),
 .ALUop1(ALUop1),
 .ALUop2(ALUop2),

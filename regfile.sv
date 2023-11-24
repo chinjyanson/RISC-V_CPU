@@ -27,4 +27,4 @@ always_ff @(posedge clk) begin
     a0 <= reg_array[0];
 end 
 
-endmodule 
+endmodule

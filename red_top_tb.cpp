@@ -6,12 +6,12 @@ int main(int argc, char **argv, char **env){
     int clk;
     Verilated::commandArgs(argc,argv);
 //  initialise top verilog instance
-    VALUtop* top = new VALUtop;
+    Vred_top* top = new Vred_top;
 // initialise trace dump
     Verilated::traceEverOn(true);
     VerilatedVcdC* tfp = new VerilatedVcdC;
     top->trace(tfp,99);
-    tfp->open("VALUTop.vcd");
+    tfp->open("Vred_top.vcd");
 
     // initialise simulation outputs
     top->clk =1;
