@@ -31,7 +31,7 @@ module CPU #(
         //red
     //we can change the names 
 
-blue Myblue(
+PCtop Myblue(
     .clk(clk),
     .rst(rst),
     .PC(PC),
@@ -50,14 +50,14 @@ green Mygreen(
     .PC(PC)
 );
 
-red Myred(
+red_top Myred(
     .clk(clk),
     .a0(a0),
     .instr(instr),//we pass the whole instruction, and then we separate inside red
     .RegWrite(RegWrite),
     .EQ(EQ),
     .ALUctrl(ALUctrl),
-    .ALUsrc(ALUsrc)
+    .ALUsrc(ALUsrc),
     .ImmOp(ImmOp)
 )
     
