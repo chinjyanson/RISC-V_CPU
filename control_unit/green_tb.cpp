@@ -14,7 +14,7 @@ int main(int argc, char **argv, char **env){
     tfp->open("Vgreen.vcd");
 
     // initialise simulation outputs
-    top->clk = 0;
+    clk = 0;
     top->PC = 0;
     top->EQ = 0;
     
@@ -27,7 +27,7 @@ int main(int argc, char **argv, char **env){
             // in ps
             tfp->dump (2*i+clk);
             // falling edge
-            top->clk = !top->clk;
+            clk = !clk;
             top->eval ();
         }
 
