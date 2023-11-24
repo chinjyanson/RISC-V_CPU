@@ -7,7 +7,6 @@ module pc_top #(
     input   logic [WIDTH-1:0]           ImmOp,     
     input   logic                       PCsrc,
     //output logic [WIDTH-1:0]            pc_out (debugging purposes)
-    
 );
 
 logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire
