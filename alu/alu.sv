@@ -16,6 +16,8 @@ always_comb begin
     3'b011: SUM = ALUop1 | ALUop2;
     3'b100: SUM = ALUop1 ^ ALUop2;
 
+    default: SUM = 0;
+
     endcase 
 
     assign EQ = (ALUop1 == ALUop2);
