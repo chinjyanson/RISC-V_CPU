@@ -2,7 +2,7 @@
 #include "verilated_vcd_c.h"
 #include "VPCtop.h"
 
-#include "vbuddy.cpp"     // include vbuddy code
+// #include "vbuddy.cpp"     
 
 int main(int argc, char **argv, char **env) {
   int i;     
@@ -35,7 +35,7 @@ int main(int argc, char **argv, char **env) {
       exit(0);                
   }
 
-  vbdClose();  
+  // vbdClose();  
   tfp->close(); 
   exit(0);
 }

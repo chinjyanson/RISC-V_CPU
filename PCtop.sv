@@ -11,15 +11,14 @@ module PCtop #(
 
 logic [ADDRESS_WIDTH-1:0]   next_PC, pc;    // interconnect wire
 
-PCmux PCmux(
-    .clk (clk),
+PCmux pc_mux(
     .PCsrc (PCsrc),
+    .pc (pc),
     .ImmOp (ImmOp),
-    .next_PC (next_PC),
-    .pc (pc)
+    .next_PC (next_PC), 
 );
 
-PCReg PCreg(
+PCreg pc_reg(
     .clk (clk),
     .rst (rst),
     .next_PC (next_PC),
