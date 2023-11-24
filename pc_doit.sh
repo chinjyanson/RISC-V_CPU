@@ -2,7 +2,7 @@
 
 # cleanup
 rm -rf obj_dir
-rm -f topPC.vcd
+rm -f PCtop.vcd
 
 #run Verilator to translate Verilog into C++, including C++ testbench
 verilator -Wall --cc --trace PCtop.sv --exe PCtop_tb.cpp
