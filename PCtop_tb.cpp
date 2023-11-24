@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **env) {
       top->eval ();
     }
     
-    std::cout<<top->pc_out<<std::endl; 
+    // std::cout<<top->pc_out<<std::endl; 
     // either simulation finished, or 'q' is pressed
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
       exit(0);                

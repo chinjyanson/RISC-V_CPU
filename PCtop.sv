@@ -4,9 +4,9 @@ module PCtop #(
     // interface signals
     input   logic                       clk,        // clock
     input   logic                       rst,        // reset        
-    input   logic [ADDRESS_WIDTH-1:0]           ImmOp,     
+    input   logic [ADDRESS_WIDTH-1:0]   ImmOp,     
     input   logic                       PCsrc,
-    
+    // output logic [ADDRESS_WIDTH-1:0]    pc_out
 );
 
 logic [ADDRESS_WIDTH-1:0]   next_PC, pc;    // interconnect wire
@@ -23,6 +23,7 @@ PCreg pc_reg(
     .rst (rst),
     .next_PC (next_PC),
     .pc (pc)
+    //.another_pc(pc_out) (for debugging purposes)
 );
 
 endmodule
