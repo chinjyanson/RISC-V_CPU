@@ -1,12 +1,13 @@
-module PCmux #(
-    parameter ADDRESS_WIDTH = 32
+module PCmux#(
+    parameter next_PC_width = 12
 )(
     input logic PCsrc,
-    input logic [ADDRESS_WIDTH-1:0] pc ,
-    input logic [ADDRESS_WIDTH-1:0] ImmOp,
-    output logic [ADDRESS_WIDTH-1:0] next_PC
+    input logic [next_PC_width-1:0] branch_PC,
+    input logic [next_PC_width-1:0] inc_PC,
+    output logic [next_PC_width-1:0] next_PC 
+
 );
 
-    assign next_PC = PCsrc ? pc + ImmOp : pc + 32'd4;
-
+assign next_PC = PCsrc ? branch_PC : inc_PC;
+    
 endmodule
