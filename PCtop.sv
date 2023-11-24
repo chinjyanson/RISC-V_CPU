@@ -1,29 +1,26 @@
 module PCtop #(
-    parameter   ADDRESS_WIDTH = 32
-)(
-    // interface signals
-    input   logic                       clk,        // clock
-    input   logic                       rst,        // reset        
-    input   logic [ADDRESS_WIDTH-1:0]   ImmOp,     
-    input   logic                       PCsrc,
-    // output logic [ADDRESS_WIDTH-1:0]    pc_out
+    parameter IMMOp_WIDTH = 12 
+) (
+    input wire clk,
+    input wire rst,
+    input wire [IMMOp_WIDTH-1:0] ImmOp ,
+    input logic PCsrc,
+    output wire [11:0] PC 
 );
 
-logic [ADDRESS_WIDTH-1:0]   next_PC, pc;    // interconnect wire
+wire [11:0] next_PC ;
 
-PCmux pc_mux(
-    .PCsrc (PCsrc),
-    .pc (pc),
-    .ImmOp (ImmOp),
-    .next_PC (next_PC), 
+PCmux PC_Select(
+.PCsrc(PCsrc),
+.branch_PC(PC+ImmOp),
+.inc_PC(PC+4),
+.next_PC(next_PC)
 );
 
-PCreg pc_reg(
-    .clk (clk),
-    .rst (rst),
-    .next_PC (next_PC),
-    .pc (pc)
-    //.another_pc(pc_out) (for debugging purposes)
+PCreg PC_Reg(
+.clk(clk),
+.rst(rst),
+.next_PC(next_PC),
+.PC(PC)
 );
-
 endmodule

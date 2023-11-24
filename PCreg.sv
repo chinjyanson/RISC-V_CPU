@@ -1,16 +1,19 @@
 module PCreg #(
-    parameter ADDRESS_WIDTH = 8,
+    parameter PC_WIDTH = 32
 )(
-    input logic                        clk,
-    input logic                        rst,
-    input logic  [ADDRESS_WIDTH-1:0]   next_PC,
-    output logic [ADDRESS_WIDTH-1:0]      PC
+    input logic clk,
+    input logic rst,
+    input logic [PC_WIDTH-1:0] next_PC ,
+    output logic [PC_WIDTH-1:0] PC 
 );
 
-//synchronous reset
-always_ff @(posedge clk) 
-    begin 
-        if(rst) PC <= {ADDRESS_WIDTH{1'b0}};
-        else PC <= next_PC;
-    end 
-endmodule 
+always_ff @(posedge clk) begin
+    if(rst)begin 
+        PC <= 32'b0;
+    end
+    else begin
+        PC <= next_PC;   
+    end
+end
+    
+endmodule
