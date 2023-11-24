@@ -9,9 +9,13 @@ module pc_reg #(
 );
 
 always_ff @ (posedge clk)
-    begin
-    if (rst) pc <= {WIDTH{1'b0}};
-    else pc <= next_PC;
-    another_pc <= pc
-    end
+begin
+    if (rst)
+        pc <= {WIDTH{1'b0}};
+    else
+        pc <= next_PC;
+
+    another_pc <= next_PC;
+end
+
 endmodule

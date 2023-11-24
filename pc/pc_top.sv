@@ -6,7 +6,7 @@ module pc_top #(
     input   logic                       rst,        // reset        
     input   logic [WIDTH-1:0]           ImmOp,     
     input   logic                       PCsrc,
-    //output logic [WIDTH-1:0]            pc_out (debugging purposes)
+    output logic [WIDTH-1:0]            pc_out
 );
 
 logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire
@@ -23,8 +23,8 @@ pc_reg pc_reg(
     .clk (clk),
     .rst (rst),
     .next_PC (next_PC),
-    .pc (pc)
-    //.another_pc(pc_out) (for debugging purposes)
+    .pc (pc),
+    .another_pc(pc_out)
 );
 
 endmodule
