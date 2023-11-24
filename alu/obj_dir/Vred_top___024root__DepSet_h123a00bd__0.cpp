@@ -18,7 +18,6 @@ VL_INLINE_OPT void Vred_top___024root___sequent__TOP__0(Vred_top___024root* vlSe
     __Vdlyvset__red_top__DOT__register__DOT__reg_array__v0 = 0U;
     if (vlSelf->RegWrite) {
         __Vdlyvval__red_top__DOT__register__DOT__reg_array__v0 
-<<<<<<< HEAD
             = ((4U & (IData)(vlSelf->ALUctrl)) ? ((2U 
                                                    & (IData)(vlSelf->ALUctrl))
                                                    ? 0U
@@ -40,9 +39,6 @@ VL_INLINE_OPT void Vred_top___024root___sequent__TOP__0(Vred_top___024root* vlSe
                            - vlSelf->red_top__DOT__ALUop2)
                         : (vlSelf->red_top__DOT__ALUop1 
                            + vlSelf->red_top__DOT__ALUop2))));
-=======
-            = vlSelf->red_top__DOT__ALUout;
->>>>>>> 50b31004cd62507ad94823e01c1cf965eed50421
         __Vdlyvset__red_top__DOT__register__DOT__reg_array__v0 = 1U;
         __Vdlyvdim0__red_top__DOT__register__DOT__reg_array__v0 
             = (0x1fU & (vlSelf->Instr >> 7U));
@@ -68,25 +64,6 @@ VL_INLINE_OPT void Vred_top___024root___combo__TOP__0(Vred_top___024root* vlSelf
                                      ? vlSelf->ImmOp
                                      : vlSelf->red_top__DOT__regOp2);
     vlSelf->EQ = (vlSelf->red_top__DOT__ALUop1 == vlSelf->red_top__DOT__ALUop2);
-<<<<<<< HEAD
-=======
-    if ((0U == (IData)(vlSelf->ALUctrl))) {
-        vlSelf->red_top__DOT__ALUout = (vlSelf->red_top__DOT__ALUop1 
-                                        + vlSelf->red_top__DOT__ALUop2);
-    } else if ((1U == (IData)(vlSelf->ALUctrl))) {
-        vlSelf->red_top__DOT__ALUout = (vlSelf->red_top__DOT__ALUop1 
-                                        - vlSelf->red_top__DOT__ALUop2);
-    } else if ((2U == (IData)(vlSelf->ALUctrl))) {
-        vlSelf->red_top__DOT__ALUout = (vlSelf->red_top__DOT__ALUop1 
-                                        & vlSelf->red_top__DOT__ALUop2);
-    } else if ((3U == (IData)(vlSelf->ALUctrl))) {
-        vlSelf->red_top__DOT__ALUout = (vlSelf->red_top__DOT__ALUop1 
-                                        | vlSelf->red_top__DOT__ALUop2);
-    } else if ((4U == (IData)(vlSelf->ALUctrl))) {
-        vlSelf->red_top__DOT__ALUout = (vlSelf->red_top__DOT__ALUop1 
-                                        ^ vlSelf->red_top__DOT__ALUop2);
-    }
->>>>>>> 50b31004cd62507ad94823e01c1cf965eed50421
 }
 
 void Vred_top___024root___eval(Vred_top___024root* vlSelf) {

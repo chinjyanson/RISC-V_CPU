@@ -149,7 +149,6 @@ VL_ATTR_COLD void Vred_top___024root__trace_full_sub_0(Vred_top___024root* vlSel
     bufp->fullIData(oldp+40,(vlSelf->ImmOp),32);
     bufp->fullBit(oldp+41,(vlSelf->EQ));
     bufp->fullIData(oldp+42,(vlSelf->a0),32);
-<<<<<<< HEAD
     bufp->fullIData(oldp+43,(((4U & (IData)(vlSelf->ALUctrl))
                                ? ((2U & (IData)(vlSelf->ALUctrl))
                                    ? 0U : ((1U & (IData)(vlSelf->ALUctrl))
@@ -167,9 +166,6 @@ VL_ATTR_COLD void Vred_top___024root__trace_full_sub_0(Vred_top___024root* vlSel
                                           - vlSelf->red_top__DOT__ALUop2)
                                        : (vlSelf->red_top__DOT__ALUop1 
                                           + vlSelf->red_top__DOT__ALUop2))))),32);
-=======
-    bufp->fullIData(oldp+43,(vlSelf->red_top__DOT__ALUout),32);
->>>>>>> 50b31004cd62507ad94823e01c1cf965eed50421
     bufp->fullIData(oldp+44,(vlSelf->red_top__DOT__ALUop2),32);
     bufp->fullCData(oldp+45,((0x1fU & (vlSelf->Instr 
                                        >> 0x14U))),5);

@@ -22,10 +22,6 @@ class Vred_top___024root final : public VerilatedModule {
     VL_IN(Instr,31,0);
     VL_IN(ImmOp,31,0);
     VL_OUT(a0,31,0);
-<<<<<<< HEAD
-=======
-    IData/*31:0*/ red_top__DOT__ALUout;
->>>>>>> 50b31004cd62507ad94823e01c1cf965eed50421
     IData/*31:0*/ red_top__DOT__ALUop1;
     IData/*31:0*/ red_top__DOT__ALUop2;
     IData/*31:0*/ red_top__DOT__regOp2;

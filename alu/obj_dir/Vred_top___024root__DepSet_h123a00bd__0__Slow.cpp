@@ -43,10 +43,6 @@ VL_ATTR_COLD void Vred_top___024root___ctor_var_reset(Vred_top___024root* vlSelf
     vlSelf->ImmOp = VL_RAND_RESET_I(32);
     vlSelf->EQ = VL_RAND_RESET_I(1);
     vlSelf->a0 = VL_RAND_RESET_I(32);
-<<<<<<< HEAD
-=======
-    vlSelf->red_top__DOT__ALUout = VL_RAND_RESET_I(32);
->>>>>>> 50b31004cd62507ad94823e01c1cf965eed50421
     vlSelf->red_top__DOT__ALUop1 = VL_RAND_RESET_I(32);
     vlSelf->red_top__DOT__ALUop2 = VL_RAND_RESET_I(32);
     vlSelf->red_top__DOT__regOp2 = VL_RAND_RESET_I(32);
