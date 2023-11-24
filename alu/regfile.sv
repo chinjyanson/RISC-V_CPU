@@ -8,7 +8,7 @@ module regfile #(
     input logic [DATA_WIDTH-1:0] Instr,
     output logic [DATA_WIDTH-1:0] RD1,
     output logic [DATA_WIDTH-1:0] RD2,
-    output logic [DATA_WIDTH-1:0] a0,
+    output logic [DATA_WIDTH-1:0] a0
 );
 
 logic[4:0] rs2 = Instr[24:20];
