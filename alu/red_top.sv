@@ -17,28 +17,28 @@ wire [DATA_WIDTH-1:0] ALUop2;
 wire [DATA_WIDTH-1:0] regOp2;
 
 regfile register(
-.clk(clk),
-.Instr(Instr),
-.WE3(RegWrite),
-.WD3(ALUout),
-.RD1(ALUop1),
-.RD2(regOp2),
-.a0(a0)
+    .clk(clk),
+    .Instr(Instr),
+    .WE3(RegWrite),
+    .WD3(ALUout),
+    .RD1(ALUop1),
+    .RD2(regOp2),
+    .a0(a0)
 );
 
 mux2 ALUMux(
-.ALUsrc(ALUsrc),
-.regOp2(regOp2),
-.ImmOp(ImmOp),
-.ALUop2(ALUop2)
+    .ALUsrc(ALUsrc),
+    .regOp2(regOp2),
+    .ImmOp(ImmOp),
+    .ALUop2(ALUop2)
 );
 
 alu ALU(
-.ALUctrl(ALUctrl),
-.ALUop1(ALUop1),
-.ALUop2(ALUop2),
-.SUM(ALUout),
-.EQ(EQ)
+    .ALUctrl(ALUctrl),
+    .ALUop1(ALUop1),
+    .ALUop2(ALUop2),
+    .SUM(ALUout),
+    .EQ(EQ)
 );
 
 endmodule

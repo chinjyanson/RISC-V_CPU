@@ -10,10 +10,11 @@ module InstrMem #(
 logic [DATA_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
 
 initial begin
-        $display("Loading rom.")
-        $readmemh("machinecode.mem",rom_array);
+        $display("Loading rom.");
+        $readmemh("machinecode.mem", rom_array);
 end;
 
-always_comb dout = rom_array[addr];
+always_comb 
+dout = rom_array[addr];
 
 endmodule
