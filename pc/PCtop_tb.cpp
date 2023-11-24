@@ -1,45 +1,42 @@
-#include "VPCtop.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include "Vpc_top.h"
 
-int main(int argc, char **argv, char **env){
-    int it;
-    int clk;
-    Verilated::commandArgs(argc,argv);
-//  initialise top verilog instance
-    VPCtop* top = new VPCtop;
-// initialise trace dump
-    Verilated::traceEverOn(true);
-    VerilatedVcdC* tfp = new VerilatedVcdC;
-    top->trace(tfp,99);
-    tfp->open("VPCTop.vcd");
+#include "vbuddy.cpp"     // include vbuddy code
 
-    // initialise simulation outputs
-    top->clk =1;
-    top->rst=0;
-    top->PCsrc = 1;
-    top->ImmOP = 25;
+int main(int argc, char **argv, char **env) {
+  int i;     
+  int clk;       
 
-    // run simulation for many clock cycles
-    int tick = 0;
-    for(int i=0;i< 300; i++){
-        // Add to readme, remember to compelete part 2 of challenge
-        // dump variables into VCD file and toggle clock
-        for(clk=0;clk<2;clk++){
-            // in ps
-            tfp->dump (2*i+clk);
-            // falling edge
-            top->clk = !top->clk;
-            top->eval ();
-        }
-        top->clk =1;
-        top->rst=0;
-        top->PCsrc = 0;
-        top->ImmOP = 25;
-        if(Verilated::gotFinish()) exit(0);
-        
+  Verilated::commandArgs(argc, argv);
+  // init top verilog instance
+  VtopPC* top = new VtopPC;
+  // init trace dump
+  Verilated::traceEverOn(true);
+  VerilatedVcdC* tfp = new VerilatedVcdC;
+  top->trace (tfp, 99);
+  tfp->open ("pc_top.vcd");
+
+  // initialize simulation inputs
+  top->ImmOp = 0x00000001; // 32-bit Immediate Operand fed from sign-extended 8-bit instr output
+  top->PCsrc = 0; // 1-bit (Multiplexer Control - 0 selects PC+4, 1 selects PC+ImmOp.)
+
+  // run simulation for 500 clock cycles
+  for (i=0; i<500; i++) {
+    // dump variables into VCD file and toggle clock
+    for (clk=0; clk<2; clk++) {
+      tfp->dump(2*i+clk);
+      top->clk = !top->clk;
+      top->eval ();
     }
-    tfp->close();
-    exit(0);
+    
+    //std::cout<<top->pc_out<<std::endl; (for debugging)
+    // either simulation finished, or 'q' is pressed
+    if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
+      exit(0);                // ... exit if finish OR 'q' pressed
+  }
 
+  vbdClose();    
+  tfp->close(); 
+  exit(0);
 }
