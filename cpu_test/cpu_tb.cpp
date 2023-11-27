@@ -1,7 +1,7 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "Vcpu.h"
-#include <iostream>
+
 
 #define MAX_SIM_CYC 1000000
 
@@ -35,7 +35,7 @@ int main(int argc, char **argv, char **env) {
         }
 
 
-            std::cout << top->a0 << std::endl;
+            std::cout << top->a0 <<std::endl;
 
     }
 }

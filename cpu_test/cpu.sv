@@ -1,8 +1,3 @@
-`include "/home/vish/Documents/iac/Reduced_RISC-V-Team1-/pc/pc_top.sv"
-`include "/home/vish/Documents/iac/Reduced_RISC-V-Team1-/alu/red_top.sv"
-`include "/home/vish/Documents/iac/Reduced_RISC-V-Team1-/control_unit/green.sv"
-
-
 module cpu #(
 
     parameter DATA_WIDTH = 32
@@ -36,10 +31,10 @@ module cpu #(
         //red
     //we can change the names 
 
-PCtop Myblue(
+pc_top Myblue(
     .clk(clk),
     .rst(rst),
-    .PC(PC),
+    .pc_out(PC),
     .PCsrc(PCsrc),
     .ImmOp(ImmOp)
 );
