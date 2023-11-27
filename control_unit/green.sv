@@ -31,7 +31,7 @@ InstrMem MyInstrMem(
 
 SignExtend MySignExtend(
     .instr(instr),
-    .ImmSrc(ImmScr),
+    .ImmSrc(ImmSrc),
     .ImmOp(ImmOp)
 );
 

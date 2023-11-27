@@ -1,6 +1,7 @@
 #include "Vgreen.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include <iostream>
 
 int main(int argc, char **argv, char **env){
     int clk;
@@ -21,7 +22,7 @@ int main(int argc, char **argv, char **env){
 
     // run simulation for many clock cycles
     int tick = 0;
-    for(int i=0;i< 300; i++){
+    for(int i=0;i< 30; i++){
 
         for(clk=0;clk<2;clk++){
             // in ps
@@ -30,6 +31,8 @@ int main(int argc, char **argv, char **env){
             clk = !clk;
             top->eval ();
         }
+        top->PC = i;
+        std::cout << std::hex << int(top->PC) << " and " << int(top->ALUsrc) << std::endl;
 
         if(Verilated::gotFinish()) exit(0);
         

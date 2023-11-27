@@ -31,7 +31,6 @@ VL_ATTR_COLD void Vgreen___024root__trace_init_sub__TOP__0(Vgreen___024root* vlS
     tracep->declBit(c+7,"PCsrc", false,-1);
     tracep->declBus(c+8,"ImmOp", false,-1, 31,0);
     tracep->declBus(c+12,"ImmSrc", false,-1, 1,0);
-    tracep->declBit(c+13,"ImmScr", false,-1);
     tracep->pushNamePrefix("MyControlUnit ");
     tracep->declBus(c+11,"DATA_WIDTH", false,-1, 31,0);
     tracep->declBit(c+2,"EQ", false,-1);
@@ -46,14 +45,14 @@ VL_ATTR_COLD void Vgreen___024root__trace_init_sub__TOP__0(Vgreen___024root* vlS
     tracep->pushNamePrefix("MyInstrMem ");
     tracep->declBus(c+10,"ADDRESS_WIDTH", false,-1, 31,0);
     tracep->declBus(c+11,"DATA_WIDTH", false,-1, 31,0);
-    tracep->declBit(c+14,"clk", false,-1);
+    tracep->declBit(c+13,"clk", false,-1);
     tracep->declBus(c+1,"addr", false,-1, 7,0);
     tracep->declBus(c+3,"dout", false,-1, 31,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("MySignExtend ");
     tracep->declBus(c+11,"DATA_WIDTH", false,-1, 31,0);
     tracep->declBus(c+3,"instr", false,-1, 31,0);
-    tracep->declBus(c+15,"ImmSrc", false,-1, 1,0);
+    tracep->declBus(c+12,"ImmSrc", false,-1, 1,0);
     tracep->declBus(c+8,"ImmOp", false,-1, 31,0);
     tracep->popNamePrefix(2);
 }
@@ -110,7 +109,5 @@ VL_ATTR_COLD void Vgreen___024root__trace_full_sub_0(Vgreen___024root* vlSelf, V
     bufp->fullIData(oldp+10,(8U),32);
     bufp->fullIData(oldp+11,(0x20U),32);
     bufp->fullCData(oldp+12,(0U),2);
-    bufp->fullBit(oldp+13,(vlSelf->green__DOT__ImmScr));
-    bufp->fullBit(oldp+14,(vlSelf->green__DOT__MyInstrMem__DOT__clk));
-    bufp->fullCData(oldp+15,(vlSelf->green__DOT__ImmScr),2);
+    bufp->fullBit(oldp+13,(vlSelf->green__DOT__MyInstrMem__DOT__clk));
 }

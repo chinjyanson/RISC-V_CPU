@@ -15,6 +15,7 @@ VL_ATTR_COLD void Vgreen___024root___settle__TOP__0(Vgreen___024root* vlSelf) {
     vlSelf->ALUctrl = 0U;
     vlSelf->ALUsrc = 1U;
     vlSelf->PCsrc = 0U;
+    vlSelf->ImmOp = 0U;
 }
 
 VL_ATTR_COLD void Vgreen___024root___initial__TOP__0(Vgreen___024root* vlSelf) {
@@ -72,7 +73,6 @@ VL_ATTR_COLD void Vgreen___024root___ctor_var_reset(Vgreen___024root* vlSelf) {
     vlSelf->ALUsrc = VL_RAND_RESET_I(1);
     vlSelf->PCsrc = VL_RAND_RESET_I(1);
     vlSelf->ImmOp = VL_RAND_RESET_I(32);
-    vlSelf->green__DOT__ImmScr = VL_RAND_RESET_I(1);
     vlSelf->green__DOT__MyInstrMem__DOT__clk = VL_RAND_RESET_I(1);
     for (int __Vi0=0; __Vi0<256; ++__Vi0) {
         vlSelf->green__DOT__MyInstrMem__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(32);
