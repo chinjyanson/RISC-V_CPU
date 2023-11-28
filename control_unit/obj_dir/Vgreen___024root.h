@@ -19,6 +19,8 @@ class Vgreen___024root final : public VerilatedModule {
     VL_OUT8(ALUctrl,2,0);
     VL_OUT8(ALUsrc,0,0);
     VL_OUT8(PCsrc,0,0);
+    VL_OUT8(opcode_out,6,0);
+    CData/*1:0*/ green__DOT__ImmSrc;
     CData/*0:0*/ green__DOT__MyInstrMem__DOT__clk;
     VL_OUT(instr,31,0);
     VL_OUT(ImmOp,31,0);

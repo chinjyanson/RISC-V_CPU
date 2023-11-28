@@ -9,7 +9,8 @@ module green #(
      output logic [2:0]                  ALUctrl, //3b
      output logic                        ALUsrc, //1 bit
      output logic                        PCsrc, //1 bit
-     output logic [DATA_WIDTH-1:0]        ImmOp //32 bits
+     output logic [DATA_WIDTH-1:0]        ImmOp, //32 bits
+     output logic [6:0]                 opcode_out           
 );
 
     logic [1:0]                        ImmSrc;
@@ -21,7 +22,8 @@ ControlUnit MyControlUnit(
     .ALUctrl(ALUctrl),
     .ALUsrc(ALUsrc),
     .ImmSrc(ImmSrc),
-    .PCsrc(PCsrc)
+    .PCsrc(PCsrc),
+    .opcode_out(opcode_out)
 );
 
 InstrMem MyInstrMem(

@@ -2,7 +2,7 @@ module InstrMem #(
     parameter ADDRESS_WIDTH = 8,
     DATA_WIDTH = 32
 )(
-    input logic                     clk,
+    //input logic                     clk,
     input logic [ADDRESS_WIDTH-1:0] addr,
     output logic [DATA_WIDTH-1:0]   dout
 );

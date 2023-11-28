@@ -10,6 +10,7 @@ module green #(
      output logic                        ALUsrc, //1 bit
      output logic                        PCsrc, //1 bit
      output logic [DATA_WIDTH-1:0]        ImmOp //32 bits
+
 );
 
     logic [1:0]                        ImmSrc;
@@ -31,7 +32,7 @@ InstrMem MyInstrMem(
 
 SignExtend MySignExtend(
     .instr(instr),
-    .ImmSrc(ImmScr),
+    .ImmSrc(ImmSrc),
     .ImmOp(ImmOp)
 );
 

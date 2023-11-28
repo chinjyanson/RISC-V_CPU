@@ -31,6 +31,7 @@ class Vgreen VL_NOT_FINAL : public VerilatedModel {
     VL_OUT8(&ALUctrl,2,0);
     VL_OUT8(&ALUsrc,0,0);
     VL_OUT8(&PCsrc,0,0);
+    VL_OUT8(&opcode_out,6,0);
     VL_OUT(&instr,31,0);
     VL_OUT(&ImmOp,31,0);
 

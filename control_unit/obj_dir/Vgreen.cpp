@@ -17,6 +17,7 @@ Vgreen::Vgreen(VerilatedContext* _vcontextp__, const char* _vcname__)
     , ALUctrl{vlSymsp->TOP.ALUctrl}
     , ALUsrc{vlSymsp->TOP.ALUsrc}
     , PCsrc{vlSymsp->TOP.PCsrc}
+    , opcode_out{vlSymsp->TOP.opcode_out}
     , instr{vlSymsp->TOP.instr}
     , ImmOp{vlSymsp->TOP.ImmOp}
     , rootp{&(vlSymsp->TOP)}

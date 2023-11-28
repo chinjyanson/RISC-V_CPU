@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **env){
 
     // run simulation for many clock cycles
     int tick = 0;
-    for(int i=0;i< 30; i++){
+    for(int i=0;i< 10; i++){
 
         for(clk=0;clk<2;clk++){
             // in ps
@@ -32,7 +32,8 @@ int main(int argc, char **argv, char **env){
             top->eval ();
         }
         top->PC = i;
-        std::cout << std::hex << int(top->PC) << " and " << int(top->ALUsrc) << std::endl;
+
+        std::cout << std::hex << int(top->PC) << " instr: " << int(top->instr) << " ALUctrl: " << int(top->ALUctrl) << " opcode: " << int(top->opcode_out)  << std::endl;
 
         if(Verilated::gotFinish()) exit(0);
         

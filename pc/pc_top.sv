@@ -1,5 +1,5 @@
 module pc_top #(
-    parameter   WIDTH = 32
+    parameter   WIDTH = 8
 )(
     // interface signals
     input   logic                       clk,        // clock

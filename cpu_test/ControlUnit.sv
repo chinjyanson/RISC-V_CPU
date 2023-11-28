@@ -15,7 +15,7 @@ module ControlUnit #(
     //S => 10
     //B => 11
 
-    logic opcode = instr[6:0];
+    logic [6:0] opcode = instr[6:0];
     
     always_comb 
     case (opcode)

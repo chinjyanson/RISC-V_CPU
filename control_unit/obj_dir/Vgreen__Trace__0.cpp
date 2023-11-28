@@ -31,7 +31,9 @@ void Vgreen___024root__trace_chg_sub_0(Vgreen___024root* vlSelf, VerilatedVcd::B
     bufp->chgBit(oldp+5,(vlSelf->ALUsrc));
     bufp->chgBit(oldp+6,(vlSelf->PCsrc));
     bufp->chgIData(oldp+7,(vlSelf->ImmOp),32);
-    bufp->chgBit(oldp+8,((1U & vlSelf->instr)));
+    bufp->chgCData(oldp+8,(vlSelf->opcode_out),7);
+    bufp->chgCData(oldp+9,(vlSelf->green__DOT__ImmSrc),2);
+    bufp->chgCData(oldp+10,((0x7fU & vlSelf->instr)),7);
 }
 
 void Vgreen___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

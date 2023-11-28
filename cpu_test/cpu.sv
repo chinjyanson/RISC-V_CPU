@@ -1,6 +1,7 @@
 module cpu #(
 
-    parameter DATA_WIDTH = 32
+    parameter DATA_WIDTH = 32,
+    ADDRESS_WIDTH = 8
 
 )(
 
@@ -12,18 +13,18 @@ module cpu #(
 
     //output internal logic for "green" module 
     logic   RegWrite;
-    logic   ALUctrl;
+    logic   [2:0] ALUctrl;
     logic   ALUsrc;
     logic   ImmSrc;
     logic   PCsrc;
-    logic   ImmOp;
+    logic   [DATA_WIDTH-1:0] ImmOp;
     logic   Instr;
 
     //output internal logic for "red" module 
     logic EQ;
 
     //output internal logic for "blue" module
-    logic PC;
+    logic [ADDRESS_WIDTH-1:0] PC;
 
     //and then we would specify the "submodules here"   
         //green
@@ -47,7 +48,8 @@ green Mygreen(
     //.ImmSrc(ImmSrc),
     .PCsrc(PCsrc),
     .ImmOp(ImmOp),
-    .PC(PC)
+    .
+    PC(PC)
 );
 
 red_top Myred(
