@@ -12,7 +12,6 @@ module pc_top #(
 logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire
 
 pc_mux pc_mux(
-    //.clk (clk),
     .PCsrc (PCsrc),
     .ImmOp (ImmOp),
     .next_PC (next_PC),
