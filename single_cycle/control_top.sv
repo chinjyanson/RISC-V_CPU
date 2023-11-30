@@ -1,4 +1,4 @@
-module green #(
+module control_top #(
     parameter   //ADDRESS_WIDTH = 8,
                 DATA_WIDTH = 32
 )(

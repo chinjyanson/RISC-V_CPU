@@ -41,7 +41,7 @@ pc_top Myblue(
     .ImmOp(ImmOp)
     );
 
-green Mygreen(
+control_top Mygreen(
     .EQ(EQ),
     .RegWrite(RegWrite),
     .ALUctrl(ALUctrl),
@@ -53,7 +53,7 @@ green Mygreen(
     .instr(Instr)
 );
 
-red_top Myred(
+alu_top Myred(
     .clk(clk),
     .a0(a0),
     .Instr(Instr),//we pass the whole Instruction, and then we separate inside red
