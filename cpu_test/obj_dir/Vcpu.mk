@@ -10,13 +10,22 @@ default: Vcpu
 # Perl executable (from $PERL)
 PERL = perl
 # Path to Verilator kit (from $VERILATOR_ROOT)
+<<<<<<< HEAD
 VERILATOR_ROOT = /usr/share/verilator
+=======
+VERILATOR_ROOT = /usr/local/share/verilator
+>>>>>>> 07e1f023be4db24706a5e02e1dc67bc09c2f927b
 # SystemC include directory with systemc.h (from $SYSTEMC_INCLUDE)
 SYSTEMC_INCLUDE ?= 
 # SystemC library directory with libsystemc.a (from $SYSTEMC_LIBDIR)
 SYSTEMC_LIBDIR ?= 
 
 ### Switches...
+<<<<<<< HEAD
+=======
+# C++ code coverage  0/1 (from --prof-c)
+VM_PROFC = 0
+>>>>>>> 07e1f023be4db24706a5e02e1dc67bc09c2f927b
 # SystemC output mode?  0/1 (from --sc)
 VM_SC = 0
 # Legacy or SystemC output mode?  0/1 (from --sc)
@@ -59,7 +68,11 @@ cpu_tb.o: cpu_tb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
+<<<<<<< HEAD
 Vcpu: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a
+=======
+Vcpu: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+>>>>>>> 07e1f023be4db24706a5e02e1dc67bc09c2f927b
 	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
 
 

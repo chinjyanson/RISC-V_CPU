@@ -38,8 +38,7 @@ int main(int argc, char **argv, char **env) {
         top->eval ();
 
         if(clock){ 
-                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 << " instr: " << top->instr2 << " pc: "
-                         << top->pc2 << " aluctrl: " << top->aluctrl2 <<std::endl; 
+                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
                         clockcount++; }
 
         clock = !clock;
