@@ -5,8 +5,7 @@ module alu #(
     input logic [DATA_WIDTH-1:0] ALUop1,
     input logic [DATA_WIDTH-1:0] ALUop2,
     output logic [DATA_WIDTH-1:0] SUM,
-        output logic [2:0] aluctrl2,
-
+    output logic [2:0] aluctrl2,
     output logic EQ
 );
 
