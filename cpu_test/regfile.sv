@@ -24,6 +24,10 @@ always_ff @(posedge clk) begin
     if(WE3 == 1) begin
         reg_array[rd] <= WD3;
     end 
+<<<<<<< HEAD
+=======
+    a0 <= reg_array[rd];
+>>>>>>> 834c99f0bd89fd9d9e8916d3f563a3e680205085
 end 
 
 assign a0 = reg_array[10];
