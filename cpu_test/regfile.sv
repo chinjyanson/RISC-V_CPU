@@ -24,7 +24,6 @@ always_ff @(posedge clk) begin
     if(WE3 == 1) begin
         reg_array[rd] <= WD3;
     end 
-    a0 <= reg_array[rd];
 end 
 
 assign a0 = reg_array[10];
