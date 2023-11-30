@@ -11,7 +11,8 @@ module data_mem #(
     logic [DATA_WIDTH-1:0]  data_mem_register [2**ADDRESS_WIDTH-1:0] //we set our reg file which will be filled with initial values
 
     initial begin
-        // still missing initial info to write into data mem register
+        $display("Loading ROM");
+        $readmemh("datarom.mem", data_mem_register); // still missing initial info to write into data mem register
     end
     
     always_ff @(posedge clk) begin
