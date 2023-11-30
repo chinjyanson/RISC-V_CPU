@@ -6,7 +6,7 @@ module pc_top #(
     input   logic                       rst,        // reset        
     input   logic [WIDTH-1:0]           ImmOp,     
     input   logic                       PCsrc,
-    output logic [WIDTH-1:0]            pc_out
+    output  logic [WIDTH-1:0]           pc_out
 );
 
 logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire

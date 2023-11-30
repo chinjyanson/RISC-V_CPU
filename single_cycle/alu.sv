@@ -1,29 +1,28 @@
 module alu #(
+    parameter CONTROL_WIDTH = 3,
     parameter DATA_WIDTH = 32
 )(
-    input logic [2:0] ALUctrl,
-    input logic [DATA_WIDTH-1:0] ALUop1,
-    input logic [DATA_WIDTH-1:0] ALUop2,
-    output logic [DATA_WIDTH-1:0] SUM,
-    output logic [2:0] aluctrl2,
-    output logic EQ
+    input   logic   [CONTROL_WIDTH-1:0] ALUctrl,
+    input   logic   [DATA_WIDTH-1:0]    SrcA,
+    input   logic   [DATA_WIDTH-1:0]    SrcB,
+    output  logic   [DATA_WIDTH-1:0]    ALUResult,
+    output  logic                       Zero
 );
 
 always_comb begin
 
-    aluctrl2 = ALUctrl;
     case (ALUctrl)
-    3'b000: SUM = ALUop1 + ALUop2;
-    3'b001: SUM = ALUop1 - ALUop2;
-    3'b010: SUM = ALUop1 & ALUop2;
-    3'b011: SUM = ALUop1 | ALUop2;
-    3'b100: SUM = ALUop1 ^ ALUop2;
+    3'b000: ALUResult = SrcA + SrcB;
+    3'b001: ALUResult = SrcA - SrcB;
+    3'b010: ALUResult = SrcA & SrcB;
+    3'b011: ALUResult = SrcA | SrcB;
+    3'b100: ALUResult = SrcA ^ SrcB;
 
-    default: SUM = 0;
+    default: ALUResult = 0;
 
     endcase 
 
-    assign EQ = (ALUop1 == ALUop2);
+    assign Zero = (SrcA == SrcB);
 
 end 
 
