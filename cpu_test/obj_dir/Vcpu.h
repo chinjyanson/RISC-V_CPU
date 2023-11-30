@@ -27,7 +27,10 @@ class Vcpu VL_NOT_FINAL : public VerilatedModel {
     // propagate new values into/out from the Verilated model.
     VL_IN8(&clk,0,0);
     VL_IN8(&rst,0,0);
+    VL_OUT8(&aluctrl2,2,0);
     VL_OUT(&a0,31,0);
+    VL_OUT(&instr2,31,0);
+    VL_OUT(&pc2,31,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.

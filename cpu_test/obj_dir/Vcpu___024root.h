@@ -15,16 +15,17 @@ class Vcpu___024root final : public VerilatedModule {
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
-    CData/*0:0*/ cpu__DOT__ImmSrc;
-    CData/*0:0*/ cpu__DOT__Instr;
+    VL_OUT8(aluctrl2,2,0);
     CData/*1:0*/ cpu__DOT__Mygreen__DOT__ImmSrc;
     CData/*0:0*/ __Vclklast__TOP__clk;
     VL_OUT(a0,31,0);
+    VL_OUT(instr2,31,0);
+    VL_OUT(pc2,31,0);
     IData/*31:0*/ cpu__DOT__ImmOp;
-    IData/*31:0*/ cpu__DOT____Vcellout__Myblue__pc_out;
+    IData/*31:0*/ cpu__DOT__Instr;
+    IData/*31:0*/ cpu__DOT__PC;
     IData/*31:0*/ cpu__DOT__Myblue__DOT__next_PC;
     IData/*31:0*/ cpu__DOT__Myblue__DOT__pc;
-    IData/*31:0*/ cpu__DOT__Mygreen__DOT__instr;
     IData/*31:0*/ cpu__DOT__Myred__DOT__ALUop1;
     IData/*31:0*/ cpu__DOT__Myred__DOT__ALUop2;
     IData/*31:0*/ cpu__DOT__Myred__DOT__regOp2;

@@ -6,13 +6,15 @@ module pc_top #(
     input   logic                       rst,        // reset        
     input   logic [WIDTH-1:0]           ImmOp,     
     input   logic                       PCsrc,
+        output logic [WIDTH-1:0]            pc_out2,
+
     output logic [WIDTH-1:0]            pc_out
 );
 
 logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire
 
 pc_mux pc_mux(
-    .clk (clk),
+    //.clk (clk),
     .PCsrc (PCsrc),
     .ImmOp (ImmOp),
     .next_PC (next_PC),
@@ -24,6 +26,8 @@ pc_reg pc_reg(
     .rst (rst),
     .next_PC (next_PC),
     .pc (pc),
+        .another_pc2(pc_out2),
+
     .another_pc(pc_out)
 );
 

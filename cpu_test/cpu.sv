@@ -1,13 +1,17 @@
 module cpu #(
 
-    parameter DATA_WIDTH = 32,
-    ADDRESS_WIDTH = 8
+    parameter DATA_WIDTH = 32
+    //ADDRESS_WIDTH = 8
 
 )(
 
     input logic                        clk,
     input logic                        rst,
-    output logic [DATA_WIDTH-1:0]      a0
+    output logic [DATA_WIDTH-1:0]      a0,
+    output logic [DATA_WIDTH-1:0]      instr2,
+        output logic [2:0] aluctrl2,
+
+    output logic [DATA_WIDTH-1:0]      pc2
 
 );
 
@@ -15,16 +19,16 @@ module cpu #(
     logic   RegWrite;
     logic   [2:0] ALUctrl;
     logic   ALUsrc;
-    logic   ImmSrc;
+    //logic   ImmSrc;
     logic   PCsrc;
     logic   [DATA_WIDTH-1:0] ImmOp;
-    logic   Instr;
+    logic   [DATA_WIDTH-1:0] Instr;
 
     //output internal logic for "red" module 
     logic EQ;
 
     //output internal logic for "blue" module
-    logic [ADDRESS_WIDTH-1:0] PC;
+    logic [DATA_WIDTH-1:0] PC;
 
     //and then we would specify the "submodules here"   
         //green
@@ -37,7 +41,8 @@ pc_top Myblue(
     .rst(rst),
     .pc_out(PC),
     .PCsrc(PCsrc),
-    .ImmOp(ImmOp)
+    .ImmOp(ImmOp),
+    .pc_out2(pc2)
 );
 
 green Mygreen(
@@ -48,8 +53,9 @@ green Mygreen(
     //.ImmSrc(ImmSrc),
     .PCsrc(PCsrc),
     .ImmOp(ImmOp),
-    .
-    PC(PC)
+    .PC(PC),
+    .instr(Instr),
+    .instr2(instr2)
 );
 
 red_top Myred(
@@ -60,6 +66,7 @@ red_top Myred(
     .EQ(EQ),
     .ALUctrl(ALUctrl),
     .ALUsrc(ALUsrc),
+    .aluctrl2(aluctrl2),
     .ImmOp(ImmOp)
 );
     

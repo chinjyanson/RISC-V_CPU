@@ -8,6 +8,8 @@ module red_top #(
     input wire RegWrite,
     input wire [DATA_WIDTH-1:0] ImmOp,
     output wire EQ,
+            output logic [2:0] aluctrl2,
+
     output wire [DATA_WIDTH-1:0] a0
 );
 
@@ -38,6 +40,7 @@ alu ALU(
     .ALUop1(ALUop1),
     .ALUop2(ALUop2),
     .SUM(ALUout),
+    .aluctrl2(aluctrl2),
     .EQ(EQ)
 );
 

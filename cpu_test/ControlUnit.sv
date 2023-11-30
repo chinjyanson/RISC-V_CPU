@@ -3,11 +3,14 @@ module ControlUnit #(
 )(
      input logic                         EQ,
      input logic [DATA_WIDTH-1:0]        instr,
+          output logic [DATA_WIDTH-1:0]        instr2,
+
      output logic                        RegWrite,
      output logic [2:0]                  ALUctrl,
      output logic                        ALUsrc,
      output logic [1:0]                 ImmSrc, 
      output logic                        PCsrc
+     //output logic [DATA_WIDTH-1:0]       Instruction2
 );
     //for ImmSrc
     //R => 00
@@ -17,7 +20,9 @@ module ControlUnit #(
 
     logic [6:0] opcode = instr[6:0];
     
-    always_comb 
+    always_comb  begin
+
+    instr2 = instr;
     case (opcode)
     7'b0010011: begin //addi instruction
         RegWrite = 1;
@@ -41,4 +46,5 @@ module ControlUnit #(
         PCsrc = 0;
     end
     endcase 
+    end
 endmodule

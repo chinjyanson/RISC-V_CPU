@@ -1,7 +1,7 @@
 module pc_mux #(
     parameter WIDTH = 32
 )(
-    input logic clk,
+    //input logic clk,
     input logic PCsrc,
     input logic [WIDTH-1:0] pc ,
     input logic [WIDTH-1:0] ImmOp,

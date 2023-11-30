@@ -13,7 +13,10 @@ Vcpu::Vcpu(VerilatedContext* _vcontextp__, const char* _vcname__)
     , vlSymsp{new Vcpu__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
+    , aluctrl2{vlSymsp->TOP.aluctrl2}
     , a0{vlSymsp->TOP.a0}
+    , instr2{vlSymsp->TOP.instr2}
+    , pc2{vlSymsp->TOP.pc2}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

@@ -5,10 +5,14 @@ module alu #(
     input logic [DATA_WIDTH-1:0] ALUop1,
     input logic [DATA_WIDTH-1:0] ALUop2,
     output logic [DATA_WIDTH-1:0] SUM,
+        output logic [2:0] aluctrl2,
+
     output logic EQ
 );
 
 always_comb begin
+
+    aluctrl2 = ALUctrl;
     case (ALUctrl)
     3'b000: SUM = ALUop1 + ALUop2;
     3'b001: SUM = ALUop1 - ALUop2;

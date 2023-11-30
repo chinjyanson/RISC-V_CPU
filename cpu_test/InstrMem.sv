@@ -3,7 +3,9 @@ module InstrMem #(
     DATA_WIDTH = 32
 )(
     //input logic                     clk,
-    input logic [ADDRESS_WIDTH-1:0] addr,
+    input logic [DATA_WIDTH-1:0] addr,
+       // output logic [DATA_WIDTH-1:0]   dout2,
+
     output logic [DATA_WIDTH-1:0]   dout
 );
 
@@ -15,6 +17,8 @@ initial begin
 end;
 
 always_comb 
-dout = rom_array[addr];
+dout = rom_array[{addr[7:0]/4}];
+//dout2 = rom_array[addr[7:0]];
+
 
 endmodule
