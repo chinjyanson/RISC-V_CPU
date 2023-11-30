@@ -46,8 +46,14 @@ int main(int argc, char **argv, char **env) {
                    
 
         }
-
-
-
     }
+   if (Verilated::gotFinish()) 
+      exit(0);                
+  
+
+    tfp->close(); 
+    exit(0);
+
+
+    
 }
