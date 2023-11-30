@@ -8,6 +8,15 @@ This repository is part of an IAC Module for Imperial where we are required to d
 
 ## Team Members and Distribution of Tasks
 
+| Team members         | Task assigned                                                         |
+|----------------------|-----------------------------------------------------------------------|
+| Chin Jun Yen (Anson) | Writing README.md file, ALU and register files                        |
+| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |
+| Vishesh Mongia       | Testbench and verification of design                                  |
+| Samuel Khoo Ing Shin | PC and related addresses                                              |
+  
+
+
 Chin Jun Yen (Anson)
 - Task: Writing README.md file, ALU and register files
 
