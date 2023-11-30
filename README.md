@@ -13,7 +13,7 @@ Chin Jun Yen (Anson)
 Bruno Duaso
 - Task: Writing logic for control unit, sign extension and instruction memory
 Vishesh Mongia
-- Task: Testbench and verification of design 
+- Task: Testbench and verification of design
 Samuel Khoo Ing Shin
 - Task: PC and related addresses
 
