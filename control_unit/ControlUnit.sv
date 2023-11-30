@@ -15,7 +15,7 @@ module ControlUnit #(
     //I => 01
     //S => 10
     //B => 11
-
+    
     logic [6:0] opcode = instr[6:0];
     
 

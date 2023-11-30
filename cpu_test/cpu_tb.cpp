@@ -3,7 +3,7 @@
 #include "Vcpu.h"
 #include <iostream>
 
-#define MAX_SIM_CYC 10
+#define MAX_SIM_CYC 1000
 
 
 int main(int argc, char **argv, char **env) {

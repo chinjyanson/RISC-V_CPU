@@ -17,14 +17,17 @@ logic[4:0] rd = Instr[11:7];
 
 logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 
+assign RD1 = reg_array[rs1];
+assign RD2 = reg_array[rs2];
 
 always_ff @(posedge clk) begin 
-    RD1 <= reg_array[rs1];
-    RD2 <= reg_array[rs2];
     if(WE3 == 1) begin
         reg_array[rd] <= WD3;
     end 
-    a0 <= reg_array[0];
 end 
+
+assign a0 = reg_array[10];
+
+
 
 endmodule

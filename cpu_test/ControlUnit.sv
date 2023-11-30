@@ -36,7 +36,7 @@ module ControlUnit #(
         ALUctrl = 3'b000;
         ALUsrc = 0;
         ImmSrc = 2'b11;
-        PCsrc = EQ;
+        PCsrc = !EQ;
     end
         default begin //just in case we have something else
         RegWrite = 1;
