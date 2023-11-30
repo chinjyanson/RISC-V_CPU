@@ -2,7 +2,7 @@
 
 ## Distribution of Tasks for single-cycle processor 
 
- asasnbbaefb
+
  Chin Jun Yen (Anson)
  - 
  Vishesh Mongia 
