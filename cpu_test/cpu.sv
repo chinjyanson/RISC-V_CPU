@@ -8,10 +8,7 @@ module cpu #(
     input logic                        clk,
     input logic                        rst,
     output logic [DATA_WIDTH-1:0]      a0,
-    output logic [DATA_WIDTH-1:0]      instr2,
-        output logic [2:0] aluctrl2,
 
-    output logic [DATA_WIDTH-1:0]      pc2
 
 );
 
@@ -41,9 +38,8 @@ pc_top Myblue(
     .rst(rst),
     .pc_out(PC),
     .PCsrc(PCsrc),
-    .ImmOp(ImmOp),
-    .pc_out2(pc2)
-);
+    .ImmOp(ImmOp)
+    );
 
 green Mygreen(
     .EQ(EQ),
@@ -54,8 +50,7 @@ green Mygreen(
     .PCsrc(PCsrc),
     .ImmOp(ImmOp),
     .PC(PC),
-    .instr(Instr),
-    .instr2(instr2)
+    .instr(Instr)
 );
 
 red_top Myred(
@@ -66,7 +61,6 @@ red_top Myred(
     .EQ(EQ),
     .ALUctrl(ALUctrl),
     .ALUsrc(ALUsrc),
-    .aluctrl2(aluctrl2),
     .ImmOp(ImmOp)
 );
     
