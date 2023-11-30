@@ -21,10 +21,9 @@ class Vcpu___024root final : public VerilatedModule {
     VL_OUT(a0,31,0);
     IData/*31:0*/ cpu__DOT__ImmOp;
     IData/*31:0*/ cpu__DOT__Instr;
-    IData/*31:0*/ cpu__DOT__PC;
-    IData/*31:0*/ cpu__DOT__Myblue__DOT__pc_out2;
-    IData/*31:0*/ cpu__DOT__Myblue__DOT__next_PC;
-    IData/*31:0*/ cpu__DOT__Myblue__DOT__pc;
+    IData/*31:0*/ cpu__DOT__Myblue__DOT____Vcellout__pc_mux__next_PC;
+    IData/*31:0*/ cpu__DOT__Myblue__DOT____Vcellout__pc_reg__another_pc;
+    IData/*31:0*/ cpu__DOT__Myblue__DOT____Vcellout__pc_reg__pc;
     IData/*31:0*/ cpu__DOT__Myred__DOT__ALUop1;
     IData/*31:0*/ cpu__DOT__Myred__DOT__ALUop2;
     VlUnpacked<IData/*31:0*/, 256> cpu__DOT__Mygreen__DOT__MyInstrMem__DOT__rom_array;

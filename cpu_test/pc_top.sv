@@ -1,13 +1,11 @@
 module pc_top #(
-    parameter   WIDTH = 32
+    parameter   WIDTH = 8
 )(
     // interface signals
     input   logic                       clk,        // clock
     input   logic                       rst,        // reset        
     input   logic [WIDTH-1:0]           ImmOp,     
     input   logic                       PCsrc,
-        output logic [WIDTH-1:0]            pc_out2,
-
     output logic [WIDTH-1:0]            pc_out
 );
 
@@ -26,8 +24,6 @@ pc_reg pc_reg(
     .rst (rst),
     .next_PC (next_PC),
     .pc (pc),
-        .another_pc2(pc_out2),
-
     .another_pc(pc_out)
 );
 

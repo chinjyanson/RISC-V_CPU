@@ -31,7 +31,8 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->a0 = vlSelf->cpu__DOT__Myred__DOT__register__DOT__reg_array
         [0xaU];
     vlSelf->cpu__DOT__Instr = vlSelf->cpu__DOT__Mygreen__DOT__MyInstrMem__DOT__rom_array
-        [(0x3fU & (vlSelf->cpu__DOT__PC >> 2U))];
+        [(0x3fU & (vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_reg__another_pc 
+                   >> 2U))];
     vlSelf->cpu__DOT__Myred__DOT__ALUop1 = vlSelf->cpu__DOT__Myred__DOT__register__DOT__reg_array
         [(0x1fU & (vlSelf->cpu__DOT__Instr >> 0xfU))];
     vlSelf->cpu__DOT__Mygreen__DOT__ImmSrc = ((0x13U 
@@ -75,20 +76,14 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
                                             [(0x1fU 
                                               & (vlSelf->cpu__DOT__Instr 
                                                  >> 0x14U))]);
-    vlSelf->cpu__DOT__Myblue__DOT__next_PC = (((0x13U 
-                                                != 
-                                                (0x7fU 
-                                                 & vlSelf->cpu__DOT__Instr)) 
-                                               & ((0x63U 
-                                                   == 
-                                                   (0x7fU 
-                                                    & vlSelf->cpu__DOT__Instr)) 
-                                                  & (vlSelf->cpu__DOT__Myred__DOT__ALUop1 
-                                                     != vlSelf->cpu__DOT__Myred__DOT__ALUop2)))
-                                               ? (vlSelf->cpu__DOT__Myblue__DOT__pc 
-                                                  + vlSelf->cpu__DOT__ImmOp)
-                                               : ((IData)(4U) 
-                                                  + vlSelf->cpu__DOT__Myblue__DOT__pc));
+    vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_mux__next_PC 
+        = (((0x13U != (0x7fU & vlSelf->cpu__DOT__Instr)) 
+            & ((0x63U == (0x7fU & vlSelf->cpu__DOT__Instr)) 
+               & (vlSelf->cpu__DOT__Myred__DOT__ALUop1 
+                  != vlSelf->cpu__DOT__Myred__DOT__ALUop2)))
+            ? ((0xffU & vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_reg__pc) 
+               + (0xffU & vlSelf->cpu__DOT__ImmOp))
+            : ((IData)(4U) + (0xffU & vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_reg__pc)));
 }
 
 VL_ATTR_COLD void Vcpu___024root___eval_initial(Vcpu___024root* vlSelf) {
@@ -127,10 +122,9 @@ VL_ATTR_COLD void Vcpu___024root___ctor_var_reset(Vcpu___024root* vlSelf) {
     vlSelf->__pinNumber4 = VL_RAND_RESET_I(1);
     vlSelf->cpu__DOT__ImmOp = VL_RAND_RESET_I(32);
     vlSelf->cpu__DOT__Instr = VL_RAND_RESET_I(32);
-    vlSelf->cpu__DOT__PC = VL_RAND_RESET_I(32);
-    vlSelf->cpu__DOT__Myblue__DOT__pc_out2 = VL_RAND_RESET_I(32);
-    vlSelf->cpu__DOT__Myblue__DOT__next_PC = VL_RAND_RESET_I(32);
-    vlSelf->cpu__DOT__Myblue__DOT__pc = VL_RAND_RESET_I(32);
+    vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_mux__next_PC = VL_RAND_RESET_I(32);
+    vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_reg__another_pc = VL_RAND_RESET_I(32);
+    vlSelf->cpu__DOT__Myblue__DOT____Vcellout__pc_reg__pc = VL_RAND_RESET_I(32);
     vlSelf->cpu__DOT__Mygreen__DOT__ImmSrc = VL_RAND_RESET_I(2);
     for (int __Vi0=0; __Vi0<256; ++__Vi0) {
         vlSelf->cpu__DOT__Mygreen__DOT__MyInstrMem__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(32);

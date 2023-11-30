@@ -5,7 +5,6 @@ module pc_reg #(
     input logic rst, 
     input logic [WIDTH-1:0] next_PC,
     output logic [WIDTH-1:0] pc,
-    output logic [WIDTH-1:0] another_pc2,
 
     output logic [WIDTH-1:0] another_pc
 );
@@ -16,7 +15,6 @@ begin
         pc <= {WIDTH{1'b0}};
     else
         pc <= next_PC;
-    another_pc2 <= next_PC;
 
     another_pc <= next_PC;
 end
