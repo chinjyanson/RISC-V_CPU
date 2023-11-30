@@ -7,7 +7,7 @@ module cpu #(
 
     input logic                        clk,
     input logic                        rst,
-    output logic [DATA_WIDTH-1:0]      a0,
+    output logic [DATA_WIDTH-1:0]      a0
 
 
 );
