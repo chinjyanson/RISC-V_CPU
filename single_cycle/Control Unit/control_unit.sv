@@ -40,7 +40,7 @@ module control_unit #(
         PCsrc = 0;
         case(funct3)
         3'b000: ALUctrl = 3'b000; //addi
-        3'b001: ALUctrl = 3'101: //slli
+        3'b001: ALUctrl = 3'b101: //slli
         endcase
     end
     7'b1100011: begin //Type B
