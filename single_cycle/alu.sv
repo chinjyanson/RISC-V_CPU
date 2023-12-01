@@ -6,7 +6,7 @@ module alu #(
     input   logic   [DATA_WIDTH-1:0]    SrcA,
     input   logic   [DATA_WIDTH-1:0]    SrcB,
     output  logic   [DATA_WIDTH-1:0]    ALUResult,
-    output  logic                       EQ
+    output  logic                       Zero
 );
 
 always_comb begin
@@ -22,7 +22,7 @@ always_comb begin
 
     endcase 
 
-    assign EQ = (SrcA == SrcB);
+    assign Zero = (SrcA == SrcB);
 
 end 
 

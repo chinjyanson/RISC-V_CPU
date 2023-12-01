@@ -1,5 +1,5 @@
 module pc_top #(
-    parameter   WIDTH = 8
+    parameter   WIDTH = 32 // changed back to 32 as input for instr mem has to be 32 bit
 )(
     // interface signals
     input   logic                       clk,        // clock
@@ -12,18 +12,18 @@ module pc_top #(
 logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire
 
 pc_mux pc_mux(
-    .PCsrc (PCsrc),
-    .ImmOp (ImmOp),
-    .next_PC (next_PC),
-    .pc (pc)
+    .PCsrc      (PCsrc),
+    .ImmOp      (ImmOp),
+    .next_PC    (next_PC),
+    .pc         (pc)
 );
 
 pc_reg pc_reg(
-    .clk (clk),
-    .rst (rst),
-    .next_PC (next_PC),
-    .pc (pc),
-    .another_pc(pc_out)
+    .clk        (clk),
+    .rst        (rst),
+    .next_PC    (next_PC),
+    .pc         (pc),
+    .another_pc (pc_out)
 );
 
 endmodule
