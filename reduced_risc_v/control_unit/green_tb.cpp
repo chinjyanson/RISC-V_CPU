@@ -31,9 +31,9 @@ int main(int argc, char **argv, char **env){
             clk = !clk;
             top->eval ();
         }
-        top->PC = i;
+        top->PC = 4*i;
 
-        std::cout << std::hex << int(top->PC) << " instr: " << int(top->instr) << " ALUctrl: " << int(top->ALUctrl) << " opcode: " << int(top->opcode_out)  << std::endl;
+        std::cout << std::hex << int(top->PC) << " instr: " << int(top->instr) << " ALUctrl: " << int(top->ALUctrl) << " opcode: " << int(top->opcode_out) << std::endl;
 
         if(Verilated::gotFinish()) exit(0);
         
