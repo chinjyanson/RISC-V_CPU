@@ -7,12 +7,14 @@ module control_unit #(
     input   logic [DATA_WIDTH-1:0]          instr,
     output  logic                           RegWrite,
     output  logic                           MemWrite,
-    output  logic [CONTROL_WIDTH-1:0]       Resultsrc,
+    output  logic [IMM_WIDTH-1:0]           Resultsrc,
     output  logic [CONTROL_WIDTH-1:0]       ALUctrl,
     output  logic                           ALUsrc,
     output  logic [IMM_WIDTH-1:0]           ImmSrc, 
-    output  logic                           PCsrc
+    output  logic [IMM_WIDTH-1:0]           PCsrc
+    // output  logic [DATA_WIDTH-1:0]          instr2 (used for debugging)
 );
+
     //for ImmSrc
     //R => 00
     //I => 01
@@ -27,6 +29,8 @@ module control_unit #(
     3'b100: SUM = ALUop1 ^ ALUop2;
     */
 
+    
+
     logic [6:0] opcode = instr[6:0];
     logic [2:0] funct3 = instr[14:12];
 
@@ -36,8 +40,9 @@ module control_unit #(
     7'b0010011: begin //Type I (19)
         RegWrite = 1;
         ALUsrc = 1;
+        Resultsrc = 2'b00;
         ImmSrc = 2'b01;
-        PCsrc = 0;
+        PCsrc = 2'b00;
         case(funct3)
         3'b000: ALUctrl = 3'b000; //addi
         3'b001: ALUctrl = 3'101; //slli
@@ -45,40 +50,43 @@ module control_unit #(
     end
     7'b1100011: begin //Type B
         RegWrite = 0;   
+        Resultsrc = 2'b01;
         ALUctrl = 3'b000; //dont care
         ALUsrc = 0;
         ImmSrc = 2'b11; 
         case(funct3)
-        3'b000: PCsrc = Zero; //beq
-        3'b001: PCsrc = !Zero; //bne
+        3'b000: PCsrc = {1'b0 ,Zero}; //beq
+        3'b001: PCsrc = {1'b0, !Zero}; //bne
         endcase
         
     end
     7'b1101111: begin //Type J - JAL
         RegWrite = 1;
+        Resultsrc = 2'b10;
         ALUctrl = 3'b000;
         ALUsrc = 1;
         ImmSrc = 2'b10;
-        PCsrc = 1;
+        PCsrc = 2'b01;
     end
     7'b1100111:begin //Type I - JALR
         RegWrite = 0;   
+        Resultsrc = 2'b10;
         ALUctrl = 3'b000; //dont care
         ALUsrc = ;
         ImmSrc = 2'b11; 
-        PCscr = 1
+        PCscr = 2'b10;
     end
         default begin //just in case we have something else
         RegWrite = 1;
+        Resultsrc = 2'b00;
         ALUctrl = 3'b000;
         ALUsrc = 1;
         ImmSrc = 2'b00;
-        PCsrc = 0;
+        PCsrc = 2'b00;
     end
     endcase 
     end
+
+    assign MemWrite = 0; //we let it be 0 for now
 endmodule
 
-//Jalr zero, 0(ra)
-
-//we need to have a cable to read from PC, if we want to set rd = PC +4
