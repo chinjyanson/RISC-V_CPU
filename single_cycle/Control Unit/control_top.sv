@@ -21,13 +21,15 @@ module control_top #(
     logic [1:0]       ImmSrc;
 
 control_unit ControlUnit(
-    .Zero(Zero),
-    .instr(instr),
-    .RegWrite(RegWrite),
-    .ALUctrl(ALUctrl),
-    .ALUsrc(ALUsrc),
-    .ImmSrc(ImmSrc),
-    .PCsrc(PCsrc)
+    .Zero           (Zero),
+    .instr          (instr),
+    .RegWrite       (RegWrite),
+    .MemWrite       (MemWrite),
+    .Resultsrc      (Resultsrc),
+    .ALUctrl        (ALUctrl),
+    .ALUsrc         (ALUsrc),
+    .ImmSrc         (ImmSrc),
+    .PCsrc          (PCsrc)
 
 );
 
