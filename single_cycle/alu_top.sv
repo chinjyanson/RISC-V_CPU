@@ -8,7 +8,7 @@ module alu_top #(
     input   wire [DATA_WIDTH-1:0]   Instr,
     input   wire                    RegWrite,
     input   wire [DATA_WIDTH-1:0]   ImmOp,
-    output  wire                    EQ,
+    output  wire                    Zero,
     output  wire [DATA_WIDTH-1:0]   a0
 );
 
@@ -39,7 +39,7 @@ alu ALU(
     .ALUop1(SrcA),
     .ALUop2(SrcB),
     .SUM(ALUResult),
-    .EQ(EQ)
+    .Zero(Zero)
 );
 
 endmodule
