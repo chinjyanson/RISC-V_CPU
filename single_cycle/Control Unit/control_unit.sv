@@ -24,7 +24,6 @@ module control_unit #(
     
     always_comb  begin
 
-    // instr2 = instr;
     case (opcode)
     7'b0010011: begin //addi instruction
         RegWrite = 1;
