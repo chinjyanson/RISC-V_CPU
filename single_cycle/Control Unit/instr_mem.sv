@@ -1,11 +1,11 @@
 module instr_mem #(
     parameter ADDRESS_WIDTH = 8,
-    DATA_WIDTH = 8
+    parameter DATA_WIDTH = 32
     
 )(
-    input logic                     clk,
-    input logic [ADDRESS_WIDTH-1:0] addr,
-    output logic [31:0]   dout
+    input   logic                       clk,
+    input   logic [ADDRESS_WIDTH-1:0]   addr,
+    output  logic [DATA_WIDTH-1:0]      Instr
 );
 
 logic [DATA_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
@@ -16,6 +16,6 @@ initial begin
 end;
 
 
-assign dout = {{rom_array[addr+3]}, {rom_array[addr+2]}, {rom_array[addr+1]}, {rom_array[addr]}};
+assign Instr = {{rom_array[addr+3]}, {rom_array[addr+2]}, {rom_array[addr+1]}, {rom_array[addr]}};
 
 endmodule

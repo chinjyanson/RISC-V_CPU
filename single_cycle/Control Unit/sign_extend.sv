@@ -1,9 +1,10 @@
 module sign_extend #(
-    parameter DATA_WIDTH = 32
+    parameter DATA_WIDTH = 32,
+    parameter IMM_WIDTH = 2
 )(
-    input logic [DATA_WIDTH-1:0]        instr,
-    input logic [1:0]                   ImmSrc,
-    output logic [DATA_WIDTH-1:0]        ImmOp
+    input   logic [DATA_WIDTH-1:0]        instr,
+    input   logic [IMM_WIDTH-1:0]         ImmSrc,
+    output  logic [DATA_WIDTH-1:0]        ImmOp
 );
 
 always_comb 
