@@ -16,6 +16,6 @@ initial begin
 end;
 
 
-assign Instr = {{rom_array[addr+3]}, {rom_array[addr+2]}, {rom_array[addr+1]}, {rom_array[addr]}};
+assign Instr = {rom_array[addr+3], rom_array[addr+2], rom_array[addr+1], rom_array[addr]};
 
 endmodule
