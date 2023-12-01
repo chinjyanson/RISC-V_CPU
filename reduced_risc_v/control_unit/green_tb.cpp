@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **env){
         }
         top->PC = 4*i;
 
-        std::cout << std::hex << int(top->PC) << " instr: " << int(top->instr) << " ALUctrl: " << int(top->ALUctrl) << " opcode: " << int(top->opcode_out) << std::endl;
+        std::cout << std::hex << int(top->PC) << " instr: " << int(top->instr) << " ALUctrl: " << int(top->ALUctrl) << " opcode: " << std::endl;
 
         if(Verilated::gotFinish()) exit(0);
         
