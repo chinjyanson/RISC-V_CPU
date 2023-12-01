@@ -37,6 +37,21 @@ module control_unit #(
     always_comb  begin
 
     case (opcode)
+    7'b0000011: begin //lw
+        RegWrite = 1;
+        ImmSrc = 2'b00;
+        ALUsrc = 1;
+        MemWrite = 0;
+        Resultsrc = 1'b01;
+        
+
+    end
+    7'b0100011: begin //sw
+
+    end
+    7'b0110011: begin
+
+    end
     7'b0010011: begin //Type I (19)
         RegWrite = 1;
         ALUsrc = 1;
