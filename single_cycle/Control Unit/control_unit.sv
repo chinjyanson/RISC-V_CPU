@@ -1,16 +1,18 @@
-module ControlUnit #(
-    parameter DATA_WIDTH = 32
+module control_unit #(
+    parameter DATA_WIDTH = 32,
+    parameter CONTROL_WIDTH = 3,
+    parameter IMM_WIDTH = 2
 )(
     input   logic                           Zero,
     input   logic [DATA_WIDTH-1:0]          instr,
-    output  logic [DATA_WIDTH-1:0]          instr2,
-
     output  logic                           RegWrite,
-    output  logic [2:0]                     ALUctrl,
+    output  logic                           MemWrite,
+    output  logic [CONTROL_WIDTH-1:0]       Resultsrc,
+    output  logic [CONTROL_WIDTH-1:0]       ALUctrl,
     output  logic                           ALUsrc,
-    output  logic [1:0]                     ImmSrc, 
+    output  logic [IMM_WIDTH-1:0]           ImmSrc, 
     output  logic                           PCsrc
-     //output logic [DATA_WIDTH-1:0]       Instruction2
+    // output  logic [DATA_WIDTH-1:0]          instr2 (used for debugging)
 );
     //for ImmSrc
     //R => 00
@@ -31,7 +33,6 @@ module ControlUnit #(
 
     always_comb  begin
 
-    instr2 = instr;
     case (opcode)
     7'b0010011: begin //Type I (19)
         RegWrite = 1;
