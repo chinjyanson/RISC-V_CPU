@@ -8,7 +8,6 @@ module control_unit #(
     output  logic                           ALUsrc,
     output  logic [1:0]                     ImmSrc, 
     output  logic                           PCsrc
-     //output logic [DATA_WIDTH-1:0]       Instruction2
 );
     //for ImmSrc
     //R => 00

@@ -4,34 +4,36 @@
 // Internal details; most calling programs do not need this header,
 // unless using verilator public meta comments.
 
-#ifndef _VGREEN__SYMS_H_
-#define _VGREEN__SYMS_H_  // guard
+#ifndef VERILATED_VGREEN__SYMS_H_
+#define VERILATED_VGREEN__SYMS_H_  // guard
 
-#include "verilated_heavy.h"
+#include "verilated.h"
 
-// INCLUDE MODULE CLASSES
+// INCLUDE MODEL CLASS
+
 #include "Vgreen.h"
 
-// SYMS CLASS
-class Vgreen__Syms : public VerilatedSyms {
+// INCLUDE MODULE CLASSES
+#include "Vgreen___024root.h"
+
+// SYMS CLASS (contains all model state)
+class Vgreen__Syms final : public VerilatedSyms {
   public:
-    
-    // LOCAL STATE
-    const char* __Vm_namep;
-    bool __Vm_activity;  ///< Used by trace routines to determine change occurred
-    uint32_t __Vm_baseCode;  ///< Used by trace routines when tracing multiple models
-    bool __Vm_didInit;
-    
-    // SUBCELL STATE
-    Vgreen*                        TOPp;
-    
-    // CREATORS
-    Vgreen__Syms(Vgreen* topp, const char* namep);
-    ~Vgreen__Syms() {}
-    
+    // INTERNAL STATE
+    Vgreen* const __Vm_modelp;
+    bool __Vm_activity = false;  ///< Used by trace routines to determine change occurred
+    uint32_t __Vm_baseCode = 0;  ///< Used by trace routines when tracing multiple models
+    bool __Vm_didInit = false;
+
+    // MODULE INSTANCE STATE
+    Vgreen___024root               TOP;
+
+    // CONSTRUCTORS
+    Vgreen__Syms(VerilatedContext* contextp, const char* namep, Vgreen* modelp);
+    ~Vgreen__Syms();
+
     // METHODS
-    inline const char* name() { return __Vm_namep; }
-    
+    const char* name() { return TOP.name(); }
 } VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
 
 #endif  // guard

@@ -11,7 +11,6 @@ module control_top #(
      output logic                           ALUsrc, //1 bit
      output logic                           PCsrc, //1 bit
      output logic [DATA_WIDTH-1:0]          ImmOp //32 bits
-     //output logic [DATA_WIDTH-1:0]       Instruction2
 
 
 );
