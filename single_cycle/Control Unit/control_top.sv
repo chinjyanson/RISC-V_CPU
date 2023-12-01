@@ -7,24 +7,27 @@ module control_top #(
      input  logic                           Zero, //1b
      output logic [DATA_WIDTH-1:0]          instr,//32b
      output logic                           RegWrite, //1b
+     output logic                           MemWrite, //1b
+     output logic [CONTROL_WIDTH-1:0]       Resultsrc, //3b
      output logic [CONTROL_WIDTH-1:0]       ALUctrl, //3b
      output logic                           ALUsrc, //1 bit
      output logic                           PCsrc, //1 bit
      output logic [DATA_WIDTH-1:0]          ImmOp //32 bits
 
-
 );
 
-    logic [1:0]                        ImmSrc;
+    logic [1:0]       ImmSrc;
 
 control_unit ControlUnit(
-    .Zero(Zero),
-    .instr(instr),
-    .RegWrite(RegWrite),
-    .ALUctrl(ALUctrl),
-    .ALUsrc(ALUsrc),
-    .ImmSrc(ImmSrc),
-    .PCsrc(PCsrc)
+    .Zero           (Zero),
+    .instr          (instr),
+    .RegWrite       (RegWrite),
+    .MemWrite       (MemWrite),
+    .Resultsrc      (Resultsrc),
+    .ALUctrl        (ALUctrl),
+    .ALUsrc         (ALUsrc),
+    .ImmSrc         (ImmSrc),
+    .PCsrc          (PCsrc)
 
 );
 
