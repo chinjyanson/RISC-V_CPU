@@ -1,133 +1,155 @@
 // Verilated -*- C++ -*-
-// DESCRIPTION: Verilator output: Model implementation (design independent parts)
+// DESCRIPTION: Verilator output: Design implementation internals
+// See Vgreen.h for the primary calling header
 
 #include "Vgreen.h"
 #include "Vgreen__Syms.h"
-#include "verilated_vcd_c.h"
 
-//============================================================
-// Constructors
-
-Vgreen::Vgreen(VerilatedContext* _vcontextp__, const char* _vcname__)
-    : VerilatedModel{*_vcontextp__}
-    , vlSymsp{new Vgreen__Syms(contextp(), _vcname__, this)}
-    , PC{vlSymsp->TOP.PC}
-    , EQ{vlSymsp->TOP.EQ}
-    , RegWrite{vlSymsp->TOP.RegWrite}
-    , ALUctrl{vlSymsp->TOP.ALUctrl}
-    , ALUsrc{vlSymsp->TOP.ALUsrc}
-    , PCsrc{vlSymsp->TOP.PCsrc}
-    , opcode_out{vlSymsp->TOP.opcode_out}
-    , instr{vlSymsp->TOP.instr}
-    , ImmOp{vlSymsp->TOP.ImmOp}
-    , rootp{&(vlSymsp->TOP)}
-{
-    // Register model with the context
-    contextp()->addModel(this);
-}
-
-Vgreen::Vgreen(const char* _vcname__)
-    : Vgreen(Verilated::threadContextp(), _vcname__)
-{
-}
-
-//============================================================
-// Destructor
-
-Vgreen::~Vgreen() {
-    delete vlSymsp;
-}
-
-//============================================================
-// Evaluation loop
-
-void Vgreen___024root___eval_initial(Vgreen___024root* vlSelf);
-void Vgreen___024root___eval_settle(Vgreen___024root* vlSelf);
-void Vgreen___024root___eval(Vgreen___024root* vlSelf);
-#ifdef VL_DEBUG
-void Vgreen___024root___eval_debug_assertions(Vgreen___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vgreen___024root___final(Vgreen___024root* vlSelf);
-
-static void _eval_initial_loop(Vgreen__Syms* __restrict vlSymsp) {
-    vlSymsp->__Vm_didInit = true;
-    Vgreen___024root___eval_initial(&(vlSymsp->TOP));
-    // Evaluate till stable
-    vlSymsp->__Vm_activity = true;
-    do {
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
-        Vgreen___024root___eval_settle(&(vlSymsp->TOP));
-        Vgreen___024root___eval(&(vlSymsp->TOP));
-    } while (0);
-}
+//==========
 
 void Vgreen::eval_step() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vgreen::eval_step\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vgreen::eval\n"); );
+    Vgreen__Syms* __restrict vlSymsp = this->__VlSymsp;  // Setup global symbol table
+    Vgreen* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
 #ifdef VL_DEBUG
     // Debug assertions
-    Vgreen___024root___eval_debug_assertions(&(vlSymsp->TOP));
+    _eval_debug_assertions();
 #endif  // VL_DEBUG
     // Initialize
     if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
     // Evaluate till stable
-    vlSymsp->__Vm_activity = true;
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        Vgreen___024root___eval(&(vlSymsp->TOP));
-    } while (0);
-    // Evaluate cleanup
+        vlSymsp->__Vm_activity = true;
+        _eval(vlSymsp);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = _change_request(vlSymsp);
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("green.sv", 1, "",
+                "Verilated model didn't converge\n"
+                "- See DIDNOTCONVERGE in the Verilator manual");
+        } else {
+            __Vchange = _change_request(vlSymsp);
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
-//============================================================
-// Utilities
-
-const char* Vgreen::name() const {
-    return vlSymsp->name();
+void Vgreen::_eval_initial_loop(Vgreen__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    _eval_initial(vlSymsp);
+    vlSymsp->__Vm_activity = true;
+    // Evaluate till stable
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
+    do {
+        _eval_settle(vlSymsp);
+        _eval(vlSymsp);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = _change_request(vlSymsp);
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("green.sv", 1, "",
+                "Verilated model didn't DC converge\n"
+                "- See DIDNOTCONVERGE in the Verilator manual");
+        } else {
+            __Vchange = _change_request(vlSymsp);
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
-//============================================================
-// Invoke final blocks
-
-VL_ATTR_COLD void Vgreen::final() {
-    Vgreen___024root___final(&(vlSymsp->TOP));
+VL_INLINE_OPT void Vgreen::_combo__TOP__3(Vgreen__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vgreen::_combo__TOP__3\n"); );
+    Vgreen* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    vlTOPp->instr = ((vlTOPp->green__DOT__MyInstrMem__DOT__rom_array
+                      [(0xffU & ((IData)(3U) + (IData)(vlTOPp->PC)))] 
+                      << 0x18U) | ((vlTOPp->green__DOT__MyInstrMem__DOT__rom_array
+                                    [(0xffU & ((IData)(2U) 
+                                               + (IData)(vlTOPp->PC)))] 
+                                    << 0x10U) | ((vlTOPp->green__DOT__MyInstrMem__DOT__rom_array
+                                                  [
+                                                  (0xffU 
+                                                   & ((IData)(1U) 
+                                                      + (IData)(vlTOPp->PC)))] 
+                                                  << 8U) 
+                                                 | vlTOPp->green__DOT__MyInstrMem__DOT__rom_array
+                                                 [vlTOPp->PC])));
+    vlTOPp->RegWrite = ((0x13U == (0x7fU & vlTOPp->instr)) 
+                        | (0x63U != (0x7fU & vlTOPp->instr)));
+    vlTOPp->ALUsrc = ((0x13U == (0x7fU & vlTOPp->instr)) 
+                      | (0x63U != (0x7fU & vlTOPp->instr)));
+    vlTOPp->opcode_out = (0x7fU & vlTOPp->instr);
+    vlTOPp->PCsrc = ((0x13U != (0x7fU & vlTOPp->instr)) 
+                     & ((0x63U == (0x7fU & vlTOPp->instr)) 
+                        & (IData)(vlTOPp->EQ)));
+    vlTOPp->green__DOT__ImmSrc = ((0x13U == (0x7fU 
+                                             & vlTOPp->instr))
+                                   ? 1U : ((0x63U == 
+                                            (0x7fU 
+                                             & vlTOPp->instr))
+                                            ? 3U : 0U));
+    vlTOPp->ImmOp = ((1U == (IData)(vlTOPp->green__DOT__ImmSrc))
+                      ? ((0xfffff000U & ((- (IData)(
+                                                    (1U 
+                                                     & (vlTOPp->instr 
+                                                        >> 0x1fU)))) 
+                                         << 0xcU)) 
+                         | (0xfffU & (vlTOPp->instr 
+                                      >> 0x14U))) : 
+                     ((3U == (IData)(vlTOPp->green__DOT__ImmSrc))
+                       ? ((0xfffff000U & ((- (IData)(
+                                                     (1U 
+                                                      & (vlTOPp->instr 
+                                                         >> 0x1fU)))) 
+                                          << 0xcU)) 
+                          | ((0x800U & (vlTOPp->instr 
+                                        << 4U)) | (
+                                                   (0x7e0U 
+                                                    & (vlTOPp->instr 
+                                                       >> 0x14U)) 
+                                                   | (0x1eU 
+                                                      & (vlTOPp->instr 
+                                                         >> 7U)))))
+                       : 0U));
 }
 
-//============================================================
-// Implementations of abstract methods from VerilatedModel
-
-const char* Vgreen::hierName() const { return vlSymsp->name(); }
-const char* Vgreen::modelName() const { return "Vgreen"; }
-unsigned Vgreen::threads() const { return 1; }
-std::unique_ptr<VerilatedTraceConfig> Vgreen::traceConfig() const {
-    return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
-};
-
-//============================================================
-// Trace configuration
-
-void Vgreen___024root__trace_init_top(Vgreen___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32_t code) {
-    // Callback from tracep->open()
-    Vgreen___024root* const __restrict vlSelf VL_ATTR_UNUSED = static_cast<Vgreen___024root*>(voidSelf);
-    Vgreen__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    if (!vlSymsp->_vm_contextp__->calcUnusedSigs()) {
-        VL_FATAL_MT(__FILE__, __LINE__, __FILE__,
-            "Turning on wave traces requires Verilated::traceEverOn(true) call before time 0.");
-    }
-    vlSymsp->__Vm_baseCode = code;
-    tracep->scopeEscape(' ');
-    tracep->pushNamePrefix(std::string{vlSymsp->name()} + ' ');
-    Vgreen___024root__trace_init_top(vlSelf, tracep);
-    tracep->popNamePrefix();
-    tracep->scopeEscape('.');
+void Vgreen::_eval(Vgreen__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vgreen::_eval\n"); );
+    Vgreen* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    vlTOPp->_combo__TOP__3(vlSymsp);
 }
 
-VL_ATTR_COLD void Vgreen___024root__trace_register(Vgreen___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD void Vgreen::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (false && levels && options) {}  // Prevent unused
-    tfp->spTrace()->addModel(this);
-    tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
-    Vgreen___024root__trace_register(&(vlSymsp->TOP), tfp->spTrace());
+VL_INLINE_OPT QData Vgreen::_change_request(Vgreen__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vgreen::_change_request\n"); );
+    Vgreen* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    return (vlTOPp->_change_request_1(vlSymsp));
 }
+
+VL_INLINE_OPT QData Vgreen::_change_request_1(Vgreen__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vgreen::_change_request_1\n"); );
+    Vgreen* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    // Change detection
+    QData __req = false;  // Logically a bool
+    return __req;
+}
+
+#ifdef VL_DEBUG
+void Vgreen::_eval_debug_assertions() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vgreen::_eval_debug_assertions\n"); );
+    // Body
+    if (VL_UNLIKELY((EQ & 0xfeU))) {
+        Verilated::overWidthError("EQ");}
+}
+#endif  // VL_DEBUG

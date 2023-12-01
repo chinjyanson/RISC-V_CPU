@@ -15,12 +15,19 @@ module ControlUnit #(
     //I => 01
     //S => 10
     //B => 11
+
+    /*
+    3'b000: SUM = ALUop1 + ALUop2;
+    3'b001: SUM = ALUop1 - ALUop2;
+    3'b010: SUM = ALUop1 & ALUop2;
+    3'b011: SUM = ALUop1 | ALUop2;
+    3'b100: SUM = ALUop1 ^ ALUop2;
+    */
     
     logic [6:0] opcode = instr[6:0];
     
 
-    always_comb begin
-    //opcode_out = 1;
+    always_comb 
     case (opcode)
     7'b0010011: begin //addi instruction
         RegWrite = 1;
@@ -50,5 +57,5 @@ module ControlUnit #(
 
     end
     endcase 
-    end
+    
 endmodule
