@@ -10,13 +10,14 @@ module alu_top #(
     input   wire [1:0]                  ResultSrc,
     input   wire                        MemWrite,
     input   wire [DATA_WIDTH-1:0]       ImmOp,
-    input   wire                        PCTarget,
+    input   wire                        PCPlus4,
     output  wire                        Zero,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
-    output  wire [DATA_WIDTH-1:0]       Result
+    output  wire [DATA_WIDTH-1:0]       Result,
+    output  wire [DATA_WIDTH-1:0]       ALUResult
 );
 
-wire [DATA_WIDTH-1:0] ALUResult;
+
 wire [DATA_WIDTH-1:0] SrcA;
 wire [DATA_WIDTH-1:0] SrcB;
 wire [DATA_WIDTH-1:0] regOp2;
