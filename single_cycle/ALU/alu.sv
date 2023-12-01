@@ -19,7 +19,7 @@ always_comb begin
     3'b100: ALUResult = SrcA ^ SrcB;
     3'b101: ALUResult = SrcA << SrcB[4:0];
     3'b110: ALUResult = SrcA >> SrcB[4:0];
-    3'b111: ALUResult = SrcA; // dont know what to assign this to yet 
+    3'b111: ALUResult = megb; // dont know what to assign this to yet 
 
     default: ALUResult = 0;
 
