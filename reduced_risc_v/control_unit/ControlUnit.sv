@@ -8,7 +8,6 @@ module ControlUnit #(
      output logic                        ALUsrc,
      output logic [1:0]                 ImmSrc, 
      output logic                        PCsrc,
-     output logic [6:0]                    opcode_out
 );
     //for ImmSrc
     //R => 00
@@ -35,7 +34,6 @@ module ControlUnit #(
         ALUsrc = 1;
         ImmSrc = 2'b01;
         PCsrc = 0;
-        opcode_out = opcode;
 
     end
     7'b1100011: begin //bne instruction
@@ -44,7 +42,6 @@ module ControlUnit #(
         ALUsrc = 0;
         ImmSrc = 2'b11;
         PCsrc = EQ;
-        opcode_out = opcode;
 
     end
         default begin //just in case we have something else
@@ -53,7 +50,6 @@ module ControlUnit #(
         ALUsrc = 1;
         ImmSrc = 2'b00;
         PCsrc = 0;
-        opcode_out = opcode;
 
     end
     endcase 

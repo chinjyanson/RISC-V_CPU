@@ -10,11 +10,9 @@ module control_top #(
      output logic                           MemWrite, //1b
      output logic [CONTROL_WIDTH-1:0]       Resultsrc, //3b
      output logic [CONTROL_WIDTH-1:0]       ALUctrl, //3b
-     output logic                           ALUsrc, //1b
-     output logic                           PCsrc, //1b
-     output logic [DATA_WIDTH-1:0]          ImmOp //32b
-     //output logic [DATA_WIDTH-1:0]       Instruction2
-
+     output logic                           ALUsrc, //1 bit
+     output logic                           PCsrc, //1 bit
+     output logic [DATA_WIDTH-1:0]          ImmOp //32 bits
 
 );
 

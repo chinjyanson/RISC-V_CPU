@@ -12,7 +12,6 @@ module control_unit #(
     output  logic                           ALUsrc,
     output  logic [IMM_WIDTH-1:0]           ImmSrc, 
     output  logic                           PCsrc
-    // output  logic [DATA_WIDTH-1:0]          instr2 (used for debugging)
 );
     //for ImmSrc
     //R => 00
