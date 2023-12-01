@@ -10,6 +10,7 @@ module alu_top #(
     input   wire [DATA_WIDTH-1:0]       ImmOp,
     output  wire                        Zero,
     output  wire [DATA_WIDTH-1:0]       a0  //(debug output)
+    output  wire [DATA_WIDTH-1:0]       Result
 );
 
 wire [DATA_WIDTH-1:0] ALUResult;
@@ -41,5 +42,13 @@ alu ALU( // checked - SK 1/12/2023
     .ALUResult  (ALUResult),
     .Zero       (Zero)
 );
+
+mux4 MemoryMux(
+    .control(Resultsrc),
+    .input0(ALUResult),
+    .input1(ReadData),
+    .input2(PCPlus4),
+    .out(Result)
+)
 
 endmodule
