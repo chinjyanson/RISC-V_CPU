@@ -3,19 +3,25 @@ module pc_top #(
 )(
     // interface signals
     input   logic                       clk,        // clock
-    input   logic                       rst,        // reset        
+    input   logic                       rst,        // reset 
+    input   logic                       ALUResult,        
     input   logic [WIDTH-1:0]           ImmOp,     
     input   logic                       PCsrc,
-    output  logic [WIDTH-1:0]           pc_out
+    output  logic [WIDTH-1:0]           pc_out,
+    output  wire  [WIDTH-1:0]           PCPlus4
 );
 
-logic [WIDTH-1:0]   next_PC, pc;    // interconnect wire
+logic [WIDTH-1:0]   next_PC, pc, PCTarget;    // interconnect wire
 
-pc_mux pc_mux(
-    .PCsrc      (PCsrc),
-    .ImmOp      (ImmOp),
-    .next_PC    (next_PC),
-    .pc         (pc)
+assign PCPlus4 = PC + 32'b4;
+assign PCTarget = PC + ImmOp;
+
+mux4 pc_mux(
+    .control    (PCscr),
+    .input0     (PCPlus4),
+    .input1     (PCTarget),
+    .input2     (ALUResult),
+    .out        (next_PC)
 );
 
 pc_reg pc_reg(
