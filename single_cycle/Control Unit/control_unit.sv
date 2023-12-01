@@ -1,4 +1,4 @@
-module ControlUnit #(
+module control_unit #(
     parameter DATA_WIDTH = 32
 )(
     input   logic                           Zero,

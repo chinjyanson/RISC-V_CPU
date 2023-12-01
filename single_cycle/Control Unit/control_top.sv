@@ -18,7 +18,7 @@ module control_top #(
 
     logic [1:0]                        ImmSrc;
 
-ControlUnit MyControlUnit(
+control_unit ControlUnit(
     .Zero(Zero),
     .instr(instr),
     .RegWrite(RegWrite),
@@ -29,12 +29,12 @@ ControlUnit MyControlUnit(
 
 );
 
-InstrMem MyInstrMem(
+instr_mem InstrMem(
     .addr(PC),
     .dout(instr)
 );
 
-SignExtend MySignExtend(
+sign_extend MySignExtend(
     .instr(instr),
     .ImmSrc(ImmSrc),
     .ImmOp(ImmOp)
