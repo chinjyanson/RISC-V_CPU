@@ -3,8 +3,6 @@ module control_unit #(
 )(
     input   logic                           Zero,
     input   logic [DATA_WIDTH-1:0]          instr,
-    output  logic [DATA_WIDTH-1:0]          instr2,
-
     output  logic                           RegWrite,
     output  logic [2:0]                     ALUctrl,
     output  logic                           ALUsrc,
@@ -22,7 +20,6 @@ module control_unit #(
     
     always_comb  begin
 
-    instr2 = instr;
     case (opcode)
     7'b0010011: begin //addi instruction
         RegWrite = 1;
