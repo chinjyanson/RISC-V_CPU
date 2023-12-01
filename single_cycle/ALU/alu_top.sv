@@ -7,15 +7,20 @@ module alu_top #(
     input   wire [CONTROL_WIDTH-1:0]    ALUctrl,
     input   wire [DATA_WIDTH-1:0]       Instr,
     input   wire                        RegWrite,
+    input   wire [1:0]                  ResultSrc,
+    input   wire                        MemWrite,
     input   wire [DATA_WIDTH-1:0]       ImmOp,
+    input   wire                        PCTarget,
     output  wire                        Zero,
-    output  wire [DATA_WIDTH-1:0]       a0  //(debug output)
+    output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
+    output  wire [DATA_WIDTH-1:0]       Result
 );
 
 wire [DATA_WIDTH-1:0] ALUResult;
 wire [DATA_WIDTH-1:0] SrcA;
 wire [DATA_WIDTH-1:0] SrcB;
 wire [DATA_WIDTH-1:0] regOp2;
+wire [DATA_WIDTH-1:0] ReadData;
 
 regfile register(
     .clk        (clk),
@@ -40,6 +45,23 @@ alu ALU( // checked - SK 1/12/2023
     .SrcB       (SrcB),
     .ALUResult  (ALUResult),
     .Zero       (Zero)
+);
+
+data_mem data(
+    .clk        (clk),
+    .A          (ALUResult),
+    .WD         (regOp2),
+    .WE         (MemWrite),
+    .RD         (ReadData),
+);
+
+mux4 resultMux(
+    .control    (ResultSrc),
+    .input0     (ReadData),
+    .input1     (ALUResult),
+    .input2     (ReadData),
+    .input3     (PCTarget),
+    .out        (Result)
 );
 
 endmodule
