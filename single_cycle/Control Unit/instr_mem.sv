@@ -3,9 +3,9 @@ module instr_mem #(
     parameter DATA_WIDTH = 32
     
 )(
-    input   logic                       clk,
-    input   logic [ADDRESS_WIDTH-1:0]   addr,
-    output  logic [DATA_WIDTH-1:0]      Instr
+    //input   logic                       clk, //idk this is on the diagram before the instruction memory block
+    input   logic [ADDRESS_WIDTH-1:0]   addr_i,
+    output  logic [DATA_WIDTH-1:0]      Instr_o
 );
 
 logic [DATA_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
@@ -16,6 +16,6 @@ initial begin
 end;
 
 
-assign Instr = {rom_array[addr+3], rom_array[addr+2], rom_array[addr+1], rom_array[addr]};
+assign Instr_o = {{rom_array[addr_i+3]}, {rom_array[addr_i+2]}, {rom_array[addr_i+1]}, {rom_array[addr_i]}};
 
 endmodule

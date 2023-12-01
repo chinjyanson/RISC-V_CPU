@@ -3,43 +3,43 @@ module control_top #(
     parameter   DATA_WIDTH = 32,
     parameter   CONTROL_WIDTH = 3
 )(
-     input  logic [DATA_WIDTH-1:0]          PC, //8b
-     input  logic                           Zero, //1b
-     output logic [DATA_WIDTH-1:0]          instr,//32b
-     output logic                           RegWrite, //1b
-     output logic                           MemWrite, //1b
-     output logic [CONTROL_WIDTH-1:0]       Resultsrc, //3b
-     output logic [CONTROL_WIDTH-1:0]       ALUctrl, //3b
-     output logic                           ALUsrc, //1 bit
-     output logic                           PCsrc, //1 bit
-     output logic [DATA_WIDTH-1:0]          ImmOp //32 bits
+     input  logic [DATA_WIDTH-1:0]          PC_i, //8b
+     input  logic                           Zero_i, //1b
+     output logic [DATA_WIDTH-1:0]          instr_o,//32b
+     output logic                           RegWrite_o, //1b
+     output logic                           MemWrite_o, //1b
+     output logic [CONTROL_WIDTH-1:0]       Resultsrc_o, //3b
+     output logic [CONTROL_WIDTH-1:0]       ALUctrl_o, //3b
+     output logic                           ALUsrc_o, //1 bit
+     output logic                           PCsrc_o, //1 bit
+     output logic [DATA_WIDTH-1:0]          ImmOp_o //32 bits
 
 );
 
     logic [1:0]       ImmSrc;
 
 control_unit ControlUnit(
-    .Zero           (Zero),
-    .instr          (instr),
-    .RegWrite       (RegWrite),
-    .MemWrite       (MemWrite),
-    .Resultsrc      (Resultsrc),
-    .ALUctrl        (ALUctrl),
-    .ALUsrc         (ALUsrc),
-    .ImmSrc         (ImmSrc),
-    .PCsrc          (PCsrc)
+    .Zero_i          (Zero_i),
+    .instr_i         (instr_o),
+    .RegWrite_o      (RegWrite_o),
+    .MemWrite_o       (MemWrite_o),
+    .Resultsrc_o      (Resultsrc_o),
+    .ALUctrl_o        (ALUctrl_o),
+    .ALUsrc_o         (ALUsrc_o),
+    .ImmSrc_o         (ImmSrc),
+    .PCsrc_o          (PCsrc_o)
 
 );
 
 instr_mem InstrMem(
-    .addr(PC),
-    .dout(instr)
+    .addr_i         (PC_i),
+    .Instr_o        (instr_o)
 );
 
 sign_extend MySignExtend(
-    .instr(instr),
-    .ImmSrc(ImmSrc),
-    .ImmOp(ImmOp)
+    .instr_i        (instr_o),
+    .ImmSrc_i       (ImmSrc),
+    .ImmOp_o        (ImmOp_o)
 );
 
 endmodule 

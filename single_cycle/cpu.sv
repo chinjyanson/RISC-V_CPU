@@ -38,7 +38,9 @@ pc_top Myblue(
     .rst(rst),
     .pc_out(PC),
     .PCsrc(PCsrc),
-    .ImmOp(ImmOp)
+    .ImmOp(ImmOp),
+    .PCPlus4(PCPlus4),
+    .ALUResult(ALUResult)
     );
 
 control_top Mygreen(
@@ -61,7 +63,9 @@ alu_top Myred(
     .EQ(EQ),
     .ALUctrl(ALUctrl),
     .ALUsrc(ALUsrc),
-    .ImmOp(ImmOp)
+    .ImmOp(ImmOp),
+    .PCPlus4(PCPlus4),
+    .ALUResult(ALUResult)
 );
     
 endmodule
