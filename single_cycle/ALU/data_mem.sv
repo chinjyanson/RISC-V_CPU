@@ -12,7 +12,7 @@ module data_mem #(
 
     initial begin
         $display("Loading ROM");
-        $readmemh("datarom.mem", data_mem_register); // still missing initial info to write into data mem register
+        $readmemh("datarom.mem", data_mem_register); // load sine wave gen for testing (remove for final)
     end
     
     always_ff @(posedge clk) begin

@@ -9,7 +9,7 @@ module alu_top #(
     input   wire                        RegWrite,
     input   wire [DATA_WIDTH-1:0]       ImmOp,
     output  wire                        Zero,
-    output  wire [DATA_WIDTH-1:0]       a0
+    output  wire [DATA_WIDTH-1:0]       a0  //(debug output)
 );
 
 wire [DATA_WIDTH-1:0] ALUResult;
