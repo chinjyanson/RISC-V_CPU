@@ -13,7 +13,7 @@ module ControlUnit #(
     //for ImmSrc
     //R => 00
     //I => 01
-    //S => 10
+    //J => 10
     //B => 11
 
     /*
