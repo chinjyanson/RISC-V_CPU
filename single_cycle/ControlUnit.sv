@@ -1,15 +1,15 @@
 module ControlUnit #(
     parameter DATA_WIDTH = 32
 )(
-     input logic                         EQ,
-     input logic [DATA_WIDTH-1:0]        instr,
-          output logic [DATA_WIDTH-1:0]        instr2,
+    input   logic                           Zero,
+    input   logic [DATA_WIDTH-1:0]          instr,
+    output  logic [DATA_WIDTH-1:0]          instr2,
 
-     output logic                        RegWrite,
-     output logic [2:0]                  ALUctrl,
-     output logic                        ALUsrc,
-     output logic [1:0]                 ImmSrc, 
-     output logic                        PCsrc
+    output  logic                           RegWrite,
+    output  logic [2:0]                     ALUctrl,
+    output  logic                           ALUsrc,
+    output  logic [1:0]                     ImmSrc, 
+    output  logic                           PCsrc
      //output logic [DATA_WIDTH-1:0]       Instruction2
 );
     //for ImmSrc
@@ -36,7 +36,7 @@ module ControlUnit #(
         ALUctrl = 3'b000;
         ALUsrc = 0;
         ImmSrc = 2'b11;
-        PCsrc = !EQ;
+        PCsrc = !Zero;
     end
         default begin //just in case we have something else
         RegWrite = 1;
