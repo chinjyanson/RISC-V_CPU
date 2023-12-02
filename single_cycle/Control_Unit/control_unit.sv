@@ -88,7 +88,7 @@ module control_unit #(
         RegWrite_o = 0;   
         Resultsrc_o = 2'b10;
         ALUctrl_o = 3'b000; //dont care
-        ALUsrc_o = 1;
+        ALUsrc_o = 1; //was blank before - check instr
         ImmSrc_o = 2'b11; 
         PCsrc_o = 2'b10;
     end

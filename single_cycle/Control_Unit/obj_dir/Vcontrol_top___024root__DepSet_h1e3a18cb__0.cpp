@@ -6,12 +6,14 @@
 
 #include "Vcontrol_top___024root.h"
 
-extern const VlUnpacked<CData/*0:0*/, 2048> Vcontrol_top__ConstPool__TABLE_hc84c87e9_0;
-extern const VlUnpacked<CData/*1:0*/, 2048> Vcontrol_top__ConstPool__TABLE_heb456256_0;
+extern const VlUnpacked<CData/*6:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h8ce1d139_0;
+extern const VlUnpacked<CData/*0:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h0638d652_0;
+extern const VlUnpacked<CData/*1:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h451fada2_0;
 extern const VlUnpacked<CData/*2:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h86cc9c99_0;
-extern const VlUnpacked<CData/*0:0*/, 2048> Vcontrol_top__ConstPool__TABLE_hbfca088b_0;
+extern const VlUnpacked<CData/*0:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h3793b81c_0;
 extern const VlUnpacked<CData/*1:0*/, 2048> Vcontrol_top__ConstPool__TABLE_hf7e03d3b_0;
 extern const VlUnpacked<CData/*1:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h8b944ba6_0;
+extern const VlUnpacked<CData/*0:0*/, 2048> Vcontrol_top__ConstPool__TABLE_h208bbd95_0;
 
 VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
@@ -25,20 +27,43 @@ VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root
     __Vtableidx1 = (((IData)(vlSelf->Zero_i) << 0xaU) 
                     | ((0x380U & (vlSelf->instr_o >> 5U)) 
                        | (0x7fU & vlSelf->instr_o)));
-    vlSelf->RegWrite_o = Vcontrol_top__ConstPool__TABLE_hc84c87e9_0
-        [__Vtableidx1];
-    vlSelf->control_top__DOT____Vcellout__ControlUnit__Resultsrc_o 
-        = Vcontrol_top__ConstPool__TABLE_heb456256_0
-        [__Vtableidx1];
-    vlSelf->ALUctrl_o = Vcontrol_top__ConstPool__TABLE_h86cc9c99_0
-        [__Vtableidx1];
-    vlSelf->ALUsrc_o = Vcontrol_top__ConstPool__TABLE_hbfca088b_0
-        [__Vtableidx1];
-    vlSelf->control_top__DOT__ImmSrc = Vcontrol_top__ConstPool__TABLE_hf7e03d3b_0
-        [__Vtableidx1];
-    vlSelf->control_top__DOT____Vcellout__ControlUnit__PCsrc_o 
-        = Vcontrol_top__ConstPool__TABLE_h8b944ba6_0
-        [__Vtableidx1];
+    if ((1U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->RegWrite_o = Vcontrol_top__ConstPool__TABLE_h0638d652_0
+            [__Vtableidx1];
+    }
+    if ((2U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->control_top__DOT____Vcellout__ControlUnit__Resultsrc_o 
+            = Vcontrol_top__ConstPool__TABLE_h451fada2_0
+            [__Vtableidx1];
+    }
+    if ((4U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->ALUctrl_o = Vcontrol_top__ConstPool__TABLE_h86cc9c99_0
+            [__Vtableidx1];
+    }
+    if ((8U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->ALUsrc_o = Vcontrol_top__ConstPool__TABLE_h3793b81c_0
+            [__Vtableidx1];
+    }
+    if ((0x10U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->control_top__DOT__ImmSrc = Vcontrol_top__ConstPool__TABLE_hf7e03d3b_0
+            [__Vtableidx1];
+    }
+    if ((0x20U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->control_top__DOT____Vcellout__ControlUnit__PCsrc_o 
+            = Vcontrol_top__ConstPool__TABLE_h8b944ba6_0
+            [__Vtableidx1];
+    }
+    if ((0x40U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
+         [__Vtableidx1])) {
+        vlSelf->MemWrite_o = Vcontrol_top__ConstPool__TABLE_h208bbd95_0
+            [__Vtableidx1];
+    }
     vlSelf->Resultsrc_o = vlSelf->control_top__DOT____Vcellout__ControlUnit__Resultsrc_o;
     vlSelf->PCsrc_o = (1U & (IData)(vlSelf->control_top__DOT____Vcellout__ControlUnit__PCsrc_o));
     vlSelf->ImmOp_o = ((1U == (IData)(vlSelf->control_top__DOT__ImmSrc))
