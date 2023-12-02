@@ -11,6 +11,7 @@
 Vcontrol_top::Vcontrol_top(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vcontrol_top__Syms(contextp(), _vcname__, this)}
+    , PC_i{vlSymsp->TOP.PC_i}
     , Zero_i{vlSymsp->TOP.Zero_i}
     , RegWrite_o{vlSymsp->TOP.RegWrite_o}
     , MemWrite_o{vlSymsp->TOP.MemWrite_o}
@@ -18,7 +19,6 @@ Vcontrol_top::Vcontrol_top(VerilatedContext* _vcontextp__, const char* _vcname__
     , ALUctrl_o{vlSymsp->TOP.ALUctrl_o}
     , ALUsrc_o{vlSymsp->TOP.ALUsrc_o}
     , PCsrc_o{vlSymsp->TOP.PCsrc_o}
-    , PC_i{vlSymsp->TOP.PC_i}
     , instr_o{vlSymsp->TOP.instr_o}
     , ImmOp_o{vlSymsp->TOP.ImmOp_o}
     , rootp{&(vlSymsp->TOP)}

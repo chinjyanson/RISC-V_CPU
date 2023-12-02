@@ -25,14 +25,14 @@ class Vcontrol_top VL_NOT_FINAL : public VerilatedModel {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
+    VL_IN8(&PC_i,7,0);
     VL_IN8(&Zero_i,0,0);
     VL_OUT8(&RegWrite_o,0,0);
     VL_OUT8(&MemWrite_o,0,0);
-    VL_OUT8(&Resultsrc_o,2,0);
+    VL_OUT8(&Resultsrc_o,1,0);
     VL_OUT8(&ALUctrl_o,2,0);
     VL_OUT8(&ALUsrc_o,0,0);
-    VL_OUT8(&PCsrc_o,0,0);
-    VL_IN(&PC_i,31,0);
+    VL_OUT8(&PCsrc_o,1,0);
     VL_OUT(&instr_o,31,0);
     VL_OUT(&ImmOp_o,31,0);
 

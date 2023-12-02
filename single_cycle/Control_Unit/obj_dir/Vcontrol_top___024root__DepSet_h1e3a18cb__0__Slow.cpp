@@ -40,8 +40,6 @@ VL_ATTR_COLD void Vcontrol_top___024root___eval_settle(Vcontrol_top___024root* v
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcontrol_top___024root___eval_settle\n"); );
     // Body
     Vcontrol_top___024root___combo__TOP__0(vlSelf);
-    vlSelf->__Vm_traceActivity[1U] = 1U;
-    vlSelf->__Vm_traceActivity[0U] = 1U;
 }
 
 VL_ATTR_COLD void Vcontrol_top___024root___final(Vcontrol_top___024root* vlSelf) {
@@ -55,23 +53,18 @@ VL_ATTR_COLD void Vcontrol_top___024root___ctor_var_reset(Vcontrol_top___024root
     Vcontrol_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcontrol_top___024root___ctor_var_reset\n"); );
     // Body
-    vlSelf->PC_i = VL_RAND_RESET_I(32);
+    vlSelf->PC_i = VL_RAND_RESET_I(8);
     vlSelf->Zero_i = VL_RAND_RESET_I(1);
     vlSelf->instr_o = VL_RAND_RESET_I(32);
     vlSelf->RegWrite_o = VL_RAND_RESET_I(1);
     vlSelf->MemWrite_o = VL_RAND_RESET_I(1);
-    vlSelf->Resultsrc_o = VL_RAND_RESET_I(3);
+    vlSelf->Resultsrc_o = VL_RAND_RESET_I(2);
     vlSelf->ALUctrl_o = VL_RAND_RESET_I(3);
     vlSelf->ALUsrc_o = VL_RAND_RESET_I(1);
-    vlSelf->PCsrc_o = VL_RAND_RESET_I(1);
+    vlSelf->PCsrc_o = VL_RAND_RESET_I(2);
     vlSelf->ImmOp_o = VL_RAND_RESET_I(32);
     vlSelf->control_top__DOT__ImmSrc = VL_RAND_RESET_I(2);
-    vlSelf->control_top__DOT____Vcellout__ControlUnit__PCsrc_o = VL_RAND_RESET_I(2);
-    vlSelf->control_top__DOT____Vcellout__ControlUnit__Resultsrc_o = VL_RAND_RESET_I(2);
     for (int __Vi0=0; __Vi0<256; ++__Vi0) {
         vlSelf->control_top__DOT__InstrMem__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(32);
-    }
-    for (int __Vi0=0; __Vi0<2; ++__Vi0) {
-        vlSelf->__Vm_traceActivity[__Vi0] = VL_RAND_RESET_I(1);
     }
 }

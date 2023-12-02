@@ -13,21 +13,18 @@ class Vcontrol_top___024root final : public VerilatedModule {
   public:
 
     // DESIGN SPECIFIC STATE
+    VL_IN8(PC_i,7,0);
     VL_IN8(Zero_i,0,0);
     VL_OUT8(RegWrite_o,0,0);
     VL_OUT8(MemWrite_o,0,0);
-    VL_OUT8(Resultsrc_o,2,0);
+    VL_OUT8(Resultsrc_o,1,0);
     VL_OUT8(ALUctrl_o,2,0);
     VL_OUT8(ALUsrc_o,0,0);
-    VL_OUT8(PCsrc_o,0,0);
+    VL_OUT8(PCsrc_o,1,0);
     CData/*1:0*/ control_top__DOT__ImmSrc;
-    CData/*1:0*/ control_top__DOT____Vcellout__ControlUnit__PCsrc_o;
-    CData/*1:0*/ control_top__DOT____Vcellout__ControlUnit__Resultsrc_o;
-    VL_IN(PC_i,31,0);
     VL_OUT(instr_o,31,0);
     VL_OUT(ImmOp_o,31,0);
     VlUnpacked<IData/*31:0*/, 256> control_top__DOT__InstrMem__DOT__rom_array;
-    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     Vcontrol_top__Syms* const vlSymsp;

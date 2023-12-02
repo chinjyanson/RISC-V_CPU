@@ -41,7 +41,7 @@ module control_unit #(
         ImmSrc_o = 2'b00;
         ALUsrc_o = 1;
         MemWrite_o = 0;
-        Resultsrc_o = 1'b01;
+        Resultsrc_o = 2'b01;
         
 
     end

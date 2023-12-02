@@ -23,22 +23,22 @@ VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root
     SData/*10:0*/ __Vtableidx1;
     // Body
     vlSelf->instr_o = ((vlSelf->control_top__DOT__InstrMem__DOT__rom_array
-                        [(0xffU & ((IData)(3U) + vlSelf->PC_i))] 
+                        [(0xffU & ((IData)(3U) + (IData)(vlSelf->PC_i)))] 
                         << 0x18U) | ((0xff0000U & (
                                                    vlSelf->control_top__DOT__InstrMem__DOT__rom_array
                                                    [
                                                    (0xffU 
                                                     & ((IData)(2U) 
-                                                       + vlSelf->PC_i))] 
+                                                       + (IData)(vlSelf->PC_i)))] 
                                                    << 0x10U)) 
                                      | ((0xff00U & 
                                          (vlSelf->control_top__DOT__InstrMem__DOT__rom_array
                                           [(0xffU & 
                                             ((IData)(1U) 
-                                             + vlSelf->PC_i))] 
+                                             + (IData)(vlSelf->PC_i)))] 
                                           << 8U)) | 
                                         (0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
-                                         [(0xffU & vlSelf->PC_i)]))));
+                                         [vlSelf->PC_i]))));
     __Vtableidx1 = (((IData)(vlSelf->Zero_i) << 0xaU) 
                     | ((0x380U & (vlSelf->instr_o >> 5U)) 
                        | (0x7fU & vlSelf->instr_o)));
@@ -49,8 +49,7 @@ VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root
     }
     if ((2U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
          [__Vtableidx1])) {
-        vlSelf->control_top__DOT____Vcellout__ControlUnit__Resultsrc_o 
-            = Vcontrol_top__ConstPool__TABLE_h451fada2_0
+        vlSelf->Resultsrc_o = Vcontrol_top__ConstPool__TABLE_h451fada2_0
             [__Vtableidx1];
     }
     if ((4U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
@@ -70,8 +69,7 @@ VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root
     }
     if ((0x20U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
          [__Vtableidx1])) {
-        vlSelf->control_top__DOT____Vcellout__ControlUnit__PCsrc_o 
-            = Vcontrol_top__ConstPool__TABLE_h8b944ba6_0
+        vlSelf->PCsrc_o = Vcontrol_top__ConstPool__TABLE_h8b944ba6_0
             [__Vtableidx1];
     }
     if ((0x40U & Vcontrol_top__ConstPool__TABLE_h8ce1d139_0
@@ -79,8 +77,6 @@ VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root
         vlSelf->MemWrite_o = Vcontrol_top__ConstPool__TABLE_h208bbd95_0
             [__Vtableidx1];
     }
-    vlSelf->Resultsrc_o = vlSelf->control_top__DOT____Vcellout__ControlUnit__Resultsrc_o;
-    vlSelf->PCsrc_o = (1U & (IData)(vlSelf->control_top__DOT____Vcellout__ControlUnit__PCsrc_o));
     vlSelf->ImmOp_o = ((1U == (IData)(vlSelf->control_top__DOT__ImmSrc))
                         ? (((- (IData)((vlSelf->instr_o 
                                         >> 0x1fU))) 
@@ -118,7 +114,6 @@ void Vcontrol_top___024root___eval(Vcontrol_top___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcontrol_top___024root___eval\n"); );
     // Body
     Vcontrol_top___024root___combo__TOP__0(vlSelf);
-    vlSelf->__Vm_traceActivity[1U] = 1U;
 }
 
 #ifdef VL_DEBUG

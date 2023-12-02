@@ -1,17 +1,19 @@
 module control_top #(
     parameter   ADDRESS_WIDTH = 8,
     parameter   DATA_WIDTH = 32,
-    parameter   CONTROL_WIDTH = 3
+    parameter   CONTROL_WIDTH = 3,
+    parameter   IMM_WIDTH = 2
+
 )(
-     input  logic [DATA_WIDTH-1:0]          PC_i, //8b
+     input  logic [ADDRESS_WIDTH-1:0]          PC_i, //8b
      input  logic                           Zero_i, //1b
      output logic [DATA_WIDTH-1:0]          instr_o,//32b
      output logic                           RegWrite_o, //1b
      output logic                           MemWrite_o, //1b
-     output logic [CONTROL_WIDTH-1:0]       Resultsrc_o, //3b
+     output logic [IMM_WIDTH-1:0]           Resultsrc_o, //3b ==> edited to 2 bits
      output logic [CONTROL_WIDTH-1:0]       ALUctrl_o, //3b
      output logic                           ALUsrc_o, //1 bit
-     output logic                           PCsrc_o, //1 bit
+     output logic [IMM_WIDTH-1:0]           PCsrc_o, //1 bit ==> edited to 2 bits
      output logic [DATA_WIDTH-1:0]          ImmOp_o //32 bits
 
 );
