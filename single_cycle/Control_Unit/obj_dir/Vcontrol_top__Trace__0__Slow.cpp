@@ -22,9 +22,9 @@ VL_ATTR_COLD void Vcontrol_top___024root__trace_init_sub__TOP__0(Vcontrol_top___
     tracep->declBit(c+12,"PCsrc_o", false,-1);
     tracep->declBus(c+13,"ImmOp_o", false,-1, 31,0);
     tracep->pushNamePrefix("control_top ");
-    tracep->declBus(c+17,"ADDRESS_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+18,"DATA_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+19,"CONTROL_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+21,"ADDRESS_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+22,"DATA_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+23,"CONTROL_WIDTH", false,-1, 31,0);
     tracep->declBus(c+4,"PC_i", false,-1, 31,0);
     tracep->declBit(c+5,"Zero_i", false,-1);
     tracep->declBus(c+6,"instr_o", false,-1, 31,0);
@@ -37,9 +37,9 @@ VL_ATTR_COLD void Vcontrol_top___024root__trace_init_sub__TOP__0(Vcontrol_top___
     tracep->declBus(c+13,"ImmOp_o", false,-1, 31,0);
     tracep->declBus(c+1,"ImmSrc", false,-1, 1,0);
     tracep->pushNamePrefix("ControlUnit ");
-    tracep->declBus(c+18,"DATA_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+19,"CONTROL_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+20,"IMM_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+22,"DATA_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+23,"CONTROL_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+24,"IMM_WIDTH", false,-1, 31,0);
     tracep->declBit(c+5,"Zero_i", false,-1);
     tracep->declBus(c+6,"instr_i", false,-1, 31,0);
     tracep->declBit(c+7,"RegWrite_o", false,-1);
@@ -53,14 +53,18 @@ VL_ATTR_COLD void Vcontrol_top___024root__trace_init_sub__TOP__0(Vcontrol_top___
     tracep->declBus(c+15,"funct3", false,-1, 2,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("InstrMem ");
-    tracep->declBus(c+17,"ADDRESS_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+18,"DATA_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+21,"ADDRESS_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+22,"DATA_WIDTH", false,-1, 31,0);
     tracep->declBus(c+16,"addr_i", false,-1, 7,0);
     tracep->declBus(c+6,"Instr_o", false,-1, 31,0);
+    tracep->declBus(c+17,"rom_array0", false,-1, 7,0);
+    tracep->declBus(c+18,"rom_array1", false,-1, 7,0);
+    tracep->declBus(c+19,"rom_array2", false,-1, 7,0);
+    tracep->declBus(c+20,"rom_array3", false,-1, 7,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("MySignExtend ");
-    tracep->declBus(c+18,"DATA_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+20,"IMM_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+22,"DATA_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+24,"IMM_WIDTH", false,-1, 31,0);
     tracep->declBus(c+6,"instr_i", false,-1, 31,0);
     tracep->declBus(c+1,"ImmSrc_i", false,-1, 1,0);
     tracep->declBus(c+13,"ImmOp_o", false,-1, 31,0);
@@ -124,8 +128,19 @@ VL_ATTR_COLD void Vcontrol_top___024root__trace_full_sub_0(Vcontrol_top___024roo
     bufp->fullCData(oldp+15,((7U & (vlSelf->instr_o 
                                     >> 0xcU))),3);
     bufp->fullCData(oldp+16,((0xffU & vlSelf->PC_i)),8);
-    bufp->fullIData(oldp+17,(8U),32);
-    bufp->fullIData(oldp+18,(0x20U),32);
-    bufp->fullIData(oldp+19,(3U),32);
-    bufp->fullIData(oldp+20,(2U),32);
+    bufp->fullCData(oldp+17,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                              [(0xffU & vlSelf->PC_i)])),8);
+    bufp->fullCData(oldp+18,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                              [(0xffU & ((IData)(1U) 
+                                         + vlSelf->PC_i))])),8);
+    bufp->fullCData(oldp+19,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                              [(0xffU & ((IData)(2U) 
+                                         + vlSelf->PC_i))])),8);
+    bufp->fullCData(oldp+20,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                              [(0xffU & ((IData)(3U) 
+                                         + vlSelf->PC_i))])),8);
+    bufp->fullIData(oldp+21,(8U),32);
+    bufp->fullIData(oldp+22,(0x20U),32);
+    bufp->fullIData(oldp+23,(3U),32);
+    bufp->fullIData(oldp+24,(2U),32);
 }

@@ -42,6 +42,17 @@ void Vcontrol_top___024root__trace_chg_sub_0(Vcontrol_top___024root* vlSelf, Ver
     bufp->chgCData(oldp+14,((7U & (vlSelf->instr_o 
                                    >> 0xcU))),3);
     bufp->chgCData(oldp+15,((0xffU & vlSelf->PC_i)),8);
+    bufp->chgCData(oldp+16,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                             [(0xffU & vlSelf->PC_i)])),8);
+    bufp->chgCData(oldp+17,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                             [(0xffU & ((IData)(1U) 
+                                        + vlSelf->PC_i))])),8);
+    bufp->chgCData(oldp+18,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                             [(0xffU & ((IData)(2U) 
+                                        + vlSelf->PC_i))])),8);
+    bufp->chgCData(oldp+19,((0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                             [(0xffU & ((IData)(3U) 
+                                        + vlSelf->PC_i))])),8);
 }
 
 void Vcontrol_top___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

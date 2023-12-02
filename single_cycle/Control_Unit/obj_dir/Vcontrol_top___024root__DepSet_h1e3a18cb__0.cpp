@@ -22,8 +22,23 @@ VL_INLINE_OPT void Vcontrol_top___024root___combo__TOP__0(Vcontrol_top___024root
     // Init
     SData/*10:0*/ __Vtableidx1;
     // Body
-    vlSelf->instr_o = vlSelf->control_top__DOT__InstrMem__DOT__rom_array
-        [(0xffU & vlSelf->PC_i)];
+    vlSelf->instr_o = ((vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                        [(0xffU & ((IData)(3U) + vlSelf->PC_i))] 
+                        << 0x18U) | ((0xff0000U & (
+                                                   vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                                                   [
+                                                   (0xffU 
+                                                    & ((IData)(2U) 
+                                                       + vlSelf->PC_i))] 
+                                                   << 0x10U)) 
+                                     | ((0xff00U & 
+                                         (vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                                          [(0xffU & 
+                                            ((IData)(1U) 
+                                             + vlSelf->PC_i))] 
+                                          << 8U)) | 
+                                        (0xffU & vlSelf->control_top__DOT__InstrMem__DOT__rom_array
+                                         [(0xffU & vlSelf->PC_i)]))));
     __Vtableidx1 = (((IData)(vlSelf->Zero_i) << 0xaU) 
                     | ((0x380U & (vlSelf->instr_o >> 5U)) 
                        | (0x7fU & vlSelf->instr_o)));
