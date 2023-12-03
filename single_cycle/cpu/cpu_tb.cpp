@@ -16,13 +16,12 @@ int main(int argc, char **argv, char **env){
 
     // initialise simulation outputs
     clk = 0;
-    top->PC_i = 0;
-    top->Zero_i = 0;
+
     
 
     // run simulation for many clock cycles
     int tick = 0;
-    for(int i=0;i< 10; i++){
+    for(int i=0;i< 20; i++){
 
         for(clk=0;clk<2;clk++){
             // in ps
@@ -31,9 +30,8 @@ int main(int argc, char **argv, char **env){
             clk = !clk;
             top->eval ();
         }
-        top->PC_i = 4*i;
 
-        std::cout << std::hex << int(top->PC_i) << " instr: " << int(top->instr_o) << " ALUctrl: " << int(top->ALUctrl_o) << std::endl;
+        std::cout << std::hex << int(top->a0) << std::endl;
 
         if(Verilated::gotFinish()) exit(0);
         

@@ -1,6 +1,8 @@
 module cpu #(
-    parameter DATA_WIDTH = 32,
-    parameter ADDRESS_WIDTH = 8
+    parameter   ADDRESS_WIDTH = 8,
+    parameter   DATA_WIDTH = 32,
+    parameter   CONTROL_WIDTH = 3,
+    parameter   IMM_WIDTH = 2
 
 )(
 
@@ -13,56 +15,61 @@ module cpu #(
 
     //output internal logic for control module 
     logic   RegWrite;
-    logic   [2:0] ALUctrl;
-    logic   ALUsrc;
-    logic   PCsrc;
-    logic   [DATA_WIDTH-1:0] ImmOp;
+    logic   MemWrite;
     logic   [DATA_WIDTH-1:0] Instr;
 
     //output internal logic for alu module 
     logic EQ;
+    logic [ADDRESS_WIDTH-1:0]  ALUResult;
+    logic [CONTROL_WIDTH-1:0]  ALUctrl;
+    logic ALUsrc;
+    logic Zero;
+
 
     //output internal logic for pc module
-    logic [DATA_WIDTH-1:0] PC;
-
+    logic [IMM_WIDTH-1:0]  Resultsrc;
+    logic [DATA_WIDTH-1:0] ImmOp;
+    logic [IMM_WIDTH-1:0]  PCsrc;
+    logic [ADDRESS_WIDTH-1:0]  PC;
+    logic [ADDRESS_WIDTH-1:0]  PCPlus4;
 
 pc_top pc(
-    .PC_i(), //8b
-    .Zero_i(), //1b
-    .instr_o(),//32b
-    .RegWrite_o(), //1b
-    .MemWrite_o(), //1b
-    .Resultsrc_o(), //3b ==> edited to 2 bits
-    .ALUctrl_o(), //3b
-    .ALUsrc_o(), //1 bit
-    .PCsrc_o(), //1 bit ==> edited to 2 bits
-    .ImmOp_o() //32 bits
+    .clk(clk),        
+    .rst(rst),        
+    .ALUResult_i(ALUResult),        
+    .ImmOp_i(ImmOp),     
+    .PCsrc_i(PCsrc),
+    .pc_out(PC),
+    .PCPlus4_o(PCPlus4) 
     );
 
 control_top control(
-    .EQ(EQ),
-    .RegWrite(RegWrite),
-    .ALUctrl(ALUctrl),
-    .ALUsrc(ALUsrc),
-    //.ImmSrc(ImmSrc),
-    .PCsrc(PCsrc),
-    .ImmOp(ImmOp),
-    .PC(PC),
-    .instr(Instr)
+    .PC_i(PC), //8b
+    .Zero_i(Zero), //1b
+    .instr_o(Instr),//32b
+    .RegWrite_o(RegWrite), //1b
+    .MemWrite_o(MemWrite), //1b
+    .Resultsrc_o(Resultsrc), //3b ==> edited to 2 bits
+    .ALUctrl_o(ALUctrl), //3b
+    .ALUsrc_o(ALUsrc), //1 bit
+    .PCsrc_o(PCsrc), //1 bit ==> edited to 2 bits
+    .ImmOp_o(ImmOp) //32 bits
 );
 
 alu_top alu(
     .clk(clk),
-    .a0(a0),
-    .Instr(Instr),//we pass the whole Instruction, and then we separate inside red
-    .RegWrite(RegWrite),
-    .EQ(EQ),
-    .ALUctrl(ALUctrl),
-    .ALUsrc(ALUsrc),
-    .ImmOp(ImmOp),
-    .PCPlus4(PCPlus4),
-    .ALUResult(ALUResult)
+    .ALUsrc_i(ALUsrc),
+    .ALUctrl_i(ALUctrl),
+    .Instr_i(Instr),
+    .RegWrite_i(RegWrite),
+    .ResultSrc_i(Resultsrc),
+    .MemWrite_i(MemWrite),
+    .ImmOp_i(ImmOp),
+    .PCPlus4_i(PCPlus4),
+    .Zero_o(Zero),
+    .a0(a0),  //(debug output)
+    .Result_o(), //unsure about this, shouldnt result stay within alu_top as its connected to register
+    .ALUResult_o(ALUResult)
 );
-    
 endmodule
 

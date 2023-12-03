@@ -3,18 +3,18 @@ module alu_top #(
     parameter DATA_WIDTH = 32 
 )(
     input   wire                        clk,
-    input   wire                        ALUsrc,
-    input   wire [CONTROL_WIDTH-1:0]    ALUctrl,
-    input   wire [DATA_WIDTH-1:0]       Instr,
-    input   wire                        RegWrite,
-    input   wire [1:0]                  ResultSrc,
-    input   wire                        MemWrite,
-    input   wire [DATA_WIDTH-1:0]       ImmOp,
-    input   wire                        PCPlus4,
-    output  wire                        Zero,
+    input   wire                        ALUsrc_i,
+    input   wire [CONTROL_WIDTH-1:0]    ALUctrl_i,
+    input   wire [DATA_WIDTH-1:0]       Instr_i,
+    input   wire                        RegWrite_i,
+    input   wire [1:0]                  ResultSrc_i,
+    input   wire                        MemWrite_i,
+    input   wire [DATA_WIDTH-1:0]       ImmOp_i,
+    input   wire                        PCPlus4_i,
+    output  wire                        Zero_o,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
-    output  wire [DATA_WIDTH-1:0]       Result,
-    output  wire [DATA_WIDTH-1:0]       ALUResult
+    output  wire [DATA_WIDTH-1:0]       Result_o,
+    output  wire [DATA_WIDTH-1:0]       ALUResult_o
 );
 
 
@@ -25,43 +25,43 @@ wire [DATA_WIDTH-1:0] ReadData;
 
 regfile register(
     .clk        (clk),
-    .Instr      (Instr),
-    .WE3        (RegWrite),
-    .WD3        (ALUResult),
+    .Instr      (Instr_i),
+    .WE3        (RegWrite_i),
+    .WD3        (ALUResult_o),
     .RD1        (SrcA),
     .RD2        (regOp2),
     .a0         (a0)
 );
 
 mux2 ALUMux( // checked - SK 1/12/2023
-    .control    (ALUsrc),
+    .control    (ALUsrc_i),
     .input0     (regOp2),
-    .input1     (ImmOp),
+    .input1     (ImmOp_i),
     .out        (SrcB)
 );
 
 alu ALU( // checked - SK 1/12/2023
-    .ALUctrl    (ALUctrl),
+    .ALUctrl    (ALUctrl_i),
     .SrcA       (SrcA),
     .SrcB       (SrcB),
-    .ALUResult  (ALUResult),
-    .Zero       (Zero)
+    .ALUResult  (ALUResult_o),
+    .Zero       (Zero_o)
 );
 
 data_mem data(
     .clk        (clk),
-    .A          (ALUResult),
+    .A          (ALUResult_o),
     .WD         (regOp2),
-    .WE         (MemWrite),
-    .RD         (ReadData),
+    .WE         (MemWrite_i),
+    .RD         (ReadData)
 );
 
 mux4 resultMux(
-    .control    (ResultSrc),
+    .control    (ResultSrc_i),
     .input0     (ReadData),
-    .input1     (ALUResult),
-    .input2     (PCPlus4),
-    .out        (Result)
+    .input1     (ALUResult_o),
+    .input2     (PCPlus4_i),
+    .out        (Result_o)
 );
 
 endmodule

@@ -8,7 +8,7 @@ module data_mem #(
     input  logic     [DATA_WIDTH-1:0]        WD,
     output logic     [DATA_WIDTH-1:0]        RD
 );
-    logic [DATA_WIDTH-1:0]  data_mem_register [2**ADDRESS_WIDTH-1:0] //we set our reg file which will be filled with initial values
+    logic [DATA_WIDTH-1:0]  data_mem_register [2**ADDRESS_WIDTH-1:0]; //we set our reg file which will be filled with initial values
 
     initial begin
         $display("Loading ROM");
