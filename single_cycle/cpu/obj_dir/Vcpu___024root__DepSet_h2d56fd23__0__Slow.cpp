@@ -12,7 +12,7 @@ VL_ATTR_COLD void Vcpu___024root___initial__TOP__0(Vcpu___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___initial__TOP__0\n"); );
     // Init
     VlWide<3>/*95:0*/ __Vtemp_hb978afc8__0;
-    VlWide<3>/*95:0*/ __Vtemp_hb2b9696e__0;
+    VlWide<4>/*127:0*/ __Vtemp_h2ad0e489__0;
     // Body
     VL_WRITEF("Loading ROM\n");
     __Vtemp_hb978afc8__0[0U] = 0x2e6d656dU;
@@ -21,11 +21,12 @@ VL_ATTR_COLD void Vcpu___024root___initial__TOP__0(Vcpu___024root* vlSelf) {
     VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp_hb978afc8__0)
                  ,  &(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register)
                  , 0, ~0ULL);
-    VL_WRITEF("Loading counter test rom.\n");
-    __Vtemp_hb2b9696e__0[0U] = 0x2e6d656dU;
-    __Vtemp_hb2b9696e__0[1U] = 0x6e746572U;
-    __Vtemp_hb2b9696e__0[2U] = 0x636f75U;
-    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp_hb2b9696e__0)
+    VL_WRITEF("Loading rom.\n");
+    __Vtemp_h2ad0e489__0[0U] = 0x2e6d656dU;
+    __Vtemp_h2ad0e489__0[1U] = 0x636f6465U;
+    __Vtemp_h2ad0e489__0[2U] = 0x68696e65U;
+    __Vtemp_h2ad0e489__0[3U] = 0x6d6163U;
+    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(4, __Vtemp_h2ad0e489__0)
                  ,  &(vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array)
                  , 0, ~0ULL);
     vlSelf->cpu__DOT__MemWrite = 0U;
