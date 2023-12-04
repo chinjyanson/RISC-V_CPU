@@ -1,41 +1,57 @@
-#include "Vcpu.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include "Vcpu.h"
 #include <iostream>
 
-int main(int argc, char **argv, char **env){
-    int clk;
-    Verilated::commandArgs(argc,argv);
-//  initialise top verilog instance
+#define MAX_SIM_CYC 20
+
+
+
+int main(int argc, char **argv, char **env) {
+    int simcyc;     // simulation clock count
+    int tick;       // each clk cycle has two ticks for two edges
+
+    Verilated::commandArgs(argc, argv);
+    // init top verilog instance
     Vcpu* top = new Vcpu;
-// initialise trace dump
+    // init trace dump
     Verilated::traceEverOn(true);
     VerilatedVcdC* tfp = new VerilatedVcdC;
-    top->trace(tfp,99);
-    tfp->open("Vcpu.vcd");
-
-    // initialise simulation outputs
-    clk = 0;
-
+    top->trace (tfp, 99);
+    tfp->open ("cpu.vcd");
     
 
-    // run simulation for many clock cycles
-    int tick = 0;
-    for(int i=0;i< 20; i++){
+    // initialize simulation inputs
+    top->clk = 0;
+    top->rst = 0;
 
-        for(clk=0;clk<2;clk++){
-            // in ps
-            tfp->dump (2*i+clk);
-            // falling edge
-            clk = !clk;
-            top->eval ();
+            bool clock = false;
+            int clockcount = 0;
+
+
+    // run simulation for MAX_SIM_CYC clock cycles
+    for (simcyc=0; simcyc<MAX_SIM_CYC; simcyc++) {
+        // dump variables into VCD file and toggle clock
+        for (tick=0; tick<2; tick++) {
+        tfp->dump (2*simcyc+tick);
+        top->clk = !top->clk;
+        top->eval ();
+
+        if(clock){ 
+                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
+                        clockcount++; }
+
+        clock = !clock;
+        //std::cout << "clock1: " << clock << std::endl;
+                   
+
         }
 
-        std::cout << std::hex << int(top->a0) << std::endl;
-
-        if(Verilated::gotFinish()) exit(0);
-        
     }
-    tfp->close();
+
+    tfp->close(); 
     exit(0);
+
+
+    
 }

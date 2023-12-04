@@ -11,9 +11,9 @@ module regfile #(
     output  logic [DATA_WIDTH-1:0]  a0  //(debug output)
 );
 
-logic[4:0] A2 = Instr[24:20];
-logic[4:0] A1 = Instr[19:15];
-logic[4:0] A3 = Instr[11:7];
+logic[7:0] A2 = Instr[24:20];
+logic[7:0] A1 = Instr[19:15];
+logic[7:0] A3 = Instr[11:7];
 
 logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 

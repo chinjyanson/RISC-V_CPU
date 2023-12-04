@@ -19,8 +19,6 @@ module cpu #(
     logic   [DATA_WIDTH-1:0] Instr;
 
     //output internal logic for alu module 
-    logic EQ;
-    logic [ADDRESS_WIDTH-1:0]  ALUResult;
     logic [CONTROL_WIDTH-1:0]  ALUctrl;
     logic ALUsrc;
     logic Zero;
@@ -31,16 +29,17 @@ module cpu #(
     logic [DATA_WIDTH-1:0] ImmOp;
     logic [IMM_WIDTH-1:0]  PCsrc;
     logic [ADDRESS_WIDTH-1:0]  PC;
-    logic [ADDRESS_WIDTH-1:0]  PCPlus4;
+    logic [DATA_WIDTH-1:0]  PCPlus4;
+    logic [DATA_WIDTH-1:0]       Result;
 
 pc_top pc(
     .clk(clk),        
     .rst(rst),        
-    .ALUResult_i(ALUResult),        
+    .ALUResult_i(Result),    //result from data mem to mux4    
     .ImmOp_i(ImmOp),     
     .PCsrc_i(PCsrc),
-    .pc_out(PC),
-    .PCPlus4_o(PCPlus4) 
+    .pc_out(PC), //32b
+    .PCPlus4_o(PCPlus4) //unsure
     );
 
 control_top control(
@@ -68,8 +67,8 @@ alu_top alu(
     .PCPlus4_i(PCPlus4),
     .Zero_o(Zero),
     .a0(a0),  //(debug output)
-    .Result_o(), //unsure about this, shouldnt result stay within alu_top as its connected to register
-    .ALUResult_o(ALUResult)
+    .Result_o(Result), 
+    .ALUResult_o()
 );
 endmodule
 
