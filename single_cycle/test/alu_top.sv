@@ -58,8 +58,8 @@ data_mem data(
 
 mux4 resultMux(
     .control    (ResultSrc_i),
-    .input0     (ReadData),
-    .input1     (ALUResult_o),
+    .input0     (ALUResult_o),
+    .input1     (ReadData),
     .input2     (PCPlus4_i),
     .out        (Result)
 );

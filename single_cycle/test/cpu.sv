@@ -35,7 +35,7 @@ module cpu #(
 pc_top pc(
     .clk(clk),        
     .rst(rst),        
-    .ALUResult_i(Result),    //result from data mem to mux4    
+    .ALUResult_i(Result),    //result from alu to pc mux4    
     .ImmOp_i(ImmOp),     
     .PCsrc_i(PCsrc),
     .pc_out(PC), //32b
@@ -67,8 +67,7 @@ alu_top alu(
     .PCPlus4_i(PCPlus4),
     .Zero_o(Zero),
     .a0(a0),  //(debug output)
-    .Result_o(Result), 
-    .ALUResult_o()
+    .ALUResult_o(Result)
 );
 endmodule
 
