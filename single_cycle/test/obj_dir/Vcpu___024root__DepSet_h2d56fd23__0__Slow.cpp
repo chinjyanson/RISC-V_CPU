@@ -14,7 +14,15 @@ VL_ATTR_COLD void Vcpu___024root___initial__TOP__0(Vcpu___024root* vlSelf) {
     VlWide<3>/*95:0*/ __Vtemp_hb978afc8__0;
     // Body
     VL_WRITEF("Loading rom.\n");
+<<<<<<< HEAD
     VL_READMEM_N(true, 32, 256, 0, std::string{"pdf.mem"}
+=======
+    __Vtemp_h2ad0e489__0[0U] = 0x2e6d656dU;
+    __Vtemp_h2ad0e489__0[1U] = 0x636f6465U;
+    __Vtemp_h2ad0e489__0[2U] = 0x68696e65U;
+    __Vtemp_h2ad0e489__0[3U] = 0x6d6163U;
+    VL_READMEM_N(true, 8, 256, 0, VL_CVT_PACK_STR_NW(4, __Vtemp_h2ad0e489__0)
+>>>>>>> 55b20fd79fcbd3ac5c43fabc5558a05cc6ef29d4
                  ,  &(vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array)
                  , 0, ~0ULL);
     VL_WRITEF("Loading ROM\n");
@@ -48,24 +56,19 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
-                                << 0x18U) | ((0xff0000U 
-                                              & (vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                << 0x18U) | ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                              [(0xffU 
+                                                & ((IData)(2U) 
+                                                   + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
+                                              << 0x10U) 
+                                             | ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                                  [(0xffU 
-                                                   & ((IData)(2U) 
+                                                   & ((IData)(1U) 
                                                       + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
-                                                 << 0x10U)) 
-                                             | ((0xff00U 
-                                                 & (vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
-                                                    [
-                                                    (0xffU 
-                                                     & ((IData)(1U) 
-                                                        + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
-                                                    << 8U)) 
-                                                | (0xffU 
-                                                   & vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
-                                                   [
-                                                   (0xffU 
-                                                    & vlSelf->cpu__DOT____Vcellout__pc__pc_out)]))));
+                                                 << 8U) 
+                                                | vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                                [(0xffU 
+                                                  & vlSelf->cpu__DOT____Vcellout__pc__pc_out)])));
     vlSelf->cpu__DOT__alu__DOT__regOp2 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
         [(0x1fU & (vlSelf->cpu__DOT__Instr >> 0x14U))];
     vlSelf->cpu__DOT__alu__DOT__SrcA = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
@@ -229,7 +232,7 @@ VL_ATTR_COLD void Vcpu___024root___ctor_var_reset(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__pc__DOT__pc_mux__DOT__input3 = VL_RAND_RESET_I(32);
     vlSelf->cpu__DOT__control__DOT__ImmSrc = VL_RAND_RESET_I(2);
     for (int __Vi0=0; __Vi0<256; ++__Vi0) {
-        vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(8);
     }
     vlSelf->cpu__DOT__alu__DOT__SrcA = VL_RAND_RESET_I(32);
     vlSelf->cpu__DOT__alu__DOT__SrcB = VL_RAND_RESET_I(32);

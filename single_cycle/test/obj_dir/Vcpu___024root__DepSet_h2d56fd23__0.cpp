@@ -53,24 +53,19 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
-                                << 0x18U) | ((0xff0000U 
-                                              & (vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                << 0x18U) | ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                              [(0xffU 
+                                                & ((IData)(2U) 
+                                                   + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
+                                              << 0x10U) 
+                                             | ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                                  [(0xffU 
-                                                   & ((IData)(2U) 
+                                                   & ((IData)(1U) 
                                                       + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
-                                                 << 0x10U)) 
-                                             | ((0xff00U 
-                                                 & (vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
-                                                    [
-                                                    (0xffU 
-                                                     & ((IData)(1U) 
-                                                        + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 
-                                                    << 8U)) 
-                                                | (0xffU 
-                                                   & vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
-                                                   [
-                                                   (0xffU 
-                                                    & vlSelf->cpu__DOT____Vcellout__pc__pc_out)]))));
+                                                 << 8U) 
+                                                | vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                                [(0xffU 
+                                                  & vlSelf->cpu__DOT____Vcellout__pc__pc_out)])));
     vlSelf->cpu__DOT__pc__DOT__PC = ((IData)(vlSelf->rst)
                                       ? 0U : vlSelf->cpu__DOT__pc__DOT__next_PC);
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
