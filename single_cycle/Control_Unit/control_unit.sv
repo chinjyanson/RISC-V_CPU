@@ -14,11 +14,13 @@ module control_unit #(
     output  logic [IMM_WIDTH-1:0]           PCsrc_o
 );
 
-    //for ImmSrc
-    //R => 00
-    //I => 01
-    //S => 10
-    //B => 11
+
+    //actual ImmSrc
+    //00 -> I
+    //01 -> S
+    //10 -> B 
+    //11 -> J
+
 
     /*
     3'b000: SUM = ALUop1 + ALUop2;
