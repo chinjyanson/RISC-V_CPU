@@ -13,13 +13,13 @@ module alu_top #(
     input   wire [DATA_WIDTH-1:0]       PCPlus4_i,
     output  wire                        Zero_o,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
-    output  wire [DATA_WIDTH-1:0]       Result_o,
     output  wire [DATA_WIDTH-1:0]       ALUResult_o
 );
 
 
 wire [DATA_WIDTH-1:0] SrcA;
 wire [DATA_WIDTH-1:0] SrcB;
+wire [DATA_WIDTH-1:0] Result;
 wire [DATA_WIDTH-1:0] regOp2;
 wire [DATA_WIDTH-1:0] ReadData;
 
@@ -27,7 +27,7 @@ regfile register(
     .clk        (clk),
     .Instr      (Instr_i),
     .WE3        (RegWrite_i),
-    .WD3        (ALUResult_o),
+    .WD3        (Result),
     .RD1        (SrcA),
     .RD2        (regOp2),
     .a0         (a0)
@@ -61,7 +61,7 @@ mux4 resultMux(
     .input0     (ReadData),
     .input1     (ALUResult_o),
     .input2     (PCPlus4_i),
-    .out        (Result_o)
+    .out        (Result)
 );
 
 endmodule
