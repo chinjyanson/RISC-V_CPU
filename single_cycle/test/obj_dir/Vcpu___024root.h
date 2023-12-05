@@ -1,7 +1,7 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Design internal header
 // See Vcpu.h for the primary calling header
-// d
+
 #ifndef VERILATED_VCPU___024ROOT_H_
 #define VERILATED_VCPU___024ROOT_H_  // guard
 
@@ -36,7 +36,7 @@ class Vcpu___024root final : public VerilatedModule {
     IData/*31:0*/ cpu__DOT__alu__DOT__regOp2;
     IData/*31:0*/ cpu__DOT__alu__DOT__resultMux__DOT__input3;
     IData/*31:0*/ __Vchglast__TOP__cpu__DOT__alu__DOT__SrcB;
-    VlUnpacked<IData/*31:0*/, 256> cpu__DOT__control__DOT__InstrMem__DOT__rom_array;
+    VlUnpacked<CData/*7:0*/, 256> cpu__DOT__control__DOT__InstrMem__DOT__rom_array;
     VlUnpacked<IData/*31:0*/, 256> cpu__DOT__alu__DOT__register__DOT__reg_array;
     VlUnpacked<IData/*31:0*/, 256> cpu__DOT__alu__DOT__data__DOT__data_mem_register;
     VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
