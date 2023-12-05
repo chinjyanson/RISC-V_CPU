@@ -66,7 +66,6 @@ alu_top alu(
     .PCPlus4_i(PCPlus4),
     .Zero_o(Zero),
     .a0(a0),  //(debug output)
-    .Result(Result), 
     .ALUResult_o(ALUResult_o)
 );
 endmodule

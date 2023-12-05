@@ -25,7 +25,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
             = vlSelf->cpu__DOT__alu__DOT__regOp2;
         __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 = 1U;
         __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 
-            = (0xffU & vlSelf->cpu__DOT__Result);
+            = (0xffU & vlSelf->cpu__DOT____Vcellout__alu__ALUResult_o);
     }
     vlSelf->cpu__DOT____Vcellout__pc__pc_out = vlSelf->cpu__DOT__pc__DOT__next_PC;
     if (vlSelf->cpu__DOT__RegWrite) {
@@ -36,8 +36,8 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                     : ((IData)(4U) + vlSelf->cpu__DOT__pc__DOT__PC))
                 : ((1U & (IData)(vlSelf->cpu__DOT__Resultsrc))
                     ? vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                   [(0xffU & vlSelf->cpu__DOT__Result)]
-                    : vlSelf->cpu__DOT__Result));
+                   [(0xffU & vlSelf->cpu__DOT____Vcellout__alu__ALUResult_o)]
+                    : vlSelf->cpu__DOT____Vcellout__alu__ALUResult_o));
         __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 = 1U;
         __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 
             = (0x1fU & (vlSelf->cpu__DOT__Instr >> 7U));
@@ -133,30 +133,29 @@ VL_INLINE_OPT void Vcpu___024root___combo__TOP__0(Vcpu___024root* vlSelf) {
         vlSelf->cpu__DOT__MemWrite = Vcpu__ConstPool__TABLE_h208bbd95_0
             [__Vtableidx1];
     }
-    vlSelf->cpu__DOT__Result = ((4U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                 ? ((2U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                     ? ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                         ? vlSelf->cpu__DOT__alu__DOT__SrcA
-                                         : (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            >> (0x1fU 
-                                                & vlSelf->cpu__DOT__alu__DOT__SrcB)))
-                                     : ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                         ? (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            << (0x1fU 
-                                                & vlSelf->cpu__DOT__alu__DOT__SrcB))
-                                         : (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            ^ vlSelf->cpu__DOT__alu__DOT__SrcB)))
-                                 : ((2U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                     ? ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                         ? (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            | vlSelf->cpu__DOT__alu__DOT__SrcB)
-                                         : (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            & vlSelf->cpu__DOT__alu__DOT__SrcB))
-                                     : ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
-                                         ? (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            - vlSelf->cpu__DOT__alu__DOT__SrcB)
-                                         : (vlSelf->cpu__DOT__alu__DOT__SrcA 
-                                            + vlSelf->cpu__DOT__alu__DOT__SrcB))));
+    vlSelf->cpu__DOT____Vcellout__alu__ALUResult_o 
+        = ((4U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+            ? ((2U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+                ? ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+                    ? vlSelf->cpu__DOT__alu__DOT__SrcA
+                    : (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       >> (0x1fU & vlSelf->cpu__DOT__alu__DOT__SrcB)))
+                : ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+                    ? (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       << (0x1fU & vlSelf->cpu__DOT__alu__DOT__SrcB))
+                    : (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       ^ vlSelf->cpu__DOT__alu__DOT__SrcB)))
+            : ((2U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+                ? ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+                    ? (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       | vlSelf->cpu__DOT__alu__DOT__SrcB)
+                    : (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       & vlSelf->cpu__DOT__alu__DOT__SrcB))
+                : ((1U & (IData)(vlSelf->cpu__DOT__ALUctrl))
+                    ? (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       - vlSelf->cpu__DOT__alu__DOT__SrcB)
+                    : (vlSelf->cpu__DOT__alu__DOT__SrcA 
+                       + vlSelf->cpu__DOT__alu__DOT__SrcB))));
     vlSelf->cpu__DOT__ImmOp = ((1U == (IData)(vlSelf->cpu__DOT__control__DOT__ImmSrc))
                                 ? (((- (IData)((vlSelf->cpu__DOT__Instr 
                                                 >> 0x1fU))) 
@@ -195,7 +194,8 @@ VL_INLINE_OPT void Vcpu___024root___combo__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__pc__DOT__next_PC = ((2U & (IData)(vlSelf->cpu__DOT__PCsrc))
                                            ? ((1U & (IData)(vlSelf->cpu__DOT__PCsrc))
                                                ? vlSelf->cpu__DOT__pc__DOT__pc_mux__DOT__input3
-                                               : vlSelf->cpu__DOT__Result)
+                                               : (1U 
+                                                  & vlSelf->cpu__DOT____Vcellout__alu__ALUResult_o))
                                            : ((1U & (IData)(vlSelf->cpu__DOT__PCsrc))
                                                ? (vlSelf->cpu__DOT__pc__DOT__PC 
                                                   + vlSelf->cpu__DOT__ImmOp)
