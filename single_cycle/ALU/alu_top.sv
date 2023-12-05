@@ -13,13 +13,13 @@ module alu_top #(
     input   wire                        PCPlus4,
     output  wire                        Zero,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
-    output  wire [DATA_WIDTH-1:0]       Result,
     output  wire [DATA_WIDTH-1:0]       ALUResult
 );
 
 
 wire [DATA_WIDTH-1:0] SrcA;
 wire [DATA_WIDTH-1:0] SrcB;
+wire [DATA_WIDTH-1:0] Result;
 wire [DATA_WIDTH-1:0] regOp2;
 wire [DATA_WIDTH-1:0] ReadData;
 
@@ -27,7 +27,7 @@ regfile register(
     .clk        (clk),
     .Instr      (Instr),
     .WE3        (RegWrite),
-    .WD3        (ALUResult),
+    .WD3        (Result),
     .RD1        (SrcA),
     .RD2        (regOp2),
     .a0         (a0)
