@@ -51,11 +51,18 @@ module control_unit #(
 
     case (opcode)
 
-    // 7'b0000011: // lw
-    //     begin
-    //         RegWrite_o = 1'b1;
-    //     end
+    7'b0000011: // lw
+        begin
+            RegWrite_o = 1'b1;
+            ImmSrc = 2'b00;
+            ALUsrc_o = 1'b1;
+            // MemWrite_o = 1'b0; (currently defaulted to 0)
+            Resultsrc_o = 2'b01;
+            // branch logic is missing cause nto sure how to organise PCsrc
+            ALUctrl = 3'b000;
+        end
 
+    
     7'b0010011: //Type I (19)
         begin 
             RegWrite_o = 1'b1;
