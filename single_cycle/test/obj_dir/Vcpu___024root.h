@@ -26,11 +26,12 @@ class Vcpu___024root final : public VerilatedModule {
     VL_OUT(a0,31,0);
     IData/*31:0*/ cpu__DOT__Instr;
     IData/*31:0*/ cpu__DOT__ImmOp;
+    IData/*31:0*/ cpu__DOT__Result;
     IData/*31:0*/ cpu__DOT____Vcellout__pc__pc_out;
+    IData/*31:0*/ cpu__DOT____Vcellout__alu__ALUResult_o;
     IData/*31:0*/ cpu__DOT__pc__DOT__next_PC;
     IData/*31:0*/ cpu__DOT__pc__DOT__PC;
     IData/*31:0*/ cpu__DOT__pc__DOT__pc_mux__DOT__input3;
-    IData/*31:0*/ cpu__DOT__alu__DOT__ALUResult_o;
     IData/*31:0*/ cpu__DOT__alu__DOT__SrcA;
     IData/*31:0*/ cpu__DOT__alu__DOT__SrcB;
     IData/*31:0*/ cpu__DOT__alu__DOT__regOp2;

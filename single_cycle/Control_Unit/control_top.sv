@@ -5,7 +5,7 @@ module control_top #(
     parameter   IMM_WIDTH = 2
 
 )(
-     input  logic [ADDRESS_WIDTH-1:0]          PC_i, //8b
+     input  logic [ADDRESS_WIDTH-1:0]       PC_i, //8b
      input  logic                           Zero_i, //1b
      output logic [DATA_WIDTH-1:0]          instr_o,//32b
      output logic                           RegWrite_o, //1b

@@ -33,76 +33,115 @@ module control_unit #(
     logic [6:0] opcode = instr_i[6:0];
     logic [2:0] funct3 = instr_i[14:12];
 
+    // always_comb
+    //     begin
+    //         if(opcode  == 7'b0000011):
+    //             RegWrite_o = 1'b1;
+    //             ImmSrc = 2'b00;
+    //             ALUsrc_o = 1'b1;
+    //             // MemWrite_o = 1'b0; (currently defaulted to 0)
+    //             Resultsrc_o = 2'b01;
+    //             // branch logic is missing cause nto sure how to organise PCsrc
+    //             ALUctrl = 3'b000;
+    //     end
+
+
+
     always_comb  begin
 
     case (opcode)
-    7'b0000011: begin //lw
-        RegWrite_o = 1;
-        ImmSrc_o = 2'b00;
-        ALUsrc_o = 1;
-        MemWrite_o = 0;
-        Resultsrc_o = 2'b01;
+
+    7'b0000011: // lw
+        begin
+            RegWrite_o = 1'b1;
+            ImmSrc = 2'b00;
+            ALUsrc_o = 1'b1;
+            // MemWrite_o = 1'b0; (currently defaulted to 0)
+            Resultsrc_o = 2'b01;
+            // branch logic is missing cause nto sure how to organise PCsrc
+            ALUctrl = 3'b000;
+        end
+
+    7'b0100011: // sw
+        begin
+        end
+    
+    7'b0110011: // R-type
+        begin
+        end
         
+    7'b0010011: //Type I (19)
+        begin 
+            RegWrite_o = 1'b1;
+            ImmSrc_o = 2'b01;
+            ALUsrc_o = 1'b1;
+            // MemWrite_o = 1'b0; (not sure for this)
+            Resultsrc_o = 2'b00;
+            PCsrc_o = 2'b00;
 
-    end
-    7'b0100011: begin //sw
+                case(funct3)
+                    3'b000:  ALUctrl_o = 3'b000; //addi
+                    3'b001:  ALUctrl_o = 3'b101; //slli
+                    default: ALUctrl_o = 3'b000;
+            endcase
+        end
 
-    end
-    7'b0110011: begin //R-type
+    7'b1100011: //Type B
+        begin
+            RegWrite_o = 1'b0;
+            ImmSrc_o = 2'b11; // should be 10
+            ALUsrc_o = 1'b0;
+            MemWrite_o = 1'b0;
+            Resultsrc_o = 2'b01;  //dont care
+            ALUctrl_o = 3'b000; //should be 001
 
-    end
-    7'b0010011: begin //Type I (19)
-        RegWrite_o = 1;
-        ALUsrc_o = 1;
-        Resultsrc_o = 2'b00;
-        ImmSrc_o = 2'b01;
-        PCsrc_o = 2'b00;
-        case(funct3)
-        3'b000: ALUctrl_o = 3'b000; //addi
-        3'b001: ALUctrl_o = 3'b101; //slli
-        default: ALUctrl_o = 3'b000;
-        endcase
-    end
-    7'b1100011: begin //Type B
-        RegWrite_o = 0;   
-        Resultsrc_o = 2'b01;
-        ALUctrl_o = 3'b000; //dont care
-        ALUsrc_o = 0;
-        ImmSrc_o = 2'b11; 
-        case(funct3)
-        3'b000: PCsrc_o = {1'b0 , Zero_i}; //beq
-        3'b001: PCsrc_o = {1'b0, !Zero_i}; //bne
-        default: PCsrc_o = {1'b0 , Zero_i};
-        endcase
-        
-    end
-    7'b1101111: begin //Type J - JAL
-        RegWrite_o = 1;
-        Resultsrc_o = 2'b10;
-        ALUctrl_o = 3'b000;
-        ALUsrc_o = 1;
-        ImmSrc_o = 2'b10;
-        PCsrc_o = 2'b01;
-    end
-    7'b1100111:begin //Type I - JALR
-        RegWrite_o = 0;   
-        Resultsrc_o = 2'b10;
-        ALUctrl_o = 3'b000; //dont care
-        ALUsrc_o = 1; //was blank before - check instr
-        ImmSrc_o = 2'b11; 
-        PCsrc_o = 2'b10;
-    end
-        default begin //just in case we have something else
-        RegWrite_o = 1;
-        Resultsrc_o = 2'b00;
-        ALUctrl_o = 3'b000;
-        ALUsrc_o = 1;
-        ImmSrc_o = 2'b00;
-        PCsrc_o = 2'b00;
-    end
+                case(funct3)
+                    //func3 shouldnt affect PCsrc?
+                    3'b000: PCsrc_o = {1'b0 , Zero_i}; //beq
+                    3'b001: PCsrc_o = {1'b0, !Zero_i}; //bne
+                    default: PCsrc_o = {1'b0 , Zero_i};
+                endcase
+        end
+
+    7'b1101111: //Type J - JAL
+        begin 
+            RegWrite_o = 1;
+            ImmSrc_o = 2'b10;
+            ALUsrc_o = 1'b1;
+            // MemWrite_o = 1'b0; (not sure for this)
+            Resultsrc_o = 2'b10;
+            ALUctrl_o = 3'b000;
+            PCsrc_o = 2'b01;
+        end
+
+    7'b1100111: //Type I - JALR
+        begin 
+            RegWrite_o = 1'b0;
+            ImmSrc_o = 2'b11;
+            ALUsrc_o = 1'b1; //was blank before - check instr
+            // MemWrite_o = 1'b0; (not sure for now)
+            Resultsrc_o = 2'b10;
+            ALUctrl_o = 3'b000; //dont care
+            PCsrc_o = 2'b10;
+        end
+    
+    default: //just in case we have something else
+        begin 
+            RegWrite_o = 1'b1;
+            ImmSrc_o = 2'b00;
+            ALUsrc_o = 1'b1;
+            // MemWrite_o = 1'b0; (not sure for now)
+            Resultsrc_o = 2'b00;
+            ALUctrl_o = 3'b000;
+            PCsrc_o = 2'b00;
+        end
+
     endcase 
+
+    assign MemWrite_o = 1'b0; //we let it be 0 for now
+    
     end
 
-    assign MemWrite_o = 0; //we let it be 0 for now
+    
 endmodule
 
