@@ -62,7 +62,14 @@ module control_unit #(
             ALUctrl = 3'b000;
         end
 
+    7'b0100011: // sw
+        begin
+        end
     
+    7'b0110011: // R-type
+        begin
+        end
+        
     7'b0010011: //Type I (19)
         begin 
             RegWrite_o = 1'b1;
