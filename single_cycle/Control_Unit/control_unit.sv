@@ -75,7 +75,7 @@ module control_unit #(
     7'b0010011: //Type I (19)
         begin 
             RegWrite_o = 1'b1;
-            ImmSrc_o = 2'b01;
+            ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
             // MemWrite_o = 1'b0; (not sure for this)
             Resultsrc_o = 2'b00;
@@ -91,7 +91,7 @@ module control_unit #(
     7'b1100011: //Type B
         begin
             RegWrite_o = 1'b0;
-            ImmSrc_o = 2'b11; // should be 10
+            ImmSrc_o = 2'b10; 
             ALUsrc_o = 1'b0;
             MemWrite_o = 1'b0;
             Resultsrc_o = 2'b01;  //dont care
@@ -108,7 +108,7 @@ module control_unit #(
     7'b1101111: //Type J - JAL
         begin 
             RegWrite_o = 1;
-            ImmSrc_o = 2'b10;
+            ImmSrc_o = 2'b11;
             ALUsrc_o = 1'b1;
             // MemWrite_o = 1'b0; (not sure for this)
             Resultsrc_o = 2'b10;
@@ -119,7 +119,7 @@ module control_unit #(
     7'b1100111: //Type I - JALR
         begin 
             RegWrite_o = 1'b0;
-            ImmSrc_o = 2'b11;
+            ImmSrc_o = 2'b00;   
             ALUsrc_o = 1'b1; //was blank before - check instr
             // MemWrite_o = 1'b0; (not sure for now)
             Resultsrc_o = 2'b10;
