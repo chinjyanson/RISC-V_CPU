@@ -21,6 +21,7 @@ module cpu #(
     logic [CONTROL_WIDTH-1:0]  ALUctrl;
     logic ALUsrc;
     logic Zero;
+    logic [DATA_WIDTH-1:0]     ALUResult_o;
 
 
     //output internal logic for pc module
