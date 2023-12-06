@@ -32,7 +32,6 @@ always @(posedge clk)
 
 assign RD1 = reg_array[A1];
 assign RD2 = reg_array[A2];
-assign a0 =  reg_array[10];
+assign a0 =  reg_array[11];
 
 endmodule
-
