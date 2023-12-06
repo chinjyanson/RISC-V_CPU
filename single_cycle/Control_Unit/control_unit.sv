@@ -95,7 +95,7 @@ module control_unit #(
             ALUsrc_o = 1'b0;
             MemWrite_o = 1'b0;
             Resultsrc_o = 2'b01;  //dont care
-            ALUctrl_o = 3'b000; //should be 001
+            ALUctrl_o = 3'b001; //should be 001 - but we dk why it matters
 
                 case(funct3)
                     //func3 shouldnt affect PCsrc?
