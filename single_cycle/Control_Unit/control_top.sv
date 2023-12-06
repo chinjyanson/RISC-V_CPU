@@ -30,7 +30,6 @@ control_unit ControlUnit(
     .ALUsrc_o         (ALUsrc_o),
     .ImmSrc_o         (ImmSrc),
     .PCsrc_o          (PCsrc_o)
-
 );
 
 instr_mem InstrMem(

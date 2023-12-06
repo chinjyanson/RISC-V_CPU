@@ -53,11 +53,11 @@ module control_unit #(
 
     case (opcode)
 
-    7'b0000011: // load instructions - lb/lh/lw (3) - I Type
+    7'b0000011: // (3) load instructions - lb/lh/lw  - I Type
         begin
             ImmSrc = 2'b00;
             ALUsrc_o = 1'b1;
-            MemWrite_o = 1'b0; 
+            MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b01;
             PCsrc_0 = 2'b000;
             ALUctrl = 3'b000;
@@ -68,8 +68,19 @@ module control_unit #(
             endcase
         end
 
-    7'b0100011: // sw
+    7'b0100011: // (35) store instrucions - sb/sh/sw
         begin
+            ImmSrc = 2'b01;
+            ALUsrc_o = 1'b1;
+            RegWrite_o = 2'b00; 
+            Resultsrc_o = 2'b00;
+            PCsrc_0 = 2'b000;
+            ALUctrl = 3'b000;
+            case(funct3)
+                3'b000: MemWrite_o = 2'b11; //sb
+                3'b001: MemWrite_o = 2'b10; //sh
+                3'b010: MemWrite_o = 2'b01; //sw
+            endcase
         end
     
     7'b0110011: // R-type
