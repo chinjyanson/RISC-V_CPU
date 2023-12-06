@@ -14,15 +14,7 @@ VL_ATTR_COLD void Vcpu___024root___initial__TOP__0(Vcpu___024root* vlSelf) {
     VlWide<3>/*95:0*/ __Vtemp_hb978afc8__0;
     // Body
     VL_WRITEF("Loading rom.\n");
-<<<<<<< HEAD
-    VL_READMEM_N(true, 32, 256, 0, std::string{"pdf.mem"}
-=======
-    __Vtemp_h2ad0e489__0[0U] = 0x2e6d656dU;
-    __Vtemp_h2ad0e489__0[1U] = 0x636f6465U;
-    __Vtemp_h2ad0e489__0[2U] = 0x68696e65U;
-    __Vtemp_h2ad0e489__0[3U] = 0x6d6163U;
-    VL_READMEM_N(true, 8, 256, 0, VL_CVT_PACK_STR_NW(4, __Vtemp_h2ad0e489__0)
->>>>>>> 55b20fd79fcbd3ac5c43fabc5558a05cc6ef29d4
+    VL_READMEM_N(true, 8, 256, 0, std::string{"pdf.mem"}
                  ,  &(vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array)
                  , 0, ~0ULL);
     VL_WRITEF("Loading ROM\n");
@@ -52,7 +44,7 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
     SData/*10:0*/ __Vtableidx1;
     // Body
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
-        [0xaU];
+        [0xbU];
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT____Vcellout__pc__pc_out))] 

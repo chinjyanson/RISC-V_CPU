@@ -1,2 +1,6 @@
 single_cycle/test/obj_dir
+single_cycle/test/cpu.vcd
+single_cycle/test/obj_dir/Vcpu___024root__DepSet_h2d56fd23__0__Slow.cpp
+single_cycle/test/obj_dir/Vcpu___024root__DepSet_h2d56fd23__0__Slow.cpp
+single_cycle/test/obj_dir/Vcpu___024root.h
 

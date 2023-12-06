@@ -69,7 +69,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__pc__DOT__PC = ((IData)(vlSelf->rst)
                                       ? 0U : vlSelf->cpu__DOT__pc__DOT__next_PC);
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
-        [0xaU];
+        [0xbU];
     vlSelf->cpu__DOT__alu__DOT__regOp2 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
         [(0x1fU & (vlSelf->cpu__DOT__Instr >> 0x14U))];
     vlSelf->cpu__DOT__alu__DOT__SrcA = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
