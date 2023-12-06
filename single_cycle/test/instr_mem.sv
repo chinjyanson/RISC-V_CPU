@@ -4,7 +4,7 @@ module instr_mem #(
     
 )(
     //input   logic                       clk, //idk this is on the diagram before the instruction memory block
-    input   logic [ADDRESS_WIDTH-1:0]   addr_i,
+    input   logic [DATA_WIDTH-1:0]   addr_i,
     output  logic [DATA_WIDTH-1:0]      Instr_o
 );
 
