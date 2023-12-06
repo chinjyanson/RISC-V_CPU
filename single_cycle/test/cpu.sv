@@ -31,6 +31,7 @@ module cpu #(
     logic [DATA_WIDTH-1:0]  PCPlus4;
     logic [DATA_WIDTH-1:0]       Result;
 
+
 pc_top pc(
     .clk(clk),        
     .rst(rst),        

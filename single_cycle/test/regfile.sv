@@ -17,15 +17,19 @@ logic[7:0] A3 = {3'b0 , Instr[11:7]};
 
 logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 
+
 always_ff @(posedge clk) begin 
-    if(WE3 == 1'b1) begin
+    if((WE3 == 1'b1) && (A3 != 0)) begin
         reg_array[A3] <= WD3;
     end 
 end 
+//assign reg_array[0] = 0; //zero
 
 assign RD1 = reg_array[A1];
 assign RD2 = reg_array[A2];
 assign a0 = reg_array[11];
+
+
 
 
 
