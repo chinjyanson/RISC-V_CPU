@@ -53,7 +53,7 @@ data_mem data(
     .A          (ALUResult_o),
     .WD         (regOp2),
     .WE         (MemWrite_i),
-    .RD         (ReadData),
+    .RD         (ReadData)
 );
 
 mux4 resultMux(
