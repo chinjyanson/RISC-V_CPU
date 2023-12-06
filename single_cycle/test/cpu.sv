@@ -30,7 +30,6 @@ module cpu #(
     logic [IMM_WIDTH-1:0]  PCsrc;
     logic [ADDRESS_WIDTH-1:0]  PC;
     logic [DATA_WIDTH-1:0]  PCPlus4;
-    logic [DATA_WIDTH-1:0]       Result;
 
 
 pc_top pc(

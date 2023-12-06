@@ -147,7 +147,7 @@ module control_unit #(
             RegWrite_o = 2'b01;
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
-            MemWrite_o = 1'b00;
+            MemWrite_o = 2'b00;
             Resultsrc_o = 2'b00;
             ALUctrl_o = 3'b000;
             PCsrc_o = 2'b00;

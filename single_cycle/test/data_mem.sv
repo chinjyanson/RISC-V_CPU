@@ -4,7 +4,7 @@ module data_mem #(
 ) (
     input  logic                             clk,
     input  logic     [1:0]                   WE,
-    input  logic     [ADDRESS_WIDTH-1:0]     A,
+    input  logic     [DATA_WIDTH-1:0]        A,
     input  logic     [DATA_WIDTH-1:0]        WD,
     output logic     [DATA_WIDTH-1:0]        RD
 );
@@ -38,7 +38,7 @@ module data_mem #(
             data_mem_register[A][7:0] <= WD[7:0];
         end
         endcase
-    end 
+    end
     assign RD = data_mem_register[A]; //we read and output the [A] register value
 
 endmodule
