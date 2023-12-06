@@ -55,12 +55,12 @@ module control_unit #(
 
     7'b0000011: // (3) load instructions - lb/lh/lw  - I Type
         begin
-            ImmSrc = 2'b00;
+            ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
             MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b01;
-            PCsrc_0 = 2'b000;
-            ALUctrl = 3'b000;
+            PCsrc_o = 2'b000;
+            ALUctrl_o = 3'b000;
             case(funct3)
                 3'b000: RegWrite_o = 2'b11; //lb
                 3'b001: RegWrite_o = 2'b10; //lh
@@ -70,12 +70,12 @@ module control_unit #(
 
     7'b0100011: // (35) store instrucions - sb/sh/sw
         begin
-            ImmSrc = 2'b01;
+            ImmSrc_o = 2'b01;
             ALUsrc_o = 1'b1;
             RegWrite_o = 2'b00; 
             Resultsrc_o = 2'b00;
-            PCsrc_0 = 2'b000;
-            ALUctrl = 3'b000;
+            PCsrc_o = 2'b000;
+            ALUctrl_o = 3'b000;
             case(funct3)
                 3'b000: MemWrite_o = 2'b11; //sb
                 3'b001: MemWrite_o = 2'b10; //sh
