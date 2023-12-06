@@ -30,11 +30,11 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
         bufp->chgIData(oldp+3,(vlSelf->cpu__DOT__alu__DOT__SrcA),32);
         bufp->chgIData(oldp+4,(vlSelf->cpu__DOT__alu__DOT__regOp2),32);
         bufp->chgCData(oldp+5,((0x1fU & (vlSelf->cpu__DOT__Instr 
-                                         >> 0x14U))),8);
+                                         >> 0x14U))),5);
         bufp->chgCData(oldp+6,((0x1fU & (vlSelf->cpu__DOT__Instr 
-                                         >> 0xfU))),8);
+                                         >> 0xfU))),5);
         bufp->chgCData(oldp+7,((0x1fU & (vlSelf->cpu__DOT__Instr 
-                                         >> 7U))),8);
+                                         >> 7U))),5);
         bufp->chgCData(oldp+8,((0x7fU & vlSelf->cpu__DOT__Instr)),7);
         bufp->chgCData(oldp+9,((7U & (vlSelf->cpu__DOT__Instr 
                                       >> 0xcU))),3);

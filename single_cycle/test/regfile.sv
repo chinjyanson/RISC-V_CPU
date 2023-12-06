@@ -19,7 +19,7 @@ logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 
 
 always_ff @(posedge clk) begin 
-    if(WE3 == 1'b1) begin
+    if((WE3 == 1'b1) && (A3 != 0)) begin
         reg_array[A3] <= WD3;
     end 
 end 

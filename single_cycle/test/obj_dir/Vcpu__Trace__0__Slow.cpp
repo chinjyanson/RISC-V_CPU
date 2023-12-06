@@ -90,9 +90,9 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->declBus(c+4,"RD1", false,-1, 31,0);
     tracep->declBus(c+5,"RD2", false,-1, 31,0);
     tracep->declBus(c+27,"a0", false,-1, 31,0);
-    tracep->declBus(c+6,"A2", false,-1, 7,0);
-    tracep->declBus(c+7,"A1", false,-1, 7,0);
-    tracep->declBus(c+8,"A3", false,-1, 7,0);
+    tracep->declBus(c+6,"A2", false,-1, 4,0);
+    tracep->declBus(c+7,"A1", false,-1, 4,0);
+    tracep->declBus(c+8,"A3", false,-1, 4,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("resultMux ");
     tracep->declBus(c+33,"DATA_WIDTH", false,-1, 31,0);
@@ -227,11 +227,11 @@ VL_ATTR_COLD void Vcpu___024root__trace_full_sub_0(Vcpu___024root* vlSelf, Veril
     bufp->fullIData(oldp+4,(vlSelf->cpu__DOT__alu__DOT__SrcA),32);
     bufp->fullIData(oldp+5,(vlSelf->cpu__DOT__alu__DOT__regOp2),32);
     bufp->fullCData(oldp+6,((0x1fU & (vlSelf->cpu__DOT__Instr 
-                                      >> 0x14U))),8);
+                                      >> 0x14U))),5);
     bufp->fullCData(oldp+7,((0x1fU & (vlSelf->cpu__DOT__Instr 
-                                      >> 0xfU))),8);
+                                      >> 0xfU))),5);
     bufp->fullCData(oldp+8,((0x1fU & (vlSelf->cpu__DOT__Instr 
-                                      >> 7U))),8);
+                                      >> 7U))),5);
     bufp->fullCData(oldp+9,((0x7fU & vlSelf->cpu__DOT__Instr)),7);
     bufp->fullCData(oldp+10,((7U & (vlSelf->cpu__DOT__Instr 
                                     >> 0xcU))),3);
