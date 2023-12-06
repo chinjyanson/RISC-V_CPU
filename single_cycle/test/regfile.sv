@@ -17,7 +17,7 @@ logic[7:0] A3 = {3'b0 , Instr[11:7]};
 
 logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 
-always_ff @(posedge clk) begin 
+always_ff @(posedge clk)  begin
     case(WE3) // this could be done cleaner 
         2'b01: begin //word write
             reg_array[A3] <= WD3;
@@ -28,7 +28,9 @@ always_ff @(posedge clk) begin
         2'b11: begin //write byte
             reg_array[A3][7:0] <= WD3[7:0];
         end
-        default: begin             //dont do anything?
+        default: begin  
+            reg_array[A3][7:0] <= reg_array[A3][7:0];
+           //dont do anything?
         end 
     endcase
 end 
