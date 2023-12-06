@@ -10,7 +10,7 @@ module alu_top #(
     input   wire [1:0]                  ResultSrc_i,
     input   wire [1:0]                  MemWrite_i,
     input   wire [DATA_WIDTH-1:0]       ImmOp_i,
-    input   wire [DATA_WIDTH-1:0]       PCPlus4_i,
+    input   wire                        PCPlus4_i,
     output  wire                        Zero_o,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       ALUResult_o
@@ -53,13 +53,13 @@ data_mem data(
     .A          (ALUResult_o),
     .WD         (regOp2),
     .WE         (MemWrite_i),
-    .RD         (ReadData)
+    .RD         (ReadData),
 );
 
 mux4 resultMux(
     .control    (ResultSrc_i),
-    .input0     (ALUResult_o),
-    .input1     (ReadData),
+    .input0     (ReadData),
+    .input1     (ALUResult_o),
     .input2     (PCPlus4_i),
     .out        (Result)
 );
