@@ -92,7 +92,7 @@ module control_unit #(
             RegWrite_o = 2'b01;
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
-            // MemWrite_o = 1'b0; (not sure for this)
+            MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b00;
             PCsrc_o = 2'b00;
 
@@ -108,7 +108,7 @@ module control_unit #(
             RegWrite_o = 2'b00;
             ImmSrc_o = 2'b10; 
             ALUsrc_o = 1'b0;
-            MemWrite_o = 1'b0;
+            MemWrite_o = 2'b00;
             Resultsrc_o = 2'b01;  //dont care
             ALUctrl_o = 3'b001; //should be 001 - but we dk why it matters
 
@@ -125,7 +125,7 @@ module control_unit #(
             RegWrite_o = 2'b01;
             ImmSrc_o = 2'b11;
             ALUsrc_o = 1'b1;
-            // MemWrite_o = 1'b0; (not sure for this)
+            MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b10;
             ALUctrl_o = 3'b000;
             PCsrc_o = 2'b01;
@@ -136,7 +136,7 @@ module control_unit #(
             RegWrite_o = 2'b00;
             ImmSrc_o = 2'b00;   
             ALUsrc_o = 1'b1; //was blank before - check instr
-            // MemWrite_o = 1'b0; (not sure for now)
+            MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b10;
             ALUctrl_o = 3'b000; //dont care
             PCsrc_o = 2'b10;
@@ -147,15 +147,13 @@ module control_unit #(
             RegWrite_o = 2'b01;
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
-            // MemWrite_o = 1'b0; (not sure for now)
+            MemWrite_o = 1'b00;
             Resultsrc_o = 2'b00;
             ALUctrl_o = 3'b000;
             PCsrc_o = 2'b00;
         end
 
     endcase 
-
-    assign MemWrite_o = 1'b0; //we let it be 0 for now
     
     end
 
