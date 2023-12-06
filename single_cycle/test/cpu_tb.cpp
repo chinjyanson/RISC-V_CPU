@@ -3,7 +3,7 @@
 #include "Vcpu.h"
 #include <iostream>
 
-#define MAX_SIM_CYC 160
+#define MAX_SIM_CYC 100
 
 
 

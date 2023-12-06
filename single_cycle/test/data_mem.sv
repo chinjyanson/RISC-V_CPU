@@ -23,21 +23,22 @@ module data_mem #(
         $readmemh("datarom.mem", data_mem_register); // load sine wave gen for testing (remove for final)
     end
     
-    always_ff @(posedge clk)
+    always_ff @(posedge clk) begin
         case(WE) // this could be done cleaner 
-        2'b01: begin //word write
+        2'b01: 
+        begin //word write
             data_mem_register[A] <= WD;
         end
-        2'b10: begin //half word 
+        2'b10: 
+        begin //half word 
             data_mem_register[A][15:0] <= WD[15:0];
         end
-        2'b11:begin //write byte
+        2'b11:
+        begin //write byte
             data_mem_register[A][7:0] <= WD[7:0];
         end
-        
-            //dont do anything?
         endcase
-
+    end 
     assign RD = data_mem_register[A]; //we read and output the [A] register value
 
 endmodule
