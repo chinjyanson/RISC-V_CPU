@@ -34,8 +34,7 @@ always @(posedge clk)
         3'b110: begin  //lhu - zero extended
             reg_array[A3] <= {16'b0, WD3[15:0]};
         end
-
-
+        default: reg_array[A3] <= reg_array[A3];
         
     endcase
 
