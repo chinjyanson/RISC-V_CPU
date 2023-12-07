@@ -34,19 +34,7 @@ module control_unit #(
 
     logic [6:0] opcode = instr_i[6:0];
     logic [2:0] funct3 = instr_i[14:12];
-
-    // always_comb
-    //     begin
-    //         if(opcode  == 7'b0000011):
-    //             RegWrite_o = 1'b1;
-    //             ImmSrc = 2'b00;
-    //             ALUsrc_o = 1'b1;
-    //             // MemWrite_o = 1'b0; (currently defaulted to 0)
-    //             Resultsrc_o = 2'b01;
-    //             // branch logic is missing cause nto sure how to organise PCsrc
-    //             ALUctrl = 3'b000;
-    //     end
-
+    logic funct7 = instr_i[30];
 
 
     always_comb  begin
@@ -55,11 +43,11 @@ module control_unit #(
 
     7'b0000011: // (3) load instructions - lb/lh/lw  - I Type
         begin
-            ImmSrc = 2'b00;
+            ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
             MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b01;
-            PCsrc_0 = 2'b000;
+            PCsrc_0 = 2'b00;
             ALUctrl = 3'b000;
             case(funct3)
                 3'b000: RegWrite_o = 2'b11; //lb
@@ -70,7 +58,7 @@ module control_unit #(
 
     7'b0100011: // (35) store instrucions - sb/sh/sw
         begin
-            ImmSrc = 2'b01;
+            ImmSrc_o = 2'b01;
             ALUsrc_o = 1'b1;
             RegWrite_o = 2'b00; 
             Resultsrc_o = 2'b00;
@@ -85,6 +73,25 @@ module control_unit #(
     
     7'b0110011: // R-type
         begin
+            RegWrite_o = 1'b1;
+            ImmSrc_o = 2'b00;
+            ALUsrc_o = 1'b0;
+            MemWrite_o = 2'b00;
+            Resultsrc_o = 2'b00;
+            PCsrc_o = 2'b00;
+            case(funct3)
+                3'b000:
+                    begin
+                        if({opcode[5], funct7} == {1'b1, 1'b1})
+                            ALUctrl_o = 3'b001;
+                        else
+                            ALUctrl_o = 3'b000;
+                    end 
+                3'b010: ALUctrl_o = 3'b101;
+                3'b110: ALUctrl_o = 3'b011;
+                3'b111: ALUctrl_o = 3'b010;
+                default: ALUctrl_o = 3'b000;
+            endcase
         end
         
     7'b0010011: //Type I (19)
