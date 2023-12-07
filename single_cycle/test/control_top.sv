@@ -8,8 +8,8 @@ module control_top #(
      input  logic [ADDRESS_WIDTH-1:0]       PC_i, //8b
      input  logic                           Zero_i, //1b
      output logic [DATA_WIDTH-1:0]          instr_o,//32b
-     output logic [1:0]                     RegWrite_o, //1b
-     output logic [1:0]                     MemWrite_o, //1b
+     output logic [2:0]                     RegWrite_o, //1b ==> edited to 3 bits
+     output logic [1:0]                     MemWrite_o, //1b ==> edited to 2 bits
      output logic [IMM_WIDTH-1:0]           Resultsrc_o, //3b ==> edited to 2 bits
      output logic [CONTROL_WIDTH-1:0]       ALUctrl_o, //3b
      output logic                           ALUsrc_o, //1 bit
