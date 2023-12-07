@@ -87,6 +87,25 @@ module control_unit #(
     
     7'b0110011: // R-type
         begin
+            RegWrite_o = 3'b001;
+            ImmSrc_o = 2'b00;
+            ALUsrc_o = 1'b0;
+            MemWrite_o = 2'b00;
+            Resultsrc_o = 2'b00;
+            PCsrc_o = 2'b00;
+            case(funct3)
+                3'b000:
+                    begin
+                        if({opcode[5], funct7} == {1'b1, 1'b1})
+                            ALUctrl_o = 3'b001;
+                        else
+                            ALUctrl_o = 3'b000;
+                    end 
+                3'b010: ALUctrl_o = 3'b101;
+                3'b110: ALUctrl_o = 3'b011;
+                3'b111: ALUctrl_o = 3'b010;
+                default: ALUctrl_o = 3'b000;
+            endcase
         end
         
     7'b0010011: //Type I (19)
