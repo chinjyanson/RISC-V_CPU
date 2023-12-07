@@ -53,7 +53,7 @@ module control_unit #(
 
     case (opcode)
 
-    7'b0000011: // (3) load instructions - lb/lh/lw  - I Type
+    7'b0000011: // (3) load instructions - I Type
         begin
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
@@ -65,10 +65,11 @@ module control_unit #(
                 3'b000: RegWrite_o = 2'b11; //lb
                 3'b001: RegWrite_o = 2'b10; //lh
                 3'b010: RegWrite_o = 2'b01; //lw
+                3'b100
             endcase
         end
 
-    7'b0100011: // (35) store instrucions - sb/sh/sw
+    7'b0100011: // (35) store instrucions - S type 
         begin
             ImmSrc_o = 2'b01;
             ALUsrc_o = 1'b1;
