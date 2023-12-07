@@ -53,6 +53,7 @@ module control_unit #(
                 3'b000: RegWrite_o = 2'b11; //lb
                 3'b001: RegWrite_o = 2'b10; //lh
                 3'b010: RegWrite_o = 2'b01; //lw
+                default: RegWrite_o = 2'b00;
             endcase
         end
 
@@ -68,6 +69,7 @@ module control_unit #(
                 3'b000: MemWrite_o = 2'b11; //sb
                 3'b001: MemWrite_o = 2'b10; //sh
                 3'b010: MemWrite_o = 2'b01; //sw
+                default MemWrite_o = 2'b00;
             endcase
         end
     
