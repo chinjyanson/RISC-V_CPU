@@ -34,21 +34,8 @@ module control_unit #(
 
     logic [6:0] opcode = instr_i[6:0];
     logic [2:0] funct3 = instr_i[14:12];
-
-    // always_comb
-    //     begin
-    //         if(opcode  == 7'b0000011):
-    //             RegWrite_o = 1'b1;
-    //             ImmSrc = 2'b00;
-    //             ALUsrc_o = 1'b1;
-    //             // MemWrite_o = 1'b0; (currently defaulted to 0)
-    //             Resultsrc_o = 2'b01;
-    //             // branch logic is missing cause nto sure how to organise PCsrc
-    //             ALUctrl = 3'b000;
-    //     end
-
-
-
+    logic funct7 = instr_i[30];
+    
     always_comb  begin
 
     case (opcode)
@@ -67,6 +54,7 @@ module control_unit #(
                 3'b010: RegWrite_o = 3'b001; //lw
                 3'b100: RegWrite_o = 3'b111; //lbu
                 3'b101: RegWrite_o = 3'b110; //lhu
+                default: RegWrite_o = 3'b000; //(not sure what default should be but 000 for now)
             endcase
         end
 
@@ -82,6 +70,7 @@ module control_unit #(
                 3'b000: MemWrite_o = 2'b11; //sb
                 3'b001: MemWrite_o = 2'b10; //sh
                 3'b010: MemWrite_o = 2'b01; //sw
+                default: MemWrite_o = 2'b00; //(not sure what default should be but 000 for now)
             endcase
         end
     
