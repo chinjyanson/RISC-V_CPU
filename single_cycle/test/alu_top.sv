@@ -6,7 +6,7 @@ module alu_top #(
     input   wire                        ALUsrc_i,
     input   wire [CONTROL_WIDTH-1:0]    ALUctrl_i,
     input   wire [DATA_WIDTH-1:0]       Instr_i,
-    input   wire [1:0]                  RegWrite_i,
+    input   wire [2:0]                  RegWrite_i,
     input   wire [1:0]                  ResultSrc_i,
     input   wire [1:0]                  MemWrite_i,
     input   wire [DATA_WIDTH-1:0]       ImmOp_i,

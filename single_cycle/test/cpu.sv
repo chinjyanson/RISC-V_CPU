@@ -13,7 +13,7 @@ module cpu #(
 );
 
     //output internal logic for control module 
-    logic   [1:0]            RegWrite;
+    logic   [2:0]            RegWrite;
     logic   [1:0]            MemWrite;
     logic   [DATA_WIDTH-1:0] Instr;
 
