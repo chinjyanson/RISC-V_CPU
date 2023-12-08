@@ -18,7 +18,8 @@ module alu_top #(
     input   wire [4:0]                  Rs2D_i,
     input   wire [4:0]                  RdD_i,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
-    output  wire [DATA_WIDTH-1:0]       ALUResult_o
+    output  wire [DATA_WIDTH-1:0]       ALUResult_o,
+    output  wire [DATA_WIDTH-1:0]       PCTargetE_o
 );
 
 //Data Logic ResultWriteD
@@ -43,24 +44,10 @@ wire [4:0]               Rs1E;
 wire [4:0]               Rs2E;
 wire [4:0]               RdE;
 wire [DATA_WIDTH-1:0]    PCPlus4E;
-
-.RegWriteE(RegWriteE),
-    .ResultSrcE(ResultSrcE),
-    .MemWriteE(MemWriteE),
-    .JumpE(JumpE)
-    .BranchE(BranchE),
-    .ALUContRD1ErolE(ALUControlE),
-    .ALUsrcE(ALUsrE),
-    .RD1E(RD1E),
-    .RD2E(RD2E),
-    .PCE(PCE),
-    .Rs1E(Rs1E),
-    .Rs2E(Rs2E),
-    .RdE(RdE),
-    .PCPlus4E(PCPlus4E),
-
-
-
+wire [DATA_WIDTH-1:0]    SrcAE;
+wire [DATA_WIDTH-1:0]    SrcBE;
+wire [DATA_WIDTH-1:0]    WriteDataE;
+wire [DATA_WIDTH-1:0]    ExtImmE;
 
 
 regfile register(
@@ -104,6 +91,28 @@ mux4 resultMux(
     .out        (Result)
 );
 
+mux4 RD1EHazardMux(
+    .control    (FowardAE),
+    .input0     (RD1E),
+    .input1     (ResultW),
+    .input2     (ALUResultM),
+    .out        (SrcAE)
+);
+
+mux4 RD2EHazardMux(
+    .control    (FowardBE),
+    .input0     (RD2E),
+    .input1     (ResultW),
+    .input2     (ALUResultM),
+    .out        (Result)
+);
+
+adder addPCTargetE(
+    .input0 (PCE),
+    .input1 (ExtImmE),
+    .out    (PCTargetE)
+);
+
 reg_dec DREg(
     //inputs - D
     .RegWriteD(RegWriteD_i),
@@ -119,6 +128,7 @@ reg_dec DREg(
     .Rs1D(Rs1D_i),
     .Rs2D(Rs2D_i),
     .RdD(RdD_i),
+    .ExtImmD(ExtImmD_i)
     .PCPlus4D(PCPlus4D_i),
 
     //outputs - E
@@ -135,8 +145,8 @@ reg_dec DREg(
     .Rs1E(Rs1E),
     .Rs2E(Rs2E),
     .RdE(RdE),
-    .PCPlus4E(PCPlus4E),
-
+    .ExtImmE(ExtImmE),
+    .PCPlus4E(PCPlus4E)
 );
 
 endmodule

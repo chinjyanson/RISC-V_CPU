@@ -15,6 +15,7 @@ module reg_dec#(
     input logic [4:0]               Rs1D,
     input logic [4:0]               Rs2D,
     input logic [4:0]               RdD,
+    input logic [DATA_WIDTH-1:0]    ExtImmD,
     input logic [DATA_WIDTH-1:0]    PCPlus4D,
 
     output logic [2:0]              RegWriteE,
@@ -30,7 +31,8 @@ module reg_dec#(
     output logic [4:0]               Rs1E,
     output logic [4:0]               Rs2E,
     output logic [4:0]               RdE,
-    output logic [DATA_WIDTH-1:0]    PCPlus4E,
+    output logic [DATA_WIDTH-1:0]    ExtImmE,
+    output logic [DATA_WIDTH-1:0]    PCPlus4E
 
 );
 
@@ -48,6 +50,7 @@ always_ff @(posedge clk)begin
     Rs1E        <=       Rs1D;
     Rs2E        <=       Rs2D;
     RdE         <=       RdD;
+    ExtImmE     <=       ExtImmD;
     PCPlus4E    <=       PCPlus4D;
 end
 
