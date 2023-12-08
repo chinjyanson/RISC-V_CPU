@@ -5,6 +5,7 @@ module control_top #(
     parameter   IMM_WIDTH = 2      //^^
 
 )(
+     input  logic                           clk,
      input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
      input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
      output logic [DATA_WIDTH-1:0]          InstrD,//32b
@@ -22,6 +23,7 @@ module control_top #(
 );
 
     logic [1:0]       ImmSrc;
+    logic [31:0]      InstrF;
 
 control_unit ControlUnit(
     .opcode         (InstrD[6:0]),
@@ -39,15 +41,17 @@ control_unit ControlUnit(
 
 instr_mem InstrMem(
     .addr_i         (PCF_i),
-    .InstrD        (InstrD)
+    .Instr_o        (InstrF)
 );
 
-fetch_reg FReg(
-    .InstrD(istr_o),
+reg_fetch FReg(
+    .clk
+    .InstrF(InstrF),
     .PCPlus4F(PCPlus4F_i),
     .PCF(PCF_i),
     .PCPlus4D(PCPlus4D_o),
     .PCD(PCD_o)
+    .InstrD(InstrD)
 );
 
 sign_extend MySignExtend(

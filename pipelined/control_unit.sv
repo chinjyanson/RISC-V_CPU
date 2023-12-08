@@ -13,7 +13,7 @@ module control_unit #(
     output  logic                           ALUsrcD,
     output  logic [IMM_WIDTH-1:0]           ImmSrcD, 
     output  logic                           JumpD,
-    output logic                            BranchD
+    output  logic                           BranchD
 );
 
 

@@ -18,6 +18,8 @@ module cpu #(
     logic   [DATA_WIDTH-1:0] Instr;
     logic   [DATA_WIDTH-1:0] PCD;
     logic   [DATA_WIDTH-1:0] PCPlus4D;
+    logic                    JumpD;
+    logic                    BranchD;
 
 
     //output internal logic for alu module 
@@ -47,32 +49,32 @@ pc_top pc(
     );
 
 control_top control(
+    .clk(clk),
     .PCF_i(PCF), //32b
     .PCPlus4F_i(PCPlus4F)
-    .Zero_i(Zero), //1b
-    .instr_o(Instr),//32b
-    .RegWrite_o(RegWrite), //1b
-    .MemWrite_o(MemWrite), //1b
-    .Resultsrc_o(Resultsrc), //3b ==> edited to 2 bits
-    .ALUctrl_o(ALUctrl), //3b
-    .ALUsrc_o(ALUsrc), //1 bit
-    .PCsrc_o(PCsrc), //1 bit ==> edited to 2 bits
-    .ImmOp_o(ImmOp) //32 bits
-    .PCD_o(PCD)
-    .PCPlus4D_o(PCPlus4D)
+    .InstrD_o(Instr),//32b
+    .RegWriteD_o(RegWrite), //1b
+    .MemWriteD_o(MemWrite), //1b
+    .ResultsrcD_o(Resultsrc), //3b ==> edited to 2 bits
+    .ALUctrlD_o(ALUctrl), //3b
+    .ALUsrcD_o(ALUsrc), //1 bit
+    .ImmOpD_o(ImmOp), //32 bits
+    .PCD_o(PCD),
+    .PCPlus4D_o(PCPlus4D),
+    .JumpD_o(JumpD),
+    .BranchD_o(BranchD)
 );
 
 alu_top alu(
     .clk(clk),
-    .ALUsrc_i(ALUsrc),
-    .ALUctrl_i(ALUctrl),
-    .Instr_i(Instr),
-    .RegWrite_i(RegWrite),
-    .ResultSrc_i(Resultsrc),
-    .MemWrite_i(MemWrite),
-    .ImmOp_i(ImmOp),
-    .PCPlus4_i(PCPlus4),
-    .Zero_o(Zero),
+    .ALUsrcD_i(ALUsrc),
+    .ALUctrlD_i(ALUctrl),
+    .InstrD_i(Instr),
+    .RegWriteD_i(RegWrite),
+    .ResultSrcD_i(Resultsrc),
+    .MemWriteD_i(MemWrite),
+    .ImmOpD_i(ImmOp),
+    .PCPlus4D_i(PCPlus4),
     .a0(a0),  //(debug output)
     .ALUResult_o(ALUResult_o),
     .PCD_i(PCD),
