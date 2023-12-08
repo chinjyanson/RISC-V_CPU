@@ -1,9 +1,17 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "Vcpu.h"
+#include "vbuddy.cpp"
 #include <iostream>
+#include <chrono>
+#include <thread>
 
-#define MAX_SIM_CYC 1000
+
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono; // nanoseconds, system_clock, seconds
+
+
+#define MAX_SIM_CYC 100
 
 
 
@@ -19,6 +27,10 @@ int main(int argc, char **argv, char **env) {
     VerilatedVcdC* tfp = new VerilatedVcdC;
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
+
+    //init Vbuddy
+    if (vbdOpen()!=1) return(-1);
+    vbdHeader("F1");
     
 
     // initialize simulation inputs
@@ -47,11 +59,19 @@ int main(int argc, char **argv, char **env) {
 
         }
 
+              vbdBar(top->a0 & 0xFF);
+            sleep_for(nanoseconds(100000000));  //delay for f1 lights
+
+
+   // either simulation finished, or 'q' is pressed
+    if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
+      exit(0);                // ... exit if finish OR 'q' pressed    
     }
 
-    tfp->close(); 
+    }
+
+    vbdClose();
+    tfp->close();
     exit(0);
-
-
     
 }
