@@ -66,8 +66,8 @@ wire [DATA_WIDTH-1:0]   ReadDataM;
 regfile register(
     .clk        (clk),
     .Instr      (Instr_i),
-    .WE3        (RegWrite_i),
-    .WD3        (Result),
+    .WE3        (RegWriteW),
+    .WD3        (ResultW),
     .RD1        (RD1D),
     .RD2        (RD2D),
     .a0         (a0)
@@ -181,5 +181,24 @@ reg_execute EREG(
     .WriteDataM(WriteDataM),
     .RdM(RdM),
     .PCPlus4M(PCPlus4M)
+);
+
+reg_write WREG(
+    //input M
+    .clk(clk),
+    .RegWriteM(RegWriteM),    
+    .ResultSrcM(ResultSrcM),
+    .WriteDataM(WriteDataM),
+    .ReadDataM(ReadDataM),
+    .RdM(RdM),
+    .PCPlus4M(PCPlus4M),
+
+    //outputs W
+    .RegWriteW(RegWriteW), 
+    .ResultSrcW(ResultSrcW),
+    .WriteDataW(WriteDataW),
+    .ReadDataW(ReadDataW),
+    .RdW(RdW),
+    .PCPlus4W(PCPlus4W)
 );
 endmodule
