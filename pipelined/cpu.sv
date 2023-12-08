@@ -25,15 +25,14 @@ module cpu #(
     //output internal logic for alu module 
     logic [CONTROL_WIDTH-1:0]  ALUctrl;
     logic ALUsrc;
-    logic Zero;
     logic [DATA_WIDTH-1:0]     ALUResult_o;
     logic [DATA_WIDTH-1:0]     PCTarget;
+    logic [1:0]                PCSrcE;
 
 
     //output internal logic for pc module
     logic [IMM_WIDTH-1:0]       Resultsrc;
     logic [DATA_WIDTH-1:0]      ImmOp;
-    logic [IMM_WIDTH-1:0]       PCsrc;
     logic [DATA_WIDTH-1:0]      PCF;
     logic [DATA_WIDTH-1:0]      PCPlus4F;
     logic [DATA_WIDTH-1:0]      Result;
@@ -43,7 +42,7 @@ pc_top pc(
     .clk(clk),        
     .rst(rst),        
     .ALUResult_i(ALUResult_o),    //result from data mem to mux4    
-    .PCsrc_i(PCsrc),
+    .PCsrc_i(PCsrcE),
     .PCF_o(PCF), //32b
     .PCPlus4F_o(PCPlus4F) //unsure
     .PCTarget_i(PCTarget)
@@ -85,7 +84,8 @@ alu_top alu(
     .RdD_i(InstrD[11:7]),
     .JumpD_i(JumpD),
     .BranchD_i(BranchD),
-    .PCTargetE_o(PCTarget)
+    .PCTargetE_o(PCTarget),
+    .PCSrcE_o(PCSrcE)
 );  
 
 hazard_unit hazard(
