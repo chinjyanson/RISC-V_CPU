@@ -30,18 +30,18 @@ module control_top #(
 
     control_unit #(DATA_WIDTH) my_control_unit(
         .instr_i (instr),
-        .Zero_o (Zero_o),
-        .RegWrite_o (RegWrite),
-        .ALUctrl_o (ALUctrl),
-        .ALUsrc_o (ALUsrc),
+        .Zero_o (Zero_i),
+        .RegWrite_o (RegWrite_o),
+        .ALUctrl_o (ALUctrl_o),
+        .ALUsrc_o (ALUsrc_o),
         .ImmSrc_o (ImmSrc),
-        .PCsrc_o (PCsrc)
+        .PCsrc_o (PCsrc_o)
         );
 
     sign_extend #(DATA_WIDTH, 12) my_sign_extend(
         .instr_I (instr),
         .ImmSrc_o (ImmSrc),    
-        .ImmOp_o (ImmOp)
+        .ImmOp_o (ImmOp_o)
     );
 
 endmodule
