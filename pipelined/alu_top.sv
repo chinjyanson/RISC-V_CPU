@@ -19,7 +19,8 @@ module alu_top #(
     input   wire [4:0]                  RdD_i,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       ALUResult_o,
-    output  wire [DATA_WIDTH-1:0]       PCTargetE_o
+    output  wire [DATA_WIDTH-1:0]       PCTargetE_o,
+    output  wire [1:0]                  PCSrcE_o
 );
 
 //Data Logic ResultWriteD
@@ -48,7 +49,19 @@ wire [DATA_WIDTH-1:0]    SrcAE;
 wire [DATA_WIDTH-1:0]    SrcBE;
 wire [DATA_WIDTH-1:0]    WriteDataE;
 wire [DATA_WIDTH-1:0]    ExtImmE;
+wire                     ZeroE;
 
+//Memory Logic
+
+wire [2:0]              RegWriteM;
+wire [1:0]              ResultSrcM;
+wire [1:0]              MemWriteM;
+wire [4:0]              RdM;
+wire [DATA_WIDTH-1:0]   WriteDataM;
+wire [DATA_WIDTH-1:0]   PCPlusM;
+wire [DATA_WIDTH-1:0]   ReadDataM;
+
+//add logic here for PCSrcE_o -
 
 regfile register(
     .clk        (clk),
@@ -61,26 +74,26 @@ regfile register(
 );
 
 mux2 ALUMux( // checked - SK 1/12/2023
-    .control    (ALUsrc_i),
-    .input0     (regOp2),
-    .input1     (ImmOp_i),
-    .out        (SrcB)
+    .control    (ALUSrcE),
+    .input0     (WriteDataE),
+    .input1     (ExtImmE),
+    .out        (SrcBE)
 );
 
 alu ALU( // checked - SK 1/12/2023
-    .ALUctrl    (ALUctrl_i),
-    .SrcA       (SrcA),
-    .SrcB       (SrcB),
-    .ALUResult  (ALUResult_o),
-    .Zero       (Zero_o)
+    .ALUctrl    (ALUControlE),
+    .SrcA       (SrcAE),
+    .SrcB       (SrcBE),
+    .ALUResult  (ALUResultE),
+    .Zero       (ZeroE)
 );
 
 data_mem data(
     .clk        (clk),
-    .A          (ALUResult_o),
-    .WD         (regOp2),
-    .WE         (MemWrite_i),
-    .RD         (ReadData)
+    .A          (ALUResultM),
+    .WD         (WriteDataM),
+    .WE         (MemWriteM),
+    .RD         (ReadDataM)
 );
 
 mux4 resultMux(
@@ -104,7 +117,7 @@ mux4 RD2EHazardMux(
     .input0     (RD2E),
     .input1     (ResultW),
     .input2     (ALUResultM),
-    .out        (Result)
+    .out        (WriteDataE)
 );
 
 adder addPCTargetE(
@@ -149,4 +162,24 @@ reg_dec DREg(
     .PCPlus4E(PCPlus4E)
 );
 
+reg_execute EREG(
+    .clk(clk),
+    //inputs E
+    .RegWriteE(RegWriteE),
+    .ResultSrcE(ResultSrcE),
+    .MemWriteE(MemWriteE),
+    .ALUResultE(ALUResultE),
+    .WriteDataE(WriteDataE),
+    .RdE(RdE),
+    .PCPlus4E(PCPlus4E),
+
+    //outputs M
+    .RegWriteM(RegWriteM),    
+    .ResultSrcM(ResultSrcM),
+    .MemWriteM(MemWriteM),
+    .ALUResultM(ALUResultM),
+    .WriteDataM(WriteDataM),
+    .RdM(RdM),
+    .PCPlus4M(PCPlus4M)
+);
 endmodule
