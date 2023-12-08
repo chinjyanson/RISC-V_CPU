@@ -10,7 +10,8 @@ module alu_top #(
     input   wire [1:0]                  ResultSrc_i,
     input   wire [1:0]                  MemWrite_i,
     input   wire [DATA_WIDTH-1:0]       ImmOp_i,
-    input   wire [DATA_WIDTH-1:0]       PCPlus4_i,
+    input   wire [DATA_WIDTH-1:0]       PCPlus4D_i,
+    input   wire [DATA_WIDTH-1:0]       PCD_i,
     output  wire                        Zero_o,
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       ALUResult_o

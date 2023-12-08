@@ -5,7 +5,8 @@ module control_top #(
     parameter   IMM_WIDTH = 2      //^^
 
 )(
-     input  logic [DATA_WIDTH-1:0]          PC_i, //8b
+     input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
+     input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
      input  logic                           Zero_i, //1b
      output logic [DATA_WIDTH-1:0]          instr_o,//32b
      output logic [2:0]                     RegWrite_o, //1b ==> edited to 3 bits
@@ -14,7 +15,9 @@ module control_top #(
      output logic [CONTROL_WIDTH-1:0]       ALUctrl_o, //3b
      output logic                           ALUsrc_o, //1 bit
      output logic [IMM_WIDTH-1:0]           PCsrc_o, //1 bit ==> edited to 2 bits
-     output logic [DATA_WIDTH-1:0]          ImmOp_o //32 bits
+     output logic [DATA_WIDTH-1:0]          ImmOp_o,//32 bits
+     output logic [DATA_WIDTH-1:0]          PCD_o,
+     output logic [DATA_WIDTH-1:0]          PCPlus4D_o
 
 );
 
@@ -34,8 +37,16 @@ control_unit ControlUnit(
 );
 
 instr_mem InstrMem(
-    .addr_i         (PC_i),
+    .addr_i         (PCF_i),
     .Instr_o        (instr_o)
+);
+
+fetch_reg FReg(
+    .InstrD(istr_o),
+    .PCPlus4F(PCPlus4F_i),
+    .PCF(PCF_i),
+    .PCPlus4D(PCPlus4D_o),
+    .PCD(PCD_o)
 );
 
 sign_extend MySignExtend(
