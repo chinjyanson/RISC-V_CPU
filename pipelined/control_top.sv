@@ -39,9 +39,9 @@ module control_top #(
         );
 
     sign_extend #(DATA_WIDTH, 12) my_sign_extend(
-        .instr (instr),
-        .ImmSrc (ImmSrc),    
-        .ImmOp (ImmOp)
+        .instr_I (instr),
+        .ImmSrc_o (ImmSrc),    
+        .ImmOp_o (ImmOp)
     );
 
 endmodule
