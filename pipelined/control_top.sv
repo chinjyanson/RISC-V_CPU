@@ -7,38 +7,39 @@ module control_top #(
 )(
      input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
      input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
-     input  logic                           Zero_i, //1b
-     output logic [DATA_WIDTH-1:0]          instr_o,//32b
-     output logic [2:0]                     RegWrite_o, //1b ==> edited to 3 bits
-     output logic [1:0]                     MemWrite_o, //1b ==> edited to 2 bits
-     output logic [IMM_WIDTH-1:0]           Resultsrc_o, //3b ==> edited to 2 bits
-     output logic [CONTROL_WIDTH-1:0]       ALUctrl_o, //3b
-     output logic                           ALUsrc_o, //1 bit
-     output logic [IMM_WIDTH-1:0]           PCsrc_o, //1 bit ==> edited to 2 bits
-     output logic [DATA_WIDTH-1:0]          ImmOp_o,//32 bits
+     output logic [DATA_WIDTH-1:0]          InstrD,//32b
+     output logic [2:0]                     RegWriteD_o, //1b ==> edited to 3 bits
+     output logic [1:0]                     MemWriteD_o, //1b ==> edited to 2 bits
+     output logic [IMM_WIDTH-1:0]           ResultsrcD_o, //3b ==> edited to 2 bits
+     output logic [CONTROL_WIDTH-1:0]       ALUctrlD_o, //3b
+     output logic                           ALUsrcD_o, //1 bit
+     output logic [DATA_WIDTH-1:0]          ImmOpD_o,//32 bits
      output logic [DATA_WIDTH-1:0]          PCD_o,
      output logic [DATA_WIDTH-1:0]          PCPlus4D_o
+     output logic                           JumpD_o,
+     output logic                           BranchD_o,
 
 );
 
     logic [1:0]       ImmSrc;
 
 control_unit ControlUnit(
-    .Zero_i          (Zero_i),
-    .instr_i         (instr_o),
-    .RegWrite_o      (RegWrite_o),
-    .MemWrite_o       (MemWrite_o),
-    .Resultsrc_o      (Resultsrc_o),
-    .ALUctrl_o        (ALUctrl_o),
-    .ALUsrc_o         (ALUsrc_o),
-    .ImmSrc_o         (ImmSrc),
-    .PCsrc_o          (PCsrc_o)
-
+    .opcode         (InstrD[6:0]),
+    .funct3         (InstrD[14:12]),
+    .funct7         (InstrD[30]),
+    .RegWriteD      (RegWriteD_o),
+    .MemWriteD      (MemWriteD_o),
+    .ResultsrcD     (ResultsrcD_o),
+    .ALUctrlD       (ALUctrlD_o),
+    .ALUsrcD        (ALUsrcD_o),
+    .ImmSrcD        (ImmSrcD_o),
+    .JumpD          (JumpD_o),
+    .BranchD        (BranchD_o)
 );
 
 instr_mem InstrMem(
     .addr_i         (PCF_i),
-    .Instr_o        (instr_o)
+    .InstrD        (InstrD)
 );
 
 fetch_reg FReg(
@@ -50,7 +51,7 @@ fetch_reg FReg(
 );
 
 sign_extend MySignExtend(
-    .instr_i        (instr_o),
+    .instr_i        (InstrD),
     .ImmSrc_i       (ImmSrc),
     .ImmOp_o        (ImmOp_o)
 );
