@@ -1,8 +1,8 @@
 module control_top #(
     parameter   ADDRESS_WIDTH = 8,
     parameter   DATA_WIDTH = 32,
-    parameter   CONTROL_WIDTH = 3,
-    parameter   IMM_WIDTH = 2
+    parameter   CONTROL_WIDTH = 3, //why do we need these parameters?
+    parameter   IMM_WIDTH = 2      //^^
 
 )(
      input  logic [DATA_WIDTH-1:0]          PC_i, //8b
@@ -43,5 +43,6 @@ sign_extend MySignExtend(
     .ImmSrc_i       (ImmSrc),
     .ImmOp_o        (ImmOp_o)
 );
+
 
 endmodule 

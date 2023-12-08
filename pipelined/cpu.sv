@@ -70,5 +70,9 @@ alu_top alu(
     .a0(a0),  //(debug output)
     .ALUResult_o(ALUResult_o)
 );
+
+hazard_unit hazard(
+    
+);
 endmodule
 
