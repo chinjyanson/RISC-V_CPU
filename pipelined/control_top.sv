@@ -24,13 +24,13 @@ module control_top #(
 
 
     instr_mem #(ADDRESS_WIDTH, DATA_WIDTH) my_instr_mem(
-        .PC (PC),      
-        .instr (instr)   
+        .pc_i (PC),      
+        .instr_o (instr)   
         );
 
     control_unit #(DATA_WIDTH) my_control_unit(
         .instr_i (instr),
-        .Zero_o (EQ),
+        .Zero_o (Zero_o),
         .RegWrite_o (RegWrite),
         .ALUctrl_o (ALUctrl),
         .ALUsrc_o (ALUsrc),
