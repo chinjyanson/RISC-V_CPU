@@ -15,7 +15,7 @@ module cpu #(
     //output internal logic for control module 
     logic   [2:0]            RegWrite;
     logic   [1:0]            MemWrite;
-    logic   [DATA_WIDTH-1:0] Instr;
+    logic   [DATA_WIDTH-1:0] InstrD;
     logic   [DATA_WIDTH-1:0] PCD;
     logic   [DATA_WIDTH-1:0] PCPlus4D;
     logic                    JumpD;
@@ -52,7 +52,7 @@ control_top control(
     .clk(clk),
     .PCF_i(PCF), //32b
     .PCPlus4F_i(PCPlus4F)
-    .InstrD_o(Instr),//32b
+    .InstrD_o(InstrD),//32b
     .RegWriteD_o(RegWrite), //1b
     .MemWriteD_o(MemWrite), //1b
     .ResultsrcD_o(Resultsrc), //3b ==> edited to 2 bits
@@ -73,12 +73,17 @@ alu_top alu(
     .RegWriteD_i(RegWrite),
     .ResultSrcD_i(Resultsrc),
     .MemWriteD_i(MemWrite),
-    .ImmOpD_i(ImmOp),
+    .ExtImmD_i(ImmOp),
     .PCPlus4D_i(PCPlus4),
     .a0(a0),  //(debug output)
     .ALUResult_o(ALUResult_o),
     .PCD_i(PCD),
-    .PCPlus4D_i(PCPlus4D)
+    .PCPlus4D_i(PCPlus4D),
+    .Rs1D_i(InstrD[19:15]),
+    .Rs2D_i(InstrD[24:15]),
+    .RdD_i(InstrD[11:7]),
+    .JumpD_i(JumpD),
+    .BranchD_i(BranchD)
 );  
 
 hazard_unit hazard(
