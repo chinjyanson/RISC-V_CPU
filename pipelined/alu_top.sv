@@ -17,13 +17,14 @@ module alu_top #(
     input   wire [4:0]                  Rs1D_i,
     input   wire [4:0]                  Rs2D_i,
     input   wire [4:0]                  RdD_i,
+
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       ALUResult_o,
     output  wire [DATA_WIDTH-1:0]       PCTargetE_o,
     output  wire [1:0]                  PCSrcE_o
 );
 
-//Data Logic ResultWriteD
+//Data Logic 
 wire [DATA_WIDTH-1:0] RD1D;
 wire [DATA_WIDTH-1:0] RD2D;
 wire [DATA_WIDTH-1:0] Result;
@@ -52,7 +53,6 @@ wire [DATA_WIDTH-1:0]    ExtImmE;
 wire                     ZeroE;
 
 //Memory Logic
-
 wire [2:0]              RegWriteM;
 wire [1:0]              ResultSrcM;
 wire [1:0]              MemWriteM;
@@ -60,12 +60,26 @@ wire [4:0]              RdM;
 wire [DATA_WIDTH-1:0]   WriteDataM;
 wire [DATA_WIDTH-1:0]   PCPlusM;
 wire [DATA_WIDTH-1:0]   ReadDataM;
+wire [DATA_WIDTH-1:0]   ALUResultM;
+
+//Write Logic
+wire [2:0]              RegWriteW;
+wire [1:0]              ResultSrcW;
+wire [1:0]              MemWriteW;
+wire [4:0]              RdW;
+wire [DATA_WIDTH-1:0]   WriteDataW;
+wire [DATA_WIDTH-1:0]   PCPlusW;
+wire [DATA_WIDTH-1:0]   ReadDataW;
+wire [DATA_WIDTH-1:0]   ALUResultW;
+
 
 //add logic here for PCSrcE_o -
 
 regfile register(
     .clk        (clk),
-    .Instr      (Instr_i),
+    .A1         (Rs1D_i),
+    .A2         (Rs2D_i),
+    .A3         (RdW),
     .WE3        (RegWriteW),
     .WD3        (ResultW),
     .RD1        (RD1D),
@@ -97,11 +111,11 @@ data_mem data(
 );
 
 mux4 resultMux(
-    .control    (ResultSrc_i),
-    .input0     (ALUResult_o),
-    .input1     (ReadData),
-    .input2     (PCPlus4_i),
-    .out        (Result)
+    .control    (ResultsrcW),
+    .input0     (ALUResultW),
+    .input1     (ReadDataW),
+    .input2     (PCPlus4W),
+    .out        (ResultW)
 );
 
 mux4 RD1EHazardMux(
@@ -183,11 +197,12 @@ reg_execute EREG(
     .PCPlus4M(PCPlus4M)
 );
 
-reg_write WREG(
+reg_memory MREG(
     //input M
     .clk(clk),
     .RegWriteM(RegWriteM),    
     .ResultSrcM(ResultSrcM),
+    .ALUResultM(ALUResultM)
     .WriteDataM(WriteDataM),
     .ReadDataM(ReadDataM),
     .RdM(RdM),
@@ -196,6 +211,7 @@ reg_write WREG(
     //outputs W
     .RegWriteW(RegWriteW), 
     .ResultSrcW(ResultSrcW),
+    .ALUResultW(ALUResultW),
     .WriteDataW(WriteDataW),
     .ReadDataW(ReadDataW),
     .RdW(RdW),
