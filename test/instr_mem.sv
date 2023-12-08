@@ -12,7 +12,7 @@ logic [ADDRESS_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
 
 initial begin
         $display("Loading rom.");
-        $readmemh("pdf(f1).mem", rom_array);
+        $readmemh("pdf.mem", rom_array);
 end;
 
 
