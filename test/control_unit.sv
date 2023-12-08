@@ -5,7 +5,7 @@ module control_unit #(
 )(
     input   logic                           Zero_i,
     input   logic [DATA_WIDTH-1:0]          instr_i,
-    output  logic [1:0]                     RegWrite_o,
+    output  logic [2:0]                     RegWrite_o,
     output  logic [1:0]                     MemWrite_o,
     output  logic [IMM_WIDTH-1:0]           Resultsrc_o,
     output  logic [CONTROL_WIDTH-1:0]       ALUctrl_o,
@@ -35,47 +35,48 @@ module control_unit #(
     logic [6:0] opcode = instr_i[6:0];
     logic [2:0] funct3 = instr_i[14:12];
     logic funct7 = instr_i[30];
-
-
+    
     always_comb  begin
 
     case (opcode)
 
-    7'b0000011: // (3) load instructions - lb/lh/lw  - I Type
+    7'b0000011: // (3) load instructions - I Type
         begin
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
             MemWrite_o = 2'b00; 
             Resultsrc_o = 2'b01;
-            PCsrc_0 = 2'b00;
-            ALUctrl = 3'b000;
+            PCsrc_o = 2'b000;
+            ALUctrl_o = 3'b000;
             case(funct3)
-                3'b000: RegWrite_o = 2'b11; //lb
-                3'b001: RegWrite_o = 2'b10; //lh
-                3'b010: RegWrite_o = 2'b01; //lw
-                default: RegWrite_o = 2'b00;
+                3'b000: RegWrite_o = 3'b011; //lb
+                3'b001: RegWrite_o = 3'b010; //lh
+                3'b010: RegWrite_o = 3'b001; //lw
+                3'b100: RegWrite_o = 3'b111; //lbu
+                3'b101: RegWrite_o = 3'b110; //lhu
+                default: RegWrite_o = 3'b000; //(not sure what default should be but 000 for now)
             endcase
         end
 
-    7'b0100011: // (35) store instrucions - sb/sh/sw
+    7'b0100011: // (35) store instrucions - S type 
         begin
             ImmSrc_o = 2'b01;
             ALUsrc_o = 1'b1;
-            RegWrite_o = 2'b00; 
+            RegWrite_o = 3'b000; 
             Resultsrc_o = 2'b00;
-            PCsrc_0 = 2'b000;
-            ALUctrl = 3'b000;
+            PCsrc_o = 2'b000;
+            ALUctrl_o = 3'b000;
             case(funct3)
                 3'b000: MemWrite_o = 2'b11; //sb
                 3'b001: MemWrite_o = 2'b10; //sh
                 3'b010: MemWrite_o = 2'b01; //sw
-                default MemWrite_o = 2'b00;
+                default: MemWrite_o = 2'b00; //(not sure what default should be but 000 for now)
             endcase
         end
     
     7'b0110011: // R-type
         begin
-            RegWrite_o = 1'b1;
+            RegWrite_o = 3'b001;
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b0;
             MemWrite_o = 2'b00;
@@ -98,7 +99,7 @@ module control_unit #(
         
     7'b0010011: //Type I (19)
         begin 
-            RegWrite_o = 2'b01;
+            RegWrite_o = 3'b001;
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
             MemWrite_o = 2'b00; 
@@ -114,7 +115,7 @@ module control_unit #(
 
     7'b1100011: //Type B
         begin
-            RegWrite_o = 2'b00;
+            RegWrite_o = 3'b000;
             ImmSrc_o = 2'b10; 
             ALUsrc_o = 1'b0;
             MemWrite_o = 2'b00;
@@ -131,7 +132,7 @@ module control_unit #(
 
     7'b1101111: //Type J - JAL
         begin 
-            RegWrite_o = 2'b01;
+            RegWrite_o = 3'b001;
             ImmSrc_o = 2'b11;
             ALUsrc_o = 1'b1;
             MemWrite_o = 2'b00; 
@@ -142,7 +143,7 @@ module control_unit #(
 
     7'b1100111: //Type I - JALR
         begin 
-            RegWrite_o = 2'b00;
+            RegWrite_o = 3'b000;
             ImmSrc_o = 2'b00;   
             ALUsrc_o = 1'b1; //was blank before - check instr
             MemWrite_o = 2'b00; 
@@ -153,7 +154,7 @@ module control_unit #(
     
     default: //just in case we have something else
         begin 
-            RegWrite_o = 2'b01;
+            RegWrite_o = 3'b001;
             ImmSrc_o = 2'b00;
             ALUsrc_o = 1'b1;
             MemWrite_o = 2'b00;
@@ -165,7 +166,6 @@ module control_unit #(
     endcase 
     
     end
-//coment
-    
+
 endmodule
 
