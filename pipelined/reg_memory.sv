@@ -28,6 +28,7 @@ module reg_memory #(
         ReadDataW   <=      ReadDataM;
         PCPlus4W    <=      PCPlus4M;
     end
+
       
 );
 endmodule

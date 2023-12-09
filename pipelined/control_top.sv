@@ -3,6 +3,7 @@ module control_top #(
         parameter   DATA_WIDTH = 32
 )(
     input  logic                           clk,
+    input  logic                           Fen_i
     input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
     input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
     output logic [DATA_WIDTH-1:0]          InstrD,//32b
@@ -42,6 +43,7 @@ module control_top #(
 
     reg_fetch #(DATA_WIDTH) FReg(
         .clk        (clk),
+        .en         (Fen_i),
         .InstrF     (InstrF),
         .PCPlus4F   (PCPlus4F_i),
         .PCF        (PCF_i),

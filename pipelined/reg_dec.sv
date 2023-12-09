@@ -2,6 +2,8 @@ module reg_dec#(
     parameter DATA_WIDTH = 32;
 )(
     input logic                    clk,
+    input logic                    en,
+
     input logic [2:0]              RegWriteD,
     input logic [1:0]              ResultSrcD,
     input logic [1:0]              MemWriteD,
@@ -17,6 +19,7 @@ module reg_dec#(
     input logic [4:0]               RdD,
     input logic [DATA_WIDTH-1:0]    ExtImmD,
     input logic [DATA_WIDTH-1:0]    PCPlus4D,
+    input logic [6:0]               opcodeD,
 
     output logic [2:0]              RegWriteE,
     output logic [1:0]              ResultSrcE,
@@ -32,26 +35,30 @@ module reg_dec#(
     output logic [4:0]               Rs2E,
     output logic [4:0]               RdE,
     output logic [DATA_WIDTH-1:0]    ExtImmE,
-    output logic [DATA_WIDTH-1:0]    PCPlus4E
+    output logic [DATA_WIDTH-1:0]    PCPlus4E,
+    output logic [6:0]               opcodeE
 
 );
 
 always_ff @(posedge clk)begin
-    RegWriteE   <=       RegWriteD;
-    ResultSrcE  <=       ResultSrcD;
-    MemWriteE   <=       MemWriteD;
-    JumpE       <=       JumpD;
-    BranchE     <=       BranchD;
-    ALUControlE <=       ALUControlD;
-    ALUsrcE     <=       ALUsrcD;
-    RD1E        <=       RD1D;
-    RD2E        <=       RD2D;
-    PCE         <=       PCD;
-    Rs1E        <=       Rs1D;
-    Rs2E        <=       Rs2D;
-    RdE         <=       RdD;
-    ExtImmE     <=       ExtImmD;
-    PCPlus4E    <=       PCPlus4D;
+    if(en) begin     
+        RegWriteE   <=       RegWriteD;
+        ResultSrcE  <=       ResultSrcD;
+        MemWriteE   <=       MemWriteD;
+        JumpE       <=       JumpD;
+        BranchE     <=       BranchD;
+        ALUControlE <=       ALUControlD;
+        ALUsrcE     <=       ALUsrcD;
+        RD1E        <=       RD1D;
+        RD2E        <=       RD2D;
+        PCE         <=       PCD;
+        Rs1E        <=       Rs1D;
+        Rs2E        <=       Rs2D;
+        RdE         <=       RdD;
+        ExtImmE     <=       ExtImmD;
+        PCPlus4E    <=       PCPlus4D;
+        opcodeE     <=       opcodeD;
+    end
 end
 
 endmodule

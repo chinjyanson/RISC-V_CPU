@@ -3,6 +3,7 @@ module alu_top #(
     parameter DATA_WIDTH = 32 
 )(
     input   wire                        clk,
+    input   wire                        Den_i
     input   wire                        ALUsrcD_i,
     input   wire [CONTROL_WIDTH-1:0]    ALUctrlD_i,
     input   wire [DATA_WIDTH-1:0]       InstrD_i,
@@ -17,11 +18,13 @@ module alu_top #(
     input   wire [4:0]                  Rs1D_i,
     input   wire [4:0]                  Rs2D_i,
     input   wire [4:0]                  RdD_i,
+    input   wire [6:0]                  opcodeD_i,
 
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       ALUResult_o,
     output  wire [DATA_WIDTH-1:0]       PCTargetE_o,
-    output  wire [1:0]                  PCSrcE_o
+    output  wire [1:0]                  PCSrcE_o,
+    output  wire [6:0]                  opcodeE_o
 );
 
 //Data Logic 
@@ -142,6 +145,8 @@ adder addPCTargetE(
 
 reg_dec DREg(
     //inputs - D
+    .clk(clk),
+    .en(Den_i),
     .RegWriteD(RegWriteD_i),
     .ResultSrcD(ResultSrc_i),
     .MemWriteD(MemWriteD_i),
@@ -157,6 +162,7 @@ reg_dec DREg(
     .RdD(RdD_i),
     .ExtImmD(ExtImmD_i)
     .PCPlus4D(PCPlus4D_i),
+    .opcodeD(opcodeD_i),
 
     //outputs - E
     .RegWriteE(RegWriteE),
@@ -173,7 +179,8 @@ reg_dec DREg(
     .Rs2E(Rs2E),
     .RdE(RdE),
     .ExtImmE(ExtImmE),
-    .PCPlus4E(PCPlus4E)
+    .PCPlus4E(PCPlus4E),
+    .opcodeE(opcodeE_o)
 );
 
 reg_execute EREG(

@@ -1,13 +1,12 @@
-module data_hazard (
-    logic input [4:0]   Rs1E,
-    logic input [4:0]   Rs2E,       
-    logic input [4:0]   RdM, 
-    logic input [4:0]   RdW,
-    logic input [2:0]   RegWriteM,
-    logic input [2:0]   RegWriteW,
-    logic output[1:0]   FowardAE,
-    logic output[1:0]   FowardBE
-    
+module foward_unit (
+    logic input [4:0]   Rs1E;
+    logic input [4:0]   Rs2E;
+    logic input [4:0]   RdM,;
+    logic input [4:0]   RdW;
+    logic input [2:0]   RegWriteM;
+    logic input [2:0]   RegWriteW;
+    logic output[1:0]   FowardAE;
+    logic output[1:0]   FowardBE;
 );
 
 //could be for 2 reasons 
@@ -25,22 +24,18 @@ module data_hazard (
 //fowarding
 if ((RegWriteM!= 3'b0)||(RegWriteW!= 3'b0))begin
     //FowardAE
-    if(Rs1E == RdM) begin
+    if(Rs1E == RdM) 
         FowardAE = 2'b10;
-    end 
-    else()begin
+    else 
         FowardAE = (Rs1E == RdW) ? 2'b01 : 2'b00;
-    end
+    
 
     //FowardBE
-    if(Rs2E == RdM) begin
+    if(Rs2E == RdM) 
         FowardBE = 2'b10;
-    end 
-    else()begin
+    else 
         FowardBE = (Rs2E == RdW) ? 2'b01 : 2'b00;
-    end
+    
 end
-
-
 
 endmodule

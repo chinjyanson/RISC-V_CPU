@@ -38,8 +38,14 @@ module cpu #(
     logic [DATA_WIDTH-1:0]      Result;
 
 
+    //output internal logic for hazard module
+    logic                       Den;
+    logic                       Fen;
+    logic                       PCen
+
 pc_top pc(
-    .clk(clk),        
+    .clk(clk),
+    .PCen_i(PCen)   
     .rst(rst),        
     .ALUResult_i(ALUResult_o),    //result from data mem to mux4    
     .PCsrc_i(PCsrcE),
@@ -50,6 +56,7 @@ pc_top pc(
 
 control_top control(
     .clk(clk),
+    .Fen_i(Fen) 
     .PCF_i(PCF), //32b
     .PCPlus4F_i(PCPlus4F)
     .InstrD_o(InstrD),//32b
@@ -67,6 +74,7 @@ control_top control(
 
 alu_top alu(
     .clk(clk),
+    .Den_i(Den),
     .ALUsrcD_i(ALUsrc),
     .ALUctrlD_i(ALUctrl),
     .InstrD_i(Instr),
@@ -75,6 +83,7 @@ alu_top alu(
     .MemWriteD_i(MemWrite),
     .ExtImmD_i(ImmOp),
     .PCPlus4D_i(PCPlus4),
+    .opcodeD_i(InstrD[6:0]),
     .a0(a0),  //(debug output)
     .ALUResult_o(ALUResult_o),
     .PCD_i(PCD),
@@ -85,7 +94,8 @@ alu_top alu(
     .JumpD_i(JumpD),
     .BranchD_i(BranchD),
     .PCTargetE_o(PCTarget),
-    .PCSrcE_o(PCSrcE)
+    .PCSrcE_o(PCSrcE),
+    .opcodeE_o(OpcodeE)
 );  
 
 hazard_unit hazard(

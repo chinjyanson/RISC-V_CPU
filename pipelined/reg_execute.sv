@@ -22,7 +22,8 @@ module reg_execute #(
         MemWriteM   <=      MemWriteE;
         RdM         <=      RdE;
         WriteDataM  <=      WriteDataE;
-        PCPlusM     <=      PCPlusME;      
+        PCPlusM     <=      PCPlusME;   
+          
     end
       
 );
