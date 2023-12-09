@@ -2,46 +2,59 @@ module control_top #(
         parameter   ADDRESS_WIDTH = 8,
         parameter   DATA_WIDTH = 32
 )(
-    input   logic   [ADDRESS_WIDTH-1:0] PC,
-    input   logic                       Zero_i,
-    output  logic                       RegWrite_o,
-    output  logic   [2:0]               ALUctrl,_o
-    output  logic                       ALUsrc_o,
-    output  logic                       PCsrc_o,
-    output  logic   [4:0]               rs1_o,
-    output  logic   [4:0]               rs2_o,
-    output  logic   [4:0]               rd_o,
-    output  logic   [DATA_WIDTH-1:0]    ImmOp_o
+    input  logic                           clk,
+    input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
+    input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
+    output logic [DATA_WIDTH-1:0]          InstrD,//32b
+    output logic [2:0]                     RegWriteD_o, //1b ==> edited to 3 bits
+    output logic [1:0]                     MemWriteD_o, //1b ==> edited to 2 bits
+    output logic [IMM_WIDTH-1:0]           ResultsrcD_o, //3b ==> edited to 2 bits
+    output logic [CONTROL_WIDTH-1:0]       ALUctrlD_o, //3b
+    output logic                           ALUsrcD_o, //1 bit
+    output logic [DATA_WIDTH-1:0]          ImmOpD_o,//32 bits
+    output logic [DATA_WIDTH-1:0]          PCD_o,
+    output logic [DATA_WIDTH-1:0]          PCPlus4D_o
+    output logic                           JumpD_o,
+    output logic                           BranchD_o,
 );
 
-    wire    [DATA_WIDTH-1:0]    instr;
-    wire    [11:0]              ImmSrc;
+    logic [1:0]       ImmSrc;
+    logic [31:0]      InstrF;
 
+    instr_mem InstrMem(
+        .addr_i         (PCF_i),
+        .Instr_o        (InstrF)
+    );
 
-    assign rs1  = instr[19:15];
-    assign rs2  = instr[24:20];
-    assign rd   = instr[11:7];
+    control_unit #(DATA_WIDTH) ControlUnit(
+    .opcode         (InstrD[6:0]),
+    .funct3         (InstrD[14:12]),
+    .funct7         (InstrD[30]),
+    .RegWriteD      (RegWriteD_o),
+    .MemWriteD      (MemWriteD_o),
+    .ResultsrcD     (ResultsrcD_o),
+    .ALUctrlD       (ALUctrlD_o),
+    .ALUsrcD        (ALUsrcD_o),
+    .ImmSrcD        (ImmSrcD_o),
+    .JumpD          (JumpD_o),
+    .BranchD        (BranchD_o)
+    );
 
+    reg_fetch #(DATA_WIDTH) FReg(
+        .clk        (clk),
+        .InstrF     (InstrF),
+        .PCPlus4F   (PCPlus4F_i),
+        .PCF        (PCF_i),
+        .PCPlus4D   (PCPlus4D_o),
+        .PCD        (PCD_o)
+        .InstrD     (InstrD)
+    );
 
-    instr_mem #(ADDRESS_WIDTH, DATA_WIDTH) my_instr_mem(
-        .pc_i (PC),      
-        .instr_o (instr)   
-        );
-
-    control_unit #(DATA_WIDTH) my_control_unit(
-        .instr_i (instr),
-        .Zero_o (Zero_i),
-        .RegWrite_o (RegWrite_o),
-        .ALUctrl_o (ALUctrl_o),
-        .ALUsrc_o (ALUsrc_o),
-        .ImmSrc_o (ImmSrc),
-        .PCsrc_o (PCsrc_o)
-        );
-
-    sign_extend #(DATA_WIDTH, 12) my_sign_extend(
-        .instr_I (instr),
-        .ImmSrc_o (ImmSrc),    
-        .ImmOp_o (ImmOp_o)
+    
+    sign_extend #(DATA_WIDTH) MySignExtend(
+        .instr_i        (InstrD),
+        .ImmSrc_i       (ImmSrc),
+        .ImmOp_o        (ImmOp_o)
     );
 
 endmodule

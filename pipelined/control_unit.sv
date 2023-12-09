@@ -1,17 +1,34 @@
-module control_unit #(
-    parameter DATA_WIDTH = 32
-)(
-    input   logic   [DATA_WIDTH-1:0]    instr_i,
-    input   logic                       Zero_o,
-    output  logic                       RegWrite_o,
-    output  logic   [2:0]               ALUctrl_o,
-    output  logic                       ALUsrc,_o
-    output  logic   [11:0]              ImmSrc_o,
-    output  logic                       PCsrc_o,
-    output  logic                       MEMWrite_o,
-    output  logic                       MEMsrc_o
+module control_unit (
+    input   logic [6:0]                     opcode,
+    input   logic [2:0]                     funct3,
+    input   logic                           funct7,      
+    output  logic [2:0]                     RegWrite,
+    output  logic [1:0]                     MemWriteD,
+    output  logic [1:0]                     ResultsrcD,
+    output  logic [2:0]                     ALUctrlD,
+    output  logic                           ALUsrcD,
+    output  logic [1:0]                     ImmSrcD, 
+    output  logic                           JumpD,
+    output  logic                           BranchD
 );
 
+
+//actual ImmSrc
+    //00 -> I
+    //01 -> S
+    //10 -> B 
+    //11 -> J
+
+
+ /*
+    3'b000: SUM = ALUop1 + ALUop2;
+    3'b001: SUM = ALUop1 - ALUop2;
+    3'b010: SUM = ALUop1 & ALUop2;
+    3'b011: SUM = ALUop1 | ALUop2;
+    3'b100: SUM = ALUop1 ^ ALUop2;
+    */
+
+    
     always_comb
         case ({instr_i[6:0],instr_i[14:12]})
             {7'b0010011, 3'b000}:   RegWrite_o = 1'b1;
