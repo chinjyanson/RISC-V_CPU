@@ -23,6 +23,7 @@ class Vcpu___024root final : public VerilatedModule {
     CData/*1:0*/ cpu__DOT__PCsrc;
     CData/*1:0*/ cpu__DOT__control__DOT__ImmSrc;
     CData/*0:0*/ __Vclklast__TOP__clk;
+    VL_OUT(test,31,0);
     VL_OUT(a0,31,0);
     IData/*31:0*/ cpu__DOT__Instr;
     IData/*31:0*/ cpu__DOT__ALUResult_o;

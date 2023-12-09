@@ -6,6 +6,7 @@ module data_mem #(
     input  logic     [1:0]                   WE,
     input  logic     [DATA_WIDTH-1:0]        A,
     input  logic     [DATA_WIDTH-1:0]        WD,
+    output logic [DATA_WIDTH-1:0]   test,
     output logic     [DATA_WIDTH-1:0]        RD
 );
 
@@ -43,6 +44,8 @@ module data_mem #(
         end
         endcase
     end 
+
+    assign test = data_mem_register[1];
     assign RD = data_mem_register[add]; //we read and output the [A] register value
 
 endmodule
