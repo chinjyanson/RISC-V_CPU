@@ -12,6 +12,10 @@ if (PCSrcE != 2'b0) begin
     PCrst = 1;
     Frst = 1;
     Drst = 1;
-end
+end else begin 
+    PCrst = 0;
+    Frst = 0;
+    Drst = 0;
+end 
 
 endmodule

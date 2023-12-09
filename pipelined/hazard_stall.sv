@@ -15,13 +15,14 @@ module hazard_stall(
         //disable F and D registers
         //disable the reg on PC???? 
         
-if(opcodeE == 7'd3) begin
-    if ((RdE == Rs1D) || (RdE == Rs1D)) begin
+if(opcodeE == 7'd3) && ((RdE == Rs1D) || (RdE == Rs1D)) begin
         Fen     = 0;
         Den     = 0;
         PCen    = 0;
-    end
-
+end else begin
+        Fen     = 1;
+        Den     = 1;
+        PCen    = 1;
 end
 
 

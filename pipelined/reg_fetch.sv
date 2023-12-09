@@ -3,6 +3,7 @@ module reg_fetch #(
 )(       
     input logic                  clk,
     input logic                  en,
+    input logic                  rst,
     input logic [DATA_WIDTH-1:0] InstrF,
     input logic [DATA_WIDTH-1:0] PCF,
     input logic [DATA_WIDTH-1:0] PCPlus4F,
@@ -14,9 +15,9 @@ module reg_fetch #(
 
     always_ff @(posedge clk) begin
         if (en) begin
-        InstrD <= InstrF;
-        PCD <= PDF;
-        PCPlus4D <= PCPlus4F;
+        InstrD      <= rst? 0   :   InstrF;
+        PCD         <= rst? 0   :   PDF;
+        PCPlus4D    <= rst? 0   :   PCPlus4F;
         end
     end
       
