@@ -17,12 +17,10 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
     CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
     CData/*7:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
-    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
-    SData/*15:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
     CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
     CData/*7:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
-    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
     CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
     // Body
     __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 = 0U;
@@ -40,14 +38,12 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
         __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 
             = (0xffffU & vlSelf->cpu__DOT__alu__DOT__regOp2);
         __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 = 1U;
-        __Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 = 0U;
         __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 
             = (0xffU & vlSelf->cpu__DOT__ALUResult_o);
     } else if ((3U == (IData)(vlSelf->cpu__DOT__MemWrite))) {
         __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 
             = (0xffU & vlSelf->cpu__DOT__alu__DOT__regOp2);
         __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 = 1U;
-        __Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 = 0U;
         __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 
             = (0xffU & vlSelf->cpu__DOT__ALUResult_o);
     }
@@ -81,19 +77,11 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     }
     if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1) {
         vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1] 
-            = (((~ ((IData)(0xffffU) << (IData)(__Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1))) 
-                & vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                [__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1]) 
-               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1) 
-                                   << (IData)(__Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1))));
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
     }
     if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2) {
         vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2] 
-            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2))) 
-                & vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                [__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2]) 
-               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2) 
-                                   << (IData)(__Vdlyvlsb__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2))));
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
     }
     vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0] 
         = __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
