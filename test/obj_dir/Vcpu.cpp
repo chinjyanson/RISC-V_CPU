@@ -13,6 +13,7 @@ Vcpu::Vcpu(VerilatedContext* _vcontextp__, const char* _vcname__)
     , vlSymsp{new Vcpu__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
+    , test{vlSymsp->TOP.test}
     , a0{vlSymsp->TOP.a0}
     , rootp{&(vlSymsp->TOP)}
 {

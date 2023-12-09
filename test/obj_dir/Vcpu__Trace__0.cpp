@@ -61,12 +61,13 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
     }
     bufp->chgBit(oldp+27,(vlSelf->clk));
     bufp->chgBit(oldp+28,(vlSelf->rst));
-    bufp->chgIData(oldp+29,(vlSelf->a0),32);
-    bufp->chgBit(oldp+30,((vlSelf->cpu__DOT__alu__DOT__SrcA 
+    bufp->chgIData(oldp+29,(vlSelf->test),32);
+    bufp->chgIData(oldp+30,(vlSelf->a0),32);
+    bufp->chgBit(oldp+31,((vlSelf->cpu__DOT__alu__DOT__SrcA 
                            == vlSelf->cpu__DOT__alu__DOT__SrcB)));
-    bufp->chgIData(oldp+31,(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+    bufp->chgIData(oldp+32,(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
                             [(0xffU & vlSelf->cpu__DOT__ALUResult_o)]),32);
-    bufp->chgIData(oldp+32,((vlSelf->cpu__DOT__pc__DOT__PC 
+    bufp->chgIData(oldp+33,((vlSelf->cpu__DOT__pc__DOT__PC 
                              + vlSelf->cpu__DOT__ImmOp)),32);
 }
 

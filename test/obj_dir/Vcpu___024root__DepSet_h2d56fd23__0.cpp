@@ -85,6 +85,8 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     }
     vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0] 
         = __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
+    vlSelf->test = vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+        [1U];
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT__PC))] 
@@ -102,7 +104,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                                                 [(0xffU 
                                                   & vlSelf->cpu__DOT__PC)])));
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
-        [0xbU];
+        [0xaU];
     vlSelf->cpu__DOT__alu__DOT__regOp2 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
         [(0x1fU & (vlSelf->cpu__DOT__Instr >> 0x14U))];
     vlSelf->cpu__DOT__alu__DOT__SrcA = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
@@ -271,7 +273,7 @@ VL_INLINE_OPT QData Vcpu___024root___change_request_1(Vcpu___024root* vlSelf) {
     // Change detection
     QData __req = false;  // Logically a bool
     __req |= ((vlSelf->cpu__DOT__alu__DOT__SrcB ^ vlSelf->__Vchglast__TOP__cpu__DOT__alu__DOT__SrcB));
-    VL_DEBUG_IF( if(__req && ((vlSelf->cpu__DOT__alu__DOT__SrcB ^ vlSelf->__Vchglast__TOP__cpu__DOT__alu__DOT__SrcB))) VL_DBG_MSGF("        CHANGE: alu_top.sv:21: cpu.alu.SrcB\n"); );
+    VL_DEBUG_IF( if(__req && ((vlSelf->cpu__DOT__alu__DOT__SrcB ^ vlSelf->__Vchglast__TOP__cpu__DOT__alu__DOT__SrcB))) VL_DBG_MSGF("        CHANGE: alu_top.sv:22: cpu.alu.SrcB\n"); );
     // Final
     vlSelf->__Vchglast__TOP__cpu__DOT__alu__DOT__SrcB 
         = vlSelf->cpu__DOT__alu__DOT__SrcB;

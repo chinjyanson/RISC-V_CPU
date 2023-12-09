@@ -1,6 +1,7 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "Vcpu.h"
+// #include "vbuddy.cpp"
 #include <iostream>
 
 
@@ -43,17 +44,20 @@ int main(int argc, char **argv, char **env) {
         top->eval ();
 
         if(clock){ 
-                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
+                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 << " datamem: " << top->test << std::endl; 
                         clockcount++; }
 
         clock = !clock;
         //std::cout << "clock1: " << clock << std::endl;
-                   
 
         }
 
+        // vbdPlot(int(top->a0), 0, 255);
+        // vbdCycle(simcyc+1);
+
     }
 
+    // vbdClose();
     tfp->close();
     exit(0);
     
