@@ -24,11 +24,16 @@ module cpu #(
 
     //output internal logic for alu module 
     logic [CONTROL_WIDTH-1:0]  ALUctrl;
-    logic ALUsrc;
+    logic                      ALUsrc;
     logic [DATA_WIDTH-1:0]     ALUResult_o;
     logic [DATA_WIDTH-1:0]     PCTarget;
     logic [1:0]                PCSrcE;
-
+    logic [4:0]                Rs1E; 
+    logic [4:0]                Rs2E;
+    logic [4:0]                RdM;
+    logic [4:0]                RdW;
+    logic [4:0]                RdE;
+    logic [2:0]                RegWriteW;
 
     //output internal logic for pc module
     logic [IMM_WIDTH-1:0]       Resultsrc;
@@ -41,7 +46,15 @@ module cpu #(
     //output internal logic for hazard module
     logic                       Den;
     logic                       Fen;
-    logic                       PCen
+    logic                       PCen;
+    logic                       FowardAE;
+    logic                       FowardBE;
+    logic                       Den;
+    logic                       Fen;
+    logic                       PCen;
+    logic                       PCrst;
+    logic                       Frst;
+    logic                       Drst;
 
 pc_top pc(
     .clk(clk),
@@ -50,8 +63,10 @@ pc_top pc(
     .ALUResult_i(ALUResult_o),    //result from data mem to mux4    
     .PCsrc_i(PCsrcE),
     .PCF_o(PCF), //32b
-    .PCPlus4F_o(PCPlus4F) //unsure
-    .PCTarget_i(PCTarget)
+    .PCPlus4F_o(PCPlus4F), //unsure
+    .PCTarget_i(PCTarget),
+    .PCen_i(PCen),
+    .PCrst_i(PCrst),
     );
 
 control_top control(
@@ -69,7 +84,9 @@ control_top control(
     .PCD_o(PCD),
     .PCPlus4D_o(PCPlus4D),
     .JumpD_o(JumpD),
-    .BranchD_o(BranchD)
+    .BranchD_o(BranchD),
+    .Fen_i(Fen),
+    .Frst_i(Frst)
 );
 
 alu_top alu(
@@ -89,17 +106,46 @@ alu_top alu(
     .PCD_i(PCD),
     .PCPlus4D_i(PCPlus4D),
     .Rs1D_i(InstrD[19:15]),
-    .Rs2D_i(InstrD[24:15]),
+    .Rs2D_i(InstrD[24:20]),
     .RdD_i(InstrD[11:7]),
     .JumpD_i(JumpD),
     .BranchD_i(BranchD),
     .PCTargetE_o(PCTarget),
     .PCSrcE_o(PCSrcE),
-    .opcodeE_o(OpcodeE)
+    .opcodeE_o(OpcodeE),
+
+    .Rs1E_o(Rs1E),   
+    .Rs2E_o(Rs2E),
+    .RdM_o(RdM),
+    .RdW_o(RdW),
+    .RdE_o(RdE),
+    .RegWriteW_o(RegWriteW),
+    .FowardAE_i(FowardAE),
+    .FowardBE_i(FowardBE)
+    .Den_i(Den),
+    .Drst_i(Drst)
+
 );  
 
 hazard_unit hazard(
-
+    .Rs1E_i(Rs1E),
+    .Rs2E_i(Rs2E),
+    .Rs1D_i(InstrD[19:15]),
+    .Rs2D_i(InstrD[24:20]),
+    .RdM_i(RdM),
+    .RdW_i(RdW),
+    .RdE_i(RdE),
+    .RegWriteW_i(RegWriteW),
+    .opcodeE_i(OpcodeE),
+    .PCSrcE_i(PCSrcE),
+    .FowardAE_o(FowardAE),
+    .FowardBE_o(FowardBE),
+    .Den_o(Den),
+    .Fen_o(Fen),
+    .PCen_o(PCen),
+    .PCrst_o(PCrst),
+    .Frst_o(Frst),
+    .Drst_o(Drst)
 );
 endmodule
 

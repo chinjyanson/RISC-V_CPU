@@ -1,4 +1,4 @@
-module foward_unit (
+module hazard_foward (
     logic input [4:0]   Rs1E;
     logic input [4:0]   Rs2E;
     logic input [4:0]   RdM,;

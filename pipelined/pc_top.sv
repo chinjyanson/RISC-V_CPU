@@ -4,11 +4,12 @@ module pc_top #(
 )(
     // interface signals
     input   logic                            clk,        // clock
-    input   logic                            rst,        // reset 
     input   logic [DATA_WIDTH-1:0]           ALUResult_i,        //edited
     input   logic [1:0]                      PCsrc_i,      //edited
     input   logic [PCen]                     PCen_i,
-    input   logic [DATA_WIDTH-1:0]           PCTarget_i,         
+    input   logic [DATA_WIDTH-1:0]           PCTarget_i, 
+    input   logic                            PCen_i,
+    input   logic                            PCrst_i,
     output  logic [DATA_WIDTH-1:0]           PCF_o,
     output  wire  [DATA_WIDTH-1:0]           PCPlus4F_o
 );
@@ -27,7 +28,7 @@ mux4 pc_mux(
 
 pc_reg pc_reg(
     .clk        (clk),
-    .rst        (rst),
+    .rst        (PCrst_i),
     .PCen       (PCen_i)
     .next_PC    (next_PC),
     .pc         (PCF_o),

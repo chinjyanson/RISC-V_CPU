@@ -1,4 +1,4 @@
-module stall_unit(
+module hazard_stall(
     logic input [4:0]   Rs1D;
     logic input [4:0]   Rs2D;
     logic input [4:0]   RdE;
