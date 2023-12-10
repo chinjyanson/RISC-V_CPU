@@ -10,8 +10,8 @@ module hazard_foward (
 );
 
 //could be for 2 reasons 
-    //normal write hazard - fowarding
-    //lw hazard - stalling
+    //normal write hazard - fowarding (forward the result from the memory stage and writeback stage to the execute stage)
+    //lw hazard - stalling (data read from memory is only available at the end of the clock cycle so we stall the next instructions and forward memory data from writeback)
 
 // M needs to have priority over W
     //For example:
