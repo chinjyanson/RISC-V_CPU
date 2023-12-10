@@ -12,10 +12,10 @@ module mux4 #(
 
 always_comb begin
     case (control)
-    2'b00: out = input0;
-    2'b01: out = input1;
-    2'b10: out = input2;
-    2'b11: out = input3;
+        2'b00: out = input0;
+        2'b01: out = input1;
+        2'b10: out = input2;
+        2'b11: out = input3;
     endcase 
 end 
 
