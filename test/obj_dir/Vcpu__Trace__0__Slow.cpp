@@ -83,6 +83,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->declBus(c+5,"WD", false,-1, 31,0);
     tracep->declBus(c+30,"test", false,-1, 31,0);
     tracep->declBus(c+33,"RD", false,-1, 31,0);
+    tracep->declBus(c+40,"starting_address", false,-1, 31,0);
     tracep->declBus(c+25,"add", false,-1, 7,0);
     tracep->declBus(c+6,"data16", false,-1, 15,0);
     tracep->declBus(c+7,"data8", false,-1, 7,0);
@@ -108,7 +109,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->declBus(c+19,"input0", false,-1, 31,0);
     tracep->declBus(c+33,"input1", false,-1, 31,0);
     tracep->declBus(c+3,"input2", false,-1, 31,0);
-    tracep->declBus(c+40,"input3", false,-1, 31,0);
+    tracep->declBus(c+41,"input3", false,-1, 31,0);
     tracep->declBus(c+24,"out", false,-1, 31,0);
     tracep->popNamePrefix(2);
     tracep->pushNamePrefix("control ");
@@ -176,7 +177,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->declBus(c+3,"input0", false,-1, 31,0);
     tracep->declBus(c+34,"input1", false,-1, 31,0);
     tracep->declBus(c+19,"input2", false,-1, 31,0);
-    tracep->declBus(c+41,"input3", false,-1, 31,0);
+    tracep->declBus(c+42,"input3", false,-1, 31,0);
     tracep->declBus(c+27,"out", false,-1, 31,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("pc_reg ");
@@ -276,6 +277,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_full_sub_0(Vcpu___024root* vlSelf, Veril
     bufp->fullIData(oldp+37,(3U),32);
     bufp->fullIData(oldp+38,(2U),32);
     bufp->fullIData(oldp+39,(vlSelf->cpu__DOT__Result),32);
-    bufp->fullIData(oldp+40,(vlSelf->cpu__DOT__alu__DOT__resultMux__DOT__input3),32);
-    bufp->fullIData(oldp+41,(vlSelf->cpu__DOT__pc__DOT__pc_mux__DOT__input3),32);
+    bufp->fullIData(oldp+40,(0x10000U),32);
+    bufp->fullIData(oldp+41,(vlSelf->cpu__DOT__alu__DOT__resultMux__DOT__input3),32);
+    bufp->fullIData(oldp+42,(vlSelf->cpu__DOT__pc__DOT__pc_mux__DOT__input3),32);
 }

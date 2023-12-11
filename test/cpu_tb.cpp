@@ -1,7 +1,7 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "Vcpu.h"
-// #include "vbuddy.cpp"
+#include "vbuddy.cpp"
 #include <iostream>
 
 
@@ -25,6 +25,9 @@ int main(int argc, char **argv, char **env) {
     tfp->open ("cpu.vcd");
 
 
+    //init Vbuddy
+    if (vbdOpen()!=1) return(-1);
+    vbdHeader("Ref Prog");
     
 
     // initialize simulation inputs
@@ -52,12 +55,19 @@ int main(int argc, char **argv, char **env) {
 
         }
 
-        // vbdPlot(int(top->a0), 0, 255);
-        // vbdCycle(simcyc+1);
+    vbdPlot(int(top->a0), 0, 255);
+    vbdCycle(simcyc+1);
+
+       // either simulation finished, or 'q' is pressed
+    if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
+        exit(0);                // ... exit if finish OR 'q' pressed
+        tfp->close();
+    
+    }
 
     }
 
-    // vbdClose();
+    vbdClose();
     tfp->close();
     exit(0);
     

@@ -10,16 +10,11 @@ VL_ATTR_COLD void Vcpu___024root___initial__TOP__0(Vcpu___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___initial__TOP__0\n"); );
-    // Init
-    VlWide<3>/*95:0*/ __Vtemp_hb978afc8__0;
     // Body
     VL_WRITEF("Loading ROM\n");
-    __Vtemp_hb978afc8__0[0U] = 0x2e6d656dU;
-    __Vtemp_hb978afc8__0[1U] = 0x61726f6dU;
-    __Vtemp_hb978afc8__0[2U] = 0x646174U;
-    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp_hb978afc8__0)
+    VL_READMEM_N(true, 32, 65537, 0, std::string{"sine.mem"}
                  ,  &(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register)
-                 , 0, ~0ULL);
+                 , 0x10000U, ~0ULL);
     VL_WRITEF("Loading rom.\n");
     VL_READMEM_N(true, 8, 256, 0, std::string{"pdf.mem"}
                  ,  &(vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array)
@@ -44,7 +39,7 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
         [0xaU];
     vlSelf->test = vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-        [1U];
+        [0x78U];
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT__PC))] 
@@ -239,7 +234,7 @@ VL_ATTR_COLD void Vcpu___024root___ctor_var_reset(Vcpu___024root* vlSelf) {
     for (int __Vi0=0; __Vi0<256; ++__Vi0) {
         vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vi0] = VL_RAND_RESET_I(32);
     }
-    for (int __Vi0=0; __Vi0<256; ++__Vi0) {
+    for (int __Vi0=0; __Vi0<65537; ++__Vi0) {
         vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vi0] = VL_RAND_RESET_I(32);
     }
     vlSelf->cpu__DOT__alu__DOT__resultMux__DOT__input3 = VL_RAND_RESET_I(32);

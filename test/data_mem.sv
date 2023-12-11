@@ -17,12 +17,14 @@ module data_mem #(
         10 - write half word (16 bits)
         11 - write last byte (8 bits)
     */   
-    logic [DATA_WIDTH-1:0]  data_mem_register [2**ADDRESS_WIDTH-1:0]; //we set our reg file which will be filled with initial values
+    logic [DATA_WIDTH-1:0]  data_mem_register [2**16:0]; //we set our reg file which will be filled with initial values
+    integer starting_address = 17'h10000;
+
 
     initial begin
         $display("Loading ROM");
-        $readmemh("datarom.mem", data_mem_register); // load sine wave gen for testing (remove for final)
-    end
+        $readmemh("sine.mem", data_mem_register, starting_address);
+     end
 
     logic [7:0] add = A[7:0];
     logic [15:0] data16 = WD[15:0];
@@ -45,7 +47,7 @@ module data_mem #(
         endcase
     end 
 
-    assign test = data_mem_register[1];
+    assign test = data_mem_register[120];
     assign RD = data_mem_register[add]; //we read and output the [A] register value
 
 endmodule
