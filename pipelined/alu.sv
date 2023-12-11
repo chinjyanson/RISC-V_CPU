@@ -21,7 +21,7 @@ always_comb begin
     3'b110: ALUResult = SrcA >> SrcB[4:0];
     3'b111: ALUResult = SrcA; // dont know what to assign this to yet 
 
-    default: ALUResult = 0;
+    default: ALUResult = 32'bx; 
 
     endcase 
 
