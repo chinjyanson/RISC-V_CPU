@@ -1,9 +1,28 @@
 module aludecoder #(
-
-
+    parameter CONTROL_WIDTH = 3
 )(
-    input   logic [OP_WIDTH-1:0]    opcode_i,
-    output  logic []
+    input   logic [2:0]                 funct3,
+    input   logic                       funct7b5,
+    input   logic                       opb5,
+    input   logic [1:0]                 ALUOp,
+    output  logic [CONTROL_WIDTH-1:0]   ALUControlD
 );
-    
+
+logic  RtypeSub;
+assign RtypeSub = funct7b5 & opb5; //TRUE for R-type subtract
+
+    always_comb
+        case (ALUOp)
+            2'b00 = ALUControlD = 3'b000; // addition
+            2'b01 = ALUControlD = 3'b001; // subtraction
+            default:
+                case (funct3)
+                    3'b000: ALUControlD = (RtypeSub) ? 3'b001 : 3'b000; // takes into account case where RtypeSub gives add or addi or sub
+                    3'b001: ALUControlD = 3'b100; // ssl, slli (not sure if needed)
+                    3'b010: ALUControlD = 3'b101; // set less than
+                    3'b110: ALUControlD = 3'b011; // or
+                    3'b111: ALUControlD = 3'b010; // and 
+                    default: ALUControlD = 3'bxxx;
+                endcase
+        endcase
 endmodule
