@@ -1,12 +1,12 @@
 module hazard_foward (
-    logic input [4:0]   Rs1E;
-    logic input [4:0]   Rs2E;
-    logic input [4:0]   RdM,;
-    logic input [4:0]   RdW;
-    logic input [2:0]   RegWriteM;
-    logic input [2:0]   RegWriteW;
-    logic output[1:0]   FowardAE;
-    logic output[1:0]   FowardBE;
+    input logic [4:0]   Rs1E,
+    input logic [4:0]   Rs2E,
+    input logic [4:0]   RdM,
+    input logic [4:0]   RdW,
+    input logic [2:0]   RegWriteM,
+    input logic [2:0]   RegWriteW,
+    output logic [1:0]  FowardAE,
+    output logic [1:0]   FowardBE
 );
 
 //could be for 2 reasons 

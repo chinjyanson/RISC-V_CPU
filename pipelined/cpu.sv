@@ -64,7 +64,7 @@ pc_top pc(
     .PCsrc_i(PCsrcE),
     .PCF_o(PCF), //32b
     .PCPlus4F_o(PCPlus4F), //unsure
-    .PCTarget_i(PCTarget),
+    .PCTarget_i(PCTarget)
     );
 
 control_top control(

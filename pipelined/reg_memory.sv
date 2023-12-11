@@ -1,5 +1,5 @@
 module reg_memory #(
-    parameter DATA_WIDTH =32;
+    parameter DATA_WIDTH =32
 )(  
     input logic                    clk,     
     input logic [2:0]              RegWriteM,
@@ -17,7 +17,7 @@ module reg_memory #(
     output logic [DATA_WIDTH-1:0]   WriteDataW,
     output logic [DATA_WIDTH-1:0]   ReadDataW,
     output logic [DATA_WIDTH-1:0]   PCPlusW
-    
+    );
 
     always_ff @(posedge clk) begin
         RegWriteW   <=      RegWriteM;
@@ -29,6 +29,4 @@ module reg_memory #(
         PCPlus4W    <=      PCPlus4M;
     end
 
-      
-);
 endmodule
