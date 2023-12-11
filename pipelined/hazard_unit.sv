@@ -1,23 +1,22 @@
 module hazard_unit (
-    
-    logic input [4:0]   Rs1E_i,         
-    logic input [4:0]   Rs2E_i,
-    logic input [4:0]   Rs1D_i,
-    logic input [4:0]   Rs2D_i,
-    logic input [4:0]   RdM_i,,
-    logic input [4:0]   RdW_i,
-    logic input [4:0]   RdE_i,
-    logic input [2:0]   RegWriteW_i,
-    logic input [6:0]   opcodeE_i,
-    logic input [1:0]   PCSrcE_i
-    logic output[1:0]   FowardAE_o,
-    logic output[1:0]   FowardBE_o,
-    logic output        Den_o,
-    logic output        Fen_o,
-    logic output        PCen_o,
-    logic output        PCrst_o,
-    logic output        Frst_o,
-    logic output        Drst_o
+     input  logic    [4:0]   Rs1E_i,         
+     input  logic    [4:0]   Rs2E_i,
+     input  logic    [4:0]   Rs1D_i,
+     input  logic    [4:0]   Rs2D_i,
+     input  logic    [4:0]   RdM_i,
+     input  logic    [4:0]   RdW_i,
+     input  logic    [4:0]   RdE_i,
+     input  logic    [2:0]   RegWriteW_i,
+     input  logic    [6:0]   opcodeE_i,
+     input  logic    [1:0]   PCSrcE_i,
+     output logic    [1:0]   FowardAE_o,
+     output logic    [1:0]   FowardBE_o,
+     output logic            Den_o,
+     output logic            Fen_o,
+     output logic            PCen_o,
+     output logic            PCrst_o,
+     output logic            Frst_o,
+     output logic            Drst_o
     
 );
 

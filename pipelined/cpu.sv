@@ -58,22 +58,20 @@ module cpu #(
 
 pc_top pc(
     .clk(clk),
-    .PCen_i(PCen)   
-    .rst(rst),        
+    .PCen_i(PCen),  
+    .PCrst_i(rst),        
     .ALUResult_i(ALUResult_o),    //result from data mem to mux4    
     .PCsrc_i(PCsrcE),
     .PCF_o(PCF), //32b
     .PCPlus4F_o(PCPlus4F), //unsure
     .PCTarget_i(PCTarget),
-    .PCen_i(PCen),
-    .PCrst_i(PCrst),
     );
 
 control_top control(
     .clk(clk),
-    .Fen_i(Fen) 
+    .Fen_i(Fen), 
     .PCF_i(PCF), //32b
-    .PCPlus4F_i(PCPlus4F)
+    .PCPlus4F_i(PCPlus4F),
     .InstrD_o(InstrD),//32b
     .RegWriteD_o(RegWrite), //1b
     .MemWriteD_o(MemWrite), //1b
@@ -89,12 +87,12 @@ control_top control(
     .Frst_i(Frst)
 );
 
+
 alu_top alu(
     .clk(clk),
     .Den_i(Den),
     .ALUsrcD_i(ALUsrc),
-    .ALUctrlD_i(ALUctrl),
-    .InstrD_i(Instr),
+    .ALUcontrolD_i(ALUctrl),
     .RegWriteD_i(RegWrite),
     .ResultSrcD_i(Resultsrc),
     .MemWriteD_i(MemWrite),
@@ -121,7 +119,7 @@ alu_top alu(
     .RdE_o(RdE),
     .RegWriteW_o(RegWriteW),
     .FowardAE_i(FowardAE),
-    .FowardBE_i(FowardBE)
+    .FowardBE_i(FowardBE),
     .Den_i(Den),
     .Drst_i(Drst)
 
@@ -147,5 +145,6 @@ hazard_unit hazard(
     .Frst_o(Frst),
     .Drst_o(Drst)
 );
+
 endmodule
 
