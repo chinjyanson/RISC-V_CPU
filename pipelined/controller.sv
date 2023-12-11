@@ -53,7 +53,7 @@ aludecoder aludec(
     .ALUControl (ALUControlD)
 );
 
-// control unit pipeline decode -> execute
+// control unit pipeline reg 1 decode -> execute
 control_Dec_Exc c_D_E(
     .clk (clk),
     .reset (reset), 
@@ -74,21 +74,29 @@ control_Dec_Exc c_D_E(
     .ALUControlE (ALUControlE)
 );
 
+// control unit pipeline reg 2 execute -> memory
 control_Exc_Mem c_E_M(
-    .clk (),
-    .reset (),
-    .RegWriteE (),
-    .ResultSrcE (),
-    .MemWriteE (),
-    .RegWriteM (),
-    .ResultSrcM (), 
-    .MemWriteM ()
+    .clk (clk),
+    .reset (reset),
+    .RegWriteE (RegWriteE),
+    .ResultSrcE (ResultSrcE),
+    .MemWriteE (MemWriteE),
+    .RegWriteM (RegWriteM),
+    .ResultSrcM (ResultSrcM), 
+    .MemWriteM (MemWriteM)
 );
 
+// control unit pipeline reg 3 memory -> write
 control_Mem_Wrt c_M_W(
-
+    .clk (clk),
+    .reset (reset),
+    .RegWriteM (RegWriteM),
+    .ResultSrcM (ResultSrcM),
+    .RegWriteW (RegWriteW),
+    .ResultSrcW(ResultSrcW)
 );
 
 assign PCSrcE = (BranchE & ZeroE) | JumpE;
 assign PCJalSrcE = (op == 7'b1100111) ? 1 : 0; // jalr
+
 endmodule
