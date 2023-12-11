@@ -1,6 +1,5 @@
 /*
 	Function: Control Unit Pipeline Register between Decode and Execution Stage
-    
 */
 
 module control_Dec_Exc #(
