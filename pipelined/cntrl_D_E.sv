@@ -8,7 +8,7 @@ module control_Dec_Exc #(
 ) (
     input   logic                       clk,
     input   logic                       reset,
-    input   logic                       en,
+    input   logic                       clear,
 
     input   logic                       RegWriteD,
     input   logic                       MemWriteD,
@@ -25,7 +25,7 @@ module control_Dec_Exc #(
     output  logic                       BranchE,
     output  logic                       ALUSrcE,
     output  logic [1:0]                 ResultSrcE,
-    output  logic [CONTROL_WIDTH-1:0]   ALUControlE,
+    output  logic [CONTROL_WIDTH-1:0]   ALUControlE
 );
 
 always_ff @(posedge clk, posedge reset) begin
@@ -38,8 +38,8 @@ always_ff @(posedge clk, posedge reset) begin
     ResultSrcE    <= 0;
     ALUControlE   <= 0;
 
-    // Update only if reset is low and enable is high
-    if (!reset && en) begin
+    // Update only if reset is low and clear is low
+    if (!reset && !clear) begin
         RegWriteE     <= RegWriteD;
         MemWriteE     <= MemWriteD;
         JumpE         <= JumpD;
