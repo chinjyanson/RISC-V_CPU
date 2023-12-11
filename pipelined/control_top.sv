@@ -56,9 +56,9 @@ module control_top #(
 
     
     sign_extend #(DATA_WIDTH) MySignExtend(
-        .instr_i        (InstrD),
-        .ImmSrc_i       (ImmSrc),
-        .ImmOp_o        (ImmOp_o)
+        .instr        (InstrD),
+        .ImmSrc       (ImmSrc),
+        .ExtImm       (ImmOpD_o)
     );
 
 endmodule
