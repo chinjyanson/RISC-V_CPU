@@ -3,13 +3,12 @@ module alu_top #(
     parameter DATA_WIDTH = 32 
 )(
     input   wire                        clk,
-    input   wire                        Den_i
+    input   wire                        Den_i,
     input   wire                        ALUsrcD_i,
-    input   wire [CONTROL_WIDTH-1:0]    ALUctrlD_i,
-    input   wire [DATA_WIDTH-1:0]       InstrD_i,
+    input   wire [CONTROL_WIDTH-1:0]    ALUcontrolD_i,
     input   wire [2:0]                  RegWriteD_i,
-    input   wire [1:0]                  ResultSrc_i,
-    input   wire [1:0]                  MemWrite_i,
+    input   wire [1:0]                  ResultSrcD_i,
+    input   wire [1:0]                  MemWriteD_i,
     input   wire [DATA_WIDTH-1:0]       ExtImmD_i,
     input   wire [DATA_WIDTH-1:0]       PCPlus4D_i,
     input   wire                        JumpD_i,
@@ -148,7 +147,7 @@ reg_dec DREg(
     .en(Den_i),
     .rst(Drst_i),
     .RegWriteD(RegWriteD_i),
-    .ResultSrcD(ResultSrc_i),
+    .ResultSrcD(ResultSrcD_i),
     .MemWriteD(MemWriteD_i),
     .JumpD(JumpD_i),
     .BranchD(BranchD_i),
@@ -160,7 +159,7 @@ reg_dec DREg(
     .Rs1D(Rs1D_i),
     .Rs2D(Rs2D_i),
     .RdD(RdD_i),
-    .ExtImmD(ExtImmD_i)
+    .ExtImmD(ExtImmD_i),
     .PCPlus4D(PCPlus4D_i),
     .opcodeD(opcodeD_i),
 
@@ -168,7 +167,7 @@ reg_dec DREg(
     .RegWriteE(RegWriteE),
     .ResultSrcE(ResultSrcE),
     .MemWriteE(MemWriteE),
-    .JumpE(JumpE)
+    .JumpE(JumpE),
     .BranchE(BranchE),
     .ALUControlE(ALUControlE),
     .ALUsrcE(ALUsrE),
@@ -209,7 +208,7 @@ reg_memory MREG(
     .clk(clk),
     .RegWriteM(RegWriteM),    
     .ResultSrcM(ResultSrcM),
-    .ALUResultM(ALUResultM)
+    .ALUResultM(ALUResultM),
     .WriteDataM(WriteDataM),
     .ReadDataM(ReadDataM),
     .RdM(RdM_o),

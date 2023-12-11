@@ -36,6 +36,9 @@ if ((RegWriteM!= 3'b0)||(RegWriteW!= 3'b0))begin
     else 
         FowardBE = (Rs2E == RdW) ? 2'b01 : 2'b00;
     
+end else begin
+    FowardAE = 2'b00;
+    FowardBE = 2'b00;
 end
 
 endmodule
