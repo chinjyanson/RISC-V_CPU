@@ -30,7 +30,7 @@ pc_reg pc_reg(
     .rst        (PCrst_i),
     .PCen       (PCen_i),
     .next_PC    (next_PC),
-    .pc         (PCF_o),
+    .pc         (PCF_o)
 );
 
 endmodule

@@ -1,5 +1,5 @@
-module reg_dec#(
-    parameter DATA_WIDTH = 32;
+module reg_dec #(
+    parameter DATA_WIDTH = 32
 )(
     input logic                    clk,
     input logic                    en,

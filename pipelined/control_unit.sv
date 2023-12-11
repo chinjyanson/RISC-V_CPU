@@ -2,7 +2,7 @@ module control_unit (
     input   logic [6:0]                     opcode,
     input   logic [2:0]                     funct3,
     input   logic                           funct7,      
-    output  logic [2:0]                     RegWrite,
+    output  logic [2:0]                     RegWriteD,
     output  logic [1:0]                     MemWriteD,
     output  logic [1:0]                     ResultsrcD,
     output  logic [2:0]                     ALUctrlD,
