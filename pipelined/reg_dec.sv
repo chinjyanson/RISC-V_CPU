@@ -1,17 +1,21 @@
+/*
+	Function: Control Unit Pipeline register between Datapath Decode and Execution Stage	
+*/
+
 module reg_dec #(
     parameter DATA_WIDTH = 32
 )(
-    input logic                    clk,
-    input logic                    en,
-    input logic                    rst,
+    input logic                     clk,
+    input logic                     en,
+    input logic                     rst,
 
-    input logic [2:0]              RegWriteD,
-    input logic [1:0]              ResultSrcD,
-    input logic [1:0]              MemWriteD,
-    input logic                    JumpD,
-    input logic                    BranchD,
-    input logic [2:0]              ALUControlD,
-    input logic                    ALUsrcD,
+    input logic [2:0]               RegWriteD,
+    input logic [1:0]               ResultSrcD,
+    input logic [1:0]               MemWriteD,
+    input logic                     JumpD,
+    input logic                     BranchD,
+    input logic [2:0]               ALUControlD,
+    input logic                     ALUsrcD,
     input logic [DATA_WIDTH-1:0]    RD1D,
     input logic [DATA_WIDTH-1:0]    RD2D,
     input logic [DATA_WIDTH-1:0]    PCD,
@@ -41,7 +45,7 @@ module reg_dec #(
 
 );
 
-always_ff @(posedge clk)begin
+always_ff @(posedge clk, posedge rst) begin
     if(en) begin     
         RegWriteE   <=       rst?   0   :   RegWriteD;
         ResultSrcE  <=       rst?   0   :   ResultSrcD;
