@@ -12,7 +12,8 @@ module maindecoder #(
     output  logic [2:0]             ImmSrc
 );
 
-logic [11:0] controls
+logic [11:0] controls;
+
 assign {RegWrite, ResultSrc, MemWrite, Jump, Branch, ALUSrc, ImmSrc, ALUOp} = controls;
 
 always_comb

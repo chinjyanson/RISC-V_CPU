@@ -13,7 +13,7 @@ module control_Exc_Mem #(
 
     output  logic           RegWriteM,
     output  logic [1:0]     ResultSrcM, 
-    output  logic           MemWriteE
+    output  logic           MemWriteM
 );
 
 always_ff @(posedge clk, posedge reset) begin
