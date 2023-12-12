@@ -29,7 +29,7 @@ logic [1:0] ALUOpD;
 logic [1:0] ResultSrcD, ResultSrcE, ResultSrcM;
 logic [2:0] ALUControlD;
 logic BranchD, BranchE, MemWriteD, MemWriteE, JumpD, JumpE;
-logic ALUSrcD, RegWriteD, RegWriteE;
+logic ZeroOp, ALUSrcD, RegWriteD, RegWriteE;
 
 // main decoder 
 maindecoder maindec(
@@ -96,7 +96,8 @@ control_Mem_Wrt c_M_W(
     .ResultSrcW(ResultSrcW)
 );
 
-assign PCSrcE = (BranchE & ZeroE) | JumpE;
+assign ZeroOp = ZeroE ^ funct3[0]; // Complements Zero flag for BNE Instruction
+assign PCSrcE = (BranchE & ZeroOp) | JumpE;
 assign PCJalSrcE = (op == 7'b1100111) ? 1 : 0; // jalr
 
 endmodule
