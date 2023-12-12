@@ -20,7 +20,7 @@ module datapath #(
     input   logic                   StallD,
     input   logic                   StallF,
     input   logic                   FlushD, 
-    input   logic                   FlushE
+    input   logic                   FlushE,
     input   logic [DATA_WIDTH-1:0]  ReadDataM,
     input   logic [1:0]             ForwardAE,
     input   logic [1:0]             ForwardBE,
@@ -37,7 +37,7 @@ module datapath #(
     output  logic [4:0]             Rs1E,
     output  logic [4:0]             RdE,
     output  logic [4:0]             RdM, 
-    output  logic [4:0]             RdW,
+    output  logic [4:0]             RdW
 
 );
 
