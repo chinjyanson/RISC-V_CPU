@@ -50,9 +50,6 @@ module cpu #(
     logic                       PCen;
     logic                       FowardAE;
     logic                       FowardBE;
-    logic                       Den;
-    logic                       Fen;
-    logic                       PCen;
     logic                       PCrst;
     logic                       Frst;
     logic                       Drst;
