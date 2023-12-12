@@ -18,7 +18,7 @@ module controller #(
     output  logic                   MemWriteM,
     output  logic                   PCSrcE,
     output  logic                   PCJalSrcE,
-    output  logic                   ALUSrcE
+    output  logic                   ALUSrcE,
     output  logic                   RegWriteW,
     output  logic                   RegWriteM, 
     output  logic [2:0]             ImmSrcD,
