@@ -15,6 +15,11 @@ This repository is part of an IAC Module for Imperial where we are required to d
 | Vishesh Mongia       | Testbench and verification of design                                  |
 | Samuel Khoo Ing Shin | PC and related addresses                                              |
 
+
+## Single Cycle Processor
+
+![Image](/img/pro.png)
+
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/vishesh32/RISC-V-Team1`
