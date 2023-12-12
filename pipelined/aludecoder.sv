@@ -15,6 +15,7 @@ assign RtypeSub = funct7b5 & opb5; //TRUE for R-type subtract
         case (ALUOp)
             2'b00 = ALUControl = 3'b000; // addition
             2'b01 = ALUControl = 3'b001; // subtraction
+            2'b11 = ALUControl = 3'b111;
             default: // made it a default but in theory just ALUOp = 2'b10
                 case (funct3)
                     3'b000: ALUControl = (RtypeSub) ? 3'b001 : 3'b000; // takes into account case where RtypeSub gives add or addi or sub
@@ -22,6 +23,7 @@ assign RtypeSub = funct7b5 & opb5; //TRUE for R-type subtract
                     3'b010: ALUControl = 3'b101; // set less than
                     3'b110: ALUControl = 3'b011; // or
                     3'b111: ALUControl = 3'b010; // and 
+                                                    //need to add something for lui
                     default: ALUControl = 3'bxxx;
                 endcase
         endcase

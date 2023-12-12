@@ -21,7 +21,7 @@ class Vcpu___024root final : public VerilatedModule {
     CData/*0:0*/ cpu__DOT__ALUsrc;
     CData/*1:0*/ cpu__DOT__Resultsrc;
     CData/*1:0*/ cpu__DOT__PCsrc;
-    CData/*1:0*/ cpu__DOT__control__DOT__ImmSrc;
+    CData/*2:0*/ cpu__DOT__control__DOT__ImmSrc;
     CData/*0:0*/ __Vclklast__TOP__clk;
     VL_OUT(test,31,0);
     VL_OUT(a0,31,0);
@@ -29,7 +29,6 @@ class Vcpu___024root final : public VerilatedModule {
     IData/*31:0*/ cpu__DOT__ALUResult_o;
     IData/*31:0*/ cpu__DOT__ImmOp;
     IData/*31:0*/ cpu__DOT__PC;
-    IData/*31:0*/ cpu__DOT__Result;
     IData/*31:0*/ cpu__DOT__pc__DOT__next_PC;
     IData/*31:0*/ cpu__DOT__pc__DOT__PC;
     IData/*31:0*/ cpu__DOT__pc__DOT__pc_mux__DOT__input3;
@@ -37,6 +36,9 @@ class Vcpu___024root final : public VerilatedModule {
     IData/*31:0*/ cpu__DOT__alu__DOT__SrcB;
     IData/*31:0*/ cpu__DOT__alu__DOT__Result;
     IData/*31:0*/ cpu__DOT__alu__DOT__regOp2;
+    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__0;
+    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__1;
+    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__2;
     IData/*31:0*/ cpu__DOT__alu__DOT__resultMux__DOT__input3;
     IData/*31:0*/ __Vchglast__TOP__cpu__DOT__alu__DOT__SrcB;
     VlUnpacked<CData/*7:0*/, 256> cpu__DOT__control__DOT__InstrMem__DOT__rom_array;
