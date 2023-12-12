@@ -5,15 +5,17 @@ module regfile #(
     input   logic                   clk,
     input   logic [2:0]             WE3,
     input   logic [DATA_WIDTH-1:0]  WD3,
-    input   logic [DATA_WIDTH-1:0]  Instr,
+    input   logic [4:0]             A1_i,
+    input   logic [4:0]             A2_i,
+    input   logic [4:0]             A3_i,
     output  logic [DATA_WIDTH-1:0]  RD1,
     output  logic [DATA_WIDTH-1:0]  RD2,
     output  logic [DATA_WIDTH-1:0]  a0  //(debug output)
 );
 
-logic[7:0] A2 = {3'b0 , Instr[24:20]};
-logic[7:0] A1 = {3'b0 , Instr[19:15]};
-logic[7:0] A3 = {3'b0 , Instr[11:7]};
+logic [7:0] A1 = {3'b0 , A1_i};
+logic [7:0] A2 = {3'b0 , A2_i};
+logic [7:0] A3 = {3'b0 , A3_i};
 
 logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 

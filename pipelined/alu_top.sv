@@ -78,9 +78,9 @@ wire [DATA_WIDTH-1:0]   ResultW;
 
 regfile register(
     .clk        (clk),
-    .A1         (Rs1D_i),
-    .A2         (Rs2D_i),
-    .A3         (RdW),
+    .A1_i       (Rs1D_i),
+    .A2_i       (Rs2D_i),
+    .A3_i       (RdD_i),
     .WE3        (RegWriteW),
     .WD3        (ResultW),
     .RD1        (RD1D),
