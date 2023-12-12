@@ -24,7 +24,7 @@ always_comb
         7'b0110011: controls = 12'b1_00_0_0_0_0_xxx_10; // R-type
         7'b1100011: controls = 12'b0_00_0_0_1_0_010_01; // B-type (beq)
         7'b0010011: controls = 12'b1_00_0_0_0_0_000_10; // I-type (ALUSrc is 1 - double check)
-        7'b0110111: controls = 12'b1_00_0_0_0_1_100_00; // lui
+        7'b0110111: controls = 12'b1_00_0_0_0_1_100_11; // lui (ALUOp used to be 00 but now set to 11)
         7'b1101111: controls = 12'b1_10_0_1_0_0_011_00; // jal
         7'b1100111: controls = 12'b1_10_0_1_0_1_000_00; // jalr
         7'b0000000: controls = 12'b0_00_0_0_0_0_000_00; // for default values on reset
