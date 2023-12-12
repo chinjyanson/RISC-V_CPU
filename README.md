@@ -18,7 +18,7 @@ This repository is part of an IAC Module for Imperial where we are required to d
 
 ## Single Cycle Processor
 
-[Image](/img/pro.png)
+![Image](/img/pro.png)
 
 ## Installation
 
