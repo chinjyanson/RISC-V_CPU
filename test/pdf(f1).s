@@ -3,17 +3,17 @@
 .equ base_data, 0x10000
 .equ max_count, 500
 main:
-    JAL     ra, init  # jump to init, ra and save position to ra
+    JAL     ra, init            # jump to init, ra and save position to ra
 forever:
     JAL     ra, build
     JAL     forever
 
-init:       # initialise light
-    LI      t0, 0xFF  # temp register
+init:                           # initialise light
+    LI      t0, 0xFF            # temp register
     RET
 
-build:      # function to build prob dist func (pdf)
-    LI      a0, 0   #begin with all lights off
+build:                          # function to build prob dist func (pdf)
+    LI      a0, 0               # begin with all lights off
     LI      t1, 0   
 _loop2:                         # repeat till all lights on
     SLLI    t1, t1, 1 
