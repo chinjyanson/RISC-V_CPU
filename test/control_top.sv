@@ -1,5 +1,4 @@
 module control_top #(
-    parameter   ADDRESS_WIDTH = 8,
     parameter   DATA_WIDTH = 32,
     parameter   CONTROL_WIDTH = 3,
     parameter   IMM_WIDTH = 2

@@ -18,7 +18,7 @@ module data_mem #(
         11 - write last byte (8 bits)
     */   
     logic [DATA_WIDTH-1:0]  data_mem_register [2**17:0]; //we set our reg file which will be filled with initial values
-    integer starting_address = 17'h10000;
+    integer starting_address = 32'h10000;
 
 
     initial begin
@@ -26,7 +26,7 @@ module data_mem #(
         $readmemh("sine.mem", data_mem_register, starting_address);
      end
 
-    logic [7:0] add = A[7:0];
+    logic [17:0] add = A[17:0];
     logic [15:0] data16 = WD[15:0];
     logic [7:0] data8 = WD[7:0];
 

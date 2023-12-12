@@ -16,10 +16,12 @@ module control_unit #(
 
 
     //actual ImmSrc
-    //00 -> I
-    //01 -> S
-    //10 -> B 
-    //11 -> J
+    //000 -> I
+    //001 -> S
+    //010 -> B 
+    //011 -> J
+    //100 -> U
+
 
 
     /*
@@ -163,6 +165,17 @@ module control_unit #(
             PCsrc_o = 2'b00;
         end
     
+    7'b0110111: //lui instr
+        begin
+            RegWrite_o =3'b001;
+            ImmSrc_o = 3'b100;
+            ALUsrc_o = 1'b1;
+            MemWrite_o = 2'b00;
+            Resultsrc_o = 2'b00;
+            ALUctrl_o = 3'b111;
+            PCsrc_o = 2'b00;
+        end
+
     default: //just in case we have something else
         begin 
             RegWrite_o = 3'b001;
@@ -173,7 +186,6 @@ module control_unit #(
             ALUctrl_o = 3'b000;
             PCsrc_o = 2'b00;
         end
-
     endcase 
     
     end

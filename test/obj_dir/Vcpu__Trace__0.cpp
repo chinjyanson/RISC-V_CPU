@@ -55,8 +55,8 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
         bufp->chgCData(oldp+21,(vlSelf->cpu__DOT__PCsrc),2);
         bufp->chgIData(oldp+22,(vlSelf->cpu__DOT__alu__DOT__SrcB),32);
         bufp->chgIData(oldp+23,(vlSelf->cpu__DOT__alu__DOT__Result),32);
-        bufp->chgCData(oldp+24,((0xffU & vlSelf->cpu__DOT__ALUResult_o)),8);
-        bufp->chgCData(oldp+25,(vlSelf->cpu__DOT__control__DOT__ImmSrc),2);
+        bufp->chgIData(oldp+24,((0x3ffffU & vlSelf->cpu__DOT__ALUResult_o)),18);
+        bufp->chgCData(oldp+25,(vlSelf->cpu__DOT__control__DOT__ImmSrc),3);
         bufp->chgIData(oldp+26,(vlSelf->cpu__DOT__pc__DOT__next_PC),32);
     }
     bufp->chgBit(oldp+27,(vlSelf->clk));
@@ -65,8 +65,11 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
     bufp->chgIData(oldp+30,(vlSelf->a0),32);
     bufp->chgBit(oldp+31,((vlSelf->cpu__DOT__alu__DOT__SrcA 
                            == vlSelf->cpu__DOT__alu__DOT__SrcB)));
-    bufp->chgIData(oldp+32,(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                            [(0xffU & vlSelf->cpu__DOT__ALUResult_o)]),32);
+    bufp->chgIData(oldp+32,(((0x20000U >= (0x3ffffU 
+                                           & vlSelf->cpu__DOT__ALUResult_o))
+                              ? vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                             [(0x3ffffU & vlSelf->cpu__DOT__ALUResult_o)]
+                              : 0U)),32);
     bufp->chgIData(oldp+33,((vlSelf->cpu__DOT__pc__DOT__PC 
                              + vlSelf->cpu__DOT__ImmOp)),32);
 }
