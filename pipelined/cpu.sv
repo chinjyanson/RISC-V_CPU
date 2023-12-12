@@ -92,7 +92,7 @@ control_top control(
 alu_top alu(
     .clk(clk),
     .Den_i(Den),
-    .Drst_i(Drst)
+    .Drst_i(Drst),
     .ALUsrcE_i(ALUsrc),
     .ALUcontrolE_i(ALUctrl),
     .RegWriteW_i(RegWrite),
