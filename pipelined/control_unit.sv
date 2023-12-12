@@ -3,8 +3,8 @@
 */
 
 module control_unit #(
-    parameters OP_WIDTH = 7
-) (
+    parameter OP_WIDTH = 7
+)(
     input   logic                   clk,
     input   logic                   reset,
 
@@ -20,7 +20,7 @@ module control_unit #(
     output  logic [2:0]             ImmSrcD,
     output  logic [2:0]             ALUControlD,
     output  logic                   JumpD,
-    output  logic                   BranchD,
+    output  logic                   BranchD
 );
 
 logic [1:0] ALUOpD;

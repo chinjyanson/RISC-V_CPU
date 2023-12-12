@@ -7,7 +7,7 @@ module mux3 #(
     input  logic [DATA_WIDTH-1:0]       input1,
     input  logic [DATA_WIDTH-1:0]       input2,
     output logic [DATA_WIDTH-1:0]       out
-)
+);
 
 always_comb begin
     case (control)

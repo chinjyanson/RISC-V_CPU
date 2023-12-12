@@ -17,7 +17,7 @@ logic [DATA_WIDTH-1:0]   next_PC, PCTarget;    // interconnect wire
 
 assign PCPlus4F_o = PCF_o + 32'b100;  //adding 4
 
-mux4 pc_mux(
+mux3 pc_mux(
     .control    (PCsrc_i),
     .input0     (PCPlus4_o),
     .input1     (PCTarget),

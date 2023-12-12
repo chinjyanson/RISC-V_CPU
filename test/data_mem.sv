@@ -2,12 +2,12 @@ module data_mem #(
     parameter ADDRESS_WIDTH = 8,
     parameter DATA_WIDTH = 32
 ) (
-    input  logic                             clk,
-    input  logic     [1:0]                   WE,
-    input  logic     [DATA_WIDTH-1:0]        A,
-    input  logic     [DATA_WIDTH-1:0]        WD,
-    output logic [DATA_WIDTH-1:0]   test,
-    output logic     [DATA_WIDTH-1:0]        RD
+    input  logic                         clk,
+    input  logic [1:0]                   WE,
+    input  logic [DATA_WIDTH-1:0]        A,
+    input  logic [DATA_WIDTH-1:0]        WD,
+    output logic [DATA_WIDTH-1:0]        test,
+    output logic [DATA_WIDTH-1:0]        RD
 );
 
     /*
@@ -38,11 +38,11 @@ module data_mem #(
         end
         2'b10: 
         begin //half word 
-            data_mem_register[add] <= data16;
+            data_mem_register[add][15:0] <= data16;
         end
         2'b11:
         begin //write byte
-            data_mem_register[add] <= data8;
+            data_mem_register[add][7:0] <= data8;
         end
         endcase
     end 

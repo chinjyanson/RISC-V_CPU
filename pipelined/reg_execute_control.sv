@@ -8,7 +8,7 @@ module reg_execute_control #(
     
     output logic [2:0]              RegWriteM,
     output logic [1:0]              ResultSrcM,
-    output logic [1:0]              MemWriteM,
+    output logic [1:0]              MemWriteM
 );
 
     always_ff @(posedge clk) begin
