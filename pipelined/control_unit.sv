@@ -1,84 +1,55 @@
-module control_unit (
-    input   logic [6:0]                     opcode,
-    input   logic [2:0]                     funct3,
-    input   logic                           funct7,      
-    output  logic [2:0]                     RegWriteD,
-    output  logic [1:0]                     MemWriteD,
-    output  logic [1:0]                     ResultsrcD,
-    output  logic [2:0]                     ALUctrlD,
-    output  logic                           ALUsrcD,
-    output  logic [1:0]                     ImmSrcD, 
-    output  logic                           JumpD,
-    output  logic                           BranchD
+/*
+	Function: 5 stage pipelined Control Unit
+*/
+
+module control_unit #(
+    parameters OP_WIDTH = 7
+) (
+    input   logic                   clk,
+    input   logic                   reset,
+
+    input   logic [OP_WIDTH-1:0]    op,
+    input   logic [2:0]             funct3,
+    input   logic                   funct7b5,
+
+    output  logic [1:0]             ResultSrcD,
+    output  logic                   MemWriteD,
+    output  logic                   ALUSrcD,
+    output  logic                   RegWriteD,
+    output  logic                   RegWriteD, 
+    output  logic [2:0]             ImmSrcD,
+    output  logic [2:0]             ALUControlD,
+    output  logic                   JumpD,
+    output  logic                   BranchD,
+);
+
+logic [1:0] ALUOpD;
+logic [1:0] ResultSrcD, ResultSrcE, ResultSrcM;
+logic [2:0] ALUControlD;
+
+
+// main decoder 
+maindecoder maindec(
+    .op (op),
+    .funct3(funct3),
+    .ResultSrc (ResultSrcD),
+    .MemWrite (MemWriteD),
+    .Branch (BranchD),
+    .ALUSrc (ALUSrcD),
+    .RegWrite (RegWriteD),
+    .Jump (JumpD),
+    .ALUOp (ALUOpD), 
+    .ImmSrc (ImmSrcD)
+);
+
+// alu decoder
+aludecoder aludec(
+    .funct3 (funct3),
+    .funct7b5 (funct7b5),
+    .opb5 (op[5]),
+    .ALUOp (ALUOpD),
+    .ALUControl (ALUControlD)
 );
 
 
-//actual ImmSrc
-    //00 -> I
-    //01 -> S
-    //10 -> B 
-    //11 -> J
-
-
- /*
-    3'b000: SUM = ALUop1 + ALUop2;
-    3'b001: SUM = ALUop1 - ALUop2;
-    3'b010: SUM = ALUop1 & ALUop2;
-    3'b011: SUM = ALUop1 | ALUop2;
-    3'b100: SUM = ALUop1 ^ ALUop2;
-    */
-
-    
-    always_comb
-        case ({instr_i[6:0],instr_i[14:12]})
-            {7'b0010011, 3'b000}:   RegWrite_o = 1'b1;
-            {7'b0000011, 3'b010}:   RegWrite_o = 1'b1;
-            default: RegWrite_o = 1'b0;
-        endcase
-
-    always_comb
-        case ({instr_i[6:0],instr_i[14:12]})
-            {7'b0010011, 3'b000}:   ALUctrl = 3'b0;
-            default: ALUctrl_o = 3'b111;
-        endcase
-
-    always_comb
-        case ({instr_i[6:0],instr_i[14:12]})
-            {7'b0010011, 3'b000}:   ALUsrc_o = 1'b1;
-            default: ALUsrc_o = 1'b0;
-        endcase
-
-    always_comb
-        begin
-            if ({instr_i[6:0],instr_i[14:12]} == {7'b0010011, 3'b000})
-                ImmSrc_o = {instr_i[31:20]};
-            else if ({instr_i[6:0],instr_i[14:12]} == {7'b1100011,3'b001})
-                ImmSrc_o = {instr_i[31],instr_i[7],instr_i[30:25],instr_i[11:8]};
-            else
-                ImmSrc_o = {instr_i[31:20]};
-        end
-
-    always_comb
-        begin
-            if (({instr_i[6:0],instr_i[14:12]} == {7'b1100011,3'b000}) && EQ)
-                PCsrc_o = 1'b1;
-            else if (({instr_i[6:0],instr_i[14:12]} == {7'b1100011,3'b001}) && ~EQ)
-                PCsrc_o = 1'b1;
-            else
-                PCsrc_o = 1'b0;
-        end
-
-    always_comb
-        MEMWrite_o = 1'b0;
-
-    always_comb 
-        case ({instr_i[6:0],instr_i[14:12]})
-            {7'b0000011, 3'b010}:   MEMsrc_o = 1'b1;
-            default:                MEMsrc_o = 1'b0;
-            
-        endcase
-
-            
-
- 
 endmodule

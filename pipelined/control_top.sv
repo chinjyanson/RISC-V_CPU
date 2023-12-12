@@ -53,7 +53,7 @@ module control_top #(
     .RegWriteD      (RegWriteD),
     .MemWriteD      (MemWriteD),
     .ResultsrcD     (ResultsrcD),
-    .ALUctrlD       (ALUctrlD),
+    .ALUccontrolD   (ALUcontrolD),
     .ALUsrcD        (ALUsrcD),
     .ImmSrcD        (ImmSrcD),
     .JumpD          (JumpD),
