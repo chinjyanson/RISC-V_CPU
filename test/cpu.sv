@@ -1,5 +1,4 @@
 module cpu #(
-    parameter   ADDRESS_WIDTH = 8,
     parameter   DATA_WIDTH = 32,
     parameter   CONTROL_WIDTH = 3,
     parameter   IMM_WIDTH = 2
@@ -32,7 +31,6 @@ module cpu #(
     logic [IMM_WIDTH-1:0]  PCsrc;
     logic [DATA_WIDTH-1:0]  PC;
     logic [DATA_WIDTH-1:0]  PCPlus4;
-    logic [DATA_WIDTH-1:0]       Result;
 
 
 pc_top pc(
