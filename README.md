@@ -26,12 +26,19 @@ This repository is part of an IAC Module for Imperial where we are required to d
 2. Navigate to the project directory: `cd RISC-V-Team1`
 3. Install dependencies: `npm install` or `pip install -r requirements.txt` or any other relevant command.
 
+## F1 Program 
+
+### Explanation of F1 Program 
+
+This is a basic program that counts the neopixel lights up by shifting left, then adding 1 
+
+
 ## Using run.sh 
 
 Explain how to use your project or provide examples.
 
 ```bash
-$ command-to-run-your-project arg1 arg2
+$ source ./cpu_doit.sh
 ```
 
 ## Directory 

@@ -3,7 +3,7 @@
 ## Single Cycle Processor 
 
 ### Introduction
-
+I was primarily tasked with figuring out most of the ALU and RegFile operations, I occasionally worked with Bruno to figure out the appropriate logic between 
 
 ### ALU 
 
@@ -23,7 +23,7 @@
 
 
 ### Miscellaneous Contributions
-
+README.md file 
 
 
 ## Pipelined Processor
