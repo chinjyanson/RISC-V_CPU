@@ -41,6 +41,7 @@ module alu_top #(
 wire [2:0]              RegWriteE;
 wire [1:0]              ResultSrcE;
 wire [1:0]              MemWriteE;
+wire [DATA_WIDTH-1:0]   ALUResultE; 
 wire                    JumpE;
 wire                    BranchE;
 wire [2:0]              ALUControlE;
@@ -188,7 +189,7 @@ reg_execute EREG(
     .RegWriteE(RegWriteE),
     .ResultSrcE(ResultSrcE),
     .MemWriteE(MemWriteE),
-    .ALUResultE(ALUResultE),
+    .ALUResultE(ALUResultE), 
     .WriteDataE(WriteDataE),
     .RdE(RdE),
     .PCPlus4E(PCPlus4E),
