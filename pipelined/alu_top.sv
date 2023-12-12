@@ -94,7 +94,7 @@ data_mem data(
     .RD         (ReadDataM)
 );
 
-mux4 resultMux(
+mux3 resultMux(
     .control    (ResultsrcW),
     .input0     (ALUResultW),
     .input1     (ReadDataW),
@@ -102,7 +102,7 @@ mux4 resultMux(
     .out        (ResultW)
 );
 
-mux4 RD1EHazardMux(
+mux3 RD1EHazardMux(
     .control    (FowardAE_i),
     .input0     (RD1E),
     .input1     (ResultW),
@@ -110,7 +110,7 @@ mux4 RD1EHazardMux(
     .out        (SrcAE)
 );
 
-mux4 RD2EHazardMux(
+mux3 RD2EHazardMux(
     .control    (FowardBE_i),
     .input0     (RD2E),
     .input1     (ResultW),
@@ -148,7 +148,7 @@ reg_dec DREg(
     .RdE(RdE_o),
     .ExtImmE(ExtImmE),
     .PCPlus4E(PCPlus4E),
-    .opcodeE(opcodeE_o),
+    .opcodeE(opcodeE_o)
 );
 
 reg_execute EREG(
