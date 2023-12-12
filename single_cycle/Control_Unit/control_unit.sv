@@ -123,7 +123,6 @@ module control_unit #(
             ALUctrl_o = 3'b001; //should be 001 - but we dk why it matters
 
                 case(funct3)
-                    //func3 shouldnt affect PCsrc?
                     3'b000: PCsrc_o = {1'b0 , Zero_i}; //beq
                     3'b001: PCsrc_o = {1'b0, !Zero_i}; //bne
                     default: PCsrc_o = {1'b0 , Zero_i};

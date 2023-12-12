@@ -13,13 +13,14 @@ module cpu #(
 );
 
     //output internal logic for control module 
-    logic   [2:0]            RegWrite;
-    logic   [1:0]            MemWrite;
-    logic   [DATA_WIDTH-1:0] InstrD;
-    logic   [DATA_WIDTH-1:0] PCD;
-    logic   [DATA_WIDTH-1:0] PCPlus4D;
-    logic                    JumpD;
-    logic                    BranchD;
+    
+   
+    logic [2:0]                     RegWriteW;
+    logic [1:0]                     MemWriteM;
+    logic [IMM_WIDTH-1:0]           ResultsrcW;
+    logic [CONTROL_WIDTH-1:0]       ALUcontrolE;
+    logic                           ALUsrcE;
+    
 
 
     //output internal logic for alu module 
@@ -33,7 +34,7 @@ module cpu #(
     logic [4:0]                RdM;
     logic [4:0]                RdW;
     logic [4:0]                RdE;
-    logic [2:0]                RegWriteW;
+    
 
     //output internal logic for pc module
     logic [IMM_WIDTH-1:0]       Resultsrc;
@@ -41,7 +42,7 @@ module cpu #(
     logic [DATA_WIDTH-1:0]      PCF;
     logic [DATA_WIDTH-1:0]      PCPlus4F;
     logic [DATA_WIDTH-1:0]      Result;
-
+    logic                       ZeroE;
 
     //output internal logic for hazard module
     logic                       Den;
@@ -69,33 +70,34 @@ pc_top pc(
 
 control_top control(
     .clk(clk),
-    .Fen_i(Fen), 
     .PCF_i(PCF), //32b
     .PCPlus4F_i(PCPlus4F),
     .InstrD_o(InstrD),//32b
-    .RegWriteD_o(RegWrite), //1b
-    .MemWriteD_o(MemWrite), //1b
-    .ResultsrcD_o(Resultsrc), //3b ==> edited to 2 bits
-    .ALUctrlD_o(ALUctrl), //3b
-    .ALUsrcD_o(ALUsrc), //1 bit
-    .ImmOpD_o(ImmOp), //32 bits
+    .RegWriteW_o(RegWriteW), //1b
+    .MemWriteM_o(MemWriteM), //1b
+    .ResultsrcW_o(ResultsrcW), //3b ==> edited to 2 bits
+    .ALUcontrolE_o(ALUctrlE), //3b
+    .ALUsrcE_o(ALUsrcE), //1 bit
+    .ImmOpD_o(ImmOpD), //32 bits
     .PCD_o(PCD),
     .PCPlus4D_o(PCPlus4D),
-    .JumpD_o(JumpD),
-    .BranchD_o(BranchD),
     .Fen_i(Fen),
-    .Frst_i(Frst)
+    .Frst_i(Frst),
+    .Den_i(Den),
+    .Drst_i(Drst),
+    .ZeroE_i(ZeroE)
 );
 
 
 alu_top alu(
     .clk(clk),
     .Den_i(Den),
-    .ALUsrcD_i(ALUsrc),
-    .ALUcontrolD_i(ALUctrl),
-    .RegWriteD_i(RegWrite),
-    .ResultSrcD_i(Resultsrc),
-    .MemWriteD_i(MemWrite),
+    .Drst_i(Drst)
+    .ALUsrcE_i(ALUsrc),
+    .ALUcontrolE_i(ALUctrl),
+    .RegWriteW_i(RegWrite),
+    .ResultSrcW_i(Resultsrc),
+    .MemWriteM_i(MemWrite),
     .ExtImmD_i(ImmOp),
     .PCPlus4D_i(PCPlus4),
     .opcodeD_i(InstrD[6:0]),
@@ -106,23 +108,19 @@ alu_top alu(
     .Rs1D_i(InstrD[19:15]),
     .Rs2D_i(InstrD[24:20]),
     .RdD_i(InstrD[11:7]),
-    .JumpD_i(JumpD),
-    .BranchD_i(BranchD),
+    .FowardAE_i(FowardAE),
+    .FowardBE_i(FowardBE),
+    
     .PCTargetE_o(PCTarget),
     .PCSrcE_o(PCSrcE),
     .opcodeE_o(OpcodeE),
-
     .Rs1E_o(Rs1E),   
     .Rs2E_o(Rs2E),
     .RdM_o(RdM),
     .RdW_o(RdW),
     .RdE_o(RdE),
-    .RegWriteW_o(RegWriteW),
-    .FowardAE_i(FowardAE),
-    .FowardBE_i(FowardBE),
-    .Den_i(Den),
-    .Drst_i(Drst)
-
+    .ZeroE_o(ZeroE_o)
+    
 );  
 
 hazard_unit hazard(
