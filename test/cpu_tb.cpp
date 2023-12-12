@@ -7,7 +7,7 @@
 
 
 
-#define MAX_SIM_CYC 50000
+#define MAX_SIM_CYC 70000
 
 
 
@@ -51,10 +51,10 @@ int main(int argc, char **argv, char **env) {
                         clockcount++; }
 
         clock = !clock;
-        //std::cout << "clock1: " << clock << std::endl;
+        //std::cout << "clock1: " << simcyc << std::endl;
 
         }
-    if(simcyc % 10 == 0){
+    if(simcyc > 37000){
         vbdPlot(int(top->a0), 0, 255);
         vbdCycle(simcyc+10);
     }
