@@ -20,6 +20,7 @@ module control_top #(
     output logic [DATA_WIDTH-1:0]          ImmOpD_o,//32 bits
     output logic [DATA_WIDTH-1:0]          PCD_o,
     output logic [DATA_WIDTH-1:0]          PCPlus4D_o
+    output logic [1:0]                     PCSrcE
 
 );
 
@@ -142,11 +143,9 @@ reg_memory_control MREG(
 logic ZerOP;
 
 assign ZeroOp = ZeroE_i ^ InstrD[12]; 
-if (JumpE){
-    PCSrcE = 2'b10;
-}else {
-    PCSrcE = (BranchE & ZeroOp) ? 2'b01 : 2b'00;
-}
+
+if (JumpE)      PCSrcE = 2'b10;
+else            PCSrcE = (BranchE & ZeroOp) ? 2'b01 : 2b'00;
 
 
 
