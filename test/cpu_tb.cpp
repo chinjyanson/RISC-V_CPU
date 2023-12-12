@@ -7,7 +7,7 @@
 
 
 
-#define MAX_SIM_CYC 1000
+#define MAX_SIM_CYC 5000
 
 
 
@@ -54,9 +54,10 @@ int main(int argc, char **argv, char **env) {
         //std::cout << "clock1: " << clock << std::endl;
 
         }
-
-    vbdPlot(int(top->a0), 0, 255);
-    vbdCycle(simcyc+1);
+    if(simcyc % 5 == 0){
+        vbdPlot(int(top->a0), 0, 255);
+        vbdCycle(simcyc+10);
+    }
 
        // either simulation finished, or 'q' is pressed
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){

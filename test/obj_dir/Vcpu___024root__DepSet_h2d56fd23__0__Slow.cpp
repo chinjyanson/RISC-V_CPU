@@ -39,7 +39,7 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
         [0xaU];
     vlSelf->test = vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-        [0x78U];
+        [0x122U];
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT__PC))] 

@@ -8,7 +8,7 @@ module reg_memory #(
     input logic [4:0]              RdM,
     input logic [DATA_WIDTH-1:0]   WriteDataM,
     input logic [DATA_WIDTH-1:0]   ReadDataM,
-    input logic [DATA_WIDTH-1:0]   PCPlusM,
+    input logic [DATA_WIDTH-1:0]   PCPlus4M,
 
     output logic [2:0]              RegWriteW,
     output logic [1:0]              ResultSrcW,
@@ -16,7 +16,7 @@ module reg_memory #(
     output logic [4:0]              RdW,
     output logic [DATA_WIDTH-1:0]   WriteDataW,
     output logic [DATA_WIDTH-1:0]   ReadDataW,
-    output logic [DATA_WIDTH-1:0]   PCPlusW
+    output logic [DATA_WIDTH-1:0]   PCPlus4W
     );
 
     always_ff @(posedge clk) begin
