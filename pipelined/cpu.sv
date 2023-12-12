@@ -16,7 +16,7 @@ module cpu #(
     
    
     logic [2:0]                     RegWriteW;
-    logic [1:0]                     MemWriteM;
+    logic [2:0]                     MemWriteM;
     logic [IMM_WIDTH-1:0]           ResultsrcW;
     logic [CONTROL_WIDTH-1:0]       ALUcontrolE;
     logic                           ALUsrcE;
@@ -73,8 +73,8 @@ control_top control(
     .PCF_i(PCF),                    //32b
     .PCPlus4F_i(PCPlus4F),
     .InstrD_o(InstrD),//32b
-    .RegWriteW_o(RegWriteW), //1b
-    .MemWriteM_o(MemWriteM), //1b
+    .RegWriteW_o(RegWriteW), //1b  ==> edited to 3 bits
+    .MemWriteM_o(MemWriteM), //1b ==> edited to 3 bits
     .ResultsrcW_o(ResultsrcW), //3b ==> edited to 2 bits
     .ALUcontrolE_o(ALUctrlE), //3b
     .ALUsrcE_o(ALUsrcE), //1 bit
@@ -96,7 +96,7 @@ alu_top alu(
     .Drst_i(Drst),
     .ALUsrcE_i(ALUsrc),
     .ALUcontrolE_i(ALUctrl),
-    .RegWriteW_i(RegWrite),
+    .RegWriteW_i(RegWriteW),
     .ResultSrcW_i(Resultsrc),
     .MemWriteM_i(MemWrite),
     .ExtImmD_i(ImmOp),
@@ -132,6 +132,7 @@ hazard_unit hazard(
     .RdM_i(RdM),
     .RdW_i(RdW),
     .RdE_i(RdE),
+    .RegWriteM_i(RegwriteM),
     .RegWriteW_i(RegWriteW),
     .opcodeE_i(OpcodeE),
     .PCSrcE_i(PCSrcE),

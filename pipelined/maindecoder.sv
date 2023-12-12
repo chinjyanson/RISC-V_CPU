@@ -1,5 +1,5 @@
 module maindecoder #(
-    parameters  OP_WIDTH = 7
+    parameter  OP_WIDTH = 7
 ) (
     input   logic [OP_WIDTH-1:0]    op,
     output  logic [1:0]             ResultSrc,

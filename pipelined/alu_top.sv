@@ -11,10 +11,9 @@ module alu_top #(
     input   wire [6:0]                  opcodeD_i,
     input   wire [1:0]                  FowardAE_i,
     input   wire [1:0]                  FowardBE_i,
-    input   wire                        Den_i,
     input   wire                        Drst_i,
     input   wire [2:0]                  RegWriteW_i, 
-    input   wire [1:0]                  MemWriteM_i, 
+    input   wire [2:0]                  MemWriteM_i, 
     input   wire [IMM_WIDTH-1:0]        ResultSrcW_i, 
     input   wire [CONTROL_WIDTH-1:0]    ALUcontrolE_i, 
     input   wire                        ALUsrcE_i, 
@@ -48,6 +47,8 @@ wire                     ZeroE;
 wire [2:0]              RegWriteM;
 wire [1:0]              ResultSrcM;
 wire [1:0]              MemWriteM;
+wire [DATA_WIDTH-1:0]   ALUResultM;
+wire [DATA_WIDTH-1:0]   WriteDataM;
 
 //Write Logic
 wire [DATA_WIDTH-1:0]   WriteDataW;
