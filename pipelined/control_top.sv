@@ -5,6 +5,7 @@ module control_top #(
     input  logic                           clk,
     input  logic                           Fen_i,
     input  logic                           Frst_i,
+    input  logic                           rst,
     input  logic                           Den_i,
     input  logic                           Drst_i,
     input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
@@ -22,9 +23,17 @@ module control_top #(
 
 );
 
-    logic [2:0]       ImmSrc;
+    logic [2:0]       ImmSrcD;
     logic [31:0]      InstrF;
     logic              ZeroOp;
+
+
+    wire [1:0]              ResultSrcD_i;
+    wire [1:0]              MemWriteD_i;
+    wire [2:0]              ALUcontrolD_i;
+    wire                    ALUsrcD_i;
+    wire                    JumpD;
+    wire                    BranchD_i;
 
     //Execute Logic
     wire [2:0]              RegWriteE;
@@ -47,17 +56,19 @@ module control_top #(
     );
     
     control_unit #(DATA_WIDTH) ControlUnit(
-    .opcode         (InstrD[6:0]),
+    .clk            (clk),
+    .reset          (rst),   //unsure check
+    .op             (InstrD[6:0]),
     .funct3         (InstrD[14:12]),
-    .funct7         (InstrD[30]),
+    .funct7b5        (InstrD[30]),
     .RegWriteD      (RegWriteD),
-    .MemWriteD      (MemWriteD),
-    .ResultsrcD     (ResultsrcD),
-    .ALUccontrolD   (ALUcontrolD),
-    .ALUsrcD        (ALUsrcD),
+    .MemWriteD      (MemWriteD_i),
+    .ResultSrcD     (ResultSrcD_i),
+    .ALUControlD    (ALUcontrolD_i),
+    .ALUSrcD        (ALUsrcD_i),
     .ImmSrcD        (ImmSrcD),
     .JumpD          (JumpD),
-    .BranchD        (BranchD)
+    .BranchD        (BranchD_i)
     );
 
     reg_fetch #(DATA_WIDTH) FReg(
@@ -75,11 +86,11 @@ module control_top #(
     
     sign_extend #(DATA_WIDTH) MySignExtend(
         .instr        (InstrD),
-        .ImmSrc       (ImmSrc),
+        .ImmSrc       (ImmSrcD),
         .ExtImm       (ImmOpD_o)
     );
 
-    reg_dec_control DREg(
+    reg_dec_control DReg(
     //inputs - D
     .clk(clk),
     .en(Den_i),
@@ -114,7 +125,7 @@ reg_execute_control EREG(
     //outputs M
     .RegWriteM(RegWriteM),    
     .ResultSrcM(ResultSrcM),
-    .MemWriteM(MemWriteM_o),
+    .MemWriteM(MemWriteM_o)
 );
 
 reg_memory_control MREG(
@@ -125,7 +136,7 @@ reg_memory_control MREG(
 
     //outputs W
     .RegWriteW(RegWriteW_o), 
-    .ResultSrcW(ResultSrcW_o),
+    .ResultSrcW(ResultSrcW_o)
 );
 
 logic ZerOP;

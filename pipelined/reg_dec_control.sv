@@ -25,7 +25,7 @@ module reg_dec_control #(
     output logic                    BranchE,
     output logic [2:0]              ALUControlE,
     output logic                    ALUsrcE,
-    output logic [2:0]               func3E
+    output logic [2:0]              funct3E
 
 );
 

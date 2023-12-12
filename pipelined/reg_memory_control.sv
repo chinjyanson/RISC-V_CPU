@@ -1,4 +1,4 @@
-module reg_memory #(
+module reg_memory_control #(
     parameter DATA_WIDTH =32
 )(  
     input logic                    clk,     
@@ -6,7 +6,7 @@ module reg_memory #(
     input logic [1:0]              ResultSrcM,
 
     output logic [2:0]              RegWriteW,
-    output logic [1:0]              ResultSrcW,
+    output logic [1:0]              ResultSrcW
     );
 
     always_ff @(posedge clk) begin
