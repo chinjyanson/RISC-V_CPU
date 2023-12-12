@@ -9,6 +9,7 @@ module control_top #(
     input  logic                           Drst_i,
     input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
     input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
+    input  logic                           ZeroE_i,
     output logic [DATA_WIDTH-1:0]          InstrD_o,//32b
     output logic [2:0]                     RegWriteW_o, //1b ==> edited to 3 bits
     output logic [1:0]                     MemWriteM_o, //1b ==> edited to 2 bits
@@ -25,21 +26,20 @@ module control_top #(
     logic [31:0]      InstrF;
     logic              ZeroOp;
 
-//Execute Logic
-wire [2:0]              RegWriteE;
-wire [1:0]              ResultSrcE;
-wire [1:0]              MemWriteE;
-wire [DATA_WIDTH-1:0]   ALUResultE; 
-wire                    JumpE;
-wire                    BranchE;
-wire [2:0]              funct3E;
+    //Execute Logic
+    wire [2:0]              RegWriteE;
+    wire [1:0]              ResultSrcE;
+    wire [1:0]              MemWriteE;
+    wire [DATA_WIDTH-1:0]   ALUResultE; 
+    wire                    JumpE;
+    wire                    BranchE;
+    wire [2:0]              funct3E;
 
-//Memory Logic
-wire [2:0]              RegWriteM;
-wire [1:0]              ResultSrcM;
+    //Memory Logic
+    wire [2:0]              RegWriteM;
+    wire [1:0]              ResultSrcM;
 
 
-//Write Logic
 
     instr_mem InstrMem(
         .addr_i         (PCF_i),
@@ -127,6 +127,18 @@ reg_memory_control MREG(
     .RegWriteW(RegWriteW_o), 
     .ResultSrcW(ResultSrcW_o),
 );
+
+logic ZerOP;
+
+assign ZeroOp = ZeroE_i ^ InstrD[12]; 
+if (JumpE){
+    PCSrcE = 2'b10;
+}else {
+    PCSrcE = (BranchE & ZeroOp) ? 2'b01 : 2b'00;
+}
+
+
+
 
 endmodule
 

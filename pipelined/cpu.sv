@@ -42,7 +42,7 @@ module cpu #(
     logic [DATA_WIDTH-1:0]      PCF;
     logic [DATA_WIDTH-1:0]      PCPlus4F;
     logic [DATA_WIDTH-1:0]      Result;
-
+    logic                       ZeroE;
 
     //output internal logic for hazard module
     logic                       Den;
@@ -84,7 +84,8 @@ control_top control(
     .Fen_i(Fen),
     .Frst_i(Frst),
     .Den_i(Den),
-    .Drst_i(Drst)
+    .Drst_i(Drst),
+    .ZeroE_i(ZeroE)
 );
 
 
@@ -117,7 +118,8 @@ alu_top alu(
     .Rs2E_o(Rs2E),
     .RdM_o(RdM),
     .RdW_o(RdW),
-    .RdE_o(RdE)
+    .RdE_o(RdE),
+    .ZeroE_o(ZeroE_o)
     
 );  
 

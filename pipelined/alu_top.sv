@@ -29,9 +29,9 @@ module alu_top #(
     output  wire [4:0]                  RdM_o,
     output  wire [4:0]                  RdW_o,
     output  wire [4:0]                  RdE_o,
+    output  wire                        ZeroE_o
 );
 
-wire                    ZeroOp;
 
 //Execute Logic
 wire [DATA_WIDTH-1:0]    RD1E;
