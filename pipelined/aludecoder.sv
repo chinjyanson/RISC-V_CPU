@@ -23,6 +23,7 @@ assign RtypeSub = funct7b5 & opb5; //TRUE for R-type subtract
                     3'b010: ALUControl = 3'b101; // set less than
                     3'b110: ALUControl = 3'b011; // or
                     3'b111: ALUControl = 3'b010; // and 
+                                                    //need to add something for lui
                     default: ALUControl = 3'bxxx;
                 endcase
         endcase

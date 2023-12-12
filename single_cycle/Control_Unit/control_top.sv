@@ -18,7 +18,7 @@ module control_top #(
 
 );
 
-    logic [1:0]       ImmSrc;
+    logic [2:0]       ImmSrc;
 
 control_unit ControlUnit(
     .Zero_i          (Zero_i),
