@@ -6,6 +6,7 @@ module hazard_unit (
      input  logic    [4:0]   RdM_i,
      input  logic    [4:0]   RdW_i,
      input  logic    [4:0]   RdE_i,
+     input  logic    [2:0]   RegWriteM_i,
      input  logic    [2:0]   RegWriteW_i,
      input  logic    [6:0]   opcodeE_i,
      input  logic    [1:0]   PCSrcE_i,
@@ -22,8 +23,11 @@ module hazard_unit (
 
 hazard_foward FowardHazard(
     .RdM        (RdM_i),
+    .RdW        (RdW_i),
     .Rs1E       (Rs1E_i),
     .Rs2E       (Rs2E_i),
+    .RegWriteM  (RegWriteM_i),
+    .RegWriteW  (RegWriteW_i),
     .FowardAE   (FowardAE_o),
     .FowardBE   (FowardBE_o)
     
