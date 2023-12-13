@@ -17,7 +17,7 @@ module data_mem #(
         10 - write half word (16 bits)
         11 - write last byte (8 bits)
     */   
-    logic [DATA_WIDTH-1:0]  data_mem_register [(2**17)-1:0]; //we set our reg file which will be filled with initial values
+    logic [ADDRESS_WIDTH-1:0]  data_mem_register [(2**19)-1:0]; //we set our reg file which will be filled with initial values
     integer starting_address = 32'h10000;
 
 
@@ -26,7 +26,7 @@ module data_mem #(
         $readmemh("sine.mem", data_mem_register, starting_address);
      end
 
-    logic [17:0] add = A[17:0];
+    logic [19:0] add = 4*A[17:0];
     logic [15:0] data16 = WD[15:0];
     logic [7:0] data8 = WD[7:0];
 
@@ -34,20 +34,24 @@ module data_mem #(
         case(WE) // this could be done cleaner 
         2'b01: 
         begin //word write
-            data_mem_register[add] <= WD;
+            data_mem_register[add] <= WD[7:0];
+            data_mem_register[add+1] <= WD[15:7];
+            data_mem_register[add+2] <= WD[23:15];
+            data_mem_register[add+3] <= WD[31:24];
         end
         2'b10: 
         begin //half word 
-            data_mem_register[add][15:0] <= data16;
+            data_mem_register[add] <= data16[7:0];
+            data_mem_register[add] <= data16[15:7];
         end
         2'b11:
         begin //write byte
-            data_mem_register[add][7:0] <= data8;
+            data_mem_register[add] <= data8;
         end
         endcase
     end 
 
-    assign test = data_mem_register[301];
-    assign RD = data_mem_register[add]; //we read and output the [A] register value
+    //assign test = data_mem_register[(2**17)-2];
+    assign RD = {data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
 
 endmodule

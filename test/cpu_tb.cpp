@@ -24,10 +24,12 @@ int main(int argc, char **argv, char **env) {
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
 
-
+    /*
     //init Vbuddy
     if (vbdOpen()!=1) return(-1);
     vbdHeader("Ref Prog");
+    */
+    
     
 
     // initialize simulation inputs

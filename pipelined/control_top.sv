@@ -84,7 +84,7 @@ module control_top #(
 
     
     sign_extend MySignExtend(
-        .instr        (InstrD_o[31:7]),
+        .instr        (InstrD_o[31:0]),
         .ImmSrc       (ImmSrcD),
         .ExtImm       (ExtImmD_o)
     );

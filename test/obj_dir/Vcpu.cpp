@@ -1,159 +1,872 @@
 // Verilated -*- C++ -*-
-// DESCRIPTION: Verilator output: Model implementation (design independent parts)
+// DESCRIPTION: Verilator output: Design implementation internals
+// See Vcpu.h for the primary calling header
 
 #include "Vcpu.h"
 #include "Vcpu__Syms.h"
-#include "verilated_vcd_c.h"
 
-//============================================================
-// Constructors
-
-Vcpu::Vcpu(VerilatedContext* _vcontextp__, const char* _vcname__)
-    : VerilatedModel{*_vcontextp__}
-    , vlSymsp{new Vcpu__Syms(contextp(), _vcname__, this)}
-    , clk{vlSymsp->TOP.clk}
-    , rst{vlSymsp->TOP.rst}
-    , test{vlSymsp->TOP.test}
-    , a0{vlSymsp->TOP.a0}
-    , rootp{&(vlSymsp->TOP)}
-{
-    // Register model with the context
-    contextp()->addModel(this);
-}
-
-Vcpu::Vcpu(const char* _vcname__)
-    : Vcpu(Verilated::threadContextp(), _vcname__)
-{
-}
-
-//============================================================
-// Destructor
-
-Vcpu::~Vcpu() {
-    delete vlSymsp;
-}
-
-//============================================================
-// Evaluation loop
-
-void Vcpu___024root___eval_initial(Vcpu___024root* vlSelf);
-void Vcpu___024root___eval_settle(Vcpu___024root* vlSelf);
-void Vcpu___024root___eval(Vcpu___024root* vlSelf);
-QData Vcpu___024root___change_request(Vcpu___024root* vlSelf);
-#ifdef VL_DEBUG
-void Vcpu___024root___eval_debug_assertions(Vcpu___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vcpu___024root___final(Vcpu___024root* vlSelf);
-
-static void _eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
-    vlSymsp->__Vm_didInit = true;
-    Vcpu___024root___eval_initial(&(vlSymsp->TOP));
-    // Evaluate till stable
-    int __VclockLoop = 0;
-    QData __Vchange = 1;
-    vlSymsp->__Vm_activity = true;
-    do {
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
-        Vcpu___024root___eval_settle(&(vlSymsp->TOP));
-        Vcpu___024root___eval(&(vlSymsp->TOP));
-        if (VL_UNLIKELY(++__VclockLoop > 100)) {
-            // About to fail, so enable debug to see what's not settling.
-            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
-            int __Vsaved_debug = Verilated::debug();
-            Verilated::debug(1);
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
-            Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("cpu.sv", 1, "",
-                "Verilated model didn't DC converge\n"
-                "- See https://verilator.org/warn/DIDNOTCONVERGE");
-        } else {
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
-        }
-    } while (VL_UNLIKELY(__Vchange));
-}
+//==========
 
 void Vcpu::eval_step() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval_step\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval\n"); );
+    Vcpu__Syms* __restrict vlSymsp = this->__VlSymsp;  // Setup global symbol table
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
 #ifdef VL_DEBUG
     // Debug assertions
-    Vcpu___024root___eval_debug_assertions(&(vlSymsp->TOP));
+    _eval_debug_assertions();
 #endif  // VL_DEBUG
     // Initialize
     if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
     // Evaluate till stable
     int __VclockLoop = 0;
     QData __Vchange = 1;
-    vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        Vcpu___024root___eval(&(vlSymsp->TOP));
+        vlSymsp->__Vm_activity = true;
+        _eval(vlSymsp);
         if (VL_UNLIKELY(++__VclockLoop > 100)) {
             // About to fail, so enable debug to see what's not settling.
             // Note you must run make with OPT=-DVL_DEBUG for debug prints.
             int __Vsaved_debug = Verilated::debug();
             Verilated::debug(1);
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
+            __Vchange = _change_request(vlSymsp);
             Verilated::debug(__Vsaved_debug);
             VL_FATAL_MT("cpu.sv", 1, "",
                 "Verilated model didn't converge\n"
-                "- See https://verilator.org/warn/DIDNOTCONVERGE");
+                "- See DIDNOTCONVERGE in the Verilator manual");
         } else {
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
+            __Vchange = _change_request(vlSymsp);
         }
     } while (VL_UNLIKELY(__Vchange));
-    // Evaluate cleanup
 }
 
-//============================================================
-// Utilities
-
-const char* Vcpu::name() const {
-    return vlSymsp->name();
+void Vcpu::_eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    _eval_initial(vlSymsp);
+    vlSymsp->__Vm_activity = true;
+    // Evaluate till stable
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
+    do {
+        _eval_settle(vlSymsp);
+        _eval(vlSymsp);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = _change_request(vlSymsp);
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("cpu.sv", 1, "",
+                "Verilated model didn't DC converge\n"
+                "- See DIDNOTCONVERGE in the Verilator manual");
+        } else {
+            __Vchange = _change_request(vlSymsp);
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
-//============================================================
-// Invoke final blocks
-
-VL_ATTR_COLD void Vcpu::final() {
-    Vcpu___024root___final(&(vlSymsp->TOP));
-}
-
-//============================================================
-// Implementations of abstract methods from VerilatedModel
-
-const char* Vcpu::hierName() const { return vlSymsp->name(); }
-const char* Vcpu::modelName() const { return "Vcpu"; }
-unsigned Vcpu::threads() const { return 1; }
-std::unique_ptr<VerilatedTraceConfig> Vcpu::traceConfig() const {
-    return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
-};
-
-//============================================================
-// Trace configuration
-
-void Vcpu___024root__trace_init_top(Vcpu___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32_t code) {
-    // Callback from tracep->open()
-    Vcpu___024root* const __restrict vlSelf VL_ATTR_UNUSED = static_cast<Vcpu___024root*>(voidSelf);
-    Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    if (!vlSymsp->_vm_contextp__->calcUnusedSigs()) {
-        VL_FATAL_MT(__FILE__, __LINE__, __FILE__,
-            "Turning on wave traces requires Verilated::traceEverOn(true) call before time 0.");
+VL_INLINE_OPT void Vcpu::_sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_sequent__TOP__2\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Variables
+    CData/*7:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
+    IData/*18:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
+    // Body
+    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 = 0U;
+    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 = 0U;
+    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 = 0U;
+    vlTOPp->cpu__DOT__pc__DOT__PC = ((IData)(vlTOPp->rst)
+                                      ? 0U : vlTOPp->cpu__DOT__pc__DOT__next_PC);
+    if ((1U == (IData)(vlTOPp->cpu__DOT__MemWrite))) {
+        __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 
+            = (0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2);
+        __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 = 1U;
+        __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 
+            = (0x7fffcU & (vlTOPp->cpu__DOT__ALUResult_o 
+                           << 2U));
+        __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 
+            = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
+                        >> 7U));
+        __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 
+            = (0x7ffffU & ((IData)(1U) + (0xffffcU 
+                                          & (vlTOPp->cpu__DOT__ALUResult_o 
+                                             << 2U))));
+        __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 
+            = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
+                        >> 0xfU));
+        __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 
+            = (0x7ffffU & ((IData)(2U) + (0xffffcU 
+                                          & (vlTOPp->cpu__DOT__ALUResult_o 
+                                             << 2U))));
+        __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3 
+            = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
+                        >> 0x18U));
+        __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3 
+            = (0x7ffffU & ((IData)(3U) + (0xffffcU 
+                                          & (vlTOPp->cpu__DOT__ALUResult_o 
+                                             << 2U))));
+    } else {
+        if ((2U == (IData)(vlTOPp->cpu__DOT__MemWrite))) {
+            __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 
+                = (0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2);
+            __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 = 1U;
+            __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 
+                = (0x7fffcU & (vlTOPp->cpu__DOT__ALUResult_o 
+                               << 2U));
+            __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5 
+                = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
+                            >> 7U));
+            __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5 
+                = (0x7fffcU & (vlTOPp->cpu__DOT__ALUResult_o 
+                               << 2U));
+        } else {
+            if ((3U == (IData)(vlTOPp->cpu__DOT__MemWrite))) {
+                __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 
+                    = (0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2);
+                __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 = 1U;
+                __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 
+                    = (0x7fffcU & (vlTOPp->cpu__DOT__ALUResult_o 
+                                   << 2U));
+            }
+        }
     }
-    vlSymsp->__Vm_baseCode = code;
-    tracep->scopeEscape(' ');
-    tracep->pushNamePrefix(std::string{vlSymsp->name()} + ' ');
-    Vcpu___024root__trace_init_top(vlSelf, tracep);
-    tracep->popNamePrefix();
-    tracep->scopeEscape('.');
+    __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 
+        = ((4U & (IData)(vlTOPp->cpu__DOT__RegWrite))
+            ? ((2U & (IData)(vlTOPp->cpu__DOT__RegWrite))
+                ? ((1U & (IData)(vlTOPp->cpu__DOT__RegWrite))
+                    ? (0xffU & vlTOPp->cpu__DOT__alu__DOT__Result)
+                    : (0xffffU & vlTOPp->cpu__DOT__alu__DOT__Result))
+                : vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
+               [(0x1fU & (vlTOPp->cpu__DOT__Instr >> 7U))])
+            : ((2U & (IData)(vlTOPp->cpu__DOT__RegWrite))
+                ? ((1U & (IData)(vlTOPp->cpu__DOT__RegWrite))
+                    ? ((0xffffff00U & ((- (IData)((1U 
+                                                   & (vlTOPp->cpu__DOT__alu__DOT__Result 
+                                                      >> 7U)))) 
+                                       << 8U)) | (0xffU 
+                                                  & vlTOPp->cpu__DOT__alu__DOT__Result))
+                    : ((0xffff0000U & ((- (IData)((1U 
+                                                   & (vlTOPp->cpu__DOT__alu__DOT__Result 
+                                                      >> 0xfU)))) 
+                                       << 0x10U)) | 
+                       (0xffffU & vlTOPp->cpu__DOT__alu__DOT__Result)))
+                : ((1U & (IData)(vlTOPp->cpu__DOT__RegWrite))
+                    ? vlTOPp->cpu__DOT__alu__DOT__Result
+                    : vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
+                   [(0x1fU & (vlTOPp->cpu__DOT__Instr 
+                              >> 7U))])));
+    __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 
+        = (0x1fU & (vlTOPp->cpu__DOT__Instr >> 7U));
+    vlTOPp->cpu__DOT__PC = vlTOPp->cpu__DOT__pc__DOT__next_PC;
+    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0) {
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
+    }
+    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4) {
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
+    }
+    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6) {
+        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6] 
+            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
+    }
+    vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0] 
+        = __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
+    vlTOPp->a0 = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
+        [0xaU];
+    vlTOPp->cpu__DOT__Instr = ((vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                [(0xffU & ((IData)(3U) 
+                                           + vlTOPp->cpu__DOT__PC))] 
+                                << 0x18U) | ((vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                              [(0xffU 
+                                                & ((IData)(2U) 
+                                                   + vlTOPp->cpu__DOT__PC))] 
+                                              << 0x10U) 
+                                             | ((vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                                 [(0xffU 
+                                                   & ((IData)(1U) 
+                                                      + vlTOPp->cpu__DOT__PC))] 
+                                                 << 8U) 
+                                                | vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                                                [(0xffU 
+                                                  & vlTOPp->cpu__DOT__PC)])));
+    if ((0x40U & vlTOPp->cpu__DOT__Instr)) {
+        vlTOPp->cpu__DOT__RegWrite = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                       ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                           ? 1U : (
+                                                   (8U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 1U
+                                                    : 
+                                                   ((4U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 
+                                                    ((2U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((1U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 0U
+                                                       : 1U)
+                                                      : 1U)
+                                                     : 
+                                                    ((2U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((1U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 0U
+                                                       : 1U)
+                                                      : 1U))))
+                                       : 1U);
+        vlTOPp->cpu__DOT__MemWrite = 0U;
+        vlTOPp->cpu__DOT__Resultsrc = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                        ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                            ? 0U : 
+                                           ((8U & vlTOPp->cpu__DOT__Instr)
+                                             ? ((4U 
+                                                 & vlTOPp->cpu__DOT__Instr)
+                                                 ? 
+                                                ((2U 
+                                                  & vlTOPp->cpu__DOT__Instr)
+                                                  ? 
+                                                 ((1U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 2U
+                                                   : 0U)
+                                                  : 0U)
+                                                 : 0U)
+                                             : ((4U 
+                                                 & vlTOPp->cpu__DOT__Instr)
+                                                 ? 
+                                                ((2U 
+                                                  & vlTOPp->cpu__DOT__Instr)
+                                                  ? 
+                                                 ((1U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 2U
+                                                   : 0U)
+                                                  : 0U)
+                                                 : 
+                                                ((2U 
+                                                  & vlTOPp->cpu__DOT__Instr)
+                                                  ? 
+                                                 ((1U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 1U
+                                                   : 0U)
+                                                  : 0U))))
+                                        : 0U);
+        vlTOPp->cpu__DOT__ALUctrl = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                      ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                          ? 0U : ((8U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 0U
+                                                   : 
+                                                  ((4U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 0U
+                                                    : 
+                                                   ((2U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 
+                                                    ((1U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 1U
+                                                      : 0U)
+                                                     : 0U))))
+                                      : 0U);
+    } else {
+        vlTOPp->cpu__DOT__RegWrite = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                       ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                           ? 1U : (
+                                                   (8U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 1U
+                                                    : 
+                                                   ((4U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 1U
+                                                     : 
+                                                    ((2U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((1U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 0U
+                                                       : 1U)
+                                                      : 1U))))
+                                       : ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                           ? 1U : (
+                                                   (8U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 1U
+                                                    : 
+                                                   ((4U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 1U
+                                                     : 
+                                                    ((2U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((1U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((0x4000U 
+                                                        & vlTOPp->cpu__DOT__Instr)
+                                                        ? 
+                                                       ((0x2000U 
+                                                         & vlTOPp->cpu__DOT__Instr)
+                                                         ? 0U
+                                                         : 
+                                                        ((0x1000U 
+                                                          & vlTOPp->cpu__DOT__Instr)
+                                                          ? 6U
+                                                          : 7U))
+                                                        : 
+                                                       ((0x2000U 
+                                                         & vlTOPp->cpu__DOT__Instr)
+                                                         ? 
+                                                        ((0x1000U 
+                                                          & vlTOPp->cpu__DOT__Instr)
+                                                          ? 0U
+                                                          : 1U)
+                                                         : 
+                                                        ((0x1000U 
+                                                          & vlTOPp->cpu__DOT__Instr)
+                                                          ? 2U
+                                                          : 3U)))
+                                                       : 1U)
+                                                      : 1U)))));
+        vlTOPp->cpu__DOT__MemWrite = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                       ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                           ? 0U : (
+                                                   (8U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 0U
+                                                    : 
+                                                   ((4U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 0U
+                                                     : 
+                                                    ((2U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((1U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((0U 
+                                                        == 
+                                                        (7U 
+                                                         & (vlTOPp->cpu__DOT__Instr 
+                                                            >> 0xcU)))
+                                                        ? 3U
+                                                        : 
+                                                       ((1U 
+                                                         == 
+                                                         (7U 
+                                                          & (vlTOPp->cpu__DOT__Instr 
+                                                             >> 0xcU)))
+                                                         ? 2U
+                                                         : 
+                                                        ((2U 
+                                                          == 
+                                                          (7U 
+                                                           & (vlTOPp->cpu__DOT__Instr 
+                                                              >> 0xcU)))
+                                                          ? 1U
+                                                          : 0U)))
+                                                       : 0U)
+                                                      : 0U))))
+                                       : 0U);
+        vlTOPp->cpu__DOT__Resultsrc = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                        ? 0U : ((0x10U 
+                                                 & vlTOPp->cpu__DOT__Instr)
+                                                 ? 0U
+                                                 : 
+                                                ((8U 
+                                                  & vlTOPp->cpu__DOT__Instr)
+                                                  ? 0U
+                                                  : 
+                                                 ((4U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 0U
+                                                   : 
+                                                  ((2U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 
+                                                   ((1U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 1U
+                                                     : 0U)
+                                                    : 0U)))));
+        vlTOPp->cpu__DOT__ALUctrl = ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                      ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                          ? ((8U & vlTOPp->cpu__DOT__Instr)
+                                              ? 0U : 
+                                             ((4U & vlTOPp->cpu__DOT__Instr)
+                                               ? ((2U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((1U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 7U
+                                                    : 0U)
+                                                   : 0U)
+                                               : ((2U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((1U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 
+                                                   ((0x4000U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 
+                                                    ((0x2000U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((0x1000U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 2U
+                                                       : 3U)
+                                                      : 0U)
+                                                     : 
+                                                    ((0x2000U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((0x1000U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 0U
+                                                       : 5U)
+                                                      : 
+                                                     ((0x1000U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 0U
+                                                       : 
+                                                      ((3U 
+                                                        == 
+                                                        ((2U 
+                                                          & (vlTOPp->cpu__DOT__Instr 
+                                                             >> 4U)) 
+                                                         | (1U 
+                                                            & (vlTOPp->cpu__DOT__Instr 
+                                                               >> 0x1eU))))
+                                                        ? 1U
+                                                        : 0U))))
+                                                    : 0U)
+                                                   : 0U)))
+                                          : 0U) : (
+                                                   (0x10U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 
+                                                   ((8U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 0U
+                                                     : 
+                                                    ((4U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 0U
+                                                      : 
+                                                     ((2U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((1U 
+                                                        & vlTOPp->cpu__DOT__Instr)
+                                                        ? 
+                                                       ((0U 
+                                                         == 
+                                                         (7U 
+                                                          & (vlTOPp->cpu__DOT__Instr 
+                                                             >> 0xcU)))
+                                                         ? 0U
+                                                         : 
+                                                        ((1U 
+                                                          == 
+                                                          (7U 
+                                                           & (vlTOPp->cpu__DOT__Instr 
+                                                              >> 0xcU)))
+                                                          ? 5U
+                                                          : 0U))
+                                                        : 0U)
+                                                       : 0U)))
+                                                    : 0U));
+    }
+    vlTOPp->cpu__DOT__alu__DOT__SrcA = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
+        [(0x1fU & (vlTOPp->cpu__DOT__Instr >> 0xfU))];
+    vlTOPp->cpu__DOT__alu__DOT__regOp2 = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
+        [(0x1fU & (vlTOPp->cpu__DOT__Instr >> 0x14U))];
+    vlTOPp->cpu__DOT__control__DOT__ImmSrc = ((0x40U 
+                                               & vlTOPp->cpu__DOT__Instr)
+                                               ? ((0x20U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((0x10U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 0U
+                                                    : 
+                                                   ((8U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 
+                                                    ((4U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((2U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((1U 
+                                                        & vlTOPp->cpu__DOT__Instr)
+                                                        ? 3U
+                                                        : 0U)
+                                                       : 0U)
+                                                      : 0U)
+                                                     : 
+                                                    ((4U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 0U
+                                                      : 
+                                                     ((2U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((1U 
+                                                        & vlTOPp->cpu__DOT__Instr)
+                                                        ? 2U
+                                                        : 0U)
+                                                       : 0U))))
+                                                   : 0U)
+                                               : ((0x20U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((0x10U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 
+                                                   ((8U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 0U
+                                                     : 
+                                                    ((4U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 
+                                                     ((2U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((1U 
+                                                        & vlTOPp->cpu__DOT__Instr)
+                                                        ? 4U
+                                                        : 0U)
+                                                       : 0U)
+                                                      : 0U))
+                                                    : 
+                                                   ((8U 
+                                                     & vlTOPp->cpu__DOT__Instr)
+                                                     ? 0U
+                                                     : 
+                                                    ((4U 
+                                                      & vlTOPp->cpu__DOT__Instr)
+                                                      ? 0U
+                                                      : 
+                                                     ((2U 
+                                                       & vlTOPp->cpu__DOT__Instr)
+                                                       ? 
+                                                      ((1U 
+                                                        & vlTOPp->cpu__DOT__Instr)
+                                                        ? 1U
+                                                        : 0U)
+                                                       : 0U))))
+                                                   : 0U));
+    if ((0U == (IData)(vlTOPp->cpu__DOT__control__DOT__ImmSrc))) {
+        vlTOPp->cpu__DOT__ImmOp = ((0xfffff000U & (
+                                                   (- (IData)(
+                                                              (1U 
+                                                               & (vlTOPp->cpu__DOT__Instr 
+                                                                  >> 0x1fU)))) 
+                                                   << 0xcU)) 
+                                   | (0xfffU & (vlTOPp->cpu__DOT__Instr 
+                                                >> 0x14U)));
+    } else {
+        if ((1U == (IData)(vlTOPp->cpu__DOT__control__DOT__ImmSrc))) {
+            vlTOPp->cpu__DOT__ImmOp = ((0xfffff000U 
+                                        & ((- (IData)(
+                                                      (1U 
+                                                       & (vlTOPp->cpu__DOT__Instr 
+                                                          >> 0x1fU)))) 
+                                           << 0xcU)) 
+                                       | ((0xfe0U & 
+                                           (vlTOPp->cpu__DOT__Instr 
+                                            >> 0x14U)) 
+                                          | (0x1fU 
+                                             & (vlTOPp->cpu__DOT__Instr 
+                                                >> 7U))));
+        } else {
+            if ((2U == (IData)(vlTOPp->cpu__DOT__control__DOT__ImmSrc))) {
+                vlTOPp->cpu__DOT__ImmOp = ((0xfffff000U 
+                                            & ((- (IData)(
+                                                          (1U 
+                                                           & (vlTOPp->cpu__DOT__Instr 
+                                                              >> 0x1fU)))) 
+                                               << 0xcU)) 
+                                           | ((0x800U 
+                                               & (vlTOPp->cpu__DOT__Instr 
+                                                  << 4U)) 
+                                              | ((0x7e0U 
+                                                  & (vlTOPp->cpu__DOT__Instr 
+                                                     >> 0x14U)) 
+                                                 | (0x1eU 
+                                                    & (vlTOPp->cpu__DOT__Instr 
+                                                       >> 7U)))));
+            } else {
+                if ((3U == (IData)(vlTOPp->cpu__DOT__control__DOT__ImmSrc))) {
+                    vlTOPp->cpu__DOT__ImmOp = ((0xfff00000U 
+                                                & ((- (IData)(
+                                                              (1U 
+                                                               & (vlTOPp->cpu__DOT__Instr 
+                                                                  >> 0x1fU)))) 
+                                                   << 0x14U)) 
+                                               | ((0xff000U 
+                                                   & vlTOPp->cpu__DOT__Instr) 
+                                                  | ((0x800U 
+                                                      & (vlTOPp->cpu__DOT__Instr 
+                                                         >> 9U)) 
+                                                     | (0x7feU 
+                                                        & (vlTOPp->cpu__DOT__Instr 
+                                                           >> 0x14U)))));
+                } else {
+                    if ((4U == (IData)(vlTOPp->cpu__DOT__control__DOT__ImmSrc))) {
+                        vlTOPp->cpu__DOT__ImmOp = (0xfffff000U 
+                                                   & vlTOPp->cpu__DOT__Instr);
+                    }
+                }
+            }
+        }
+    }
+    vlTOPp->cpu__DOT__alu__DOT__SrcB = ((1U & ((0x40U 
+                                                & vlTOPp->cpu__DOT__Instr)
+                                                ? (
+                                                   (~ 
+                                                    (vlTOPp->cpu__DOT__Instr 
+                                                     >> 5U)) 
+                                                   | ((vlTOPp->cpu__DOT__Instr 
+                                                       >> 4U) 
+                                                      | ((vlTOPp->cpu__DOT__Instr 
+                                                          >> 3U) 
+                                                         | ((vlTOPp->cpu__DOT__Instr 
+                                                             >> 2U) 
+                                                            | ((~ 
+                                                                (vlTOPp->cpu__DOT__Instr 
+                                                                 >> 1U)) 
+                                                               | (~ vlTOPp->cpu__DOT__Instr))))))
+                                                : (
+                                                   (~ 
+                                                    (vlTOPp->cpu__DOT__Instr 
+                                                     >> 5U)) 
+                                                   | ((~ 
+                                                       (vlTOPp->cpu__DOT__Instr 
+                                                        >> 4U)) 
+                                                      | ((vlTOPp->cpu__DOT__Instr 
+                                                          >> 3U) 
+                                                         | ((vlTOPp->cpu__DOT__Instr 
+                                                             >> 2U) 
+                                                            | ((~ 
+                                                                (vlTOPp->cpu__DOT__Instr 
+                                                                 >> 1U)) 
+                                                               | (~ vlTOPp->cpu__DOT__Instr))))))))
+                                         ? vlTOPp->cpu__DOT__ImmOp
+                                         : vlTOPp->cpu__DOT__alu__DOT__regOp2);
+    vlTOPp->cpu__DOT__ALUResult_o = ((4U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                      ? ((2U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                          ? ((1U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                              ? vlTOPp->cpu__DOT__alu__DOT__SrcB
+                                              : (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 >> 
+                                                 (0x1fU 
+                                                  & vlTOPp->cpu__DOT__alu__DOT__SrcB)))
+                                          : ((1U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                              ? (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 << 
+                                                 (0x1fU 
+                                                  & vlTOPp->cpu__DOT__alu__DOT__SrcB))
+                                              : (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 ^ vlTOPp->cpu__DOT__alu__DOT__SrcB)))
+                                      : ((2U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                          ? ((1U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                              ? (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 | vlTOPp->cpu__DOT__alu__DOT__SrcB)
+                                              : (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 & vlTOPp->cpu__DOT__alu__DOT__SrcB))
+                                          : ((1U & (IData)(vlTOPp->cpu__DOT__ALUctrl))
+                                              ? (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 - vlTOPp->cpu__DOT__alu__DOT__SrcB)
+                                              : (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                                                 + vlTOPp->cpu__DOT__alu__DOT__SrcB))));
+    vlTOPp->cpu__DOT__Zero = (vlTOPp->cpu__DOT__alu__DOT__SrcA 
+                              == vlTOPp->cpu__DOT__alu__DOT__SrcB);
+    vlTOPp->cpu__DOT__alu__DOT__Result = ((2U & (IData)(vlTOPp->cpu__DOT__Resultsrc))
+                                           ? ((1U & (IData)(vlTOPp->cpu__DOT__Resultsrc))
+                                               ? vlTOPp->cpu__DOT__alu__DOT__resultMux__DOT__input3
+                                               : ((IData)(4U) 
+                                                  + vlTOPp->cpu__DOT__pc__DOT__PC))
+                                           : ((1U & (IData)(vlTOPp->cpu__DOT__Resultsrc))
+                                               ? ((
+                                                   vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                   [
+                                                   (0x7ffffU 
+                                                    & ((IData)(3U) 
+                                                       + 
+                                                       (0xffffcU 
+                                                        & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                           << 2U))))] 
+                                                   << 0x18U) 
+                                                  | ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                      [
+                                                      (0x7ffffU 
+                                                       & ((IData)(2U) 
+                                                          + 
+                                                          (0xffffcU 
+                                                           & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                              << 2U))))] 
+                                                      << 0x10U) 
+                                                     | ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                         [
+                                                         (0x7ffffU 
+                                                          & ((IData)(1U) 
+                                                             + 
+                                                             (0xffffcU 
+                                                              & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                                 << 2U))))] 
+                                                         << 8U) 
+                                                        | vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                        [
+                                                        (0x7fffcU 
+                                                         & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                            << 2U))])))
+                                               : vlTOPp->cpu__DOT__ALUResult_o));
+    vlTOPp->cpu__DOT__PCsrc = ((0x40U & vlTOPp->cpu__DOT__Instr)
+                                ? ((0x20U & vlTOPp->cpu__DOT__Instr)
+                                    ? ((0x10U & vlTOPp->cpu__DOT__Instr)
+                                        ? 0U : ((8U 
+                                                 & vlTOPp->cpu__DOT__Instr)
+                                                 ? 
+                                                ((4U 
+                                                  & vlTOPp->cpu__DOT__Instr)
+                                                  ? 
+                                                 ((2U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((1U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 1U
+                                                    : 0U)
+                                                   : 0U)
+                                                  : 0U)
+                                                 : 
+                                                ((4U 
+                                                  & vlTOPp->cpu__DOT__Instr)
+                                                  ? 
+                                                 ((2U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((1U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 2U
+                                                    : 0U)
+                                                   : 0U)
+                                                  : 
+                                                 ((2U 
+                                                   & vlTOPp->cpu__DOT__Instr)
+                                                   ? 
+                                                  ((1U 
+                                                    & vlTOPp->cpu__DOT__Instr)
+                                                    ? 
+                                                   ((0U 
+                                                     == 
+                                                     (7U 
+                                                      & (vlTOPp->cpu__DOT__Instr 
+                                                         >> 0xcU)))
+                                                     ? (IData)(vlTOPp->cpu__DOT__Zero)
+                                                     : 
+                                                    ((1U 
+                                                      == 
+                                                      (7U 
+                                                       & (vlTOPp->cpu__DOT__Instr 
+                                                          >> 0xcU)))
+                                                      ? 
+                                                     (1U 
+                                                      & (~ (IData)(vlTOPp->cpu__DOT__Zero)))
+                                                      : (IData)(vlTOPp->cpu__DOT__Zero)))
+                                                    : 0U)
+                                                   : 0U))))
+                                    : 0U) : 0U);
+    vlTOPp->cpu__DOT__pc__DOT__next_PC = ((2U & (IData)(vlTOPp->cpu__DOT__PCsrc))
+                                           ? ((1U & (IData)(vlTOPp->cpu__DOT__PCsrc))
+                                               ? vlTOPp->cpu__DOT__pc__DOT__pc_mux__DOT__input3
+                                               : vlTOPp->cpu__DOT__ALUResult_o)
+                                           : ((1U & (IData)(vlTOPp->cpu__DOT__PCsrc))
+                                               ? (vlTOPp->cpu__DOT__pc__DOT__PC 
+                                                  + vlTOPp->cpu__DOT__ImmOp)
+                                               : ((IData)(4U) 
+                                                  + vlTOPp->cpu__DOT__pc__DOT__PC)));
 }
 
-VL_ATTR_COLD void Vcpu___024root__trace_register(Vcpu___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD void Vcpu::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (false && levels && options) {}  // Prevent unused
-    tfp->spTrace()->addModel(this);
-    tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
-    Vcpu___024root__trace_register(&(vlSymsp->TOP), tfp->spTrace());
+void Vcpu::_eval(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
+        vlTOPp->_sequent__TOP__2(vlSymsp);
+        vlTOPp->__Vm_traceActivity[1U] = 1U;
+    }
+    // Final
+    vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
 }
+
+VL_INLINE_OPT QData Vcpu::_change_request(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_change_request\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    return (vlTOPp->_change_request_1(vlSymsp));
+}
+
+VL_INLINE_OPT QData Vcpu::_change_request_1(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_change_request_1\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    // Change detection
+    QData __req = false;  // Logically a bool
+    return __req;
+}
+
+#ifdef VL_DEBUG
+void Vcpu::_eval_debug_assertions() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval_debug_assertions\n"); );
+    // Body
+    if (VL_UNLIKELY((clk & 0xfeU))) {
+        Verilated::overWidthError("clk");}
+    if (VL_UNLIKELY((rst & 0xfeU))) {
+        Verilated::overWidthError("rst");}
+}
+#endif  // VL_DEBUG
