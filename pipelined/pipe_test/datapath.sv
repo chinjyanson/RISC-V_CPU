@@ -50,5 +50,17 @@ logic [DATA_WIDTH-1:0] ResultW;
 logic [4:0]            RdB;
 
 // Fetch Stage
-mux2 
+mux2 jal_r(
+    .control(PCJalSrcE),
+    .input0(PCTargetE), 
+    .input1(ALUResultE),
+    .out(BranJumpTargetE)
+);
+mux2 pcmux(
+    .control(PCSrcE),
+    .input0(PCPlus4F),
+    .input1(BranJumpTargetE),
+    .out(PCNextF)
+);
+
 endmodule
