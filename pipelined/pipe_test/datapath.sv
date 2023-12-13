@@ -76,13 +76,27 @@ adder pcadd4(
 );
 
 // Instruction Fetch - Decode Pipeline Register
+reg_Ftc_Dec pipreg0(
+    .clk(clk),
+    .reset(reset),
+    .clear(FlushD),
+    .en(~StallD),
+
+    .InstrF(InstrF),
+    .PCF(PCF),
+    .PCPlus4F(PCPlus4F),
+
+    .InstrD(InstrD),
+    .PCD(PCD),
+    .PCPlus4D(PCPlus4D)
+);
+
 
 
 // Execute - Memory Access Pipeline Register 
-reg_E_M pipreg2(
+reg_Exc_Mem pipreg2(
     .clk(clk),
     .reset(reset),
-
 
     .ALUResultE(ALUResultE),
     .WriteDataE(WriteDataE),
@@ -97,6 +111,25 @@ reg_E_M pipreg2(
 
 // Memory - Register Writeback Stage
 reg_Mem_Wrt pipreg3(
-    
+    .clk(clk),
+    .reset(reset),
+
+    .ALUResultM(ALUResultM),
+    .ReadDataM(ReadDataM),
+    .RdM(RdM),
+    .PCPlus4M(PCPlus4M),
+
+    .ALUResultW(ALUResultW),
+    .ReadDataW(ReadDataW),
+    .RdW(RdW),
+    .PCPlus4W(PCPlus4W)
+);
+
+mux3 resmux(
+    .control(ResultSrcW),
+    .input0(ALUResultW),
+    .input1(ReadDataW),
+    .input2(PCPlus4W),
+    .out(ResultW)
 )
 endmodule
