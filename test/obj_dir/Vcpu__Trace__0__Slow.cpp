@@ -150,7 +150,6 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("MySignExtend ");
     tracep->declBus(c+35,"DATA_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+37,"IMM_WIDTH", false,-1, 31,0);
     tracep->declBus(c+1,"instr_i", false,-1, 31,0);
     tracep->declBus(c+26,"ImmSrc_i", false,-1, 2,0);
     tracep->declBus(c+21,"ImmOp_o", false,-1, 31,0);
@@ -265,11 +264,8 @@ VL_ATTR_COLD void Vcpu___024root__trace_full_sub_0(Vcpu___024root* vlSelf, Veril
     bufp->fullIData(oldp+31,(vlSelf->a0),32);
     bufp->fullBit(oldp+32,((vlSelf->cpu__DOT__alu__DOT__SrcA 
                             == vlSelf->cpu__DOT__alu__DOT__SrcB)));
-    bufp->fullIData(oldp+33,(((0x20000U >= (0x3ffffU 
-                                            & vlSelf->cpu__DOT__ALUResult_o))
-                               ? vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                              [(0x3ffffU & vlSelf->cpu__DOT__ALUResult_o)]
-                               : 0U)),32);
+    bufp->fullIData(oldp+33,(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                             [(0x1ffffU & vlSelf->cpu__DOT__ALUResult_o)]),32);
     bufp->fullIData(oldp+34,((vlSelf->cpu__DOT__pc__DOT__PC 
                               + vlSelf->cpu__DOT__ImmOp)),32);
     bufp->fullIData(oldp+35,(0x20U),32);

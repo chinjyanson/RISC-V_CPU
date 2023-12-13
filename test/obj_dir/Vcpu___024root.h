@@ -36,14 +36,11 @@ class Vcpu___024root final : public VerilatedModule {
     IData/*31:0*/ cpu__DOT__alu__DOT__SrcB;
     IData/*31:0*/ cpu__DOT__alu__DOT__Result;
     IData/*31:0*/ cpu__DOT__alu__DOT__regOp2;
-    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__0;
-    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__1;
-    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__2;
     IData/*31:0*/ cpu__DOT__alu__DOT__resultMux__DOT__input3;
     IData/*31:0*/ __Vchglast__TOP__cpu__DOT__alu__DOT__SrcB;
     VlUnpacked<CData/*7:0*/, 256> cpu__DOT__control__DOT__InstrMem__DOT__rom_array;
     VlUnpacked<IData/*31:0*/, 256> cpu__DOT__alu__DOT__register__DOT__reg_array;
-    VlUnpacked<IData/*31:0*/, 131073> cpu__DOT__alu__DOT__data__DOT__data_mem_register;
+    VlUnpacked<IData/*31:0*/, 131072> cpu__DOT__alu__DOT__data__DOT__data_mem_register;
     VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
 
     // INTERNAL VARIABLES

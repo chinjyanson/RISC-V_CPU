@@ -9,3 +9,4 @@ single_cycle/test/cpu.vcd
 test/cpu.vcd
 pipelined/cpu.vcd
 
+test/obj_dir/

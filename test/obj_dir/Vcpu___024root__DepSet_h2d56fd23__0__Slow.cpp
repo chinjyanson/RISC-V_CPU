@@ -12,7 +12,7 @@ VL_ATTR_COLD void Vcpu___024root___initial__TOP__0(Vcpu___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___initial__TOP__0\n"); );
     // Body
     VL_WRITEF("Loading ROM\n");
-    VL_READMEM_N(true, 32, 131073, 0, std::string{"sine.mem"}
+    VL_READMEM_N(true, 32, 131072, 0, std::string{"sine.mem"}
                  ,  &(vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register)
                  , 0x10000U, ~0ULL);
     VL_WRITEF("Loading rom.\n");
@@ -39,7 +39,7 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->a0 = vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array
         [0xaU];
     vlSelf->test = vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-        [0x122U];
+        [0x1fffeU];
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT__PC))] 
@@ -167,16 +167,9 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
                                                : ((IData)(4U) 
                                                   + vlSelf->cpu__DOT__pc__DOT__PC))
                                            : ((1U & (IData)(vlSelf->cpu__DOT__Resultsrc))
-                                               ? ((0x20000U 
-                                                   >= 
-                                                   (0x3ffffU 
-                                                    & vlSelf->cpu__DOT__ALUResult_o))
-                                                   ? 
-                                                  vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                                                  [
-                                                  (0x3ffffU 
-                                                   & vlSelf->cpu__DOT__ALUResult_o)]
-                                                   : 0U)
+                                               ? vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                              [(0x1ffffU 
+                                                & vlSelf->cpu__DOT__ALUResult_o)]
                                                : vlSelf->cpu__DOT__ALUResult_o));
 }
 
@@ -239,12 +232,9 @@ VL_ATTR_COLD void Vcpu___024root___ctor_var_reset(Vcpu___024root* vlSelf) {
     for (int __Vi0=0; __Vi0<256; ++__Vi0) {
         vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vi0] = VL_RAND_RESET_I(32);
     }
-    for (int __Vi0=0; __Vi0<131073; ++__Vi0) {
+    for (int __Vi0=0; __Vi0<131072; ++__Vi0) {
         vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__0 = VL_RAND_RESET_I(32);
-    vlSelf->cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__1 = VL_RAND_RESET_I(32);
-    vlSelf->cpu__DOT__alu__DOT__data__DOT____Vlvbound_h3dbd4b77__2 = VL_RAND_RESET_I(32);
     vlSelf->cpu__DOT__alu__DOT__resultMux__DOT__input3 = VL_RAND_RESET_I(32);
     vlSelf->__Vchglast__TOP__cpu__DOT__alu__DOT__SrcB = VL_RAND_RESET_I(32);
     for (int __Vi0=0; __Vi0<3; ++__Vi0) {
