@@ -3,14 +3,17 @@
 ## Single Cycle Processor 
 
 ### Introduction
-I was primarily tasked with figuring out most of the ALU and RegFile operations, I occasionally worked with Bruno to figure out the appropriate logic between Control Unit.
+I was primarily tasked with figuring out most of the ALU and RegFile operations, I occasionally worked with Bruno (duasob) to figure out the appropriate logic between Control Unit.
 
 We initially started slower than planned but our teamwork improved throughout the course of this project. 
 
 ### ALU 
-For the ALU section, I implemented _ arithmetic functions 
+For the ALU section, I implemented 7 arithmetic functions to perform ADD, SUB, AND, OR, XOR ,SLL, SRL and of course their respective immediate operations
 
-implementing its arithmetic functions. I included 
+There is also a line to check if the two inputs to the ALU is the same denoted by the output Zero
+```
+assign Zero = (SrcA == SrcB)
+```
 
 ### Register File
 First thing I did was to break the Instr out via bitwise manipulation. Then I built a 256 x 32 Register file which is primarily used for storing data and intermediate values during computation. 
@@ -20,7 +23,7 @@ First thing I did was to break the Instr out via bitwise manipulation. Then I bu
 
 
 ### F1 Assembly Code 
-
+I helped implement the assembly code 
 
 
 ### Debugging 
