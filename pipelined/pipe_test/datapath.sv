@@ -90,7 +90,10 @@ reg_Ftc_Dec pipreg0(
     .PCD(PCD),
     .PCPlus4D(PCPlus4D)
 );
+assign Rs1D = InstrD[19:15];
+assign Rs2D = InstrD[24:20];
 
+assign RdD = InstrD[11:7];	
 
 
 // Execute - Memory Access Pipeline Register 
