@@ -48,16 +48,22 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
                                                     : 0U)));
     if (((0U != (IData)(vlSelf->cpu__DOT__RegWriteM)) 
          | (0U != (IData)(vlSelf->cpu__DOT__RegWriteW)))) {
-        vlSelf->cpu__DOT__FowardAE = (((IData)(vlSelf->cpu__DOT__Rs1E) 
-                                       == (IData)(vlSelf->cpu__DOT__RdM))
-                                       ? 2U : (((IData)(vlSelf->cpu__DOT__Rs1E) 
-                                                == (IData)(vlSelf->cpu__DOT__RdW))
+        vlSelf->cpu__DOT__FowardAE = ((((IData)(vlSelf->cpu__DOT__Rs1E) 
+                                        == (IData)(vlSelf->cpu__DOT__RdM)) 
+                                       & (0U != (IData)(vlSelf->cpu__DOT__Rs1E)))
+                                       ? 2U : ((((IData)(vlSelf->cpu__DOT__Rs1E) 
+                                                 == (IData)(vlSelf->cpu__DOT__RdW)) 
+                                                & (0U 
+                                                   != (IData)(vlSelf->cpu__DOT__Rs1E)))
                                                 ? 1U
                                                 : 0U));
-        vlSelf->cpu__DOT__FowardBE = (((IData)(vlSelf->cpu__DOT__Rs2E) 
-                                       == (IData)(vlSelf->cpu__DOT__RdM))
-                                       ? 2U : (((IData)(vlSelf->cpu__DOT__Rs2E) 
-                                                == (IData)(vlSelf->cpu__DOT__RdW))
+        vlSelf->cpu__DOT__FowardBE = ((((IData)(vlSelf->cpu__DOT__Rs2E) 
+                                        == (IData)(vlSelf->cpu__DOT__RdM)) 
+                                       & (0U != (IData)(vlSelf->cpu__DOT__Rs2E)))
+                                       ? 2U : ((((IData)(vlSelf->cpu__DOT__Rs2E) 
+                                                 == (IData)(vlSelf->cpu__DOT__RdW)) 
+                                                & (0U 
+                                                   != (IData)(vlSelf->cpu__DOT__Rs2E)))
                                                 ? 1U
                                                 : 0U));
     } else {

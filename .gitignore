@@ -12,4 +12,4 @@ pipelined/cpu.vcd
 test/obj_dir/
 test/cpu.vcd
 test/output.txt
-pipelined/obj_dir
+pipelined/obj_dir/

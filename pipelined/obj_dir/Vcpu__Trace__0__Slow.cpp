@@ -205,7 +205,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->declBus(c+49,"WD3", false,-1, 31,0);
     tracep->declBus(c+28,"A1_i", false,-1, 4,0);
     tracep->declBus(c+29,"A2_i", false,-1, 4,0);
-    tracep->declBus(c+30,"A3_i", false,-1, 4,0);
+    tracep->declBus(c+17,"A3_i", false,-1, 4,0);
     tracep->declBus(c+32,"RD1", false,-1, 31,0);
     tracep->declBus(c+33,"RD2", false,-1, 31,0);
     tracep->declBus(c+79,"a0", false,-1, 31,0);
@@ -549,8 +549,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_full_sub_0(Vcpu___024root* vlSelf, Veril
                                        >> 0xfU))),8);
     bufp->fullCData(oldp+51,((0x1fU & (vlSelf->cpu__DOT__InstrD 
                                        >> 0x14U))),8);
-    bufp->fullCData(oldp+52,((0x1fU & (vlSelf->cpu__DOT__InstrD 
-                                       >> 7U))),8);
+    bufp->fullCData(oldp+52,(vlSelf->cpu__DOT__RdW),8);
     bufp->fullCData(oldp+53,((7U & ((IData)(vlSelf->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
                                     >> 2U))),3);
     bufp->fullIData(oldp+54,(((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array

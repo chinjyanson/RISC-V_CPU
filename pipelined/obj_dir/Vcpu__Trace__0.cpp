@@ -95,8 +95,7 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
                                           >> 0xfU))),8);
         bufp->chgCData(oldp+50,((0x1fU & (vlSelf->cpu__DOT__InstrD 
                                           >> 0x14U))),8);
-        bufp->chgCData(oldp+51,((0x1fU & (vlSelf->cpu__DOT__InstrD 
-                                          >> 7U))),8);
+        bufp->chgCData(oldp+51,(vlSelf->cpu__DOT__RdW),8);
         bufp->chgCData(oldp+52,((7U & ((IData)(vlSelf->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
                                        >> 2U))),3);
         bufp->chgIData(oldp+53,(((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
