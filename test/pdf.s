@@ -6,6 +6,7 @@ main:
     JAL     ra, init  # jump to init, ra and save position to ra
     JAL     ra, build
 forever:
+    LI      a0, -1               # testing
     JAL     ra, display
     J       forever
 

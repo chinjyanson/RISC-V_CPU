@@ -284,7 +284,7 @@ void Vcpu::traceInitSub0(void* userp, VerilatedVcd* tracep) {
         tracep->declBus(c+73,"cpu alu register WD3", false,-1, 31,0);
         tracep->declBus(c+53,"cpu alu register A1_i", false,-1, 4,0);
         tracep->declBus(c+54,"cpu alu register A2_i", false,-1, 4,0);
-        tracep->declBus(c+55,"cpu alu register A3_i", false,-1, 4,0);
+        tracep->declBus(c+17,"cpu alu register A3_i", false,-1, 4,0);
         tracep->declBus(c+56,"cpu alu register RD1", false,-1, 31,0);
         tracep->declBus(c+57,"cpu alu register RD2", false,-1, 31,0);
         tracep->declBus(c+79,"cpu alu register a0", false,-1, 31,0);
@@ -582,8 +582,7 @@ void Vcpu::traceFullSub0(void* userp, VerilatedVcd* tracep) {
                                              >> 0xfU))),8);
         tracep->fullCData(oldp+75,((0x1fU & (vlTOPp->cpu__DOT__InstrD 
                                              >> 0x14U))),8);
-        tracep->fullCData(oldp+76,((0x1fU & (vlTOPp->cpu__DOT__InstrD 
-                                             >> 7U))),8);
+        tracep->fullCData(oldp+76,(vlTOPp->cpu__DOT__RdW),8);
         tracep->fullBit(oldp+77,(vlTOPp->clk));
         tracep->fullBit(oldp+78,(vlTOPp->rst));
         tracep->fullIData(oldp+79,(vlTOPp->a0),32);

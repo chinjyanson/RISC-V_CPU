@@ -65,16 +65,22 @@ void Vcpu::_settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
                                                     : 0U)));
     if (((0U != (IData)(vlTOPp->cpu__DOT__RegWriteM)) 
          | (0U != (IData)(vlTOPp->cpu__DOT__RegWriteW)))) {
-        vlTOPp->cpu__DOT__FowardAE = (((IData)(vlTOPp->cpu__DOT__Rs1E) 
-                                       == (IData)(vlTOPp->cpu__DOT__RdM))
-                                       ? 2U : (((IData)(vlTOPp->cpu__DOT__Rs1E) 
-                                                == (IData)(vlTOPp->cpu__DOT__RdW))
+        vlTOPp->cpu__DOT__FowardAE = ((((IData)(vlTOPp->cpu__DOT__Rs1E) 
+                                        == (IData)(vlTOPp->cpu__DOT__RdM)) 
+                                       & (0U != (IData)(vlTOPp->cpu__DOT__Rs1E)))
+                                       ? 2U : ((((IData)(vlTOPp->cpu__DOT__Rs1E) 
+                                                 == (IData)(vlTOPp->cpu__DOT__RdW)) 
+                                                & (0U 
+                                                   != (IData)(vlTOPp->cpu__DOT__Rs1E)))
                                                 ? 1U
                                                 : 0U));
-        vlTOPp->cpu__DOT__FowardBE = (((IData)(vlTOPp->cpu__DOT__Rs2E) 
-                                       == (IData)(vlTOPp->cpu__DOT__RdM))
-                                       ? 2U : (((IData)(vlTOPp->cpu__DOT__Rs2E) 
-                                                == (IData)(vlTOPp->cpu__DOT__RdW))
+        vlTOPp->cpu__DOT__FowardBE = ((((IData)(vlTOPp->cpu__DOT__Rs2E) 
+                                        == (IData)(vlTOPp->cpu__DOT__RdM)) 
+                                       & (0U != (IData)(vlTOPp->cpu__DOT__Rs2E)))
+                                       ? 2U : ((((IData)(vlTOPp->cpu__DOT__Rs2E) 
+                                                 == (IData)(vlTOPp->cpu__DOT__RdW)) 
+                                                & (0U 
+                                                   != (IData)(vlTOPp->cpu__DOT__Rs2E)))
                                                 ? 1U
                                                 : 0U));
     } else {
