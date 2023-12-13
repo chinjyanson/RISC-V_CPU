@@ -6,16 +6,15 @@ module control_unit #(
     parameter OP_WIDTH = 7
 )(
     input   logic                   clk,
-    input   logic                   reset,
 
     input   logic [OP_WIDTH-1:0]    op,
     input   logic [2:0]             funct3,
     input   logic                   funct7b5,
 
     output  logic [1:0]             ResultSrcD,
-    output  logic                   MemWriteD,
+    output  logic [1:0]             MemWriteD,
     output  logic                   ALUSrcD,
-    output  logic                   RegWriteD,
+    output  logic [2:0]             RegWriteD,
     output  logic [2:0]             ImmSrcD,
     output  logic [2:0]             ALUControlD,
     output  logic                   JumpD,

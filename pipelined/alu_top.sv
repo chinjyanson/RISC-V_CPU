@@ -16,9 +16,9 @@ module alu_top #(
     input   wire                        Drst_i,
     input   wire [2:0]                  RegWriteW_i, 
     input   wire [2:0]                  MemWriteM_i, 
-    input   wire [IMM_WIDTH-1:0]        ResultSrcW_i, 
-    input   wire [CONTROL_WIDTH-1:0]    ALUcontrolE_i, 
-    input   wire                        ALUsrcE_i, 
+    input   wire [1:0]                  ResultSrcW_i, 
+    input   wire [CONTROL_WIDTH-1:0]    ALUControlE_i, 
+    input   wire                        ALUSrcE_i, 
     
     
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
@@ -30,7 +30,8 @@ module alu_top #(
     output  wire [4:0]                  RdM_o,
     output  wire [4:0]                  RdW_o,
     output  wire [4:0]                  RdE_o,
-    output  wire                        ZeroE_o
+    output  wire                        ZeroE_o,
+    output  wire [DATA_WIDTH-1:0]       ALUResultE_o
 );
 
 wire [DATA_WIDTH-1:0]    RD1D;
@@ -47,7 +48,7 @@ wire [DATA_WIDTH-1:0]    SrcBE;
 wire [DATA_WIDTH-1:0]    WriteDataE;
 wire [DATA_WIDTH-1:0]    ExtImmE;
 wire                     ZeroE;
-wire [DATA_WIDTH-1:0]   ALUResultE;
+
 
 
 //Memory Logic
@@ -57,6 +58,7 @@ wire [1:0]              MemWriteM;
 wire [DATA_WIDTH-1:0]   ALUResultM;
 wire [DATA_WIDTH-1:0]   WriteDataM;
 wire [DATA_WIDTH-1:0]   PCPlus4M;
+wire [DATA_WIDTH-1:0]   ReadDataM;
 
 //Write Logic
 wire [DATA_WIDTH-1:0]   PCPlus4W;
@@ -72,7 +74,7 @@ regfile register(
     .A1_i       (Rs1D_i),
     .A2_i       (Rs2D_i),
     .A3_i       (RdD_i),
-    .WE3        (RegWriteW),
+    .WE3        (RegWriteW_i),
     .WD3        (ResultW),
     .RD1        (RD1D),
     .RD2        (RD2D),
@@ -80,17 +82,17 @@ regfile register(
 );
 
 mux2 ALUMux( // checked - SK 1/12/2023
-    .control    (ALUSrcE),
+    .control    (ALUSrcE_i),
     .input0     (WriteDataE),
     .input1     (ExtImmE),
     .out        (SrcBE)
 );
 
 alu ALU( // checked - SK 1/12/2023
-    .ALUctrl    (ALUControlE),
+    .ALUControl    (ALUControlE_i),
     .SrcA       (SrcAE),
     .SrcB       (SrcBE),
-    .ALUResult  (ALUResultE),
+    .ALUResult  (ALUResultE_o),
     .Zero       (ZeroE)
 );
 
@@ -103,7 +105,7 @@ data_mem data(
 );
 
 mux3 resultMux(
-    .control    (ResultsrcW),
+    .control    (ResultSrcW_i),
     .input0     (ALUResultW),
     .input1     (ReadDataW),
     .input2     (PCPlus4W),
@@ -129,7 +131,7 @@ mux3 RD2EHazardMux(
 adder addPCTargetE(
     .input0 (PCE),
     .input1 (ExtImmE),
-    .out    (PCTargetE)
+    .out    (PCTargetE_o)
 );
 
 reg_dec DREg(
@@ -188,9 +190,5 @@ reg_memory MREG(
     .RdW(RdW_o),
     .PCPlus4W(PCPlus4W)
 );
-
-assign ZeroOp = ZeroE ^ funct3E[0]; // Complements Zero flag for BNE Instruction
-assign PCSrcE = (BranchE & ZeroOp) | JumpE;
-assign PCJalSrcE = (op == 7'b1100111) ? 1 : 0; // jalr
 
 endmodule

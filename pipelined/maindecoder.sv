@@ -2,6 +2,7 @@ module maindecoder #(
     parameter  OP_WIDTH = 7
 ) (
     input   logic [OP_WIDTH-1:0]    op,
+    input   logic [2:0]             funct3,
     output  logic [1:0]             ResultSrc,
     output  logic [1:0]             MemWrite,
     output  logic                   Branch,
@@ -22,11 +23,11 @@ always_comb
         7'b0000011:begin
             controls = 15'b000_01_00_0_0_1_000_00; // lw
             case(funct3)
-                3'b000: controls = {{3'b011}, control[11:0]}; //lb
-                3'b001: controls = {{3'b010}, control[11:0]}; //lh
-                3'b010: controls = {{3'b001}, control[11:0]}; //lw
-                3'b100: controls = {{3'b111}, control[11:0]}; //lbu
-                3'b101: controls = {{3'b110}, control[11:0]}; //lhu
+                3'b000: controls = {{3'b011}, controls [11:0]}; //lb
+                3'b001: controls = {{3'b010}, controls [11:0]}; //lh
+                3'b010: controls = {{3'b001}, controls [11:0]}; //lw
+                3'b100: controls = {{3'b111}, controls [11:0]}; //lbu
+                3'b101: controls = {{3'b110}, controls [11:0]}; //lhu
                 default: controls = controls; //(not sure what default should be but 000 for now)
             endcase
         end

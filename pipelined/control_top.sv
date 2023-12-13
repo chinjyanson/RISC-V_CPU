@@ -5,7 +5,6 @@ module control_top #(
     input  logic                           clk,
     input  logic                           Fen_i,
     input  logic                           Frst_i,
-    input  logic                           rst,
     input  logic                           Den_i,
     input  logic                           Drst_i,
     input  logic [DATA_WIDTH-1:0]          PCF_i, //8b ==> edited to 32 bits
@@ -14,10 +13,10 @@ module control_top #(
     output logic [DATA_WIDTH-1:0]          InstrD_o,//32b
     output logic [2:0]                     RegWriteW_o, //1b ==> edited to 3 bits
     output logic [1:0]                     MemWriteM_o, //1b ==> edited to 2 bits
-    output logic [IMM_WIDTH-1:0]           ResultsrcW_o, //3b ==> edited to 2 bits
-    output logic [CONTROL_WIDTH-1:0]       ALUcontrolE_o, //3b
-    output logic                           ALUsrcE_o, //1 bit
-    output logic [DATA_WIDTH-1:0]          ImmOpD_o,//32 bits
+    output logic [1:0]                     ResultSrcW_o, //3b ==> edited to 2 bits
+    output logic [2:0]                     ALUControlE_o, //3b
+    output logic                           ALUSrcE_o, //1 bit
+    output logic [DATA_WIDTH-1:0]          ExtImmD_o,//32 bits
     output logic [DATA_WIDTH-1:0]          PCD_o,
     output logic [DATA_WIDTH-1:0]          PCPlus4D_o,
     output logic [1:0]                     PCSrcE_o
@@ -29,12 +28,13 @@ module control_top #(
     logic             ZeroOp;
 
 
-    wire [1:0]              ResultSrcD_i;
-    wire [1:0]              MemWriteD_i;
-    wire [2:0]              ALUcontrolD_i;
-    wire                    ALUsrcD_i;
+    wire [1:0]              ResultSrcD;
+    wire [1:0]              MemWriteD;
+    wire [2:0]              ALUControlD;
+    wire                    ALUSrcD;
     wire                    JumpD;
-    wire                    BranchD_i;
+    wire                    BranchD;
+    wire [2:0]              RegWriteD;
 
     //Execute Logic
     wire [2:0]              RegWriteE;
@@ -58,18 +58,17 @@ module control_top #(
     
     control_unit #(DATA_WIDTH) ControlUnit(
     .clk            (clk),
-    .reset          (rst),   //unsure check
-    .op             (InstrD[6:0]),
-    .funct3         (InstrD[14:12]),
-    .funct7b5       (InstrD[30]),
+    .op             (InstrD_o[6:0]),
+    .funct3         (InstrD_o[14:12]),
+    .funct7b5       (InstrD_o[30]),
     .RegWriteD      (RegWriteD),
-    .MemWriteD      (MemWriteD_i),
-    .ResultSrcD     (ResultSrcD_i),
-    .ALUControlD    (ALUcontrolD_i),
-    .ALUSrcD        (ALUsrcD_i),
+    .MemWriteD      (MemWriteD),
+    .ResultSrcD     (ResultSrcD),
+    .ALUControlD    (ALUControlD),
+    .ALUSrcD        (ALUSrcD),
     .ImmSrcD        (ImmSrcD),
     .JumpD          (JumpD),
-    .BranchD        (BranchD_i)
+    .BranchD        (BranchD)
     );
 
     reg_fetch #(DATA_WIDTH) FReg(
@@ -81,14 +80,14 @@ module control_top #(
         .PCF        (PCF_i),
         .PCPlus4D   (PCPlus4D_o),
         .PCD        (PCD_o),
-        .InstrD     (InstrD)
+        .InstrD     (InstrD_o)
     );
 
     
     sign_extend #(DATA_WIDTH) MySignExtend(
-        .instr        (InstrD),
+        .instr        (InstrD_o),
         .ImmSrc       (ImmSrcD),
-        .ExtImm       (ImmOpD_o)
+        .ExtImm       (ExtImmD_o)
     );
 
     reg_dec_control DReg(
@@ -96,14 +95,14 @@ module control_top #(
     .clk(clk),
     .en(Den_i),
     .rst(Drst_i),
-    .RegWriteD(RegWriteD_i),
-    .ResultSrcD(ResultSrcD_i),
-    .MemWriteD(MemWriteD_i),
-    .JumpD(JumpD_i),
-    .BranchD(BranchD_i),
-    .ALUControlD(ALUControlD_i),
-    .ALUsrcD(ALUsrcD_i),
-    .funct3D(funct3D_i),
+    .RegWriteD(RegWriteD),
+    .ResultSrcD(ResultSrcD),
+    .MemWriteD(MemWriteD),
+    .JumpD(JumpD),
+    .BranchD(BranchD),
+    .ALUControlD(ALUControlD),
+    .ALUSrcD(ALUSrcD),
+    .funct3D(InstrD_o[14:12]),
 
     //outputs - E
     .RegWriteE(RegWriteE),
@@ -112,7 +111,7 @@ module control_top #(
     .JumpE(JumpE),
     .BranchE(BranchE),
     .ALUControlE(ALUControlE_o),
-    .ALUsrcE(ALUsrcE_o),
+    .ALUSrcE(ALUSrcE_o),
     .funct3E(funct3E)
 );
 
@@ -140,7 +139,7 @@ reg_memory_control MREG(
     .ResultSrcW(ResultSrcW_o)
 );
 
-assign ZeroOp = ZeroE_i ^ InstrD[12]; 
+assign ZeroOp = ZeroE_i ^ InstrD_o[12]; 
 
 always_comb
     if (JumpE)      PCSrcE_o = 2'b10;
