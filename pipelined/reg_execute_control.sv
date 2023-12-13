@@ -13,7 +13,7 @@ module reg_execute_control #(
 
     always_ff @(posedge clk) begin
         RegWriteM   <=      RegWriteE;
-        ResultSrcM  <=      ResultSrE;
+        ResultSrcM  <=      ResultSrcE;
         MemWriteM   <=      MemWriteE;
           
     end

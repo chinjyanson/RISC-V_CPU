@@ -26,9 +26,9 @@ module hazard_stall(
 //         PCen    = 1;
 // end
 
-assign Fen  = ((opcodeE == 7'd3) && (RdE == Rs1D)) ? 0 : 1;
-assign Den  = ((opcodeE == 7'd3) && (RdE == Rs1D)) ? 0 : 1;
-assign PCen = ((opcodeE == 7'd3) && (RdE == Rs1D)) ? 0 : 1;
+assign Fen  = ((opcodeE == 7'd3) && ((RdE == Rs1D)  || (RdE == Rs2D))) ? 0 : 1;
+assign Den  = ((opcodeE == 7'd3) && ((RdE == Rs1D)  || (RdE == Rs2D)))? 0 : 1;
+assign PCen = ((opcodeE == 7'd3) && ((RdE == Rs1D)  || (RdE == Rs2D))) ? 0 : 1;
 
 
 endmodule

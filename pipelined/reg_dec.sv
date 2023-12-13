@@ -30,15 +30,8 @@ module reg_dec #(
 
 );
 
-always_ff @(posedge clk, posedge rst) begin
+always_ff @(posedge clk) begin
     if(en) begin     
-        RegWriteE   <=       rst?   0   :   RegWriteD;
-        ResultSrcE  <=       rst?   0   :   ResultSrcD;
-        MemWriteE   <=       rst?   0   :   MemWriteD;
-        JumpE       <=       rst?   0   :   JumpD;
-        BranchE     <=       rst?   0   :   BranchD;
-        ALUControlE <=       rst?   0   :   ALUControlD;
-        ALUsrcE     <=       rst?   0   :   ALUsrcD;
         RD1E        <=       rst?   0   :   RD1D;
         RD2E        <=       rst?   0   :   RD2D;
         PCE         <=       rst?   0   :   PCD;
@@ -48,7 +41,6 @@ always_ff @(posedge clk, posedge rst) begin
         ExtImmE     <=       rst?   0   :   ExtImmD;
         PCPlus4E    <=       rst?   0   :   PCPlus4D;
         opcodeE     <=       rst?   0   :   opcodeD;
-        funct3E     <=       rst?   0   :   funct3D;
     end
 end
 

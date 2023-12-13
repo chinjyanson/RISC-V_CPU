@@ -16,7 +16,7 @@ module reg_fetch #(
     always_ff @(posedge clk) begin
         if (en) begin
         InstrD      <= rst? 0   :   InstrF;
-        PCD         <= rst? 0   :   PDF;
+        PCD         <= rst? 0   :   PCF;
         PCPlus4D    <= rst? 0   :   PCPlus4F;
         end
         

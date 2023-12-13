@@ -37,6 +37,7 @@ module data_mem #(
         begin //write byte
             data_mem_register[A][7:0] <= WD[7:0];
         end
+        default: data_mem_register[A] <= data_mem_register[A];
         endcase
     end 
     assign RD = data_mem_register[A]; //we read and output the [A] register value

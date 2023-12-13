@@ -4,8 +4,8 @@ module pc_top #(
 )(
     // interface signals
     input   logic                            clk,        // clock
-    input   logic [DATA_WIDTH-1:0]           ALUResult_i,        //edited
-    input   logic [1:0]                      PCsrc_i,      //edited
+    input   logic [DATA_WIDTH-1:0]           ALUResultE_i,        //edited
+    input   logic [1:0]                      PCSrc_i,      //edited
     input   logic                            PCen_i,
     input   logic [DATA_WIDTH-1:0]           PCTarget_i, 
     input   logic                            PCrst_i,
@@ -13,15 +13,15 @@ module pc_top #(
     output  wire  [DATA_WIDTH-1:0]           PCPlus4F_o
 );
 
-logic [DATA_WIDTH-1:0]   next_PC, PCTarget;    // interconnect wire
+logic [DATA_WIDTH-1:0]   next_PC; // interconnect wire
 
 assign PCPlus4F_o = PCF_o + 32'b100;  //adding 4
 
 mux3 pc_mux(
-    .control    (PCsrc_i),
-    .input0     (PCPlus4_o),
-    .input1     (PCTarget),
-    .input2     (ALUResult_i),
+    .control    (PCSrc_i),
+    .input0     (PCPlus4F_o),
+    .input1     (PCTarget_i),
+    .input2     (ALUResultE_i),
     .out        (next_PC)
 );
 
