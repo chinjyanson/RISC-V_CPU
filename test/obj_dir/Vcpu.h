@@ -52,14 +52,11 @@ VL_MODULE(Vcpu) {
     IData/*31:0*/ cpu__DOT__alu__DOT__resultMux__DOT__input3;
     CData/*7:0*/ cpu__DOT__control__DOT__InstrMem__DOT__rom_array[256];
     IData/*31:0*/ cpu__DOT__alu__DOT__register__DOT__reg_array[256];
-    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT__data_mem_register[131073];
+    CData/*7:0*/ cpu__DOT__alu__DOT__data__DOT__data_mem_register[524288];
     
     // LOCAL VARIABLES
     // Internals; generally not touched by application code
-    CData/*7:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound3;
     CData/*0:0*/ __Vclklast__TOP__clk;
-    SData/*15:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound2;
-    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT____Vlvbound1;
     CData/*0:0*/ __Vm_traceActivity[2];
     
     // INTERNAL VARIABLES

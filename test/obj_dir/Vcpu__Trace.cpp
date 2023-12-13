@@ -75,18 +75,40 @@ void Vcpu::traceChgSub0(void* userp, VerilatedVcd* tracep) {
             tracep->chgIData(oldp+20,(vlTOPp->cpu__DOT__alu__DOT__SrcB),32);
             tracep->chgIData(oldp+21,(vlTOPp->cpu__DOT__alu__DOT__Result),32);
             tracep->chgIData(oldp+22,(vlTOPp->cpu__DOT__alu__DOT__regOp2),32);
-            tracep->chgIData(oldp+23,(((0x20000U >= 
-                                        (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o))
-                                        ? vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                                       [(0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o)]
-                                        : 0U)),32);
+            tracep->chgIData(oldp+23,(((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                        [(0x7ffffU 
+                                          & ((IData)(3U) 
+                                             + (0xffffcU 
+                                                & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                   << 2U))))] 
+                                        << 0x18U) | 
+                                       ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                         [(0x7ffffU 
+                                           & ((IData)(2U) 
+                                              + (0xffffcU 
+                                                 & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                    << 2U))))] 
+                                         << 0x10U) 
+                                        | ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                            [(0x7ffffU 
+                                              & ((IData)(1U) 
+                                                 + 
+                                                 (0xffffcU 
+                                                  & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                     << 2U))))] 
+                                            << 8U) 
+                                           | vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                           [(0x7fffcU 
+                                             & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                << 2U))])))),32);
             tracep->chgCData(oldp+24,((0x1fU & (vlTOPp->cpu__DOT__Instr 
                                                 >> 0x14U))),8);
             tracep->chgCData(oldp+25,((0x1fU & (vlTOPp->cpu__DOT__Instr 
                                                 >> 0xfU))),8);
             tracep->chgCData(oldp+26,((0x1fU & (vlTOPp->cpu__DOT__Instr 
                                                 >> 7U))),8);
-            tracep->chgIData(oldp+27,((0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o)),18);
+            tracep->chgIData(oldp+27,((0xffffcU & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                   << 2U))),20);
             tracep->chgSData(oldp+28,((0xffffU & vlTOPp->cpu__DOT__alu__DOT__regOp2)),16);
             tracep->chgCData(oldp+29,((0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2)),8);
         }

@@ -33,7 +33,7 @@ void Vcpu::_initial__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     VL_WRITEF("Loading ROM\n");
-    VL_READMEM_N(true, 32, 131073, 0, std::string("sine.mem")
+    VL_READMEM_N(true, 8, 524288, 0, std::string("sine.mem")
                  , vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
                  , 0x10000U, ~0ULL);
     VL_WRITEF("Loading rom.\n");
@@ -48,8 +48,6 @@ void Vcpu::_settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
     // Body
     vlTOPp->a0 = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
         [0xaU];
-    vlTOPp->test = vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-        [0x122U];
     vlTOPp->cpu__DOT__Instr = ((vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlTOPp->cpu__DOT__PC))] 
@@ -581,16 +579,39 @@ void Vcpu::_settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
                                                : ((IData)(4U) 
                                                   + vlTOPp->cpu__DOT__pc__DOT__PC))
                                            : ((1U & (IData)(vlTOPp->cpu__DOT__Resultsrc))
-                                               ? ((0x20000U 
-                                                   >= 
-                                                   (0x3ffffU 
-                                                    & vlTOPp->cpu__DOT__ALUResult_o))
-                                                   ? 
-                                                  vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                                                  [
-                                                  (0x3ffffU 
-                                                   & vlTOPp->cpu__DOT__ALUResult_o)]
-                                                   : 0U)
+                                               ? ((
+                                                   vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                   [
+                                                   (0x7ffffU 
+                                                    & ((IData)(3U) 
+                                                       + 
+                                                       (0xffffcU 
+                                                        & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                           << 2U))))] 
+                                                   << 0x18U) 
+                                                  | ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                      [
+                                                      (0x7ffffU 
+                                                       & ((IData)(2U) 
+                                                          + 
+                                                          (0xffffcU 
+                                                           & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                              << 2U))))] 
+                                                      << 0x10U) 
+                                                     | ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                         [
+                                                         (0x7ffffU 
+                                                          & ((IData)(1U) 
+                                                             + 
+                                                             (0xffffcU 
+                                                              & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                                 << 2U))))] 
+                                                         << 8U) 
+                                                        | vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                        [
+                                                        (0x7fffcU 
+                                                         & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                            << 2U))])))
                                                : vlTOPp->cpu__DOT__ALUResult_o));
     vlTOPp->cpu__DOT__PCsrc = ((0x40U & vlTOPp->cpu__DOT__Instr)
                                 ? ((0x20U & vlTOPp->cpu__DOT__Instr)
@@ -716,12 +737,9 @@ void Vcpu::_ctor_var_reset() {
     { int __Vi0=0; for (; __Vi0<256; ++__Vi0) {
             cpu__DOT__alu__DOT__register__DOT__reg_array[__Vi0] = VL_RAND_RESET_I(32);
     }}
-    { int __Vi0=0; for (; __Vi0<131073; ++__Vi0) {
-            cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vi0] = VL_RAND_RESET_I(32);
+    { int __Vi0=0; for (; __Vi0<524288; ++__Vi0) {
+            cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vi0] = VL_RAND_RESET_I(8);
     }}
-    cpu__DOT__alu__DOT__data__DOT____Vlvbound1 = VL_RAND_RESET_I(32);
-    cpu__DOT__alu__DOT__data__DOT____Vlvbound2 = VL_RAND_RESET_I(16);
-    cpu__DOT__alu__DOT__data__DOT____Vlvbound3 = VL_RAND_RESET_I(8);
     cpu__DOT__alu__DOT__resultMux__DOT__input3 = VL_RAND_RESET_I(32);
     { int __Vi0=0; for (; __Vi0<2; ++__Vi0) {
             __Vm_traceActivity[__Vi0] = VL_RAND_RESET_I(1);

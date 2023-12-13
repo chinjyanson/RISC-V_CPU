@@ -126,7 +126,6 @@ void Vcpu::traceInitSub0(void* userp, VerilatedVcd* tracep) {
         tracep->declBus(c+11,"cpu control InstrMem addr_i", false,-1, 31,0);
         tracep->declBus(c+3,"cpu control InstrMem Instr_o", false,-1, 31,0);
         tracep->declBus(c+35,"cpu control MySignExtend DATA_WIDTH", false,-1, 31,0);
-        tracep->declBus(c+37,"cpu control MySignExtend IMM_WIDTH", false,-1, 31,0);
         tracep->declBus(c+3,"cpu control MySignExtend instr_i", false,-1, 31,0);
         tracep->declBus(c+16,"cpu control MySignExtend ImmSrc_i", false,-1, 2,0);
         tracep->declBus(c+9,"cpu control MySignExtend ImmOp_o", false,-1, 31,0);
@@ -183,7 +182,7 @@ void Vcpu::traceInitSub0(void* userp, VerilatedVcd* tracep) {
         tracep->declBus(c+33,"cpu alu data test", false,-1, 31,0);
         tracep->declBus(c+24,"cpu alu data RD", false,-1, 31,0);
         tracep->declBus(c+40,"cpu alu data starting_address", false,-1, 31,0);
-        tracep->declBus(c+28,"cpu alu data add", false,-1, 17,0);
+        tracep->declBus(c+28,"cpu alu data add", false,-1, 19,0);
         tracep->declBus(c+29,"cpu alu data data16", false,-1, 15,0);
         tracep->declBus(c+30,"cpu alu data data8", false,-1, 7,0);
         tracep->declBus(c+35,"cpu alu resultMux DATA_WIDTH", false,-1, 31,0);
@@ -272,18 +271,44 @@ void Vcpu::traceFullSub0(void* userp, VerilatedVcd* tracep) {
         tracep->fullIData(oldp+21,(vlTOPp->cpu__DOT__alu__DOT__SrcB),32);
         tracep->fullIData(oldp+22,(vlTOPp->cpu__DOT__alu__DOT__Result),32);
         tracep->fullIData(oldp+23,(vlTOPp->cpu__DOT__alu__DOT__regOp2),32);
-        tracep->fullIData(oldp+24,(((0x20000U >= (0x3ffffU 
-                                                  & vlTOPp->cpu__DOT__ALUResult_o))
-                                     ? vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-                                    [(0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o)]
-                                     : 0U)),32);
+        tracep->fullIData(oldp+24,(((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                     [(0x7ffffU & ((IData)(3U) 
+                                                   + 
+                                                   (0xffffcU 
+                                                    & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                       << 2U))))] 
+                                     << 0x18U) | ((
+                                                   vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                   [
+                                                   (0x7ffffU 
+                                                    & ((IData)(2U) 
+                                                       + 
+                                                       (0xffffcU 
+                                                        & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                           << 2U))))] 
+                                                   << 0x10U) 
+                                                  | ((vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                      [
+                                                      (0x7ffffU 
+                                                       & ((IData)(1U) 
+                                                          + 
+                                                          (0xffffcU 
+                                                           & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                              << 2U))))] 
+                                                      << 8U) 
+                                                     | vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                                                     [
+                                                     (0x7fffcU 
+                                                      & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                         << 2U))])))),32);
         tracep->fullCData(oldp+25,((0x1fU & (vlTOPp->cpu__DOT__Instr 
                                              >> 0x14U))),8);
         tracep->fullCData(oldp+26,((0x1fU & (vlTOPp->cpu__DOT__Instr 
                                              >> 0xfU))),8);
         tracep->fullCData(oldp+27,((0x1fU & (vlTOPp->cpu__DOT__Instr 
                                              >> 7U))),8);
-        tracep->fullIData(oldp+28,((0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o)),18);
+        tracep->fullIData(oldp+28,((0xffffcU & (vlTOPp->cpu__DOT__ALUResult_o 
+                                                << 2U))),20);
         tracep->fullSData(oldp+29,((0xffffU & vlTOPp->cpu__DOT__alu__DOT__regOp2)),16);
         tracep->fullCData(oldp+30,((0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2)),8);
         tracep->fullBit(oldp+31,(vlTOPp->clk));
