@@ -93,8 +93,16 @@ reg_Ftc_Dec pipreg0(
 assign Rs1D = InstrD[19:15];
 assign Rs2D = InstrD[24:20];
 
-assign RdD = InstrD[11:7];	
+regfile rf(
+);
 
+assign RdD = InstrD[11:7];
+
+sign_extend ext(
+    .instr(InstrD[31:7]),
+    .ImmSrc(ImmSrcD),
+    .ExtImm(ExtImmD)
+);
 
 // Execute - Memory Access Pipeline Register 
 reg_Exc_Mem pipreg2(
@@ -134,5 +142,6 @@ mux3 resmux(
     .input1(ReadDataW),
     .input2(PCPlus4W),
     .out(ResultW)
-)
+);
+
 endmodule
