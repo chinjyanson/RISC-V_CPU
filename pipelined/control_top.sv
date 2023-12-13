@@ -20,8 +20,8 @@ module control_top #(
     output logic [DATA_WIDTH-1:0]          ExtImmD_o,//32 bits
     output logic [DATA_WIDTH-1:0]          PCD_o,
     output logic [DATA_WIDTH-1:0]          PCPlus4D_o,
-    output logic [1:0]                     PCSrcE_o
-
+    output logic [1:0]                     PCSrcE_o,
+    output logic [2:0]                     ImmSrcE_o
 );
 
     logic [2:0]       ImmSrcD;
@@ -57,17 +57,17 @@ module control_top #(
     );
     
     control_unit ControlUnit(
-    .op             (InstrD_o[6:0]),
-    .funct3         (InstrD_o[14:12]),
-    .funct7b5       (InstrD_o[30]),
-    .RegWriteD      (RegWriteD),
-    .MemWriteD      (MemWriteD),
-    .ResultSrcD     (ResultSrcD),
-    .ALUControlD    (ALUControlD),
-    .ALUSrcD        (ALUSrcD),
-    .ImmSrcD        (ImmSrcD),
-    .JumpD          (JumpD),
-    .BranchD        (BranchD)
+    .op            (InstrD_o[6:0]),
+    .funct3        (InstrD_o[14:12]),
+    .funct7b5      (InstrD_o[30]),
+    .RegWriteD     (RegWriteD),
+    .MemWriteD     (MemWriteD),
+    .ResultSrcD    (ResultSrcD),
+    .ALUControlD   (ALUControlD),
+    .ALUSrcD       (ALUSrcD),
+    .ImmSrcD       (ImmSrcD),
+    .JumpD         (JumpD),
+    .BranchD       (BranchD)
     );
 
     reg_fetch FReg(
@@ -102,6 +102,8 @@ module control_top #(
     .ALUControlD(ALUControlD),
     .ALUSrcD(ALUSrcD),
     .funct3D(InstrD_o[14:12]),
+    .ImmSrcD(ImmSrcD),
+    
 
     //outputs - E
     .RegWriteE(RegWriteE),
@@ -111,7 +113,9 @@ module control_top #(
     .BranchE(BranchE),
     .ALUControlE(ALUControlE_o),
     .ALUSrcE(ALUSrcE_o),
-    .funct3E(funct3E)
+    .funct3E(funct3E),
+    .ImmSrcE(ImmSrcE_o)
+
 );
 
 reg_execute_control EREG(

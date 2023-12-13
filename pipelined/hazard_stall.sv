@@ -3,6 +3,7 @@ module hazard_stall(
     input logic [4:0]   Rs2D,
     input logic [4:0]   RdE,
     input logic [6:0]   opcodeE,
+    input  logic [2:0]   ImmSrcE,
     output logic        Fen,
     output logic        Den,
     output logic        PCen
@@ -26,9 +27,12 @@ module hazard_stall(
 //         PCen    = 1;
 // end
 
-assign Fen  = ((opcodeE == 7'd3) && ((RdE == Rs1D)  || (RdE == Rs2D))) ? 0 : 1;
-assign Den  = ((opcodeE == 7'd3) && ((RdE == Rs1D)  || (RdE == Rs2D)))? 0 : 1;
-assign PCen = ((opcodeE == 7'd3) && ((RdE == Rs1D)  || (RdE == Rs2D))) ? 0 : 1;
+assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
+assign B = (A)&&(ImmSrcE!=3'b000);
+
+assign Fen  = ((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B)) ? 0 : 1;
+assign Den  = ((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1;
+assign PCen = ((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B)) ? 0 : 1;
 
 
 endmodule

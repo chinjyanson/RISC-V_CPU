@@ -10,6 +10,7 @@ module hazard_unit (
      input  logic    [2:0]   RegWriteW_i,
      input  logic    [6:0]   opcodeE_i,
      input  logic    [1:0]   PCSrcE_i,
+     input  logic    [2:0]   ImmSrcE_i,
      output logic    [1:0]   FowardAE_o,
      output logic    [1:0]   FowardBE_o,
      output logic            Den_o,
@@ -29,7 +30,8 @@ hazard_foward FowardHazard(
     .RegWriteM  (RegWriteM_i),
     .RegWriteW  (RegWriteW_i),
     .FowardAE   (FowardAE_o),
-    .FowardBE   (FowardBE_o)
+    .FowardBE   (FowardBE_o),
+    .ImmSrcE    (ImmSrcE_i)
     
 );
 
@@ -40,7 +42,8 @@ hazard_stall StallHazard(
     .opcodeE    (opcodeE_i),
     .Fen        (Fen_o),
     .Den        (Den_o),
-    .PCen       (PCen_o)
+    .PCen       (PCen_o),
+    .ImmSrcE    (ImmSrcE_i)
 );
 
 hazard_control ControlHazard(

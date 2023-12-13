@@ -5,10 +5,14 @@ module hazard_foward (
     input logic [4:0]   RdW,
     input logic [2:0]   RegWriteM,
     input logic [2:0]   RegWriteW,
+    input  logic [2:0]   ImmSrcE,
     output logic [1:0]  FowardAE,
     output logic [1:0]   FowardBE
 );
 
+
+logic A;
+logic B;
 //could be for 2 reasons 
     //normal write hazard - fowarding (forward the result from the memory stage and writeback stage to the execute stage)
     //lw hazard - stalling (data read from memory is only available at the end of the clock cycle so we stall the next instructions and forward memory data from writeback)
@@ -40,8 +44,11 @@ module hazard_foward (
 //     FowardBE = 2'b00;
 // end
 
-assign FowardAE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0)) ? (((Rs1E == RdM)&&(Rs1E))? 2'b10 : (((Rs1E == RdW)&&(Rs1E)) ? 2'b01 : 2'b00)) : 2'b00;
-assign FowardBE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0)) ? (((Rs2E == RdM)&&(Rs2E)) ? 2'b10 : (((Rs2E == RdW)&&(Rs2E)) ? 2'b01 : 2'b00)) : 2'b00;
+assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
+assign B = (A)&&(ImmSrcE!=3'b000);
+
+assign FowardAE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0))&&A ? (((Rs1E == RdM)&&(Rs1E))? 2'b10 : (((Rs1E == RdW)&&(Rs1E)) ? 2'b01 : 2'b00)) : 2'b00;
+assign FowardBE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0))&&B ? (((Rs2E == RdM)&&(Rs2E)) ? 2'b10 : (((Rs2E == RdW)&&(Rs2E)) ? 2'b01 : 2'b00)) : 2'b00;
 
 
 endmodule
