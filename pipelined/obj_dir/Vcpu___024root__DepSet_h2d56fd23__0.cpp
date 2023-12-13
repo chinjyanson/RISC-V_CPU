@@ -6,7 +6,7 @@
 
 #include "Vcpu___024root.h"
 
-extern const VlUnpacked<CData/*2:0*/, 64> Vcpu__ConstPool__TABLE_h9668aa63_0;
+extern const VlUnpacked<CData/*2:0*/, 64> Vcpu__ConstPool__TABLE_h9e1b8ee5_0;
 
 VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
@@ -300,19 +300,14 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__PCF = __Vdly__cpu__DOT__PCF;
     vlSelf->cpu__DOT__ALUResultE = ((4U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                      ? ((2U & (IData)(vlSelf->cpu__DOT__ALUControlE))
-                                         ? ((1U & (IData)(vlSelf->cpu__DOT__ALUControlE))
-                                             ? vlSelf->cpu__DOT__alu__DOT__SrcBE
-                                             : (vlSelf->cpu__DOT__alu__DOT__SrcAE 
-                                                >> 
-                                                (0x1fU 
-                                                 & vlSelf->cpu__DOT__alu__DOT__SrcBE)))
+                                         ? vlSelf->cpu__DOT__alu__DOT__SrcBE
                                          : ((1U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                              ? (vlSelf->cpu__DOT__alu__DOT__SrcAE 
+                                                < vlSelf->cpu__DOT__alu__DOT__SrcBE)
+                                             : (vlSelf->cpu__DOT__alu__DOT__SrcAE 
                                                 << 
                                                 (0x1fU 
-                                                 & vlSelf->cpu__DOT__alu__DOT__SrcBE))
-                                             : (vlSelf->cpu__DOT__alu__DOT__SrcAE 
-                                                ^ vlSelf->cpu__DOT__alu__DOT__SrcBE)))
+                                                 & vlSelf->cpu__DOT__alu__DOT__SrcBE))))
                                      : ((2U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                          ? ((1U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                              ? (vlSelf->cpu__DOT__alu__DOT__SrcAE 
@@ -402,7 +397,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                 : ((4U & vlSelf->cpu__DOT__InstrD) ? 0U
                     : ((2U & vlSelf->cpu__DOT__InstrD)
                         ? ((1U & vlSelf->cpu__DOT__InstrD)
-                            ? 0x1002U : 0U) : 0U)));
+                            ? 0x1022U : 0U) : 0U)));
     } else if ((8U & vlSelf->cpu__DOT__InstrD)) {
         vlSelf->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0U;
     } else if ((4U & vlSelf->cpu__DOT__InstrD)) {
@@ -497,7 +492,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                      << 5U) | ((0x1cU & (vlSelf->cpu__DOT__InstrD 
                                          >> 0xaU)) 
                                | (3U & (IData)(vlSelf->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))));
-    vlSelf->cpu__DOT__control__DOT__ALUControlD = Vcpu__ConstPool__TABLE_h9668aa63_0
+    vlSelf->cpu__DOT__control__DOT__ALUControlD = Vcpu__ConstPool__TABLE_h9e1b8ee5_0
         [__Vtableidx1];
 }
 
