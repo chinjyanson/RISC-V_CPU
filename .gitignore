@@ -7,4 +7,5 @@ single_cycle/test/obj_dir/Vcpu___024root.h
 single_cycle/test/cpu2.gtkw
 single_cycle/test/cpu.vcd
 test/cpu.vcd
+pipelined/cpu.vcd
 
