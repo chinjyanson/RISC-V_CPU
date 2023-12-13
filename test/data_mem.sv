@@ -16,9 +16,8 @@ module data_mem #(
         01 - write all word (32 bits)
         10 - write half word (16 bits)
         11 - write last byte (8 bits)
-    */  
-     
-    logic [DATA_WIDTH-1:0]  data_mem_register [2**17:0]; //we set our reg file which will be filled with initial values
+    */   
+    logic [DATA_WIDTH-1:0]  data_mem_register [(2**17)-1:0]; //we set our reg file which will be filled with initial values
     integer starting_address = 32'h10000;
 
 
@@ -48,7 +47,7 @@ module data_mem #(
         endcase
     end 
 
-    assign test = data_mem_register[290];
+    assign test = data_mem_register[(2**17)-2];
     assign RD = data_mem_register[add]; //we read and output the [A] register value
 
 endmodule
