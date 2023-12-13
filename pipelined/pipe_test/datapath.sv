@@ -42,5 +42,13 @@ module datapath #(
 );
 
 logic [DATA_WIDTH-1:0] PCD, PCE, ALUResultE, ALUResultW, ReadDataW;
+logic [DATA_WIDTH-1:0] PCNextF, PCPlus4F, PCPlus4D, PCPlus4E, PCPlus4M, PCPlus4W, PCTargetE, BranJumpTargetE;
+logic [DATA_WIDTH-1:0] WriteDataE;
+logic [DATA_WIDTH-1:0] ExtImmD, ExtImmE;
+logic [DATA_WIDTH-1:0] SrcAE, SrcBE, RD1D, RD2D, RD1E, RD2E;
+logic [DATA_WIDTH-1:0] ResultW;
+logic [4:0]            RdB;
 
+// Fetch Stage
+mux2 
 endmodule
