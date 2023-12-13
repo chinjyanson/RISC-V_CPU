@@ -67,7 +67,7 @@ regfile register(
     .clk        (clk),
     .A1_i       (Rs1D_i),
     .A2_i       (Rs2D_i),
-    .A3_i       (RdD_i),
+    .A3_i       (RdW_o),
     .WE3        (RegWriteW_i),
     .WD3        (ResultW),
     .RD1        (RD1D),

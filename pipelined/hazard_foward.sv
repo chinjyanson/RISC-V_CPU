@@ -40,8 +40,8 @@ module hazard_foward (
 //     FowardBE = 2'b00;
 // end
 
-assign FowardAE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0)) ? ((Rs1E == RdM) ? 2'b10 : ((Rs1E == RdW) ? 2'b01 : 2'b00)) : 2'b00;
-assign FowardBE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0)) ? ((Rs2E == RdM) ? 2'b10 : ((Rs2E == RdW) ? 2'b01 : 2'b00)) : 2'b00;
+assign FowardAE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0)) ? (((Rs1E == RdM)&&(Rs1E))? 2'b10 : (((Rs1E == RdW)&&(Rs1E)) ? 2'b01 : 2'b00)) : 2'b00;
+assign FowardBE = ((RegWriteM != 3'b0) || (RegWriteW != 3'b0)) ? (((Rs2E == RdM)&&(Rs2E)) ? 2'b10 : (((Rs2E == RdW)&&(Rs2E)) ? 2'b01 : 2'b00)) : 2'b00;
 
 
 endmodule
