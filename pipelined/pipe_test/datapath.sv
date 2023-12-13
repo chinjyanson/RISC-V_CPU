@@ -105,7 +105,47 @@ sign_extend ext(
 
 // Decode - Execute Pipeline Register 
 reg_Dec_Exc pipreg1(
+    .clk(clk),
+    .reset(reset),
+    .clear(FlushE),
+
+    .RD1D(RD1D),
+    .RD2D(RD2D),
+    .PCD(PCD),
+    .Rs1D(Rs1D),
+    .Rs2D(Rs2D),
+    .RdD(RdD),
+    .ExtImmD(ExtImmD),
+    .PCPlus4D(PCPlus4D),
+
+    .RD1E(RD1E),
+    .RD2E(RD2E),
+    .PCE(PCE),
+    .Rs1E(Rs1E),
+    .Rs2E(Rs2E),
+    .RdE(RdE),
+    .ExtImmE(ExtImmE),
+    .PCPlus4E(PCPlus4E)
 );
+mux3 forwardMuxA(
+    .control(SrcAE),
+    .input0(RD1E),
+    .input1(ResultW),
+    .input2(ALUResultM),
+    .out(ForwardAE)
+);
+mux3 forwardMuxB(
+    .control(SrcBE),
+    .input0(RD2E),
+    .input1(ResultW),
+    .input2(ALUResultM),
+    .out(ForwardBE)
+);
+adder pcAddBranch(
+    .input0(PCE),
+    .input1(ExtImmE),
+    .out(PCTargetE) // next PC for jump and branch instr
+)
 
 // Execute - Memory Access Pipeline Register 
 reg_Exc_Mem pipreg2(
