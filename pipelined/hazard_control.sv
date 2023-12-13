@@ -18,7 +18,7 @@ module hazard_control(
 //     Drst = 0;
 // end 
 
-assign PCrst = (PCSrcE != 2'b0) ? 1 : 0;
+//assign PCrst = (PCSrcE != 2'b0) ? 1 : 0;
 assign Frst  = (PCSrcE != 2'b0) ? 1 : 0;
 assign Drst  = (PCSrcE != 2'b0) ? 1 : 0;
 

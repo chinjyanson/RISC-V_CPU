@@ -30,7 +30,6 @@ VL_MODULE(Vcpu) {
     
     // LOCAL SIGNALS
     // Internals; generally not touched by application code
-    CData/*0:0*/ cpu__DOT__Drst;
     CData/*2:0*/ cpu__DOT__RegWriteW;
     CData/*2:0*/ cpu__DOT__RegWriteM;
     CData/*1:0*/ cpu__DOT__MemWriteM;
@@ -47,6 +46,7 @@ VL_MODULE(Vcpu) {
     CData/*0:0*/ cpu__DOT__Fen;
     CData/*1:0*/ cpu__DOT__FowardAE;
     CData/*1:0*/ cpu__DOT__FowardBE;
+    CData/*0:0*/ cpu__DOT__PCrst;
     CData/*2:0*/ cpu__DOT__control__DOT__ALUControlD;
     CData/*2:0*/ cpu__DOT__control__DOT__RegWriteE;
     CData/*1:0*/ cpu__DOT__control__DOT__ResultSrcE;
@@ -85,15 +85,8 @@ VL_MODULE(Vcpu) {
     // LOCAL VARIABLES
     // Internals; generally not touched by application code
     CData/*5:0*/ __Vtableidx1;
-    CData/*7:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    CData/*0:0*/ __VinpClk__TOP__cpu__DOT__Drst;
     CData/*0:0*/ __Vclklast__TOP__clk;
-    CData/*0:0*/ __Vclklast__TOP____VinpClk__TOP__cpu__DOT__Drst;
-    CData/*0:0*/ __Vchglast__TOP__cpu__DOT__Drst;
-    IData/*31:0*/ __Vdly__cpu__DOT__PCF;
-    IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    CData/*0:0*/ __Vm_traceActivity[5];
+    CData/*0:0*/ __Vm_traceActivity[2];
     static CData/*2:0*/ __Vtable1_cpu__DOT__control__DOT__ALUControlD[64];
     
     // INTERNAL VARIABLES
@@ -142,12 +135,9 @@ VL_MODULE(Vcpu) {
   public:
     static void _eval_initial(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _eval_settle(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
-    static void _initial__TOP__3(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
+    static void _initial__TOP__2(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__5(Vcpu__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__6(Vcpu__Syms* __restrict vlSymsp);
-    static void _settle__TOP__4(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
+    static void _settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
   private:
     static void traceChgSub0(void* userp, VerilatedVcd* tracep);
     static void traceChgTop0(void* userp, VerilatedVcd* tracep);

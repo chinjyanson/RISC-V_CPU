@@ -29,7 +29,7 @@ module reg_dec_control #(
 
 );
 
-always_ff @(posedge clk, posedge rst) begin
+always_ff @(posedge clk) begin
     if(en) begin     
         RegWriteE   <=       rst?   0   :   RegWriteD;
         ResultSrcE  <=       rst?   0   :   ResultSrcD;

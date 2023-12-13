@@ -30,7 +30,7 @@ module reg_dec #(
 
 );
 
-always_ff @(posedge clk, posedge rst) begin
+always_ff @(posedge clk) begin
     if(en) begin     
         RD1E        <=       rst?   0   :   RD1D;
         RD2E        <=       rst?   0   :   RD2D;

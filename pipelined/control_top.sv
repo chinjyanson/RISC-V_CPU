@@ -141,7 +141,7 @@ reg_memory_control MREG(
 assign ZeroOp = ZeroE_i ^ funct3E[0]; 
 
 always_comb
-    if (JumpE)      PCSrcE_o = 2'b10;
+    if (JumpE)      PCSrcE_o = ALUSrcE_o ? 2'b10: 2'b01 ; //choose between JAL and JALR without extra logic
     else PCSrcE_o = (BranchE & ZeroOp) ? 2'b01 : 2'b00;
 
 

@@ -29,17 +29,17 @@ Vcpu::~Vcpu() {
     VL_DO_CLEAR(delete __VlSymsp, __VlSymsp = NULL);
 }
 
-void Vcpu::_initial__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_initial__TOP__3\n"); );
+void Vcpu::_initial__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_initial__TOP__2\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Variables
-    WData/*95:0*/ __Vtemp1[3];
+    WData/*95:0*/ __Vtemp7[3];
     // Body
     VL_WRITEF("Loading ROM\n");
-    __Vtemp1[0U] = 0x2e6d656dU;
-    __Vtemp1[1U] = 0x61726f6dU;
-    __Vtemp1[2U] = 0x646174U;
-    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp1)
+    __Vtemp7[0U] = 0x2e6d656dU;
+    __Vtemp7[1U] = 0x61726f6dU;
+    __Vtemp7[2U] = 0x646174U;
+    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp7)
                  , vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
                  , 0, ~0ULL);
     VL_READMEM_N(true, 8, 256, 0, std::string("pdf.mem")
@@ -47,8 +47,8 @@ void Vcpu::_initial__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
                  , 0, ~0ULL);
 }
 
-void Vcpu::_settle__TOP__4(Vcpu__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_settle__TOP__4\n"); );
+void Vcpu::_settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_settle__TOP__3\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->a0 = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
@@ -97,7 +97,7 @@ void Vcpu::_settle__TOP__4(Vcpu__Syms* __restrict vlSymsp) {
                      ? ((4U & vlTOPp->cpu__DOT__InstrD)
                          ? ((2U & vlTOPp->cpu__DOT__InstrD)
                              ? ((1U & vlTOPp->cpu__DOT__InstrD)
-                                 ? 0x184cU : 0U) : 0U)
+                                 ? 0x188cU : 0U) : 0U)
                          : 0U) : ((4U & vlTOPp->cpu__DOT__InstrD)
                                    ? ((2U & vlTOPp->cpu__DOT__InstrD)
                                        ? ((1U & vlTOPp->cpu__DOT__InstrD)
@@ -347,13 +347,14 @@ void Vcpu::_settle__TOP__4(Vcpu__Syms* __restrict vlSymsp) {
                                              : (vlTOPp->cpu__DOT__alu__DOT__SrcAE 
                                                 + vlTOPp->cpu__DOT__alu__DOT__SrcBE))));
     vlTOPp->cpu__DOT__PCSrcE = ((IData)(vlTOPp->cpu__DOT__control__DOT__JumpE)
-                                 ? 2U : (((IData)(vlTOPp->cpu__DOT__control__DOT__BranchE) 
-                                          & ((vlTOPp->cpu__DOT__alu__DOT__SrcAE 
-                                              == vlTOPp->cpu__DOT__alu__DOT__SrcBE) 
-                                             ^ (IData)(vlTOPp->cpu__DOT__control__DOT__funct3E)))
-                                          ? 1U : 0U));
-    vlTOPp->cpu__DOT__Drst = ((0U != (IData)(vlTOPp->cpu__DOT__PCSrcE))
-                               ? 1U : 0U);
+                                 ? ((IData)(vlTOPp->cpu__DOT__ALUSrcE)
+                                     ? 2U : 1U) : (
+                                                   ((IData)(vlTOPp->cpu__DOT__control__DOT__BranchE) 
+                                                    & ((vlTOPp->cpu__DOT__alu__DOT__SrcAE 
+                                                        == vlTOPp->cpu__DOT__alu__DOT__SrcBE) 
+                                                       ^ (IData)(vlTOPp->cpu__DOT__control__DOT__funct3E)))
+                                                    ? 1U
+                                                    : 0U));
     vlTOPp->cpu__DOT__pc__DOT__next_PC = ((0U == (IData)(vlTOPp->cpu__DOT__PCSrcE))
                                            ? ((IData)(4U) 
                                               + vlTOPp->cpu__DOT__PCF)
@@ -371,12 +372,7 @@ void Vcpu::_eval_initial(Vcpu__Syms* __restrict vlSymsp) {
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
-    vlTOPp->__Vclklast__TOP____VinpClk__TOP__cpu__DOT__Drst 
-        = vlTOPp->__VinpClk__TOP__cpu__DOT__Drst;
-    vlTOPp->_initial__TOP__3(vlSymsp);
-    vlTOPp->__Vm_traceActivity[4U] = 1U;
-    vlTOPp->__Vm_traceActivity[3U] = 1U;
-    vlTOPp->__Vm_traceActivity[2U] = 1U;
+    vlTOPp->_initial__TOP__2(vlSymsp);
     vlTOPp->__Vm_traceActivity[1U] = 1U;
     vlTOPp->__Vm_traceActivity[0U] = 1U;
 }
@@ -392,10 +388,7 @@ void Vcpu::_eval_settle(Vcpu__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval_settle\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlTOPp->_settle__TOP__4(vlSymsp);
-    vlTOPp->__Vm_traceActivity[4U] = 1U;
-    vlTOPp->__Vm_traceActivity[3U] = 1U;
-    vlTOPp->__Vm_traceActivity[2U] = 1U;
+    vlTOPp->_settle__TOP__3(vlSymsp);
     vlTOPp->__Vm_traceActivity[1U] = 1U;
     vlTOPp->__Vm_traceActivity[0U] = 1U;
 }
@@ -428,7 +421,7 @@ void Vcpu::_ctor_var_reset() {
     cpu__DOT__Fen = VL_RAND_RESET_I(1);
     cpu__DOT__FowardAE = VL_RAND_RESET_I(2);
     cpu__DOT__FowardBE = VL_RAND_RESET_I(2);
-    cpu__DOT__Drst = VL_RAND_RESET_I(1);
+    cpu__DOT__PCrst = VL_RAND_RESET_I(1);
     cpu__DOT__pc__DOT__next_PC = VL_RAND_RESET_I(32);
     cpu__DOT__control__DOT__ALUControlD = VL_RAND_RESET_I(3);
     cpu__DOT__control__DOT__RegWriteE = VL_RAND_RESET_I(3);
@@ -528,13 +521,7 @@ void Vcpu::_ctor_var_reset() {
     __Vtable1_cpu__DOT__control__DOT__ALUControlD[61] = 1U;
     __Vtable1_cpu__DOT__control__DOT__ALUControlD[62] = 2U;
     __Vtable1_cpu__DOT__control__DOT__ALUControlD[63] = 7U;
-    __Vdly__cpu__DOT__PCF = VL_RAND_RESET_I(32);
-    __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 = 0;
-    __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 = VL_RAND_RESET_I(32);
-    __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 = 0;
-    __VinpClk__TOP__cpu__DOT__Drst = VL_RAND_RESET_I(1);
-    __Vchglast__TOP__cpu__DOT__Drst = VL_RAND_RESET_I(1);
-    { int __Vi0=0; for (; __Vi0<5; ++__Vi0) {
+    { int __Vi0=0; for (; __Vi0<2; ++__Vi0) {
             __Vm_traceActivity[__Vi0] = VL_RAND_RESET_I(1);
     }}
 }
