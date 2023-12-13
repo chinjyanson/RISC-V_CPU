@@ -39,6 +39,8 @@ module datapath #(
     output  logic [4:0]             RdM, 
     output  logic [4:0]             RdW
 
+    output  logic                   a0; // debug output
+
 );
 
 logic [DATA_WIDTH-1:0] PCD, PCE, ALUResultE, ALUResultW, ReadDataW;
@@ -96,9 +98,18 @@ reg_Ftc_Dec pipreg0(
 );
 assign Rs1D = InstrD[19:15];
 assign Rs2D = InstrD[24:20];
-regfile rf(
-);
 assign RdD = InstrD[11:7];
+regfile rf(
+    .clk(clk),
+    .WE3(RegWriteW),
+    .WD3(ResultW),
+    .A1_i(Rs1D),
+    .A2_i(Rs2D),
+    .A3_i(RdD),
+    .RD1D(RD1D),
+    .RD2D(RD2D),
+    .a0(a0)
+);
 sign_extend ext(
     .instr(InstrD[31:7]),
     .ImmSrc(ImmSrcD),
