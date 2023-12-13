@@ -42,6 +42,8 @@ wire [DATA_WIDTH-1:0]    SrcBE;
 wire [DATA_WIDTH-1:0]    WriteDataE;
 wire [DATA_WIDTH-1:0]    ExtImmE;
 wire                     ZeroE;
+wire [DATA_WIDTH-1:0]   ALUResultE;
+
 
 //Memory Logic
 wire [2:0]              RegWriteM;
@@ -49,10 +51,10 @@ wire [1:0]              ResultSrcM;
 wire [1:0]              MemWriteM;
 wire [DATA_WIDTH-1:0]   ALUResultM;
 wire [DATA_WIDTH-1:0]   WriteDataM;
+wire [DATA_WIDTH-1:0]   PCPlus4M;
 
 //Write Logic
-wire [DATA_WIDTH-1:0]   WriteDataW;
-wire [DATA_WIDTH-1:0]   PCPlusW;
+wire [DATA_WIDTH-1:0]   PCPlus4W;
 wire [DATA_WIDTH-1:0]   ReadDataW;
 wire [DATA_WIDTH-1:0]   ALUResultW;
 wire [DATA_WIDTH-1:0]   ResultW;
@@ -155,10 +157,10 @@ reg_dec DREg(
 reg_execute EREG(
     .clk(clk),
     //inputs E
-    .WriteDataE(WriteDataE),
-    .RdE(RdE),
-    .PCPlus4E(PCPlus4E),
     .ALUResultE(ALUResultE),
+    .RdE(RdE),
+    .WriteDataE(WriteDataE),
+    .PCPlus4E(PCPlus4E),
 
     //outputs M
     .ALUResultM(ALUResultM),
@@ -171,14 +173,12 @@ reg_memory MREG(
     //input M
     .clk(clk),
     .ALUResultM(ALUResultM),
-    .WriteDataM(WriteDataM),
     .ReadDataM(ReadDataM),
     .RdM(RdM_o),
     .PCPlus4M(PCPlus4M),
 
     //outputs W
     .ALUResultW(ALUResultW),
-    .WriteDataW(WriteDataW),
     .ReadDataW(ReadDataW),
     .RdW(RdW_o),
     .PCPlus4W(PCPlus4W)
