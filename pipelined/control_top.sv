@@ -138,7 +138,7 @@ reg_memory_control MREG(
     .ResultSrcW(ResultSrcW_o)
 );
 
-assign ZeroOp = ZeroE_i ^ funct3E[0]; 
+assign ZeroOp = ZeroE_i ^ funct3E[0]; // flip the Zero input if BNE
 
 always_comb
     if (JumpE)      PCSrcE_o = ALUSrcE_o ? 2'b10: 2'b01 ; //choose between JAL and JALR without extra logic
