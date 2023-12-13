@@ -62,5 +62,41 @@ mux2 pcmux(
     .input1(BranJumpTargetE),
     .out(PCNextF)
 );
+flopenr IF(
+    .clk(clk),
+    .reset(reset),
+    .en(~StallF),
+    .d(PCNextF),
+    .q(PCF)
+);
+adder pcadd4(
+    .input0(PCF),
+    .input1(32'd4),
+    .out(PCPlus4F)
+);
 
+// Instruction Fetch - Decode Pipeline Register
+
+
+// Execute - Memory Access Pipeline Register 
+reg_E_M pipreg2(
+    .clk(clk),
+    .reset(reset),
+
+
+    .ALUResultE(ALUResultE),
+    .WriteDataE(WriteDataE),
+    .RdE(RdE),
+    .PCPlus4E(PCPlus4E),
+
+    .ALUResultM(ALUResultM),
+    .WriteDataM(WriteDataM),
+    .RdM(RdM),
+    .PCPlus4M(PCPlus4M)
+);
+
+// Memory - Register Writeback Stage
+reg_Mem_Wrt pipreg3(
+    
+)
 endmodule
