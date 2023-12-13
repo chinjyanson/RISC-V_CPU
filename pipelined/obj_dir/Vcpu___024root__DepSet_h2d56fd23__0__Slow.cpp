@@ -252,11 +252,11 @@ VL_ATTR_COLD void Vcpu___024root___settle__TOP__0(Vcpu___024root* vlSelf) {
                                          ? vlSelf->cpu__DOT__alu__DOT__SrcBE
                                          : ((1U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                              ? (vlSelf->cpu__DOT__alu__DOT__SrcAE 
-                                                < vlSelf->cpu__DOT__alu__DOT__SrcBE)
-                                             : (vlSelf->cpu__DOT__alu__DOT__SrcAE 
                                                 << 
                                                 (0x1fU 
-                                                 & vlSelf->cpu__DOT__alu__DOT__SrcBE))))
+                                                 & vlSelf->cpu__DOT__alu__DOT__SrcBE))
+                                             : (vlSelf->cpu__DOT__alu__DOT__SrcAE 
+                                                ^ vlSelf->cpu__DOT__alu__DOT__SrcBE)))
                                      : ((2U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                          ? ((1U & (IData)(vlSelf->cpu__DOT__ALUControlE))
                                              ? (vlSelf->cpu__DOT__alu__DOT__SrcAE 
