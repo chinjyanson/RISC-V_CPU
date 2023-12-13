@@ -161,8 +161,7 @@ void Vcpu::traceChgSub0(void* userp, VerilatedVcd* tracep) {
                                                 >> 0xfU))),8);
             tracep->chgCData(oldp+74,((0x1fU & (vlTOPp->cpu__DOT__InstrD 
                                                 >> 0x14U))),8);
-            tracep->chgCData(oldp+75,((0x1fU & (vlTOPp->cpu__DOT__InstrD 
-                                                >> 7U))),8);
+            tracep->chgCData(oldp+75,(vlTOPp->cpu__DOT__RdW),8);
         }
         tracep->chgBit(oldp+76,(vlTOPp->clk));
         tracep->chgBit(oldp+77,(vlTOPp->rst));
