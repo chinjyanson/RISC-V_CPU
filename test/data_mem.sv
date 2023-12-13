@@ -16,7 +16,8 @@ module data_mem #(
         01 - write all word (32 bits)
         10 - write half word (16 bits)
         11 - write last byte (8 bits)
-    */   
+    */  
+     
     logic [DATA_WIDTH-1:0]  data_mem_register [2**17:0]; //we set our reg file which will be filled with initial values
     integer starting_address = 32'h10000;
 

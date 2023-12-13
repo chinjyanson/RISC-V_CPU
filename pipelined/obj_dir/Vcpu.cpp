@@ -1,116 +1,71 @@
 // Verilated -*- C++ -*-
-// DESCRIPTION: Verilator output: Model implementation (design independent parts)
+// DESCRIPTION: Verilator output: Design implementation internals
+// See Vcpu.h for the primary calling header
 
 #include "Vcpu.h"
 #include "Vcpu__Syms.h"
-#include "verilated_vcd_c.h"
 
-//============================================================
-// Constructors
-
-Vcpu::Vcpu(VerilatedContext* _vcontextp__, const char* _vcname__)
-    : VerilatedModel{*_vcontextp__}
-    , vlSymsp{new Vcpu__Syms(contextp(), _vcname__, this)}
-    , clk{vlSymsp->TOP.clk}
-    , rst{vlSymsp->TOP.rst}
-    , a0{vlSymsp->TOP.a0}
-    , rootp{&(vlSymsp->TOP)}
-{
-    // Register model with the context
-    contextp()->addModel(this);
-}
-
-Vcpu::Vcpu(const char* _vcname__)
-    : Vcpu(Verilated::threadContextp(), _vcname__)
-{
-}
-
-//============================================================
-// Destructor
-
-Vcpu::~Vcpu() {
-    delete vlSymsp;
-}
-
-//============================================================
-// Evaluation loop
-
-void Vcpu___024root___eval_initial(Vcpu___024root* vlSelf);
-void Vcpu___024root___eval_settle(Vcpu___024root* vlSelf);
-void Vcpu___024root___eval(Vcpu___024root* vlSelf);
-QData Vcpu___024root___change_request(Vcpu___024root* vlSelf);
-#ifdef VL_DEBUG
-void Vcpu___024root___eval_debug_assertions(Vcpu___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vcpu___024root___final(Vcpu___024root* vlSelf);
-
-static void _eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
-    vlSymsp->__Vm_didInit = true;
-    Vcpu___024root___eval_initial(&(vlSymsp->TOP));
-    // Evaluate till stable
-    int __VclockLoop = 0;
-    QData __Vchange = 1;
-    vlSymsp->__Vm_activity = true;
-    do {
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
-        Vcpu___024root___eval_settle(&(vlSymsp->TOP));
-        Vcpu___024root___eval(&(vlSymsp->TOP));
-        if (VL_UNLIKELY(++__VclockLoop > 100)) {
-            // About to fail, so enable debug to see what's not settling.
-            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
-            int __Vsaved_debug = Verilated::debug();
-            Verilated::debug(1);
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
-            Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("cpu.sv", 1, "",
-                "Verilated model didn't DC converge\n"
-                "- See https://verilator.org/warn/DIDNOTCONVERGE");
-        } else {
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
-        }
-    } while (VL_UNLIKELY(__Vchange));
-}
+//==========
 
 void Vcpu::eval_step() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval_step\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval\n"); );
+    Vcpu__Syms* __restrict vlSymsp = this->__VlSymsp;  // Setup global symbol table
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
 #ifdef VL_DEBUG
     // Debug assertions
-    Vcpu___024root___eval_debug_assertions(&(vlSymsp->TOP));
+    _eval_debug_assertions();
 #endif  // VL_DEBUG
     // Initialize
     if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
     // Evaluate till stable
     int __VclockLoop = 0;
     QData __Vchange = 1;
-    vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        Vcpu___024root___eval(&(vlSymsp->TOP));
+        vlSymsp->__Vm_activity = true;
+        _eval(vlSymsp);
         if (VL_UNLIKELY(++__VclockLoop > 100)) {
             // About to fail, so enable debug to see what's not settling.
             // Note you must run make with OPT=-DVL_DEBUG for debug prints.
             int __Vsaved_debug = Verilated::debug();
             Verilated::debug(1);
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
+            __Vchange = _change_request(vlSymsp);
             Verilated::debug(__Vsaved_debug);
             VL_FATAL_MT("cpu.sv", 1, "",
                 "Verilated model didn't converge\n"
-                "- See https://verilator.org/warn/DIDNOTCONVERGE");
+                "- See DIDNOTCONVERGE in the Verilator manual");
         } else {
-            __Vchange = Vcpu___024root___change_request(&(vlSymsp->TOP));
+            __Vchange = _change_request(vlSymsp);
         }
     } while (VL_UNLIKELY(__Vchange));
-    // Evaluate cleanup
 }
 
-//============================================================
-// Utilities
-
-const char* Vcpu::name() const {
-    return vlSymsp->name();
+void Vcpu::_eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    _eval_initial(vlSymsp);
+    vlSymsp->__Vm_activity = true;
+    // Evaluate till stable
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
+    do {
+        _eval_settle(vlSymsp);
+        _eval(vlSymsp);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = _change_request(vlSymsp);
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("cpu.sv", 1, "",
+                "Verilated model didn't DC converge\n"
+                "- See DIDNOTCONVERGE in the Verilator manual");
+        } else {
+            __Vchange = _change_request(vlSymsp);
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
-<<<<<<< HEAD
 VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_sequent__TOP__1\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
@@ -621,29 +576,34 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
     vlTOPp->cpu__DOT__alu__DOT__SrcBE = ((IData)(vlTOPp->cpu__DOT__ALUSrcE)
                                           ? vlTOPp->cpu__DOT__alu__DOT__ExtImmE
                                           : vlTOPp->cpu__DOT__alu__DOT__WriteDataE);
-    vlTOPp->cpu__DOT__ExtImmD = ((0x10U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))
-                                  ? ((8U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))
-                                      ? 0U : ((4U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))
-                                               ? 0U
-                                               : (0xfffff000U 
-                                                  & vlTOPp->cpu__DOT__InstrD)))
-                                  : ((8U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))
-                                      ? ((4U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))
-                                          ? ((0xfff00000U 
-                                              & ((- (IData)(
-                                                            (1U 
-                                                             & (vlTOPp->cpu__DOT__InstrD 
-                                                                >> 0x1fU)))) 
-                                                 << 0x14U)) 
-                                             | ((0xff000U 
-                                                 & vlTOPp->cpu__DOT__InstrD) 
-                                                | ((0x800U 
-                                                    & (vlTOPp->cpu__DOT__InstrD 
-                                                       >> 9U)) 
-                                                   | (0x7feU 
-                                                      & (vlTOPp->cpu__DOT__InstrD 
-                                                         >> 0x14U)))))
-                                          : ((0xfffff000U 
+    if ((0U == (7U & ((IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
+                      >> 2U)))) {
+        vlTOPp->cpu__DOT__ExtImmD = ((0xfffff000U & 
+                                      ((- (IData)((1U 
+                                                   & (vlTOPp->cpu__DOT__InstrD 
+                                                      >> 0x1fU)))) 
+                                       << 0xcU)) | 
+                                     (0xfffU & (vlTOPp->cpu__DOT__InstrD 
+                                                >> 0x14U)));
+    } else {
+        if ((1U == (7U & ((IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
+                          >> 2U)))) {
+            vlTOPp->cpu__DOT__ExtImmD = ((0xfffff000U 
+                                          & ((- (IData)(
+                                                        (1U 
+                                                         & (vlTOPp->cpu__DOT__InstrD 
+                                                            >> 0x1fU)))) 
+                                             << 0xcU)) 
+                                         | ((0xfe0U 
+                                             & (vlTOPp->cpu__DOT__InstrD 
+                                                >> 0x14U)) 
+                                            | (0x1fU 
+                                               & (vlTOPp->cpu__DOT__InstrD 
+                                                  >> 7U))));
+        } else {
+            if ((2U == (7U & ((IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
+                              >> 2U)))) {
+                vlTOPp->cpu__DOT__ExtImmD = ((0xfffff000U 
                                               & ((- (IData)(
                                                             (1U 
                                                              & (vlTOPp->cpu__DOT__InstrD 
@@ -657,29 +617,34 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
                                                        >> 0x14U)) 
                                                    | (0x1eU 
                                                       & (vlTOPp->cpu__DOT__InstrD 
-                                                         >> 7U))))))
-                                      : ((4U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))
-                                          ? ((0xfffff000U 
-                                              & ((- (IData)(
-                                                            (1U 
-                                                             & (vlTOPp->cpu__DOT__InstrD 
-                                                                >> 0x1fU)))) 
-                                                 << 0xcU)) 
-                                             | ((0xfe0U 
-                                                 & (vlTOPp->cpu__DOT__InstrD 
-                                                    >> 0x14U)) 
-                                                | (0x1fU 
-                                                   & (vlTOPp->cpu__DOT__InstrD 
-                                                      >> 7U))))
-                                          : ((0xfffff000U 
-                                              & ((- (IData)(
-                                                            (1U 
-                                                             & (vlTOPp->cpu__DOT__InstrD 
-                                                                >> 0x1fU)))) 
-                                                 << 0xcU)) 
-                                             | (0xfffU 
-                                                & (vlTOPp->cpu__DOT__InstrD 
-                                                   >> 0x14U))))));
+                                                         >> 7U)))));
+            } else {
+                if ((3U == (7U & ((IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
+                                  >> 2U)))) {
+                    vlTOPp->cpu__DOT__ExtImmD = ((0xfff00000U 
+                                                  & ((- (IData)(
+                                                                (1U 
+                                                                 & (vlTOPp->cpu__DOT__InstrD 
+                                                                    >> 0x1fU)))) 
+                                                     << 0x14U)) 
+                                                 | ((0xff000U 
+                                                     & vlTOPp->cpu__DOT__InstrD) 
+                                                    | ((0x800U 
+                                                        & (vlTOPp->cpu__DOT__InstrD 
+                                                           >> 9U)) 
+                                                       | (0x7feU 
+                                                          & (vlTOPp->cpu__DOT__InstrD 
+                                                             >> 0x14U)))));
+                } else {
+                    if ((4U == (7U & ((IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
+                                      >> 2U)))) {
+                        vlTOPp->cpu__DOT__ExtImmD = 
+                            (0xfffff000U & vlTOPp->cpu__DOT__InstrD);
+                    }
+                }
+            }
+        }
+    }
     vlTOPp->__Vtableidx1 = ((0x20U & ((vlTOPp->cpu__DOT__InstrD 
                                        >> 0x19U) & vlTOPp->cpu__DOT__InstrD)) 
                             | ((0x1cU & (vlTOPp->cpu__DOT__InstrD 
@@ -772,51 +737,3 @@ void Vcpu::_eval_debug_assertions() {
         Verilated::overWidthError("rst");}
 }
 #endif  // VL_DEBUG
-=======
-//============================================================
-// Invoke final blocks
-
-VL_ATTR_COLD void Vcpu::final() {
-    Vcpu___024root___final(&(vlSymsp->TOP));
-}
-
-//============================================================
-// Implementations of abstract methods from VerilatedModel
-
-const char* Vcpu::hierName() const { return vlSymsp->name(); }
-const char* Vcpu::modelName() const { return "Vcpu"; }
-unsigned Vcpu::threads() const { return 1; }
-std::unique_ptr<VerilatedTraceConfig> Vcpu::traceConfig() const {
-    return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
-};
-
-//============================================================
-// Trace configuration
-
-void Vcpu___024root__trace_init_top(Vcpu___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32_t code) {
-    // Callback from tracep->open()
-    Vcpu___024root* const __restrict vlSelf VL_ATTR_UNUSED = static_cast<Vcpu___024root*>(voidSelf);
-    Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    if (!vlSymsp->_vm_contextp__->calcUnusedSigs()) {
-        VL_FATAL_MT(__FILE__, __LINE__, __FILE__,
-            "Turning on wave traces requires Verilated::traceEverOn(true) call before time 0.");
-    }
-    vlSymsp->__Vm_baseCode = code;
-    tracep->scopeEscape(' ');
-    tracep->pushNamePrefix(std::string{vlSymsp->name()} + ' ');
-    Vcpu___024root__trace_init_top(vlSelf, tracep);
-    tracep->popNamePrefix();
-    tracep->scopeEscape('.');
-}
-
-VL_ATTR_COLD void Vcpu___024root__trace_register(Vcpu___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD void Vcpu::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (false && levels && options) {}  // Prevent unused
-    tfp->spTrace()->addModel(this);
-    tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
-    Vcpu___024root__trace_register(&(vlSymsp->TOP), tfp->spTrace());
-}
->>>>>>> 59a9696e8d437da2c06d3671e1163f87a5cf37d8
