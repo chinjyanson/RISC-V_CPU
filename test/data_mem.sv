@@ -47,7 +47,7 @@ module data_mem #(
         endcase
     end 
 
-    assign test = data_mem_register[(2**17)-2];
+    assign test = data_mem_register[301];
     assign RD = data_mem_register[add]; //we read and output the [A] register value
 
 endmodule

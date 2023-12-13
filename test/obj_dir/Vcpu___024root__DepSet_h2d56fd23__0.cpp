@@ -98,7 +98,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0] 
         = __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
     vlSelf->test = vlSelf->cpu__DOT__alu__DOT__data__DOT__data_mem_register
-        [0x1fffeU];
+        [0x12dU];
     vlSelf->cpu__DOT__Instr = ((vlSelf->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
                                 [(0xffU & ((IData)(3U) 
                                            + vlSelf->cpu__DOT__PC))] 
