@@ -8,6 +8,8 @@ module alu_top #(
     input   wire [4:0]                  Rs1D_i,
     input   wire [4:0]                  Rs2D_i,
     input   wire [4:0]                  RdD_i,
+    input   wire [DATA_WIDTH-1:0]       ExtImmD_i,
+    input   wire [DATA_WIDTH-1:0]       PCPlus4D_i,
     input   wire [6:0]                  opcodeD_i,
     input   wire [1:0]                  FowardAE_i,
     input   wire [1:0]                  FowardBE_i,
@@ -30,6 +32,9 @@ module alu_top #(
     output  wire [4:0]                  RdE_o,
     output  wire                        ZeroE_o
 );
+
+wire [DATA_WIDTH-1:0]    RD1D;
+wire [DATA_WIDTH-1:0]    RD2D;
 
 
 //Execute Logic
@@ -132,8 +137,8 @@ reg_dec DREg(
     .clk(clk),
     .en(Den_i),
     .rst(Drst_i),
-    .RD1D(RD1D_o),
-    .RD2D(RD2D_o),
+    .RD1D(RD1D),
+    .RD2D(RD2D),
     .PCD(PCD_i),
     .Rs1D(Rs1D_i),
     .Rs2D(Rs2D_i),
@@ -158,7 +163,7 @@ reg_execute EREG(
     .clk(clk),
     //inputs E
     .ALUResultE(ALUResultE),
-    .RdE(RdE),
+    .RdE(RdE_o),
     .WriteDataE(WriteDataE),
     .PCPlus4E(PCPlus4E),
 

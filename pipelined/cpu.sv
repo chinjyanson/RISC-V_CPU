@@ -105,7 +105,7 @@ alu_top alu(
     .PCPlus4D_i(PCPlus4D),
     .Rs1D_i(InstrD[19:15]),
     .Rs2D_i(InstrD[24:20]),
-    .RdD_i(InstrD[11:7]),
+    .RdD_i(InstrD[11:7]),  // on diagram this comes from RdW not Instr 
     .FowardAE_i(FowardAE),
     .FowardBE_i(FowardBE),
     
