@@ -24,5 +24,6 @@ always_comb begin
     3'b100: ExtImm = {instr[31:12], 12'b0}; // U type
     endcase 
 end
+
 endmodule
 

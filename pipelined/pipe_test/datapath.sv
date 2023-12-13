@@ -69,6 +69,8 @@ flopenr IF(
     .d(PCNextF),
     .q(PCF)
 );
+imem im(
+);
 adder pcadd4(
     .input0(PCF),
     .input1(32'd4),
@@ -92,16 +94,17 @@ reg_Ftc_Dec pipreg0(
 );
 assign Rs1D = InstrD[19:15];
 assign Rs2D = InstrD[24:20];
-
 regfile rf(
 );
-
 assign RdD = InstrD[11:7];
-
 sign_extend ext(
     .instr(InstrD[31:7]),
     .ImmSrc(ImmSrcD),
     .ExtImm(ExtImmD)
+);
+
+// Decode - Execute Pipeline Register 
+reg_Dec_Exc pipreg1(
 );
 
 // Execute - Memory Access Pipeline Register 
@@ -118,6 +121,8 @@ reg_Exc_Mem pipreg2(
     .WriteDataM(WriteDataM),
     .RdM(RdM),
     .PCPlus4M(PCPlus4M)
+);
+dmem dm(
 );
 
 // Memory - Register Writeback Stage
