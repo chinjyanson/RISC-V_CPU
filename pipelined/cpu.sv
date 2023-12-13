@@ -61,16 +61,16 @@ pc_top pc(
     .clk(clk),
     .PCen_i(PCen),  
     .PCrst_i(rst),        
-    .ALUResult_i(ALUResult_o),    //result from data mem to mux4    
+    .ALUResult_i(ALUResult_o),      //result from data mem to mux4    
     .PCsrc_i(PCsrcE),
-    .PCF_o(PCF), //32b
-    .PCPlus4F_o(PCPlus4F), //unsure
+    .PCF_o(PCF),                   //32b
+    .PCPlus4F_o(PCPlus4F),         //unsure
     .PCTarget_i(PCTarget)
     );
 
 control_top control(
     .clk(clk),
-    .PCF_i(PCF), //32b
+    .PCF_i(PCF),                    //32b
     .PCPlus4F_i(PCPlus4F),
     .InstrD_o(InstrD),//32b
     .RegWriteW_o(RegWriteW), //1b  ==> edited to 3 bits
@@ -101,7 +101,7 @@ alu_top alu(
     .ExtImmD_i(ImmOp),
     .PCPlus4D_i(PCPlus4),
     .opcodeD_i(InstrD[6:0]),
-    .a0(a0),  //(debug output)
+    .a0(a0),                     //(debug output)
     .ALUResult_o(ALUResult_o),
     .PCD_i(PCD),
     .PCPlus4D_i(PCPlus4D),

@@ -19,13 +19,14 @@ module control_top #(
     output logic                           ALUsrcE_o, //1 bit
     output logic [DATA_WIDTH-1:0]          ImmOpD_o,//32 bits
     output logic [DATA_WIDTH-1:0]          PCD_o,
-    output logic [DATA_WIDTH-1:0]          PCPlus4D_o
+    output logic [DATA_WIDTH-1:0]          PCPlus4D_o,
+    output logic [1:0]                     PCSrcE_o
 
 );
 
     logic [2:0]       ImmSrcD;
     logic [31:0]      InstrF;
-    logic              ZeroOp;
+    logic             ZeroOp;
 
 
     wire [1:0]              ResultSrcD_i;
@@ -60,7 +61,7 @@ module control_top #(
     .reset          (rst),   //unsure check
     .op             (InstrD[6:0]),
     .funct3         (InstrD[14:12]),
-    .funct7b5        (InstrD[30]),
+    .funct7b5       (InstrD[30]),
     .RegWriteD      (RegWriteD),
     .MemWriteD      (MemWriteD_i),
     .ResultSrcD     (ResultSrcD_i),
@@ -139,11 +140,11 @@ reg_memory_control MREG(
     .ResultSrcW(ResultSrcW_o)
 );
 
-logic ZerOP;
-
 assign ZeroOp = ZeroE_i ^ InstrD[12]; 
-assign PCSrcE = (JumpE) ? 2'b10 : ((BranchE & ZeroOp) ? 2'b01 : 2'b00);
 
+always_comb
+    if (JumpE)      PCSrcE_o = 2'b10;
+    else PCSrcE_o = (BranchE & ZeroOp) ? 2'b01 : 2'b00;
 
 
 endmodule
