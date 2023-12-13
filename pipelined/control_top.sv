@@ -12,6 +12,7 @@ module control_top #(
     input  logic                           ZeroE_i,
     output logic [DATA_WIDTH-1:0]          InstrD_o,//32b
     output logic [2:0]                     RegWriteW_o, //1b ==> edited to 3 bits
+    output logic [2:0]                     RegWriteM_o,
     output logic [1:0]                     MemWriteM_o, //1b ==> edited to 2 bits
     output logic [1:0]                     ResultSrcW_o, //3b ==> edited to 2 bits
     output logic [2:0]                     ALUControlE_o, //3b
@@ -40,13 +41,12 @@ module control_top #(
     wire [2:0]              RegWriteE;
     wire [1:0]              ResultSrcE;
     wire [1:0]              MemWriteE;
-    wire [DATA_WIDTH-1:0]   ALUResultE; 
     wire                    JumpE;
     wire                    BranchE;
     wire [2:0]              funct3E;
 
     //Memory Logic
-    wire [2:0]              RegWriteM;
+    
     wire [1:0]              ResultSrcM;
 
 
@@ -56,8 +56,7 @@ module control_top #(
         .Instr_o        (InstrF)
     );
     
-    control_unit #(DATA_WIDTH) ControlUnit(
-    .clk            (clk),
+    control_unit ControlUnit(
     .op             (InstrD_o[6:0]),
     .funct3         (InstrD_o[14:12]),
     .funct7b5       (InstrD_o[30]),
@@ -71,7 +70,7 @@ module control_top #(
     .BranchD        (BranchD)
     );
 
-    reg_fetch #(DATA_WIDTH) FReg(
+    reg_fetch FReg(
         .clk        (clk),
         .en         (Fen_i),
         .rst        (Frst_i),
@@ -84,8 +83,8 @@ module control_top #(
     );
 
     
-    sign_extend #(DATA_WIDTH) MySignExtend(
-        .instr        (InstrD_o),
+    sign_extend MySignExtend(
+        .instr        (InstrD_o[31:7]),
         .ImmSrc       (ImmSrcD),
         .ExtImm       (ExtImmD_o)
     );
@@ -123,7 +122,7 @@ reg_execute_control EREG(
     .MemWriteE(MemWriteE),
 
     //outputs M
-    .RegWriteM(RegWriteM),    
+    .RegWriteM(RegWriteM_o),    
     .ResultSrcM(ResultSrcM),
     .MemWriteM(MemWriteM_o)
 );
@@ -131,7 +130,7 @@ reg_execute_control EREG(
 reg_memory_control MREG(
     //input M
     .clk(clk),
-    .RegWriteM(RegWriteM),    
+    .RegWriteM(RegWriteM_o),    
     .ResultSrcM(ResultSrcM),
 
     //outputs W
@@ -139,7 +138,7 @@ reg_memory_control MREG(
     .ResultSrcW(ResultSrcW_o)
 );
 
-assign ZeroOp = ZeroE_i ^ InstrD_o[12]; 
+assign ZeroOp = ZeroE_i ^ funct3E[0]; 
 
 always_comb
     if (JumpE)      PCSrcE_o = 2'b10;

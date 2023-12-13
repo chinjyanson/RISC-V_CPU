@@ -15,7 +15,7 @@ module alu_top #(
     input   wire [1:0]                  FowardBE_i,
     input   wire                        Drst_i,
     input   wire [2:0]                  RegWriteW_i, 
-    input   wire [2:0]                  MemWriteM_i, 
+    input   wire [1:0]                  MemWriteM_i, 
     input   wire [1:0]                  ResultSrcW_i, 
     input   wire [CONTROL_WIDTH-1:0]    ALUControlE_i, 
     input   wire                        ALUSrcE_i, 
@@ -23,7 +23,6 @@ module alu_top #(
     
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       PCTargetE_o,
-    output  wire [1:0]                  PCSrcE_o,
     output  wire [6:0]                  opcodeE_o,
     output  wire [4:0]                  Rs1E_o,
     output  wire [4:0]                  Rs2E_o,
@@ -47,14 +46,10 @@ wire [DATA_WIDTH-1:0]    SrcAE;
 wire [DATA_WIDTH-1:0]    SrcBE;
 wire [DATA_WIDTH-1:0]    WriteDataE;
 wire [DATA_WIDTH-1:0]    ExtImmE;
-wire                     ZeroE;
 
 
 
 //Memory Logic
-wire [2:0]              RegWriteM;
-wire [1:0]              ResultSrcM;
-wire [1:0]              MemWriteM;
 wire [DATA_WIDTH-1:0]   ALUResultM;
 wire [DATA_WIDTH-1:0]   WriteDataM;
 wire [DATA_WIDTH-1:0]   PCPlus4M;
@@ -67,7 +62,6 @@ wire [DATA_WIDTH-1:0]   ALUResultW;
 wire [DATA_WIDTH-1:0]   ResultW;
 
 
-//add logic here for PCSrcE_o -
 
 regfile register(
     .clk        (clk),
@@ -89,18 +83,18 @@ mux2 ALUMux( // checked - SK 1/12/2023
 );
 
 alu ALU( // checked - SK 1/12/2023
-    .ALUControl    (ALUControlE_i),
+    .ALUControl (ALUControlE_i),
     .SrcA       (SrcAE),
     .SrcB       (SrcBE),
     .ALUResult  (ALUResultE_o),
-    .Zero       (ZeroE)
+    .Zero       (ZeroE_o)
 );
 
 data_mem data(
     .clk        (clk),
     .A          (ALUResultM),
     .WD         (WriteDataM),
-    .WE         (MemWriteM),
+    .WE         (MemWriteM_i),
     .RD         (ReadDataM)
 );
 
@@ -164,7 +158,7 @@ reg_dec DREg(
 reg_execute EREG(
     .clk(clk),
     //inputs E
-    .ALUResultE(ALUResultE),
+    .ALUResultE(ALUResultE_o),
     .RdE(RdE_o),
     .WriteDataE(WriteDataE),
     .PCPlus4E(PCPlus4E),

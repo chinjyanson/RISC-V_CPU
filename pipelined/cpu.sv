@@ -7,17 +7,16 @@ module cpu #(
 )(
 
     input logic                        clk,
-    input logic                        rst,
+    input logic                        rst, //do we need this?
     output logic [DATA_WIDTH-1:0]      a0
 
 );
 
     //output internal logic for control module 
-    
-   
     logic [2:0]                     RegWriteW;
-    logic [2:0]                     MemWriteM;
-    logic [2:0]                     ResultSrcW;
+    logic [2:0]                     RegWriteM;
+    logic [1:0]                     MemWriteM;
+    logic [1:0]                     ResultSrcW;
     logic [2:0]                     ALUControlE;
     logic                           ALUSrcE;
     logic [DATA_WIDTH-1:0]          InstrD;
@@ -27,7 +26,6 @@ module cpu #(
 
 
     //output internal logic for alu module 
-    logic [CONTROL_WIDTH-1:0]  ALUControl;
     logic [DATA_WIDTH-1:0]     ALUResultE;
     logic [DATA_WIDTH-1:0]     PCTarget;
     logic [1:0]                PCSrcE;
@@ -36,22 +34,21 @@ module cpu #(
     logic [4:0]                RdM;
     logic [4:0]                RdW;
     logic [4:0]                RdE;
+    logic [6:0]                OpcodeE;
+    logic                      ZeroE;
     
 
     //output internal logic for pc module
-    logic [IMM_WIDTH-1:0]       ResultSrc;
-    logic [DATA_WIDTH-1:0]      ImmOp;
     logic [DATA_WIDTH-1:0]      PCF;
     logic [DATA_WIDTH-1:0]      PCPlus4F;
-    logic [DATA_WIDTH-1:0]      Result;
-    logic                       ZeroE;
+    
 
     //output internal logic for hazard module
     logic                       Den;
     logic                       Fen;
     logic                       PCen;
-    logic                       FowardAE;
-    logic                       FowardBE;
+    logic [1:0]                 FowardAE;
+    logic [1:0]                 FowardBE;
     logic                       PCrst;
     logic                       Frst;
     logic                       Drst;
@@ -59,7 +56,7 @@ module cpu #(
 pc_top pc(
     .clk(clk),
     .PCen_i(PCen),  
-    .PCrst_i(rst),        
+    .PCrst_i(PCrst),        
     .ALUResultE_i(ALUResultE),      //result from data mem to mux4    
     .PCSrc_i(PCSrcE),
     .PCF_o(PCF),                   //32b
@@ -72,8 +69,9 @@ control_top control(
     .PCF_i(PCF),                    //32b
     .PCPlus4F_i(PCPlus4F),
     .InstrD_o(InstrD),//32b
-    .RegWriteW_o(RegWriteW), //1b  ==> edited to 3 bits
-    .MemWriteM_o(MemWriteM), //1b ==> edited to 3 bits
+    .RegWriteW_o(RegWriteW),
+    .RegWriteM_o(RegWriteM), //1b  ==> edited to 3 bits
+    .MemWriteM_o(MemWriteM), //1b ==> edited to 2 bits
     .ResultSrcW_o(ResultSrcW), //3b ==> edited to 2 bits
     .ALUControlE_o(ALUControlE), //3b
     .ALUSrcE_o(ALUSrcE), //1 bit
@@ -94,9 +92,9 @@ alu_top alu(
     .Den_i(Den),
     .Drst_i(Drst),
     .ALUSrcE_i(ALUSrcE),
-    .ALUControlE_i(ALUControl),
+    .ALUControlE_i(ALUControlE),
     .RegWriteW_i(RegWriteW),
-    .ResultSrcW_i(ResultSrc),
+    .ResultSrcW_i(ResultSrcW),
     .MemWriteM_i(MemWriteM),
     .ExtImmD_i(ExtImmD),
     .opcodeD_i(InstrD[6:0]),
@@ -111,14 +109,13 @@ alu_top alu(
     .FowardBE_i(FowardBE),
     
     .PCTargetE_o(PCTarget),
-    .PCSrcE_o(PCSrcE),
     .opcodeE_o(OpcodeE),
     .Rs1E_o(Rs1E),   
     .Rs2E_o(Rs2E),
     .RdM_o(RdM),
     .RdW_o(RdW),
     .RdE_o(RdE),
-    .ZeroE_o(ZeroE_o)
+    .ZeroE_o(ZeroE)
     
 );  
 
@@ -130,7 +127,7 @@ hazard_unit hazard(
     .RdM_i(RdM),
     .RdW_i(RdW),
     .RdE_i(RdE),
-    .RegWriteM_i(RegwriteM),
+    .RegWriteM_i(RegWriteM),
     .RegWriteW_i(RegWriteW),
     .opcodeE_i(OpcodeE),
     .PCSrcE_i(PCSrcE),

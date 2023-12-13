@@ -13,14 +13,14 @@ module pc_top #(
     output  wire  [DATA_WIDTH-1:0]           PCPlus4F_o
 );
 
-logic [DATA_WIDTH-1:0]   next_PC, PCTarget;    // interconnect wire
+logic [DATA_WIDTH-1:0]   next_PC; // interconnect wire
 
 assign PCPlus4F_o = PCF_o + 32'b100;  //adding 4
 
 mux3 pc_mux(
     .control    (PCSrc_i),
     .input0     (PCPlus4F_o),
-    .input1     (PCTarget),
+    .input1     (PCTarget_i),
     .input2     (ALUResultE_i),
     .out        (next_PC)
 );

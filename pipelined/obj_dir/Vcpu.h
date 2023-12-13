@@ -32,19 +32,21 @@ VL_MODULE(Vcpu) {
     // Internals; generally not touched by application code
     CData/*0:0*/ cpu__DOT__Drst;
     CData/*2:0*/ cpu__DOT__RegWriteW;
+    CData/*2:0*/ cpu__DOT__RegWriteM;
+    CData/*1:0*/ cpu__DOT__MemWriteM;
+    CData/*1:0*/ cpu__DOT__ResultSrcW;
     CData/*2:0*/ cpu__DOT__ALUControlE;
     CData/*0:0*/ cpu__DOT__ALUSrcE;
-    CData/*2:0*/ cpu__DOT__ALUControl;
     CData/*1:0*/ cpu__DOT__PCSrcE;
     CData/*4:0*/ cpu__DOT__Rs1E;
     CData/*4:0*/ cpu__DOT__Rs2E;
     CData/*4:0*/ cpu__DOT__RdM;
     CData/*4:0*/ cpu__DOT__RdW;
     CData/*4:0*/ cpu__DOT__RdE;
-    CData/*1:0*/ cpu__DOT__ResultSrc;
-    CData/*0:0*/ cpu__DOT__ZeroE;
-    CData/*0:0*/ cpu__DOT__ZeroE_o;
-    CData/*0:0*/ cpu__DOT__RegwriteM;
+    CData/*6:0*/ cpu__DOT__OpcodeE;
+    CData/*0:0*/ cpu__DOT__Fen;
+    CData/*1:0*/ cpu__DOT__FowardAE;
+    CData/*1:0*/ cpu__DOT__FowardBE;
     CData/*2:0*/ cpu__DOT__control__DOT__ALUControlD;
     CData/*2:0*/ cpu__DOT__control__DOT__RegWriteE;
     CData/*1:0*/ cpu__DOT__control__DOT__ResultSrcE;
@@ -52,23 +54,15 @@ VL_MODULE(Vcpu) {
     CData/*0:0*/ cpu__DOT__control__DOT__JumpE;
     CData/*0:0*/ cpu__DOT__control__DOT__BranchE;
     CData/*2:0*/ cpu__DOT__control__DOT__funct3E;
-    CData/*2:0*/ cpu__DOT__control__DOT__RegWriteM;
     CData/*1:0*/ cpu__DOT__control__DOT__ResultSrcM;
-    CData/*2:0*/ cpu__DOT__alu__DOT__RegWriteM;
-    CData/*1:0*/ cpu__DOT__alu__DOT__ResultSrcM;
-    CData/*1:0*/ cpu__DOT__alu__DOT__MemWriteM;
     SData/*14:0*/ cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls;
     IData/*31:0*/ cpu__DOT__InstrD;
     IData/*31:0*/ cpu__DOT__ExtImmD;
     IData/*31:0*/ cpu__DOT__PCD;
     IData/*31:0*/ cpu__DOT__PCPlus4D;
     IData/*31:0*/ cpu__DOT__ALUResultE;
-    IData/*31:0*/ cpu__DOT__ImmOp;
     IData/*31:0*/ cpu__DOT__PCF;
-    IData/*31:0*/ cpu__DOT__Result;
     IData/*31:0*/ cpu__DOT__pc__DOT__next_PC;
-    IData/*31:0*/ cpu__DOT__pc__DOT__PCTarget;
-    IData/*31:0*/ cpu__DOT__control__DOT__ALUResultE;
     IData/*31:0*/ cpu__DOT__alu__DOT__RD1E;
     IData/*31:0*/ cpu__DOT__alu__DOT__RD2E;
     IData/*31:0*/ cpu__DOT__alu__DOT__PCE;
@@ -77,6 +71,7 @@ VL_MODULE(Vcpu) {
     IData/*31:0*/ cpu__DOT__alu__DOT__SrcBE;
     IData/*31:0*/ cpu__DOT__alu__DOT__WriteDataE;
     IData/*31:0*/ cpu__DOT__alu__DOT__ExtImmE;
+    IData/*31:0*/ cpu__DOT__alu__DOT__ALUResultM;
     IData/*31:0*/ cpu__DOT__alu__DOT__WriteDataM;
     IData/*31:0*/ cpu__DOT__alu__DOT__PCPlus4M;
     IData/*31:0*/ cpu__DOT__alu__DOT__PCPlus4W;
@@ -89,10 +84,6 @@ VL_MODULE(Vcpu) {
     
     // LOCAL VARIABLES
     // Internals; generally not touched by application code
-    CData/*1:0*/ cpu__DOT____Vcellout__control__ResultSrcW_o;
-    CData/*1:0*/ cpu__DOT____Vcellout__control__MemWriteM_o;
-    CData/*6:0*/ cpu__DOT____Vcellout__alu__opcodeE_o;
-    CData/*1:0*/ cpu__DOT__alu__DOT____Vcellout__EREG__ALUResultM;
     CData/*5:0*/ __Vtableidx1;
     CData/*7:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
     CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
@@ -100,6 +91,7 @@ VL_MODULE(Vcpu) {
     CData/*0:0*/ __Vclklast__TOP__clk;
     CData/*0:0*/ __Vclklast__TOP____VinpClk__TOP__cpu__DOT__Drst;
     CData/*0:0*/ __Vchglast__TOP__cpu__DOT__Drst;
+    IData/*31:0*/ __Vdly__cpu__DOT__PCF;
     IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
     CData/*0:0*/ __Vm_traceActivity[5];
     static CData/*2:0*/ __Vtable1_cpu__DOT__control__DOT__ALUControlD[64];
