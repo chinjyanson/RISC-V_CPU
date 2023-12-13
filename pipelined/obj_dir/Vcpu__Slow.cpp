@@ -33,13 +33,13 @@ void Vcpu::_initial__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_initial__TOP__2\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Variables
-    WData/*95:0*/ __Vtemp7[3];
+    WData/*95:0*/ __Vtemp8[3];
     // Body
     VL_WRITEF("Loading ROM\n");
-    __Vtemp7[0U] = 0x2e6d656dU;
-    __Vtemp7[1U] = 0x61726f6dU;
-    __Vtemp7[2U] = 0x646174U;
-    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp7)
+    __Vtemp8[0U] = 0x2e6d656dU;
+    __Vtemp8[1U] = 0x61726f6dU;
+    __Vtemp8[2U] = 0x646174U;
+    VL_READMEM_N(true, 32, 256, 0, VL_CVT_PACK_STR_NW(3, __Vtemp8)
                  , vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
                  , 0, ~0ULL);
     VL_READMEM_N(true, 8, 256, 0, std::string("pdf.mem")
@@ -175,14 +175,30 @@ void Vcpu::_settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
             }
         } else {
             if ((0x10U & vlTOPp->cpu__DOT__InstrD)) {
-                vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls 
-                    = ((8U & vlTOPp->cpu__DOT__InstrD)
-                        ? 0U : ((4U & vlTOPp->cpu__DOT__InstrD)
-                                 ? 0U : ((2U & vlTOPp->cpu__DOT__InstrD)
-                                          ? ((1U & vlTOPp->cpu__DOT__InstrD)
-                                              ? 0x1002U
-                                              : 0U)
-                                          : 0U)));
+                if ((8U & vlTOPp->cpu__DOT__InstrD)) {
+                    vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0U;
+                } else {
+                    if ((4U & vlTOPp->cpu__DOT__InstrD)) {
+                        vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0U;
+                    } else {
+                        if ((2U & vlTOPp->cpu__DOT__InstrD)) {
+                            if ((1U & vlTOPp->cpu__DOT__InstrD)) {
+                                vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0x1022U;
+                                if ((1U == (7U & (vlTOPp->cpu__DOT__InstrD 
+                                                  >> 0xcU)))) {
+                                    vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls 
+                                        = (0x14U | 
+                                           (0x7fe3U 
+                                            & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls)));
+                                }
+                            } else {
+                                vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0U;
+                            }
+                        } else {
+                            vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0U;
+                        }
+                    }
+                }
             } else {
                 if ((8U & vlTOPp->cpu__DOT__InstrD)) {
                     vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls = 0U;
