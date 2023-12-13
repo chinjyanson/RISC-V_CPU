@@ -16,7 +16,6 @@ module control_unit #(
     output  logic                   MemWriteD,
     output  logic                   ALUSrcD,
     output  logic                   RegWriteD,
-    output  logic                   RegWriteD, 
     output  logic [2:0]             ImmSrcD,
     output  logic [2:0]             ALUControlD,
     output  logic                   JumpD,
@@ -24,9 +23,6 @@ module control_unit #(
 );
 
 logic [1:0] ALUOpD;
-logic [1:0] ResultSrcD, ResultSrcE, ResultSrcM;
-logic [2:0] ALUControlD;
-
 
 // main decoder 
 maindecoder maindec(
