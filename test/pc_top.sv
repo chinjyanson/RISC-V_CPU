@@ -5,9 +5,9 @@ module pc_top #(
     // interface signals
     input   logic                       clk,        // clock
     input   logic                       rst,        // reset 
-    input   logic [WIDTH-1:0]      ALUResult_i,        //edited
+    input   logic [WIDTH-1:0]           ALUResult_i,        //edited
     input   logic [WIDTH-1:0]           ImmOp_i,     
-    input   logic [1:0]           PCsrc_i,                   //edited
+    input   logic [1:0]                 PCsrc_i,                   //edited
     output  logic [WIDTH-1:0]           pc_out,
     output  wire  [WIDTH-1:0]           PCPlus4_o
 );

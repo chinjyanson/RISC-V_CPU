@@ -1,6 +1,5 @@
 module sign_extend #(
-    parameter DATA_WIDTH = 32,
-    parameter IMM_WIDTH = 2
+    parameter DATA_WIDTH = 32
 )(
     input   logic [DATA_WIDTH-1:0]        instr_i,
     input   logic [2:0]                   ImmSrc_i,
@@ -25,7 +24,8 @@ always_comb begin
                     //12                        8           1           10          1       = 32 bits
     3'b011: ImmOp_o = {{DATA_WIDTH-20{instr_i[31]}}, instr_i[19:12], instr_i[20], instr_i[30:21], 1'b0};//J Type 
     
-    3'b100: ImmOp_o = {instr[31:12], 12'b0}; // U type
+    3'b100: ImmOp_o = {instr_i[31:12], 12'b0}; // U type
     endcase 
 end
 endmodule
+

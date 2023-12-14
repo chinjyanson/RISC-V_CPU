@@ -1,16 +1,15 @@
 module control_top #(
-    parameter   ADDRESS_WIDTH = 8,
     parameter   DATA_WIDTH = 32,
     parameter   CONTROL_WIDTH = 3,
     parameter   IMM_WIDTH = 2
 
 )(
-     input  logic [ADDRESS_WIDTH-1:0]       PC_i, //8b
+     input  logic [DATA_WIDTH-1:0]          PC_i, //8b
      input  logic                           Zero_i, //1b
      output logic [DATA_WIDTH-1:0]          instr_o,//32b
-     output logic [1:0]                     RegWrite_o, //1b ==> edited to 2 bits
+     output logic [2:0]                     RegWrite_o, //1b ==> edited to 3 bits
      output logic [1:0]                     MemWrite_o, //1b ==> edited to 2 bits
-     output logic [IMM_WIDTH-1:0]           Resultsrc_o, //2b ==> edited to 2 bits
+     output logic [IMM_WIDTH-1:0]           Resultsrc_o, //3b ==> edited to 2 bits
      output logic [CONTROL_WIDTH-1:0]       ALUctrl_o, //3b
      output logic                           ALUsrc_o, //1 bit
      output logic [IMM_WIDTH-1:0]           PCsrc_o, //1 bit ==> edited to 2 bits
@@ -30,6 +29,7 @@ control_unit ControlUnit(
     .ALUsrc_o         (ALUsrc_o),
     .ImmSrc_o         (ImmSrc),
     .PCsrc_o          (PCsrc_o)
+
 );
 
 instr_mem InstrMem(
