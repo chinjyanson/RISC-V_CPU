@@ -134,59 +134,61 @@ adder addPCTargetE(
 
 reg_dec DREg(
     //inputs - D
-    .clk(clk),
-    .en(Den_i),
-    .rst(Drst_i),
-    .RD1D(RD1D),
-    .RD2D(RD2D),
-    .PCD(PCD_i),
-    .Rs1D(Rs1D_i),
-    .Rs2D(Rs2D_i),
-    .RdD(RdD_i),
-    .ExtImmD(ExtImmD_i),
-    .PCPlus4D(PCPlus4D_i),
-    .opcodeD(opcodeD_i),
+    .clk        (clk),
+    .en         (Den_i),
+    .rst        (Drst_i),
+    .RD1D       (RD1D),
+    .RD2D       (RD2D),
+    .PCD        (PCD_i),
+    .Rs1D       (Rs1D_i),
+    .Rs2D       (Rs2D_i),
+    .RdD        (RdD_i),
+    .ExtImmD    (ExtImmD_i),
+    .PCPlus4D   (PCPlus4D_i),
+    .opcodeD    (opcodeD_i),
 
     //outputs - E
-    .RD1E(RD1E),
-    .RD2E(RD2E),
-    .PCE(PCE),
-    .Rs1E(Rs1E_o),
-    .Rs2E(Rs2E_o),
-    .RdE(RdE_o),
-    .ExtImmE(ExtImmE),
-    .PCPlus4E(PCPlus4E),
-    .opcodeE(opcodeE_o)
+    .RD1E       (RD1E),
+    .RD2E       (RD2E),
+    .PCE        (PCE),
+    .Rs1E       (Rs1E_o),
+    .Rs2E       (Rs2E_o),
+    .RdE        (RdE_o),
+    .ExtImmE    (ExtImmE),
+    .PCPlus4E   (PCPlus4E),
+    .opcodeE    (opcodeE_o)
 );
 
 reg_execute EREG(
-    .clk(clk),
+    .clk        (clk),
+
     //inputs E
-    .ALUResultE(ALUResultE_o),
-    .RdE(RdE_o),
-    .WriteDataE(WriteDataE),
-    .PCPlus4E(PCPlus4E),
+    .ALUResultE (ALUResultE_o),
+    .RdE        (RdE_o),
+    .WriteDataE (WriteDataE),
+    .PCPlus4E   (PCPlus4E),
 
     //outputs M
-    .ALUResultM(ALUResultM),
-    .WriteDataM(WriteDataM),
-    .RdM(RdM_o),
-    .PCPlus4M(PCPlus4M)
+    .ALUResultM (ALUResultM),
+    .WriteDataM (WriteDataM),
+    .RdM        (RdM_o),
+    .PCPlus4M   (PCPlus4M)
 );
 
 reg_memory MREG(
+    .clk        (clk),
+
     //input M
-    .clk(clk),
-    .ALUResultM(ALUResultM),
-    .ReadDataM(ReadDataM),
-    .RdM(RdM_o),
-    .PCPlus4M(PCPlus4M),
+    .ALUResultM (ALUResultM),
+    .ReadDataM  (ReadDataM),
+    .RdM        (RdM_o),
+    .PCPlus4M   (PCPlus4M),
 
     //outputs W
-    .ALUResultW(ALUResultW),
-    .ReadDataW(ReadDataW),
-    .RdW(RdW_o),
-    .PCPlus4W(PCPlus4W)
+    .ALUResultW (ALUResultW),
+    .ReadDataW  (ReadDataW),
+    .RdW        (RdW_o),
+    .PCPlus4W   (PCPlus4W)
 );
 
 endmodule

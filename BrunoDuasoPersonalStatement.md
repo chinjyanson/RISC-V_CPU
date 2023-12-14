@@ -71,8 +71,7 @@ Pipelined Section
 - Created Figure 1: having an image reference of the new module 
 configuration for the JAL/JALR instructions helped to implement the 
 changes and avoid errors in the wiring.
-- Coded F1 light sequence code, which was later modified and 
-implemented mainly by Anson (chinjyanson).
+- Coded F1 light sequence code, which was later modified by Vishesh.
 - Coded Python Script to separate word instructions into bytes, in the 
 correct order to be fetched into the InstrMem. I also modified InstrMem 
 to fit Little Endian Addressing
