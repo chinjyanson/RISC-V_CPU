@@ -20,6 +20,7 @@ logic [7:0] A3 = {3'b0 , A3_i};
 logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
 
 always @(posedge clk)
+    if (A3!=0) begin
     case(WE3) // this could be done cleaner 
         3'b001: begin //write
             reg_array[A3] <= WD3;
@@ -37,8 +38,8 @@ always @(posedge clk)
             reg_array[A3] <= {16'b0, WD3[15:0]};
         end
         default: reg_array[A3] <= reg_array[A3];
-        
-    endcase
+ endcase
+    end
 
 assign RD1 = reg_array[A1];
 assign RD2 = reg_array[A2];
