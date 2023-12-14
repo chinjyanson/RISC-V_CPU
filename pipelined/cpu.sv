@@ -1,3 +1,7 @@
+/*
+    Function: Top level file linking the pc, the control unit, data path and hazard handling unit altogether
+*/
+
 module cpu #(
     parameter   ADDRESS_WIDTH = 8,
     parameter   DATA_WIDTH = 32,
