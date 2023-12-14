@@ -16,7 +16,6 @@ module hazard_unit (
      output logic            Den_o,
      output logic            Fen_o,
      output logic            PCen_o,
-     output logic            PCrst_o,
      output logic            Frst_o,
      output logic            Drst_o
     
@@ -48,7 +47,6 @@ hazard_stall StallHazard(
 
 hazard_control ControlHazard(
     .PCSrcE     (PCSrcE_i),
-    .PCrst      (PCrst_o),
     .Frst       (Frst_o),
     .Drst       (Drst_o)
 );
