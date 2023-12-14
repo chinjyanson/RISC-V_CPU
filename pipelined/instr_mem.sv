@@ -10,7 +10,7 @@ module instr_mem #(
 logic [ADDRESS_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
 
 initial begin
-    $readmemh("pdf.mem", rom_array);
+    $readmemh("pdf(f1).mem", rom_array);
 end;
 
 assign Instr_o = {{rom_array[addr_i+3]}, {rom_array[addr_i+2]}, {rom_array[addr_i+1]}, {rom_array[addr_i]}};
