@@ -16,8 +16,8 @@ always_comb begin
     3'b001: ALUResult = SrcA - SrcB;
     3'b010: ALUResult = SrcA & SrcB;
     3'b011: ALUResult = SrcA | SrcB;
-    3'b100: ALUResult = SrcA << SrcB[4:0];
-    3'b101: ALUResult = SrcA < SrcB;
+    3'b100: ALUResult = SrcA ^ SrcB;
+    3'b101: ALUResult = SrcA << SrcB[4:0];
     3'b110: ALUResult = SrcB;
     3'b111: ALUResult = SrcB; 
 
