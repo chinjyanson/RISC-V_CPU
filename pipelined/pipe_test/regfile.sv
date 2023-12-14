@@ -44,6 +44,6 @@ always @(negedge clk)
 
 assign RD1D = reg_array[A1];
 assign RD2D = reg_array[A2];
-assign a0 =  reg_array[11];
+assign a0 =  reg_array[10];
 
 endmodule
