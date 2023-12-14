@@ -24,7 +24,7 @@ logic [4:0] A3 = A3_i;
 logic [DATA_WIDTH-1:0] reg_array[2**ADDRESS_WIDTH-1:0];
 
 always @(negedge clk) begin
-    if ((A3 != 0)&&(WD3)) begin
+    if ((A3 != 0)&&(WE3)) begin
         reg_array[A3] <= WD3; // write
     end
 end
