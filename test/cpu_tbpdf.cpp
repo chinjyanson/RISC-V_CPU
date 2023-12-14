@@ -5,12 +5,7 @@
 #include <iostream>
 #include <fstream>
 
-
-
-
 #define MAX_SIM_CYC 70000000
-
-
 
 int main(int argc, char **argv, char **env) {
     int simcyc;     // simulation clock count
@@ -24,29 +19,14 @@ int main(int argc, char **argv, char **env) {
     VerilatedVcdC* tfp = new VerilatedVcdC;
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
-
     
     //init Vbuddy
     if (vbdOpen()!=1) return(-1);
     vbdHeader("Ref Prog");
     
-    
-    
-
     // initialize simulation inputs
     top->clk = 0;
     top->rst = 0;
-    //  std::ofstream outputFile;
-    //  outputFile.open("output.txt");
-
-    // if (!outputFile.is_open()){
-    //     std::cout << "Error opening file" << std::endl;
-    // }
-
-
-            bool clock = false;
-            int clockcount = 0;
-
 
     // run simulation for MAX_SIM_CYC clock cycles
     for (simcyc=0; simcyc<MAX_SIM_CYC; simcyc++) {
@@ -55,34 +35,21 @@ int main(int argc, char **argv, char **env) {
         tfp->dump (2*simcyc+tick);
         top->clk = !top->clk;
         top->eval ();
-
-        if(clock){ 
-                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 << " datamem: " << top->test << std::endl;
-                //outputFile << top->a0 << " " << simcyc << '\n';
-        
- 
-                        clockcount++; }
-
-        clock = !clock;
-        //std::cout << "clock1: " << simcyc << std::endl;
-
-        
-
         }
-    if(simcyc > 200000 && (simcyc % 4 == 0)){
-        vbdPlot(int(top->a0), 0, 255);
-        vbdCycle(simcyc);
-    }
 
-       // either simulation finished, or 'q' is pressed
-    if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
-        break;
-    }
+        if(simcyc > 200000 && (simcyc % 4 == 0)){
+            vbdPlot(int(top->a0), 0, 255);
+            vbdCycle(simcyc);
+        }
+
+        // either simulation finished, or 'q' is pressed
+        if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
+            break;
+        }
 
     }
 
     vbdClose();
-   // outputFile.close();
     tfp->close();
     exit(0);
     

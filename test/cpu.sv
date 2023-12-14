@@ -7,9 +7,7 @@ module cpu #(
 
     input logic                        clk,
     input logic                        rst,
-    output logic [DATA_WIDTH-1:0]   test,  //datamem debug
     output logic [DATA_WIDTH-1:0]      a0
-    
 
 );
 
@@ -23,7 +21,6 @@ module cpu #(
     logic ALUsrc;
     logic Zero;
     logic [DATA_WIDTH-1:0]     ALUResult_o;
-
 
     //output internal logic for pc module
     logic [IMM_WIDTH-1:0]  Resultsrc;
@@ -68,9 +65,9 @@ alu_top alu(
     .PCPlus4_i(PCPlus4),
     .Zero_o(Zero),
     .a0(a0),  //(debug output)
-    .test(test), //debug
     .ALUResult_o(ALUResult_o)
     
 );
+
 endmodule
 
