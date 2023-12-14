@@ -8,7 +8,7 @@ module cpu(input logic clk, reset,
 	
 logic ALUSrcAE, RegWriteM, RegWriteW, ZeroE, SignE, PCJalSrcE, PCSrcE;
 logic [1:0] ALUSrcE;
-logic StallD, StallF, FlushD, FlushE;
+logic StallD, StallF, FlushD, FlushE, ResultSrcE0;
 logic [1:0] ResultSrcW; 
 logic [2:0] ImmSrcD;
 logic [3:0] ALUControlE;
@@ -25,6 +25,7 @@ controller c(
 	.funct7b5(InstrD[30]),
 	.ZeroE(ZeroE),
 	.FlushE(FlushE),
+	.ResultSrcE0(ResultSrcE0),
 	.ResultSrcW(ResultSrcW),
 	.MemWriteM(MemWriteM),
 	.PCSrcE(PCSrcE),
@@ -46,6 +47,7 @@ hazardunit h(
 	.RdW(RdW),
 	.RegWriteM(RegWriteM), 
 	.RegWriteW(RegWriteW),
+	.ResultSrcE0(ResultSrcE0),
 	.PCSrcE(PCSrcE),
 	.ForwardAE(ForwardAE), 
 	.ForwardBE(ForwardBE),
