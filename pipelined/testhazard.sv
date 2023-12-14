@@ -8,7 +8,6 @@ module hazardunit(
     input   logic         RdW,
     input   logic         RegWriteM, 
     input   logic         RegWriteW,
-	input   logic         ResultSrcE0, 
     input   logic         PCSrcE,
     output  logic [1:0]   ForwardAE, 
     output  logic         ForwardBE,
@@ -38,7 +37,7 @@ always_comb begin
     
     end
 
-assign lwStall = (ResultSrcE0 == 1) & ((RdE == Rs1D) | (RdE == Rs2D));
+assign lwStall = (RdE == Rs1D) | (RdE == Rs2D); // (ResultSrcE0 == 1) & 
 
 assign StallF = lwStall;
 assign StallD = lwStall;
