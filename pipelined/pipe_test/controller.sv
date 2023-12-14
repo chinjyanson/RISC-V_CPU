@@ -14,6 +14,7 @@ module controller #(
     input   logic                   ZeroE,
     input   logic                   FlushE,
 
+    output logic                    ResultSrcE0,
     output  logic [1:0]             ResultSrcW,
     output  logic                   MemWriteM,
     output  logic                   PCSrcE,
@@ -73,6 +74,8 @@ control_Dec_Exc c_D_E(
     .ResultSrcE (ResultSrcE),
     .ALUControlE (ALUControlE)
 );
+
+assign ResultSrcE0 = ResultSrcE[0];
 
 // control unit pipeline reg 2 execute -> memory
 control_Exc_Mem c_E_M(
