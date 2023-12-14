@@ -340,7 +340,7 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
     vlTOPp->cpu__DOT__alu__DOT__WriteDataM = vlTOPp->cpu__DOT__alu__DOT__WriteDataE;
     vlTOPp->cpu__DOT__alu__DOT__ALUResultM = vlTOPp->cpu__DOT__ALUResultE;
     vlTOPp->a0 = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
-        [0xbU];
+        [0xaU];
     vlTOPp->cpu__DOT__RegWriteW = vlTOPp->cpu__DOT__RegWriteM;
     vlTOPp->cpu__DOT__RdW = vlTOPp->cpu__DOT__RdM;
     vlTOPp->cpu__DOT__hazard__DOT__StallHazard__DOT__B 
