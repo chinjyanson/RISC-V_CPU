@@ -3,12 +3,15 @@
 #include "Vcpu.h"
 #include "vbuddy.cpp"
 #include <iostream>
-#include <fstream>
+#include <chrono>
+#include <thread>
 
 
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono; // nanoseconds, system_clock, seconds
 
 
-#define MAX_SIM_CYC 70000000
+#define MAX_SIM_CYC 100
 
 
 
@@ -25,24 +28,14 @@ int main(int argc, char **argv, char **env) {
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
 
-    
     //init Vbuddy
     if (vbdOpen()!=1) return(-1);
-    vbdHeader("Ref Prog");
-    
-    
+    vbdHeader("F1");
     
 
     // initialize simulation inputs
     top->clk = 0;
     top->rst = 0;
-    std::ofstream outputFile;
-    outputFile.open("output.txt");
-
-    if (!outputFile.is_open()){
-        std::cout << "Error opening file" << std::endl;
-    }
-
 
             bool clock = false;
             int clockcount = 0;
@@ -57,31 +50,27 @@ int main(int argc, char **argv, char **env) {
         top->eval ();
 
         if(clock){ 
-                        //std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 << " datamem: " << top->test << std::endl;
-                outputFile << top->a0 << '\n';
- 
+                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
                         clockcount++; }
 
         clock = !clock;
-        //std::cout << "clock1: " << simcyc << std::endl;
-
-        
+        //std::cout << "clock1: " << clock << std::endl;
+                   
 
         }
-    if(simcyc > 200000){
-        vbdPlot(int(top->a0), 0, 255);
-        vbdCycle(simcyc);
-    }
 
-       // either simulation finished, or 'q' is pressed
+            vbdBar(top->a0 & 0xFF);
+            sleep_for(nanoseconds(200000000));  //delay for f1 lights
+
+
+   // either simulation finished, or 'q' is pressed
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
-        break;
+      exit(0);                // ... exit if finish OR 'q' pressed    
     }
 
     }
 
     vbdClose();
-    outputFile.close();
     tfp->close();
     exit(0);
     

@@ -3,15 +3,12 @@
 #include "Vcpu.h"
 #include "vbuddy.cpp"
 #include <iostream>
-#include <chrono>
-#include <thread>
+#include <fstream>
 
 
-using namespace std::this_thread; // sleep_for, sleep_until
-using namespace std::chrono; // nanoseconds, system_clock, seconds
 
 
-#define MAX_SIM_CYC 100
+#define MAX_SIM_CYC 70000000
 
 
 
@@ -28,14 +25,24 @@ int main(int argc, char **argv, char **env) {
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
 
+    
     //init Vbuddy
     if (vbdOpen()!=1) return(-1);
-    vbdHeader("F1");
+    vbdHeader("Ref Prog");
+    
+    
     
 
     // initialize simulation inputs
     top->clk = 0;
     top->rst = 0;
+    //  std::ofstream outputFile;
+    //  outputFile.open("output.txt");
+
+    // if (!outputFile.is_open()){
+    //     std::cout << "Error opening file" << std::endl;
+    // }
+
 
             bool clock = false;
             int clockcount = 0;
@@ -50,27 +57,32 @@ int main(int argc, char **argv, char **env) {
         top->eval ();
 
         if(clock){ 
-                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
+                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 << " datamem: " << top->test << std::endl;
+                //outputFile << top->a0 << " " << simcyc << '\n';
+        
+ 
                         clockcount++; }
 
         clock = !clock;
-        //std::cout << "clock1: " << clock << std::endl;
-                   
+        //std::cout << "clock1: " << simcyc << std::endl;
+
+        
 
         }
+    if(simcyc > 200000 && (simcyc % 4 == 0)){
+        vbdPlot(int(top->a0), 0, 255);
+        vbdCycle(simcyc);
+    }
 
-            vbdBar(top->a0 & 0xFF);
-            sleep_for(nanoseconds(100000000));  //delay for f1 lights
-
-
-   // either simulation finished, or 'q' is pressed
+       // either simulation finished, or 'q' is pressed
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
-      exit(0);                // ... exit if finish OR 'q' pressed    
+        break;
     }
 
     }
 
     vbdClose();
+   // outputFile.close();
     tfp->close();
     exit(0);
     

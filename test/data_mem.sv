@@ -24,10 +24,10 @@ module data_mem #(
 
     initial begin
         $display("Loading ROM");
-        $readmemh("noisy.mem", data_mem_register, START_ADDRESS);
+        $readmemh("pdf(f1)", data_mem_register, START_ADDRESS);
      end
 
-    logic [17:0] add =  {A[31:2], 2'b00};
+    logic [17:0] add =  A[31:0];
     logic [15:0] data16 = WD[15:0];
     logic [7:0] data8 = WD[7:0];
 
@@ -59,7 +59,7 @@ module data_mem #(
 //     end
 // end
 
-    assign test = data_mem_register[32'h10001];
+    assign test = data_mem_register[65536 + 38];
     assign RD = {data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
 
 endmodule
