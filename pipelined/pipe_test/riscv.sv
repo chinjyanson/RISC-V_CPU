@@ -17,9 +17,26 @@ logic [4:0] Rs1D, Rs2D, Rs1E, Rs2E;
 logic [4:0] RdE, RdM, RdW;
 logic [1:0] ForwardAE, ForwardBE;
 
-controller c(clk, reset, InstrD[6:0], InstrD[14:12], InstrD[30], ZeroE, SignE, FlushE, ResultSrcE0, ResultSrcW, MemWriteM, PCJalSrcE, PCSrcE, ALUSrcAE, ALUSrcBE, RegWriteM, RegWriteW, ImmSrcD, ALUControlE);
+controller c(
+	.clk(clk),
+	.reset(reset),
+	.op(InstrD[6:0]),
+	.funct3(InstrD[14:12]),
+	.funct7b5(InstrD[30]),
+	.ZeroE(ZeroE),
+	.FlushE(FlushE),
+	.ResultSrcW(ResultSrcW),
+	.MemWriteM(MemWriteM),
+	.PCSrcE(PCSrcE),
+	.PCJalSrcE(PCJalSrcE),
+	.ALUSrcE(ALUSrcE),
+	.RegWriteW(RegWriteW),
+	.RegWriteM(RegWriteM),
+	.ImmSrcD(ImmSrcD),
+	.ALUControlE(ALUControlE)
+);
 
-hazardunit h (Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW, RegWriteM, RegWriteW, ResultSrcE0, PCSrcE, ForwardAE, ForwardBE, StallD, StallF, FlushD, FlushE);
+hazardunit h(Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW, RegWriteM, RegWriteW, ResultSrcE0, PCSrcE, ForwardAE, ForwardBE, StallD, StallF, FlushD, FlushE);
 
 datapath dp(clk, reset, ResultSrcW, PCJalSrcE, PCSrcE,ALUSrcAE, ALUSrcBE, RegWriteW, ImmSrcD, ALUControlE, ZeroE, SignE, PCF, InstrF, InstrD, ALUResultM, WriteDataM, ReadDataM, ForwardAE, ForwardBE, Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW, StallD, StallF, FlushD, FlushE);
 
