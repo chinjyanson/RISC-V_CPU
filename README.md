@@ -11,7 +11,6 @@ Our folder was structured slightly differently since we didn't use any branching
     - `pipelined` refers to the pipelined version of our processor 
     - `img` refers to all our images and videos used throughout our .md files 
 
-
 ## Joint Statement
 As team we have ....
 
@@ -44,7 +43,9 @@ Linked [here](/taskdistribution.md) is a more detailed version of the dsitributi
 This is a basic program that counts the neopixel lights up by shifting left, then adding 1 
 
 
-## Using run.sh 
+## Using run.sh (testing instructions)
+
+> Note: that this testing instruction is only valid for the `test` folder
 
 ```bash
 $ source ./cpu_doit.sh
@@ -57,16 +58,16 @@ $ source ./cpu_doit.sh
 ![Gaussianimg](/img/gaussianmem.jpg)
 
 ### Running Noisy.mem
-![Noisy](noisymem.jpg)
+![Noisy](/img/noisymem.jpg)
 
 ### Running Triange.mem
-![Triange](triangemem.jpg)
+![Triange](/img/triangemem.jpg)
 
 ### Running Sine.mem 
-![Sine](sinemem.jpg)
+![Sine](/img/sinemem.jpg)
 
 ### Running F1 Program
-![F1video](f1video.mp4)
+![F1video](/imgf1video.mp4)
 
 > Further images and videos can be found in the `img` folder 
 
