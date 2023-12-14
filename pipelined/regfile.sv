@@ -23,7 +23,7 @@ logic [4:0] A3 = {3'b0 , A3_i};
 
 logic [DATA_WIDTH-1:0] reg_array[2**ADDRESS_WIDTH-1:0];
 
-always @(posedge clk)
+always @(negedge clk)
     if (A3!=0) begin
     case(WE3) // this could be done cleaner 
         3'b001: begin //write
