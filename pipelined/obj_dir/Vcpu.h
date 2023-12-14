@@ -1,26 +1,27 @@
 // Verilated -*- C++ -*-
-// DESCRIPTION: Verilator output: Primary design header
+// DESCRIPTION: Verilator output: Primary model header
 //
 // This header should be included by all source files instantiating the design.
 // The class here is then constructed to instantiate the design.
 // See the Verilator manual for examples.
 
-#ifndef _VCPU_H_
-#define _VCPU_H_  // guard
+#ifndef VERILATED_VCPU_H_
+#define VERILATED_VCPU_H_  // guard
 
-#include "verilated_heavy.h"
-
-//==========
+#include "verilated.h"
 
 class Vcpu__Syms;
-class Vcpu_VerilatedVcd;
+class Vcpu___024root;
+class VerilatedVcdC;
 
+// This class is the main interface to the Verilated model
+class Vcpu VL_NOT_FINAL : public VerilatedModel {
+  private:
+    // Symbol table holding complete model state (owned by this class)
+    Vcpu__Syms* const vlSymsp;
 
-//----------
-
-VL_MODULE(Vcpu) {
   public:
-    
+
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
@@ -100,18 +101,18 @@ VL_MODULE(Vcpu) {
     Vcpu__Syms* __VlSymsp;  // Symbol table
     
     // CONSTRUCTORS
+    /// Construct the model; called by application code
+    /// If contextp is null, then the model will use the default global context
+    /// If name is "", then makes a wrapper with a
+    /// single model invisible with respect to DPI scope names.
+    explicit Vcpu(VerilatedContext* contextp, const char* name = "TOP");
+    explicit Vcpu(const char* name = "TOP");
+    /// Destroy the model; called (often implicitly) by application code
+    virtual ~Vcpu();
   private:
     VL_UNCOPYABLE(Vcpu);  ///< Copying not allowed
+
   public:
-    /// Construct the model; called by application code
-    /// The special name  may be used to make a wrapper with a
-    /// single model invisible with respect to DPI scope names.
-    Vcpu(const char* name = "TOP");
-    /// Destroy the model; called (often implicitly) by application code
-    ~Vcpu();
-    /// Trace signals in the model; called by application code
-    void trace(VerilatedVcdC* tfp, int levels, int options = 0);
-    
     // API METHODS
     /// Evaluate the model.  Application must call when inputs change.
     void eval() { eval_step(); }
@@ -156,8 +157,5 @@ VL_MODULE(Vcpu) {
     void traceRegister(VerilatedVcd* tracep) VL_ATTR_COLD;
     static void traceInit(void* userp, VerilatedVcd* tracep, uint32_t code) VL_ATTR_COLD;
 } VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
-
-//----------
-
 
 #endif  // guard
