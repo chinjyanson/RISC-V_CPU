@@ -6,8 +6,8 @@ module hazard_stall(
     input  logic [2:0]   ImmSrcE,
     output logic        Fen,
     output logic        Den,
-    output logic        PCen
-    output
+    output logic        PCen,
+    output logic        Een
 );
 
 

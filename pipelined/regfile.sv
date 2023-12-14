@@ -13,7 +13,7 @@ module regfile #(
     output  logic [DATA_WIDTH-1:0]  a0  //(debug output)
 );
 
-logic [7:0] A1 = {3'b0 , A1_i}; //why do we need that??
+logic [7:0] A1 = {3'b0 , A1_i}; 
 logic [7:0] A2 = {3'b0 , A2_i};
 logic [7:0] A3 = {3'b0 , A3_i};
 
