@@ -2,8 +2,9 @@
 #include "verilated_vcd_c.h"
 #include "Vcpu.h"
 #include <iostream>
+#include <fstream>
 
-#define MAX_SIM_CYC 10000
+#define MAX_SIM_CYC 100000
 
 
 
@@ -19,6 +20,13 @@ int main(int argc, char **argv, char **env) {
     VerilatedVcdC* tfp = new VerilatedVcdC;
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
+
+    std::ofstream outputFile;
+    outputFile.open("output.txt");
+
+    if (!outputFile.is_open()){
+        std::cout << "Error opening file" << std::endl;
+    }
     
 
     // initialize simulation inputs
@@ -27,7 +35,7 @@ int main(int argc, char **argv, char **env) {
 
             bool clock = false;
             int clockcount = 0;
-
+            std::string debug;
 
     // run simulation for MAX_SIM_CYC clock cycles
     for (simcyc=0; simcyc<MAX_SIM_CYC; simcyc++) {
@@ -39,7 +47,14 @@ int main(int argc, char **argv, char **env) {
 
         if(clock){ 
                         std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
+                        outputFile << simcyc << " " << top->a0 << '\n';
+
                         clockcount++; }
+
+
+                        
+
+
 
         clock = !clock;
         //std::cout << "clock1: " << clock << std::endl;
@@ -49,6 +64,7 @@ int main(int argc, char **argv, char **env) {
 
     }
 
+    outputFile.close();
     tfp->close(); 
     exit(0);
 
