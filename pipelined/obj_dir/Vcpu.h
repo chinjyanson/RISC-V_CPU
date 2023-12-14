@@ -80,7 +80,6 @@ VL_MODULE(Vcpu) {
     IData/*31:0*/ cpu__DOT__data__DOT__ALUResultM;
     IData/*31:0*/ cpu__DOT__data__DOT__WriteDataM;
     IData/*31:0*/ cpu__DOT__data__DOT__PCPlus4M;
-    IData/*31:0*/ cpu__DOT__data__DOT__ReadDataM;
     IData/*31:0*/ cpu__DOT__data__DOT__PCPlus4W;
     IData/*31:0*/ cpu__DOT__data__DOT__ReadDataW;
     IData/*31:0*/ cpu__DOT__data__DOT__ALUResultW;

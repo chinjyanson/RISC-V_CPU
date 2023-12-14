@@ -133,7 +133,6 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
         vlTOPp->cpu__DOT__Rs2E = (0x1fU & (vlTOPp->cpu__DOT__InstrD 
                                            >> 0x14U));
     }
-    vlTOPp->cpu__DOT__data__DOT__ReadDataW = vlTOPp->cpu__DOT__data__DOT__ReadDataM;
     vlTOPp->cpu__DOT__ResultSrcW = vlTOPp->cpu__DOT__control__DOT__ResultSrcM;
     vlTOPp->cpu__DOT__data__DOT__PCPlus4W = vlTOPp->cpu__DOT__data__DOT__PCPlus4M;
     if (vlTOPp->cpu__DOT__PCrst) {
@@ -151,6 +150,67 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
         }
     }
     vlTOPp->cpu__DOT__data__DOT__ALUResultW = vlTOPp->cpu__DOT__data__DOT__ALUResultM;
+    vlTOPp->cpu__DOT__data__DOT__ReadDataW = ((2U == (IData)(vlTOPp->cpu__DOT__MemWriteM))
+                                               ? ((0x20000U 
+                                                   >= 
+                                                   (0x3ffffU 
+                                                    & vlTOPp->cpu__DOT__data__DOT__ALUResultM))
+                                                   ? 
+                                                  vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
+                                                  [
+                                                  (0x3ffffU 
+                                                   & vlTOPp->cpu__DOT__data__DOT__ALUResultM)]
+                                                   : 0U)
+                                               : ((
+                                                   ((0x20000U 
+                                                     >= 
+                                                     (0x3ffffU 
+                                                      & ((IData)(3U) 
+                                                         + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
+                                                     ? 
+                                                    vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
+                                                    [
+                                                    (0x3ffffU 
+                                                     & ((IData)(3U) 
+                                                        + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
+                                                     : 0U) 
+                                                   << 0x18U) 
+                                                  | ((((0x20000U 
+                                                        >= 
+                                                        (0x3ffffU 
+                                                         & ((IData)(2U) 
+                                                            + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
+                                                        ? 
+                                                       vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
+                                                       [
+                                                       (0x3ffffU 
+                                                        & ((IData)(2U) 
+                                                           + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
+                                                        : 0U) 
+                                                      << 0x10U) 
+                                                     | ((((0x20000U 
+                                                           >= 
+                                                           (0x3ffffU 
+                                                            & ((IData)(1U) 
+                                                               + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
+                                                           ? 
+                                                          vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
+                                                          [
+                                                          (0x3ffffU 
+                                                           & ((IData)(1U) 
+                                                              + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
+                                                           : 0U) 
+                                                         << 8U) 
+                                                        | ((0x20000U 
+                                                            >= 
+                                                            (0x3ffffU 
+                                                             & vlTOPp->cpu__DOT__data__DOT__ALUResultM))
+                                                            ? 
+                                                           vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
+                                                           [
+                                                           (0x3ffffU 
+                                                            & vlTOPp->cpu__DOT__data__DOT__ALUResultM)]
+                                                            : 0U)))));
     vlTOPp->cpu__DOT__RegWriteW = vlTOPp->cpu__DOT__RegWriteM;
     vlTOPp->cpu__DOT__RdW = vlTOPp->cpu__DOT__RdM;
     vlTOPp->cpu__DOT__ImmSrcE = ((IData)(vlTOPp->cpu__DOT__Drst)
@@ -324,81 +384,6 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
                                                  (3U 
                                                   & ((IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls) 
                                                      >> 8U)));
-    vlTOPp->cpu__DOT__data__DOT__ReadDataM = ((2U == (IData)(vlTOPp->cpu__DOT__MemWriteM))
-                                               ? ((
-                                                   ((0x20000U 
-                                                     >= 
-                                                     (0x3ffffU 
-                                                      & ((IData)(1U) 
-                                                         + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
-                                                     ? 
-                                                    vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
-                                                    [
-                                                    (0x3ffffU 
-                                                     & ((IData)(1U) 
-                                                        + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
-                                                     : 0U) 
-                                                   << 8U) 
-                                                  | ((0x20000U 
-                                                      >= 
-                                                      (0x3ffffU 
-                                                       & vlTOPp->cpu__DOT__data__DOT__ALUResultM))
-                                                      ? 
-                                                     vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
-                                                     [
-                                                     (0x3ffffU 
-                                                      & vlTOPp->cpu__DOT__data__DOT__ALUResultM)]
-                                                      : 0U))
-                                               : ((
-                                                   ((0x20000U 
-                                                     >= 
-                                                     (0x3ffffU 
-                                                      & ((IData)(3U) 
-                                                         + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
-                                                     ? 
-                                                    vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
-                                                    [
-                                                    (0x3ffffU 
-                                                     & ((IData)(3U) 
-                                                        + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
-                                                     : 0U) 
-                                                   << 0x18U) 
-                                                  | ((((0x20000U 
-                                                        >= 
-                                                        (0x3ffffU 
-                                                         & ((IData)(2U) 
-                                                            + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
-                                                        ? 
-                                                       vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
-                                                       [
-                                                       (0x3ffffU 
-                                                        & ((IData)(2U) 
-                                                           + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
-                                                        : 0U) 
-                                                      << 0x10U) 
-                                                     | ((((0x20000U 
-                                                           >= 
-                                                           (0x3ffffU 
-                                                            & ((IData)(1U) 
-                                                               + vlTOPp->cpu__DOT__data__DOT__ALUResultM)))
-                                                           ? 
-                                                          vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
-                                                          [
-                                                          (0x3ffffU 
-                                                           & ((IData)(1U) 
-                                                              + vlTOPp->cpu__DOT__data__DOT__ALUResultM))]
-                                                           : 0U) 
-                                                         << 8U) 
-                                                        | ((0x20000U 
-                                                            >= 
-                                                            (0x3ffffU 
-                                                             & vlTOPp->cpu__DOT__data__DOT__ALUResultM))
-                                                            ? 
-                                                           vlTOPp->cpu__DOT__data__DOT__data__DOT__data_mem_register
-                                                           [
-                                                           (0x3ffffU 
-                                                            & vlTOPp->cpu__DOT__data__DOT__ALUResultM)]
-                                                            : 0U)))));
     vlTOPp->cpu__DOT__data__DOT__SrcAE = ((0U == (IData)(vlTOPp->cpu__DOT__FowardAE))
                                            ? vlTOPp->cpu__DOT__data__DOT__RD1E
                                            : ((1U == (IData)(vlTOPp->cpu__DOT__FowardAE))
