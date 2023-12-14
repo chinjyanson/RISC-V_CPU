@@ -55,6 +55,6 @@ module data_mem #(
 //     end
 // end
     //WE = 10 for lbu
-    assign RD = (WE==2'b10) ?  {16'b0, data_mem_register[add+1], data_mem_register[add]} :{data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
+    assign RD = (WE==2'b10) ?  {24'b0, data_mem_register[add]} :{data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
 
 endmodule

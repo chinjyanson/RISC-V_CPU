@@ -24,20 +24,6 @@ VL_MODULE(Vcpu) {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-<<<<<<< HEAD
-    VL_IN8(&clk,0,0);
-    VL_IN8(&rst,0,0);
-    VL_OUT(&a0,31,0);
-
-    // CELLS
-    // Public to allow access to /* verilator public */ items.
-    // Otherwise the application code can consider these internals.
-
-    // Root instance pointer to allow access to model internals,
-    // including inlined /* verilator public_flat_* */ items.
-    Vcpu___024root* const rootp;
-
-=======
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
     VL_OUT(a0,31,0);
@@ -120,7 +106,10 @@ VL_MODULE(Vcpu) {
     // Internals; generally not touched by application code
     Vcpu__Syms* __VlSymsp;  // Symbol table
     
+<<<<<<< HEAD
 >>>>>>> 4e4b29378367b897096cff4f032a383244cf1fff
+=======
+>>>>>>> eeb03f3968d7c0fe007c33d3af2796ea5a0b072d
     // CONSTRUCTORS
   private:
     VL_UNCOPYABLE(Vcpu);  ///< Copying not allowed
