@@ -24,8 +24,8 @@ always_comb
                 3'b000: controls = {{3'b011}, controls [11:0]}; //lb
                 3'b001: controls = {{3'b010}, controls [11:0]}; //lh
                 3'b010: controls = {{3'b001}, controls [11:0]}; //lw
-                3'b100: controls = {{3'b111}, controls [11:0]}; //lbu
-                3'b101: controls = {{3'b110}, controls [11:0]}; //lhu
+                3'b100: controls = {{3'b111}, controls [11:0]}; //lbu (not needed)
+                3'b101: controls = {{3'b110}, controls [11:0]}; //lhu (not needed)
                 default: controls = controls; 
             endcase
         end
