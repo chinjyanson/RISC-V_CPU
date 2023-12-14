@@ -8,7 +8,7 @@ module riscv(input logic clk, reset,
 	
 logic ALUSrcAE, RegWriteM, RegWriteW, ZeroE, SignE, PCJalSrcE, PCSrcE;
 logic [1:0] ALUSrcBE;
-logic StallD, StallF, FlushD, FlushE, ResultSrcE0;
+logic StallD, StallF, FlushD, FlushE;
 logic [1:0] ResultSrcW; 
 logic [2:0] ImmSrcD;
 logic [3:0] ALUControlE;
@@ -36,7 +36,24 @@ controller c(
 	.ALUControlE(ALUControlE)
 );
 
-hazardunit h(Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW, RegWriteM, RegWriteW, ResultSrcE0, PCSrcE, ForwardAE, ForwardBE, StallD, StallF, FlushD, FlushE);
+hazardunit h(
+	.Rs1D(Rs1D), 
+	.Rs2D(Rs2D), 
+	.Rs1E(Rs1E), 
+	.Rs2E(Rs2E),
+	.RdE(RdE), 
+	.RdM(RdM), 
+	.RdW(RdW),
+	.RegWriteM(RegWriteM), 
+	.RegWriteW(RegWriteW),
+	.PCSrcE(PCSrcE),
+	.ForwardAE(ForwardAE), 
+	.ForwardBE(ForwardBE),
+	.StallD(StallD), 
+	.StallF(StallF), 
+	.FlushD(FlushD), 
+	.FlushE(FlushE)
+);
 
 datapath dp(clk, reset, ResultSrcW, PCJalSrcE, PCSrcE,ALUSrcAE, ALUSrcBE, RegWriteW, ImmSrcD, ALUControlE, ZeroE, SignE, PCF, InstrF, InstrD, ALUResultM, WriteDataM, ReadDataM, ForwardAE, ForwardBE, Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW, StallD, StallF, FlushD, FlushE);
 
