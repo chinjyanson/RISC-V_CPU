@@ -1,3 +1,8 @@
+/*
+    Function: Top file which manages the control unit pipelining registers.
+    Connects components like the sign extend and instruction memory module.
+*/
+
 module control_top #(
         parameter   ADDRESS_WIDTH = 8,
         parameter   DATA_WIDTH = 32
@@ -51,12 +56,12 @@ module control_top #(
 
 
 
-    instr_mem InstrMem(
-        .addr_i         (PCF_i),
-        .Instr_o        (InstrF)
-    );
-    
-    control_unit ControlUnit(
+instr_mem InstrMem(
+    .addr_i         (PCF_i),
+    .Instr_o        (InstrF)
+);
+
+control_unit ControlUnit(
     .op            (InstrD_o[6:0]),
     .funct3        (InstrD_o[14:12]),
     .funct7b5      (InstrD_o[30]),
@@ -68,28 +73,27 @@ module control_top #(
     .ImmSrcD       (ImmSrcD),
     .JumpD         (JumpD),
     .BranchD       (BranchD)
-    );
+);
 
-    reg_fetch FReg(
-        .clk        (clk),
-        .en         (Fen_i),
-        .rst        (Frst_i),
-        .InstrF     (InstrF),
-        .PCPlus4F   (PCPlus4F_i),
-        .PCF        (PCF_i),
-        .PCPlus4D   (PCPlus4D_o),
-        .PCD        (PCD_o),
-        .InstrD     (InstrD_o)
-    );
+reg_fetch FReg(
+    .clk        (clk),
+    .en         (Fen_i),
+    .rst        (Frst_i),
+    .InstrF     (InstrF),
+    .PCPlus4F   (PCPlus4F_i),
+    .PCF        (PCF_i),
+    .PCPlus4D   (PCPlus4D_o),
+    .PCD        (PCD_o),
+    .InstrD     (InstrD_o)
+);
 
-    
-    sign_extend MySignExtend(
-        .instr        (InstrD_o[31:0]),
-        .ImmSrc       (ImmSrcD),
-        .ExtImm       (ExtImmD_o)
-    );
+sign_extend MySignExtend(
+    .instr        (InstrD_o[31:0]),
+    .ImmSrc       (ImmSrcD),
+    .ExtImm       (ExtImmD_o)
+);
 
-    reg_dec_control DReg(
+reg_dec_control DReg(
     //inputs - D
     .clk(clk),
     .en(Den_i),
@@ -102,8 +106,7 @@ module control_top #(
     .ALUControlD(ALUControlD),
     .ALUSrcD(ALUSrcD),
     .funct3D(InstrD_o[14:12]),
-    .ImmSrcD(ImmSrcD),
-    
+    .ImmSrcD(ImmSrcD), 
 
     //outputs - E
     .RegWriteE(RegWriteE),
