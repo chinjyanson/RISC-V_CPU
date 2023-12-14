@@ -17,10 +17,9 @@ module regfile #(
     output  logic [DATA_WIDTH-1:0]  a0  //(debug output)
 );
 
-logic [4:0] A1 = {3'b0 , A1_i}; 
-logic [4:0] A2 = {3'b0 , A2_i};
-logic [4:0] A3 = {3'b0 , A3_i};
-logic [DATA_WIDTH-1:0]  a1;
+logic [4:0] A1 = A1_i; 
+logic [4:0] A2 = A2_i;
+logic [4:0] A3 = A3_i;
 
 logic [DATA_WIDTH-1:0] reg_array[2**ADDRESS_WIDTH-1:0];
 
@@ -35,12 +34,12 @@ always @(negedge clk) begin
             default: reg_array[A3] <= reg_array[A3];
         endcase
     end
+    end
 
-    logic [DATA_WIDTH-1:0] a1; 
 
 assign RD1 = reg_array[A1];
 assign RD2 = reg_array[A2];
 assign a0 =  reg_array[6];
-assign a1 =  reg_array[11];
 
 endmodule
+
