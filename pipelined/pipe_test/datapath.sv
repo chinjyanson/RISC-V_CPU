@@ -130,24 +130,37 @@ reg_Dec_Exc pipreg1(
     .PCPlus4E(PCPlus4E)
 );
 mux3 forwardMuxA(
-    .control(SrcAE),
+    .control(ForwardAE),
     .input0(RD1E),
     .input1(ResultW),
     .input2(ALUResultM),
-    .out(ForwardAE)
+    .out(SrcAE)
 );
 mux3 forwardMuxB(
-    .control(SrcBE),
+    .control(ForwardBE),
     .input0(RD2E),
     .input1(ResultW),
     .input2(ALUResultM),
-    .out(ForwardBE)
+    .out(WriteDataE)
+);
+mux2 srcBMux(
+    .control(ALUSrcE),
+    .input0(WriteDataE), 
+    .input1(ExtImmE),
+    .out(SrcBE)
 );
 adder pcAddBranch(
     .input0(PCE),
     .input1(ExtImmE),
     .out(PCTargetE) // next PC for jump and branch instr
-)
+);
+alu alu(
+    .ALUControlE(ALUControlE)
+    .SrcAE(SrcAE),
+    .SrcBE(SrcBE),
+    .ZeroE(ZeroE),
+    .ALUResultE(ALUResultE)
+);
 
 // Execute - Memory Access Pipeline Register 
 reg_Exc_Mem pipreg2(

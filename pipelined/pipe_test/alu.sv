@@ -1,15 +1,14 @@
 module alu (
-    input logic [2:0] ALUControl,
+    input logic [2:0] ALUControlE,
     input logic [31:0] SrcAE,
     input logic [31:0] SrcBE,
 
-    output logic SignE, 
     output logic ZeroE,
     output logic [31:0] ALUResultE,
 );
 
 always_comb begin
-    case (ALUControl)
+    case (ALUControlE)
     3'b000: ALUResultE = SrcAE + SrcBE; //addition
     3'b001: ALUResultE = SrcAE - SrcBE; //subtraction
     3'b010: ALUResultE = SrcAE & SrcBE; //and
