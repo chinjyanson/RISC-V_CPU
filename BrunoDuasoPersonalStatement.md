@@ -23,7 +23,7 @@ register, and write it back to PC:
     - [Added MUX4 for PC](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d2e969b386d929fbc350fc50698d395cf4109e84)
     - [Connected PCPlus4 & ALUResult](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/caa5ceaf9cf0ee306d6b7fc1b26452550e29f91f)
 
-![Figure 1](/img/pro.img)
+![Figure 1](/img/pro.png)
 
 -  Load instructions (LB, LH, LW, LBU, LHU): these new instructions 
 required additional control bits, to differentiate the ways in which we 
