@@ -51,6 +51,12 @@ logic [DATA_WIDTH-1:0] SrcAE, SrcBE, RD1D, RD2D, RD1E, RD2E;
 logic [DATA_WIDTH-1:0] ResultW;
 logic [4:0]            RdB;
 
+// bit wise operations on instruction
+assign Rs1D = InstrD[19:15];
+assign Rs2D = InstrD[24:20];
+assign RdD = InstrD[11:7];
+
+
 // Fetch Stage
 mux2 jal_r(
     .control(PCJalSrcE),
@@ -96,9 +102,7 @@ reg_Ftc_Dec pipreg0(
     .PCD(PCD),
     .PCPlus4D(PCPlus4D)
 );
-assign Rs1D = InstrD[19:15];
-assign Rs2D = InstrD[24:20];
-assign RdD = InstrD[11:7];
+
 regfile rf(
     .clk(clk),
     .WE3(RegWriteW),
@@ -108,8 +112,9 @@ regfile rf(
     .A3_i(RdD),
     .RD1D(RD1D),
     .RD2D(RD2D),
-    .a0(a0)
+    .a0(a0) // debug output
 );
+
 sign_extend ext(
     .instr(InstrD[31:7]),
     .ImmSrc(ImmSrcD),

@@ -21,7 +21,7 @@ logic [7:0] A1 = {3'b0 , A1_i};
 logic [7:0] A2 = {3'b0 , A2_i};
 logic [7:0] A3 = {3'b0 , A3_i};
 
-always @(posedge clk)
+always @(negedge clk)
     case (WE3)
     3'b001: begin
         reg_array[A3] <= WD3;
