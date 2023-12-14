@@ -15,8 +15,6 @@ module maindecoder #(
 
 logic [14:0] controls;
 
-
-
 always_comb
     case (op)
         // RegWrite_ResultSrc_MemWrite_Jump_Branch_ALUSrc_ImmSrc_ALUOp
