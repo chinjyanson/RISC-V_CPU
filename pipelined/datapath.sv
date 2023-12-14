@@ -41,7 +41,6 @@ module datapath #(
 wire [DATA_WIDTH-1:0]    RD1D;
 wire [DATA_WIDTH-1:0]    RD2D;
 
-
 //Execute Logic
 wire [DATA_WIDTH-1:0]    RD1E;
 wire [DATA_WIDTH-1:0]    RD2E;
