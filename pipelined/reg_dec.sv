@@ -31,7 +31,7 @@ module reg_dec #(
 );
 
 always_ff @(posedge clk) begin
-    if(en) begin     
+    
         RD1E        <=       rst?   0   :   RD1D;
         RD2E        <=       rst?   0   :   RD2D;
         PCE         <=       rst?   0   :   PCD;
@@ -41,7 +41,7 @@ always_ff @(posedge clk) begin
         ExtImmE     <=       rst?   0   :   ExtImmD;
         PCPlus4E    <=       rst?   0   :   PCPlus4D;
         opcodeE     <=       rst?   0   :   opcodeD;
-    end
+
 end
 
 endmodule

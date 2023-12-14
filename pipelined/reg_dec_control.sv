@@ -32,7 +32,7 @@ module reg_dec_control #(
 );
 
 always_ff @(posedge clk) begin
-    if(en) begin     
+    
         RegWriteE   <=       rst?   0   :   RegWriteD;
         ResultSrcE  <=       rst?   0   :   ResultSrcD;
         MemWriteE   <=       rst?   0   :   MemWriteD;
@@ -42,7 +42,7 @@ always_ff @(posedge clk) begin
         ALUSrcE     <=       rst?   0   :   ALUSrcD;
         funct3E     <=       rst?   0   :   funct3D;
         ImmSrcE    <=     rst?   0   :   ImmSrcD; 
-    end
+
 end
 
 endmodule
