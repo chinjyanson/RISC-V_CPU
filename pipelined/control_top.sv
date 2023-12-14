@@ -16,8 +16,8 @@ module control_top #(
     input  logic [DATA_WIDTH-1:0]          PCPlus4F_i, 
     input  logic                           ZeroE_i,
     output logic [DATA_WIDTH-1:0]          InstrD_o,//32b
-    output logic [2:0]                     RegWriteW_o, //1b ==> edited to 3 bits
-    output logic [2:0]                     RegWriteM_o,
+    output logic                           RegWriteW_o, //1b ==> edited to 3 bits
+    output logic                           RegWriteM_o,
     output logic [1:0]                     MemWriteM_o, //1b ==> edited to 2 bits
     output logic [1:0]                     ResultSrcW_o, //3b ==> edited to 2 bits
     output logic [2:0]                     ALUControlE_o, //3b
@@ -40,10 +40,10 @@ module control_top #(
     wire                    ALUSrcD;
     wire                    JumpD;
     wire                    BranchD;
-    wire [2:0]              RegWriteD;
+    wire                    RegWriteD;
 
     //Execute Logic
-    wire [2:0]              RegWriteE;
+    wire                    RegWriteE;
     wire [1:0]              ResultSrcE;
     wire [1:0]              MemWriteE;
     wire                    JumpE;
