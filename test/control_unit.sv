@@ -34,9 +34,9 @@ module control_unit #(
 
     
 
-    logic [6:0] opcode = instr_i[6:0];
-    logic [2:0] funct3 = instr_i[14:12];
-    logic funct7 = instr_i[30];
+    logic [6:0]     opcode = instr_i[6:0];
+    logic [2:0]     funct3 = instr_i[14:12];
+    logic           funct7 = instr_i[30];
     
     always_comb  begin
 

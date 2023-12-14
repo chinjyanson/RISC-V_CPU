@@ -29,15 +29,10 @@ int main(int argc, char **argv, char **env) {
     //init Vbuddy
     if (vbdOpen()!=1) return(-1);
     vbdHeader("F1");
-    
 
     // initialize simulation inputs
     top->clk = 0;
     top->rst = 0;
-
-            bool clock = false;
-            int clockcount = 0;
-
 
     // run simulation for MAX_SIM_CYC clock cycles
     for (simcyc=0; simcyc<MAX_SIM_CYC; simcyc++) {
@@ -46,13 +41,6 @@ int main(int argc, char **argv, char **env) {
         tfp->dump (2*simcyc+tick);
         top->clk = !top->clk;
         top->eval ();
-
-        if(clock){ 
-                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
-                        clockcount++; }
-
-        clock = !clock;
-        //std::cout << "clock1: " << clock << std::endl;
                    
 
         }

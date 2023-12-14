@@ -7,7 +7,6 @@ module data_mem #(
     input  logic [1:0]                   WE,
     input  logic [DATA_WIDTH-1:0]        A,
     input  logic [DATA_WIDTH-1:0]        WD,
-    output logic [DATA_WIDTH-1:0]        test,
     output logic [DATA_WIDTH-1:0]        RD
 );
 
@@ -52,14 +51,6 @@ module data_mem #(
         endcase
     end 
 
-// always_comb begin
-//     if (WE) begin
-//         $display("here");
-//         $display()
-//     end
-// end
-
-    assign test = data_mem_register[65536 + 38];
     assign RD = {data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
 
 endmodule
