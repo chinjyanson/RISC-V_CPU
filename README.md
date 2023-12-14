@@ -26,12 +26,12 @@ As team we have ....
 
 ## Team Members and Distribution of Tasks
 
-| Team members         | Primary Task assigned                                                 | Personal Statements                                                       | Emails         |
-|----------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------|----------------|
-| Chin Jun Yen (Anson) | Writing README.md file, ALU and register files                        |[Anson's Personal Statement](/AnsonChinPersonalStatement.md)               |ayc122@ic.ac.uk |
-| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |[Bruno's Personal Statement](/BrunoDuasoPersonalStatement.md)              |                |
-| Vishesh Mongia       | Testbench and verification of design                                  |[Vishesh's Personal Statement](/VisheshMongiaPersonalStatement.md)         |                |
-| Samuel Khoo Ing Shin | PC and related addresses                                              |[Samuel's Personal Statement](/SamuelKhooPersonalStatement.md)             |ssk122@ic.ac.uk |
+| Team members         | Primary Task assigned                                                 |CID        | Personal Statements                                                       | Emails         |
+|----------------------|-----------------------------------------------------------------------|-----------|---------------------------------------------------------------------------|----------------|
+| Chin Jun Yen (Anson) | Writing README.md file, ALU and register files                        |02194736   |[Anson's Personal Statement](/AnsonChinPersonalStatement.md)               |ayc122@ic.ac.uk |
+| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |           |[Bruno's Personal Statement](/BrunoDuasoPersonalStatement.md)              |                |
+| Vishesh Mongia       | Testbench and verification of design                                  |           |[Vishesh's Personal Statement](/VisheshMongiaPersonalStatement.md)         |vm622@ic.ac.uk  |
+| Samuel Khoo Ing Shin | PC and related addresses                                              |02264291   |[Samuel's Personal Statement](/SamuelKhooPersonalStatement.md)             |ssk122@ic.ac.uk |
 
 Linked [here](/taskdistribution.md) is a more detailed version of the dsitribution of tasks within our group
 
