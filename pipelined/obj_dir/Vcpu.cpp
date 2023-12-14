@@ -66,6 +66,7 @@ void Vcpu::_eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
     } while (VL_UNLIKELY(__Vchange));
 }
 
+<<<<<<< HEAD
 VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_sequent__TOP__1\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
@@ -721,6 +722,13 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
                                | (3U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))));
     vlTOPp->cpu__DOT__control__DOT__ALUControlD = vlTOPp->__Vtable1_cpu__DOT__control__DOT__ALUControlD
         [vlTOPp->__Vtableidx1];
+=======
+//============================================================
+// Invoke final blocks
+
+VL_ATTR_COLD void Vcpu::final() {
+    Vcpu___024root___final(&(vlSymsp->TOP));
+>>>>>>> 4ff039e0bef7ececef994e86e95b46cd0d38ab63
 }
 
 void Vcpu::_eval(Vcpu__Syms* __restrict vlSymsp) {

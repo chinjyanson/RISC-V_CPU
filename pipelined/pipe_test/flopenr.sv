@@ -5,7 +5,7 @@ module flopenr #(
     input   logic                   reset,
     input   logic                   en,
     input   logic [DATA_WIDTH-1:0]  d,
-    input   logic [DATA_WIDTH-1:0]  q
+    output   logic [DATA_WIDTH-1:0]  q
 );   
 
 always_ff @(posedge clk, posedge reset) begin
