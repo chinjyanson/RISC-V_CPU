@@ -22,7 +22,7 @@ always_comb begin
         3'b011: ALUResult = SrcA | SrcB;
         3'b100: ALUResult = SrcA ^ SrcB;
         3'b101: ALUResult = SrcA << SrcB[4:0];
-        3'b110: ALUResult = SrcB; //why do we have the same operation twice?
+        // 3'b110: ALUResult = SrcB; //why do we have the same operation twice?
         3'b111: ALUResult = SrcB; //^^
 
         default: ALUResult = 32'bx; 

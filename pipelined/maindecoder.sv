@@ -1,3 +1,8 @@
+/*
+	Function: This unit generates the control signals from the 7 bit opcode.
+	Determines the type of instruction
+*/
+
 module maindecoder #(
     parameter  OP_WIDTH = 7
 ) (
@@ -21,22 +26,20 @@ always_comb
     case (op)
         // RegWrite_ResultSrc_MemWrite_Jump_Branch_ALUSrc_ImmSrc_ALUOp
         7'b0000011:begin
-            controls = 15'b001_01_00_0_0_1_000_00; // lw
+            controls = 15'b001_01_00_0_0_1_000_00; // lw (default to lw)
             case(funct3)
                 3'b000: controls = {{3'b011}, controls [11:0]}; //lb
                 3'b001: controls = {{3'b010}, controls [11:0]}; //lh
-                // 3'b010: controls = {{3'b001}, controls [11:0]}; //lw
                 3'b100: controls = {{3'b111}, controls [11:0]}; //lbu
                 3'b101: controls = {{3'b110}, controls [11:0]}; //lhu
                 default: controls = controls; 
             endcase
         end
         7'b0100011: begin
-            controls = 15'b000_00_01_0_0_1_010_00; // sw
+            controls = 15'b000_00_01_0_0_1_010_00; // sw (default to sw)
             case(funct3)
                 3'b000: controls = {controls[14:10],{2'b11}, controls[7:0]}; //sb
                 3'b001: controls = {controls[14:10],{2'b10}, controls[7:0]}; //sh
-                // 3'b010: controls = {controls[14:10],{2'b01}, controls[7:0]}; //sw
                 default : controls = controls;
             endcase
         end

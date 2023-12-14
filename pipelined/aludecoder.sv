@@ -1,3 +1,8 @@
+/*
+	Function: Receives control signal from the Main Decoder Unit and 
+	determines the type of operation that has to be performed by the ALU
+*/
+
 module aludecoder #(
     parameter CONTROL_WIDTH = 3
 )(
