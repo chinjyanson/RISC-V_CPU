@@ -189,6 +189,11 @@ reg_Exc_Mem pipreg2(
     .PCPlus4M(PCPlus4M)
 );
 dmem dm(
+    .clk(clk),
+    .WE(MemWriteM),
+    .A(ALUResultM),
+    .WD(WriteDataM),
+    .RD(ReadDataM)
 );
 
 // Memory - Register Writeback Stage
