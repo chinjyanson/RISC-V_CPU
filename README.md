@@ -10,9 +10,12 @@ Our folder was structured slightly differently since we didn't use any branching
     - `test` refers to all the different single cycle design tests that we run
     - `pipelined` refers to the pipelined version of our processor 
     - `img` refers to all our images and videos used throughout our .md files 
+    - `statements` refers to our teams Personal Statements
 
 ## Joint Statement
-As team we have ....
+As team we have successfully designed and built a single cycle and a pipelined version and we have all gone really far as a team. We've met up regularly across the week to properly discuss our design and architecture and we are happy with what we have produced.
+
+To highlight why we have structured this repo through folders instead of branches, is because it was simpler to commmit to just one branch and that it was easier to coordinate with. 
 
 ## High Level Description
 
@@ -40,8 +43,33 @@ Linked [here](/statements/taskdistribution.md) is a more detailed version of the
 
 ### Explanation of F1 Program 
 
-This is a basic program that counts the neopixel lights up by shifting left, then adding 1 
+This is a basic program that counts the neopixel lights up by shifting left, then adding 1. The stored a0 value should be hence: 1, 3, 7...
 
+We first run through a main program that jumps to the init function
+```
+main:
+    JAL     ra, init            # jump to init, ra and save position to ra
+init:                           # initialise light
+    LI      t0, 0xFF            # temp register
+    RET
+```
+
+The temp register is then changed to set up for the forever section where build and loop2 is looped and outputted forever
+```
+forever:
+    JAL     ra, build
+    JAL     forever
+
+build:                          # function to build prob dist func (pdf)
+    LI      a0, 0               # begin with all lights off
+    LI      t1, 0   
+_loop2:                         # repeat till all lights on
+    SLLI    t1, t1, 1 
+    ADDI    t1, t1, 1
+    ADDI    a0, t1, 0
+    BNE     a0, t0, _loop2      # until all lights are on
+    RET
+```
 
 ## How to run test file
 

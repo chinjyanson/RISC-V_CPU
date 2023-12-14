@@ -20,3 +20,9 @@ single_cycle/pipelined/obj_dir/Vcpu__ALL.o
 single_cycle/pipelined/obj_dir/Vcpu.cpp
 pipelined/cpu.vcd
 pipelined/output.txt
+pipelined/cpu.vcd
+pipelined/output.txt
+pipelined/obj_dir/Vcpu__ALL.o
+pipelined/obj_dir/Vcpu.h
+pipelined/obj_dir/Vcpu__ALL.o
+pipelined/obj_dir/Vcpu__ALL.a
