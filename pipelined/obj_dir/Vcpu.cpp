@@ -1,85 +1,71 @@
 // Verilated -*- C++ -*-
-// DESCRIPTION: Verilator output: Model implementation (design independent parts)
+// DESCRIPTION: Verilator output: Design implementation internals
+// See Vcpu.h for the primary calling header
 
 #include "Vcpu.h"
 #include "Vcpu__Syms.h"
-#include "verilated_vcd_c.h"
 
-//============================================================
-// Constructors
-
-Vcpu::Vcpu(VerilatedContext* _vcontextp__, const char* _vcname__)
-    : VerilatedModel{*_vcontextp__}
-    , vlSymsp{new Vcpu__Syms(contextp(), _vcname__, this)}
-    , clk{vlSymsp->TOP.clk}
-    , rst{vlSymsp->TOP.rst}
-    , a0{vlSymsp->TOP.a0}
-    , rootp{&(vlSymsp->TOP)}
-{
-    // Register model with the context
-    contextp()->addModel(this);
-}
-
-Vcpu::Vcpu(const char* _vcname__)
-    : Vcpu(Verilated::threadContextp(), _vcname__)
-{
-}
-
-//============================================================
-// Destructor
-
-Vcpu::~Vcpu() {
-    delete vlSymsp;
-}
-
-//============================================================
-// Evaluation loop
-
-void Vcpu___024root___eval_initial(Vcpu___024root* vlSelf);
-void Vcpu___024root___eval_settle(Vcpu___024root* vlSelf);
-void Vcpu___024root___eval(Vcpu___024root* vlSelf);
-#ifdef VL_DEBUG
-void Vcpu___024root___eval_debug_assertions(Vcpu___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vcpu___024root___final(Vcpu___024root* vlSelf);
-
-static void _eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
-    vlSymsp->__Vm_didInit = true;
-    Vcpu___024root___eval_initial(&(vlSymsp->TOP));
-    // Evaluate till stable
-    vlSymsp->__Vm_activity = true;
-    do {
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
-        Vcpu___024root___eval_settle(&(vlSymsp->TOP));
-        Vcpu___024root___eval(&(vlSymsp->TOP));
-    } while (0);
-}
+//==========
 
 void Vcpu::eval_step() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval_step\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval\n"); );
+    Vcpu__Syms* __restrict vlSymsp = this->__VlSymsp;  // Setup global symbol table
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
 #ifdef VL_DEBUG
     // Debug assertions
-    Vcpu___024root___eval_debug_assertions(&(vlSymsp->TOP));
+    _eval_debug_assertions();
 #endif  // VL_DEBUG
     // Initialize
     if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
     // Evaluate till stable
-    vlSymsp->__Vm_activity = true;
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        Vcpu___024root___eval(&(vlSymsp->TOP));
-    } while (0);
-    // Evaluate cleanup
+        vlSymsp->__Vm_activity = true;
+        _eval(vlSymsp);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = _change_request(vlSymsp);
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("cpu.sv", 1, "",
+                "Verilated model didn't converge\n"
+                "- See DIDNOTCONVERGE in the Verilator manual");
+        } else {
+            __Vchange = _change_request(vlSymsp);
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
-//============================================================
-// Utilities
-
-const char* Vcpu::name() const {
-    return vlSymsp->name();
+void Vcpu::_eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    _eval_initial(vlSymsp);
+    vlSymsp->__Vm_activity = true;
+    // Evaluate till stable
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
+    do {
+        _eval_settle(vlSymsp);
+        _eval(vlSymsp);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = _change_request(vlSymsp);
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("cpu.sv", 1, "",
+                "Verilated model didn't DC converge\n"
+                "- See DIDNOTCONVERGE in the Verilator manual");
+        } else {
+            __Vchange = _change_request(vlSymsp);
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
-<<<<<<< HEAD
 VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_sequent__TOP__1\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
@@ -657,51 +643,43 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
                                | (3U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))));
     vlTOPp->cpu__DOT__control__DOT__ALUControlD = vlTOPp->__Vtable1_cpu__DOT__control__DOT__ALUControlD
         [vlTOPp->__Vtableidx1];
-=======
-//============================================================
-// Invoke final blocks
-
-VL_ATTR_COLD void Vcpu::final() {
-    Vcpu___024root___final(&(vlSymsp->TOP));
->>>>>>> 061436cf71f657ad1f3b6a97543904c2f58a1a87
 }
 
-//============================================================
-// Implementations of abstract methods from VerilatedModel
-
-const char* Vcpu::hierName() const { return vlSymsp->name(); }
-const char* Vcpu::modelName() const { return "Vcpu"; }
-unsigned Vcpu::threads() const { return 1; }
-std::unique_ptr<VerilatedTraceConfig> Vcpu::traceConfig() const {
-    return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
-};
-
-//============================================================
-// Trace configuration
-
-void Vcpu___024root__trace_init_top(Vcpu___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32_t code) {
-    // Callback from tracep->open()
-    Vcpu___024root* const __restrict vlSelf VL_ATTR_UNUSED = static_cast<Vcpu___024root*>(voidSelf);
-    Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    if (!vlSymsp->_vm_contextp__->calcUnusedSigs()) {
-        VL_FATAL_MT(__FILE__, __LINE__, __FILE__,
-            "Turning on wave traces requires Verilated::traceEverOn(true) call before time 0.");
+void Vcpu::_eval(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
+        vlTOPp->_sequent__TOP__1(vlSymsp);
+        vlTOPp->__Vm_traceActivity[1U] = 1U;
     }
-    vlSymsp->__Vm_baseCode = code;
-    tracep->scopeEscape(' ');
-    tracep->pushNamePrefix(std::string{vlSymsp->name()} + ' ');
-    Vcpu___024root__trace_init_top(vlSelf, tracep);
-    tracep->popNamePrefix();
-    tracep->scopeEscape('.');
+    // Final
+    vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
 }
 
-VL_ATTR_COLD void Vcpu___024root__trace_register(Vcpu___024root* vlSelf, VerilatedVcd* tracep);
-
-VL_ATTR_COLD void Vcpu::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (false && levels && options) {}  // Prevent unused
-    tfp->spTrace()->addModel(this);
-    tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
-    Vcpu___024root__trace_register(&(vlSymsp->TOP), tfp->spTrace());
+VL_INLINE_OPT QData Vcpu::_change_request(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_change_request\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    return (vlTOPp->_change_request_1(vlSymsp));
 }
+
+VL_INLINE_OPT QData Vcpu::_change_request_1(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_change_request_1\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
+    // Change detection
+    QData __req = false;  // Logically a bool
+    return __req;
+}
+
+#ifdef VL_DEBUG
+void Vcpu::_eval_debug_assertions() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval_debug_assertions\n"); );
+    // Body
+    if (VL_UNLIKELY((clk & 0xfeU))) {
+        Verilated::overWidthError("clk");}
+    if (VL_UNLIKELY((rst & 0xfeU))) {
+        Verilated::overWidthError("rst");}
+}
+#endif  // VL_DEBUG

@@ -45,8 +45,11 @@ always @(posedge clk)
     endcase
     end
 
+    logic [DATA_WIDTH-1:0] a1; 
+
 assign RD1 = reg_array[A1];
 assign RD2 = reg_array[A2];
 assign a0 =  reg_array[10];
+assign a1 =  reg_array[11];
 
 endmodule
