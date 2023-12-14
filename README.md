@@ -6,7 +6,7 @@ This repository is part of an IAC Module for Imperial where we are required to d
 Our folder was structured slightly differently since we didn't use any branching
 - We have 3 folders 
     - `reduced_risc_v` refers to our Lab 4 processor design
-    - `single_cycle` refers to our single cycle design
+    - `single_cycle` refers to our single cycle design (actual source of our processor)
     - `test` refers to all the different single cycle design tests that we run
     - `pipelined` refers to the pipelined version of our processor 
     - `img` refers to all our images and videos used throughout our .md files 
