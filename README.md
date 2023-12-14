@@ -31,7 +31,7 @@ To highlight why we have structured this repo through folders instead of branche
 | Team members         | Primary Task assigned                                                 |CID        | Personal Statements                                                         | Emails         |
 |----------------------|-----------------------------------------------------------------------|-----------|-----------------------------------------------------------------------------|----------------|
 | Chin Jun Yen (Anson) | Writing README.md file, ALU and register files                        |02194736   |[Anson's Personal Statement](/statements/AnsonChinPersonalStatement.md)      |ayc122@ic.ac.uk |
-| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |           |[Bruno's Personal Statement](/statements/BrunoDuasoPersonalStatement.md)     |                |
+| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |02321480   |[Bruno's Personal Statement](/statements/BrunoDuasoPersonalStatement.md)     | bd922@ic.ac.uk |
 | Vishesh Mongia       | Testbench and verification of design                                  |02288840   |[Vishesh's Personal Statement](/statements/VisheshMongiaPersonalStatement.md)|vm622@ic.ac.uk  |
 | Samuel Khoo Ing Shin | PC and related addresses                                              |02264291   |[Samuel's Personal Statement](/statements/SamuelKhooPersonalStatement.md)    |ssk122@ic.ac.uk |
 

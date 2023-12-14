@@ -1,6 +1,6 @@
 |File Name                   | Anson Chin         | Bruno Duaso        | Samuel Khoo        | Vishesh Mongia     |
 |----------------------------|--------------------|--------------------|--------------------|--------------------|
-| alu_top.sv                 |         x          |                    |                    |                    |
+| alu_top.sv                 |         x          |         p          |                    |                    |
 | alu.sv                     |         x          |                    |                    |                    |
 | control_top.sv             |                    |         x          |                    |                    |
 | control_unit.sv            |                    |         x          |                    |                    | 
@@ -13,7 +13,7 @@
 | regfile.sv                 |         x          |                    |                    |                    |
 | sign_extend.sv             |                    |         x          |                    |                    |
 | Testbench                  |                    |                    |                    |          x         |
-| Troubleshooting            |         p          |                    |                    |          x         |
+| Troubleshooting            |         p          |        p           |          p         |          x         |
 | Readme files               |         x          |                    |                    |                    |
 
 > Note: `x` = full responsibility, `p` = partial responsibility
