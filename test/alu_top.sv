@@ -41,20 +41,19 @@ mux2 ALUMux( // checked - SK 1/12/2023
 );
 
 alu ALU( // checked - SK 1/12/2023
-    .ALUctrl    (ALUctrl_i),
-    .SrcA       (SrcA),
-    .SrcB       (SrcB),
-    .ALUResult  (ALUResult_o),
-    .Zero       (Zero_o)
+    .ALUctrl_i   (ALUctrl_i),
+    .SrcA_i      (SrcA),
+    .SrcB_i      (SrcB),
+    .ALUResult_o (ALUResult_o),
+    .Zero_o      (Zero_o)
 );
 
 data_mem data(
-    .clk        (clk),
-    .A          (ALUResult_o),
-    .WD         (regOp2),
-    .WE         (MemWrite_i),
-    .RD         (ReadData)
-
+    .clk         (clk),
+    .A_i         (ALUResult_o),
+    .WD_i        (regOp2),
+    .WE_i        (MemWrite_i),
+    .RD_o        (ReadData)
 );
 
 mux4 resultMux(
