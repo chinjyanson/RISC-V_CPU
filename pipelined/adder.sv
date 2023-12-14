@@ -1,3 +1,7 @@
+/*
+    Function: Adding unit that adds the value of 2 inputs together and returns the result
+*/
+
 module adder #(
     parameter DATA_WIDTH = 32
 )(
