@@ -52,7 +52,6 @@ hazard_stall StallHazard(
 
 hazard_control ControlHazard(
     .PCSrcE     (PCSrcE_i),
-    .PCrst      (PCrst_o),
     .Frst       (Frst_o),
     .Drst       (Drst_o)
 );

@@ -14,6 +14,7 @@ module hazard_foward (
 
 logic A;
 logic B;
+
 //could be for 2 reasons 
     //normal write hazard - fowarding (forward the result from the memory stage and writeback stage to the execute stage)
     //lw hazard - stalling (data read from memory is only available at the end of the clock cycle so we stall the next instructions and forward memory data from writeback)

@@ -89,7 +89,7 @@ control_top control(
 );
 
 
-alu_top alu(
+datapath data(
     .clk(clk),
     .Den_i(Den),
     .Drst_i(Drst),
