@@ -12,7 +12,7 @@ module control_unit #(
     output  logic [1:0]             ResultSrcD,
     output  logic [1:0]             MemWriteD,
     output  logic                   ALUSrcD,
-    output  logic [2:0]             RegWriteD,
+    output  logic                   RegWriteD,
     output  logic [2:0]             ImmSrcD,
     output  logic [2:0]             ALUControlD,
     output  logic                   JumpD,

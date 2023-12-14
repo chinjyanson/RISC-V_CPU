@@ -17,8 +17,8 @@ module cpu #(
 );
 
     //output internal logic for control module 
-    logic [2:0]                     RegWriteW;
-    logic [2:0]                     RegWriteM;
+    logic                           RegWriteW;
+    logic                           RegWriteM;
     logic [1:0]                     MemWriteM;
     logic [1:0]                     ResultSrcW;
     logic [2:0]                     ALUControlE;

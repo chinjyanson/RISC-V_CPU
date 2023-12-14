@@ -19,7 +19,7 @@ module datapath #(
     input   wire [1:0]                  FowardAE_i,
     input   wire [1:0]                  FowardBE_i,
     input   wire                        Drst_i,
-    input   wire [2:0]                  RegWriteW_i, 
+    input   wire                        RegWriteW_i, 
     input   wire [1:0]                  MemWriteM_i, 
     input   wire [1:0]                  ResultSrcW_i, 
     input   wire [CONTROL_WIDTH-1:0]    ALUControlE_i, 

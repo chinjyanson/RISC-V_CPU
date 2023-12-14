@@ -39,16 +39,13 @@ module data_mem #(
             data_mem_register[add+2] <= WD[23:16];
             data_mem_register[add+3] <= WD[31:24];
         end
-        2'b10: 
-        begin //half word 
-            data_mem_register[add] <= data16[7:0];
-            data_mem_register[add+1] <= data16[15:8];
-        end
         2'b11:
         begin //write byte
             data_mem_register[A] <=  WD[7:0];
         end
+        default: data_mem_register[A] <= data_mem_register[A];
         endcase
+        
     end 
 
 // always_comb begin
@@ -57,7 +54,7 @@ module data_mem #(
 //         $display()
 //     end
 // end
-
-    assign RD = {data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
+    //WE = 10 for lbu
+    assign RD = (WE==2'b10) ?  {16'b0, data_mem_register[add+1], data_mem_register[add]} :{data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
 
 endmodule
