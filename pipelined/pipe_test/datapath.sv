@@ -70,6 +70,8 @@ flopenr IF(
     .q(PCF)
 );
 imem im(
+    .a(PCF),
+    .rd(InstrF)
 );
 adder pcadd4(
     .input0(PCF),
