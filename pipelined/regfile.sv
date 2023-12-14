@@ -1,3 +1,7 @@
+/*
+    Function: Writes values on the positive edge (controls the load instructions) then assign values from the register array to be read/output
+*/
+
 module regfile #(
     parameter ADDRESS_WIDTH = 8,
     parameter DATA_WIDTH = 32
