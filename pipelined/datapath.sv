@@ -1,3 +1,8 @@
+/*
+    Function: Top file which controls the pipelining registers in datapath.
+    Connects different muxes, the register file and the alu altogether.
+*/
+
 module alu_top #(
     parameter CONTROL_WIDTH = 3,
     parameter DATA_WIDTH = 32 
