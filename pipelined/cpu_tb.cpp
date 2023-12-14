@@ -5,7 +5,6 @@
 #include <fstream>
 
 #define MAX_SIM_CYC 100000
-#define MAX_SIM_CYC 100000
 
 
 
@@ -47,7 +46,9 @@ int main(int argc, char **argv, char **env) {
         top->eval ();
 
         if(clock){ 
-                       // std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
+                       std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
+                        outputFile << simcyc << " " << top->a0 << '\n';
+
                         clockcount++; }
 
 
