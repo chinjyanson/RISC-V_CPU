@@ -1,3 +1,7 @@
+/*
+	Function: Control Unit Pipeline Register for Memory Access - WriteBack Stage
+*/
+
 module reg_memory_control #(
     parameter DATA_WIDTH =32
 )(  

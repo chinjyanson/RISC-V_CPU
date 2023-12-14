@@ -1,5 +1,5 @@
 /*
-	Function: Control Unit Pipeline register between Datapath Decode and Execution Stage	
+	Function: Pipeline register between Datapath Decode and Execution Stage
 */
 
 module reg_dec #(

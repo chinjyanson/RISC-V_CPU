@@ -1,3 +1,7 @@
+/*
+	Function: Pipeline register between Datapath Fetch and Datapath Decode Stage
+*/
+
 module reg_fetch #(
     parameter DATA_WIDTH = 32
 )(       

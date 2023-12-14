@@ -1,3 +1,7 @@
+/*
+	Function: Control Unit Pipeline Register between Instruction Execution and Memory Access Stage
+*/
+
 module reg_execute_control #(
     parameter DATA_WIDTH =32
 )(  

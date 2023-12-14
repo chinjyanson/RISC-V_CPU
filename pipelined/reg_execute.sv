@@ -1,3 +1,7 @@
+/*
+	Function: Pipeline register between Datapath Execution and Memory Access Stage
+*/
+
 module reg_execute #(
     parameter DATA_WIDTH =32
 )(  
