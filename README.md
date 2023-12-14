@@ -2,9 +2,17 @@
 
 This repository is part of an IAC Module for Imperial where we are required to design a single cycle processor, and then further designing a pipelined processor (with data memory cache and hazard unit).
 
+### Note to examiner
+Our folder was structured slightly differently since we didn't use any branching
+- We have 3 folders 
+    - `reduced_risc_v` refers to our Lab 4 processor design
+    - `single_cycle` refers to our single cycle design
+    - `test` refers to all the different single cycle design tests that we run
+    - `pipelined` refers to the pipelined version of our processor 
+    - `img` refers to all our images and videos used throughout our .md files 
 
-
-
+## Joint Statement
+As team we have ....
 
 ## High Level Description
 
@@ -17,45 +25,63 @@ This repository is part of an IAC Module for Imperial where we are required to d
 
 ## Team Members and Distribution of Tasks
 
-| Team members         | Task assigned                                                         |
-|----------------------|-----------------------------------------------------------------------|
-| Chin Jun Yen (Anson) | Writing README.md file, ALU and register files                        |
-| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |
-| Vishesh Mongia       | Testbench and verification of design                                  |
-| Samuel Khoo Ing Shin | PC and related addresses                                              |
+| Team members         | Primary Task assigned                                                 |CID        | Personal Statements                                                       | Emails         |
+|----------------------|-----------------------------------------------------------------------|-----------|---------------------------------------------------------------------------|----------------|
+| Chin Jun Yen (Anson) | Writing README.md file, ALU and register files                        |02194736   |[Anson's Personal Statement](/AnsonChinPersonalStatement.md)               |ayc122@ic.ac.uk |
+| Bruno Duaso          | Writing logic for control unit, sign extension and instruction memory |           |[Bruno's Personal Statement](/BrunoDuasoPersonalStatement.md)              |                |
+| Vishesh Mongia       | Testbench and verification of design                                  |           |[Vishesh's Personal Statement](/VisheshMongiaPersonalStatement.md)         |vm622@ic.ac.uk  |
+| Samuel Khoo Ing Shin | PC and related addresses                                              |02264291   |[Samuel's Personal Statement](/SamuelKhooPersonalStatement.md)             |ssk122@ic.ac.uk |
 
+Linked [here](/taskdistribution.md) is a more detailed version of the dsitribution of tasks within our group
 
 ## Single Cycle Processor
 
 ![Image](/img/pro.png)
-
-## Installation
-
-1. Clone the repository: `git clone https://github.com/vishesh32/RISC-V-Team1`
-2. Navigate to the project directory: `cd RISC-V-Team1`
-3. Install dependencies: `npm install` or `pip install -r requirements.txt` or any other relevant command.
-
-## F1 Program 
-
 
 ### Explanation of F1 Program 
 
 This is a basic program that counts the neopixel lights up by shifting left, then adding 1 
 
 
-## Using run.sh 
+## How to run test file
 
-Explain how to use your project or provide examples.
+> Note: that this testing instruction is only valid for the `test` folder
 
-```bash
-$ source ./cpu_doit.sh
+To run the pdf reference program:
+```
+$ source ./pdf.sh
+```
+To run the F1 program:
+```
+$ source ./f1.sh
 ```
 
-## Directory Format 
+
+## Evidence and Results of Program
+
+### Running Gaussian.mem 
+![Gaussianimg](/img/gaussianmem.jpg)
+
+### Running Noisy.mem
+![Noisy](/img/noisymem.jpg)
+
+### Running Triange.mem
+![Triange](/img/triangemem.jpg)
+
+### Running Sine.mem 
+![Sine](/img/sinemem.jpg)
+
+### Running F1 Program
+![F1video](/img/f1video.mp4)
+
+> Further images and videos can be found in the `img` folder 
 
 
 
-'''
 
 
-'''
+
+
+
+
+

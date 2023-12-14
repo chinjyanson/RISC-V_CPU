@@ -12,7 +12,6 @@ module alu_top #(
     input   wire [DATA_WIDTH-1:0]       ImmOp_i,
     input   wire [DATA_WIDTH-1:0]       PCPlus4_i,
     output  wire                        Zero_o,
-    output logic [DATA_WIDTH-1:0]   test,  //datamem debug
     output  wire [DATA_WIDTH-1:0]       a0,  //(debug output)
     output  wire [DATA_WIDTH-1:0]       ALUResult_o
 );
@@ -54,7 +53,6 @@ data_mem data(
     .A          (ALUResult_o),
     .WD         (regOp2),
     .WE         (MemWrite_i),
-    .test       (test),
     .RD         (ReadData)
 
 );

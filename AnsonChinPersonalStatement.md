@@ -23,7 +23,7 @@ First thing I did was to break the Instr out via bitwise manipulation. Then I bu
 
 
 ### F1 Assembly Code 
-I helped implement the assembly code 
+I helped implement the instruction memory through setting up the Makefile provided in the project brief. 
 
 
 ### Debugging 
