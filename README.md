@@ -43,12 +43,17 @@ Linked [here](/taskdistribution.md) is a more detailed version of the dsitributi
 This is a basic program that counts the neopixel lights up by shifting left, then adding 1 
 
 
-## Using run.sh (testing instructions)
+## How to run test file
 
 > Note: that this testing instruction is only valid for the `test` folder
 
-```bash
-$ source ./cpu_doit.sh
+To run the pdf reference program:
+```
+$ source ./pdf.sh
+```
+To run the F1 program:
+```
+$ source ./f1.sh
 ```
 
 
@@ -67,7 +72,7 @@ $ source ./cpu_doit.sh
 ![Sine](/img/sinemem.jpg)
 
 ### Running F1 Program
-![F1video](/imgf1video.mp4)
+![F1video](/img/f1video.mp4)
 
 > Further images and videos can be found in the `img` folder 
 
