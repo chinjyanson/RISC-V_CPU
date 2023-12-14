@@ -3,7 +3,7 @@
 */
 
 module regfile #(
-    parameter ADDRESS_WIDTH = 8,
+    parameter ADDRESS_WIDTH = 6,
     parameter DATA_WIDTH = 32
 )(
     input   logic                   clk,
@@ -17,11 +17,11 @@ module regfile #(
     output  logic [DATA_WIDTH-1:0]  a0  //(debug output)
 );
 
-logic [7:0] A1 = {3'b0 , A1_i}; 
-logic [7:0] A2 = {3'b0 , A2_i};
-logic [7:0] A3 = {3'b0 , A3_i};
+logic [5:0] A1 = {3'b0 , A1_i}; 
+logic [5:0] A2 = {3'b0 , A2_i};
+logic [5:0] A3 = {3'b0 , A3_i};
 
-logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
+logic [DATA_WIDTH-1:0] reg_array[2**ADDRESS_WIDTH-1:0];
 
 always @(posedge clk)
     if (A3!=0) begin
