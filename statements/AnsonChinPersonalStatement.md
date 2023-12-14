@@ -43,3 +43,14 @@ README.md file
 
 ## Summary
 To wrap up a great term so far, I am really happy with what I have learnt in this module, including learning how to balance the dynamic of our group and 
+
+### Contributions 
+
+
+
+
+### What I learnt 
+
+
+### What I could do better 
+
