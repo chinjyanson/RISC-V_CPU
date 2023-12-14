@@ -23,7 +23,7 @@ module data_mem #(
 
     initial begin
         $display("Loading ROM");
-        $readmemh("pdf(f1)", data_mem_register, START_ADDRESS);
+        $readmemh("sine.mem", data_mem_register, START_ADDRESS);
      end
 
     logic [17:0] add =  A[31:0];
