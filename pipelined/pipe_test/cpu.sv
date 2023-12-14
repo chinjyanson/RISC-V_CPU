@@ -55,8 +55,7 @@ hazardunit h(
 	.FlushE(FlushE)
 );
 
-datapath dp
-(
+datapath dp(
 	.clk(clk), 
 	.reset(reset), 
 	.ResultSrcW(ResultSrcW), 

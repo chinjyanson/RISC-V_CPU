@@ -9,12 +9,12 @@ module data_mem #(
     output logic     [DATA_WIDTH-1:0]        RD
 );
 
-logic [DATA_WIDTH-1:0] ram_array [2**ADDRESS_WIDTH-1:0]
+logic [DATA_WIDTH-1:0] ram_array [2**ADDRESS_WIDTH-1:0];
 
-assign RD = ram_array[A[DATA_WIDTH-1:0]]
+assign RD = ram_array[A[DATA_WIDTH-1:0]];
 
 always_ff @(posedge clk) begin
-    if (WE) ram_array[A[DATA_WIDTH-1:0]] <= WD
+    if (WE) ram_array[A[DATA_WIDTH-1:0]] <= WD;
 end
 
 endmodule

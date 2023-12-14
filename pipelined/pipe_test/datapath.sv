@@ -14,7 +14,7 @@ module datapath #(
     input   logic                   ALUSrcE,
     input   logic                   RegWriteW,
     input   logic [2:0]             ImmSrcD,
-    input   logic [2:0]             ALUControlD,
+    input   logic [2:0]             ALUControlE,
     // input   logic [DATA_WIDTH-1:0]  InstrF,
 
     input   logic                   StallD,
@@ -29,12 +29,12 @@ module datapath #(
     output  logic [DATA_WIDTH-1:0]  InstrD, 
 
     output  logic [4:0]             Rs1E,
-    output  logic [4:0]             Rs1E,
+    output  logic [4:0]             Rs2E,
     output  logic [4:0]             RdE,
     output  logic [4:0]             RdM, 
-    output  logic [4:0]             RdW
+    output  logic [4:0]             RdW,
 
-    output  logic                   a0; // debug output
+    output  logic                   a0 // debug output
 
 );
 
@@ -171,7 +171,7 @@ adder pcAddBranch(
     .out(PCTargetE) // next PC for jump and branch instr
 );
 alu alu(
-    .ALUControlE(ALUControlE)
+    .ALUControlE(ALUControlE),
     .SrcAE(SrcAE),
     .SrcBE(SrcBE),
     .ZeroE(ZeroE),
@@ -193,7 +193,8 @@ reg_Exc_Mem pipreg2(
     .RdM(RdM),
     .PCPlus4M(PCPlus4M)
 );
-dmem dm(
+
+data_mem dm(
     .clk(clk),
     .WE(MemWriteM),
     .A(ALUResultM),
