@@ -55,7 +55,6 @@ $ source ./cpu_doit.sh
 
 ### Running Gaussian.mem 
 ![Gaussianimg](/img/gaussianmem.jpg)
-![Gaussianvid](/img/gaussianmem.mp4)
 
 ### Running Noisy.mem
 ![Noisy](noisymem.jpg)
