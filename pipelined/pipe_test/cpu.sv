@@ -7,7 +7,7 @@ module cpu(input logic clk, reset,
 );
 	
 logic ALUSrcAE, RegWriteM, RegWriteW, ZeroE, SignE, PCJalSrcE, PCSrcE;
-logic [1:0] ALUSrcBE;
+logic [1:0] ALUSrcE;
 logic StallD, StallF, FlushD, FlushE, ResultSrcE0;
 logic [1:0] ResultSrcW; 
 logic [2:0] ImmSrcD;
@@ -25,8 +25,27 @@ datapath dp
 (
 	.clk(clk), 
 	.reset(reset), 
-	.ResultSrcW(), 
-	.PCJalSrcE, PCSrcE,ALUSrcAE, ALUSrcBE, RegWriteW, ImmSrcD, ALUControlE, ZeroE, SignE, PCF, InstrF, InstrD, ALUResultM, WriteDataM, ReadDataM, ForwardAE, ForwardBE, Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW, StallD, StallF, FlushD, FlushE);
+	.ResultSrcW(ResultSrcW), 
+	.PCJalSrcE(PCJalSrcE), 
+	.PCSrcE(PCSrcE),
+	.ALUSrcE (ALUSrcE), 
+	.RegWriteW(RegWriteW), 
+	.ImmSrcD(ImmSrcD), 
+	.ALUControlE(ALUControlE), 
+	.ZeroE(ZeroE),
+	.InstrD(InstrD), 
+	.ForwardAE(ForwardAE), 
+	.ForwardBE(ForwardBE), 
+	.Rs1E(Rs1E), 
+	.Rs2E(Rs2E), 
+	.RdE(RdE), 
+	.RdM(RdM), 
+	.RdW(RdW), 
+	.StallD(StallD), 
+	.StallF(StallF), 
+	.FlushD(FlushD), 
+	.FlushE(FlushE)
+);
 
 endmodule
 
