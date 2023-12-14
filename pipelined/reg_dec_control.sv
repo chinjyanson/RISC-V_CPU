@@ -9,7 +9,7 @@ module reg_dec_control #(
     input logic                     en,
     input logic                     rst,
 
-    input logic [2:0]               RegWriteD,
+    input logic                     RegWriteD,
     input logic [1:0]               ResultSrcD,
     input logic [1:0]               MemWriteD,
     input logic                     JumpD,
@@ -19,7 +19,7 @@ module reg_dec_control #(
     input logic [2:0]               funct3D,
     input logic [2:0]               ImmSrcD,
 
-    output logic [2:0]              RegWriteE,
+    output logic                    RegWriteE,
     output logic [1:0]              ResultSrcE,
     output logic [1:0]              MemWriteE,
     output logic                    JumpE,
