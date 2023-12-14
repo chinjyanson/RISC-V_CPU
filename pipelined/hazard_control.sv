@@ -1,6 +1,5 @@
 module hazard_control(
-    input  logic [1:0]    PCSrcE,
-    output logic         PCrst,
+    input  logic [1:0]   PCSrcE,
     output logic         Frst,
     output logic         Drst
 );
@@ -19,6 +18,7 @@ module hazard_control(
 // end 
 
 //assign PCrst = (PCSrcE != 2'b0) ? 1 : 0;
+
 assign Frst  = (PCSrcE != 2'b0) ? 1 : 0;
 assign Drst  = (PCSrcE != 2'b0) ? 1 : 0;
 

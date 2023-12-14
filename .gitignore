@@ -12,3 +12,9 @@ pipelined/cpu.vcd
 test/obj_dir/
 test/cpu.vcd
 test/output.txt
+pipelined/obj_dir/
+pipelined/cpu.vcd
+single_cycle/pipelined/obj_dir/Vcpu
+single_cycle/pipelined/obj_dir/Vcpu__ALL.a
+single_cycle/pipelined/obj_dir/Vcpu__ALL.o
+single_cycle/pipelined/obj_dir/Vcpu.cpp

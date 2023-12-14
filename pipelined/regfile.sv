@@ -1,5 +1,9 @@
+/*
+    Function: Writes values on the positive edge (controls the load instructions) then assign values from the register array to be read/output
+*/
+
 module regfile #(
-    parameter ADDRESS_WIDTH = 8,
+    parameter ADDRESS_WIDTH = 5,
     parameter DATA_WIDTH = 32
 )(
     input   logic                   clk,
@@ -13,13 +17,14 @@ module regfile #(
     output  logic [DATA_WIDTH-1:0]  a0  //(debug output)
 );
 
-logic [7:0] A1 = {3'b0 , A1_i}; //why do we need that??
-logic [7:0] A2 = {3'b0 , A2_i};
-logic [7:0] A3 = {3'b0 , A3_i};
+logic [4:0] A1 = {3'b0 , A1_i}; 
+logic [4:0] A2 = {3'b0 , A2_i};
+logic [4:0] A3 = {3'b0 , A3_i};
 
-logic [DATA_WIDTH-1:0] reg_array [2**ADDRESS_WIDTH-1:0];
+logic [DATA_WIDTH-1:0] reg_array[2**ADDRESS_WIDTH-1:0];
 
-always @(posedge clk)
+always @(negedge clk)
+    if (A3!=0) begin
     case(WE3) // this could be done cleaner 
         3'b001: begin //write
             reg_array[A3] <= WD3;
@@ -37,11 +42,14 @@ always @(posedge clk)
             reg_array[A3] <= {16'b0, WD3[15:0]};
         end
         default: reg_array[A3] <= reg_array[A3];
-        
     endcase
+    end
+
+    logic [DATA_WIDTH-1:0] a1; 
 
 assign RD1 = reg_array[A1];
 assign RD2 = reg_array[A2];
-assign a0 =  reg_array[11];
+assign a0 =  reg_array[10];
+assign a1 =  reg_array[11];
 
 endmodule

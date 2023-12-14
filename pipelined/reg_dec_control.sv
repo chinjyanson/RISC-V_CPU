@@ -1,5 +1,5 @@
 /*
-	Function: Control Unit Pipeline register between Datapath Decode and Execution Stage	
+	Function: Control Unit Pipeline Register between Decode and Execution Stage
 */
 
 module reg_dec_control #(
@@ -17,6 +17,7 @@ module reg_dec_control #(
     input logic [2:0]               ALUControlD,
     input logic                     ALUSrcD,
     input logic [2:0]               funct3D,
+    input logic [2:0]               ImmSrcD,
 
     output logic [2:0]              RegWriteE,
     output logic [1:0]              ResultSrcE,
@@ -25,12 +26,13 @@ module reg_dec_control #(
     output logic                    BranchE,
     output logic [2:0]              ALUControlE,
     output logic                    ALUSrcE,
-    output logic [2:0]              funct3E
+    output logic [2:0]              funct3E,
+    output logic [2:0]              ImmSrcE
 
 );
 
 always_ff @(posedge clk) begin
-    if(en) begin     
+    
         RegWriteE   <=       rst?   0   :   RegWriteD;
         ResultSrcE  <=       rst?   0   :   ResultSrcD;
         MemWriteE   <=       rst?   0   :   MemWriteD;
@@ -39,7 +41,8 @@ always_ff @(posedge clk) begin
         ALUControlE <=       rst?   0   :   ALUControlD;
         ALUSrcE     <=       rst?   0   :   ALUSrcD;
         funct3E     <=       rst?   0   :   funct3D;
-    end
+        ImmSrcE    <=     rst?   0   :   ImmSrcD; 
+
 end
 
 endmodule

@@ -1,3 +1,7 @@
+/*
+    Function: Loads in the values from our mem file to a rom array and reads them and assigns them into Instr output
+*/
+
 module instr_mem #(
     parameter ADDRESS_WIDTH = 8,
     parameter DATA_WIDTH = 32

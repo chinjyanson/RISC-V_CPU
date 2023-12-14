@@ -1,3 +1,8 @@
+/*
+    Function: Top file which manages the control unit pipelining registers.
+    Connects components like the sign extend and instruction memory module.
+*/
+
 module control_top #(
         parameter   ADDRESS_WIDTH = 8,
         parameter   DATA_WIDTH = 32
@@ -20,8 +25,8 @@ module control_top #(
     output logic [DATA_WIDTH-1:0]          ExtImmD_o,//32 bits
     output logic [DATA_WIDTH-1:0]          PCD_o,
     output logic [DATA_WIDTH-1:0]          PCPlus4D_o,
-    output logic [1:0]                     PCSrcE_o
-
+    output logic [1:0]                     PCSrcE_o,
+    output logic [2:0]                     ImmSrcE_o
 );
 
     logic [2:0]       ImmSrcD;
@@ -51,45 +56,44 @@ module control_top #(
 
 
 
-    instr_mem InstrMem(
-        .addr_i         (PCF_i),
-        .Instr_o        (InstrF)
-    );
-    
-    control_unit ControlUnit(
-    .op             (InstrD_o[6:0]),
-    .funct3         (InstrD_o[14:12]),
-    .funct7b5       (InstrD_o[30]),
-    .RegWriteD      (RegWriteD),
-    .MemWriteD      (MemWriteD),
-    .ResultSrcD     (ResultSrcD),
-    .ALUControlD    (ALUControlD),
-    .ALUSrcD        (ALUSrcD),
-    .ImmSrcD        (ImmSrcD),
-    .JumpD          (JumpD),
-    .BranchD        (BranchD)
-    );
+instr_mem InstrMem(
+    .addr_i         (PCF_i),
+    .Instr_o        (InstrF)
+);
 
-    reg_fetch FReg(
-        .clk        (clk),
-        .en         (Fen_i),
-        .rst        (Frst_i),
-        .InstrF     (InstrF),
-        .PCPlus4F   (PCPlus4F_i),
-        .PCF        (PCF_i),
-        .PCPlus4D   (PCPlus4D_o),
-        .PCD        (PCD_o),
-        .InstrD     (InstrD_o)
-    );
+control_unit ControlUnit(
+    .op            (InstrD_o[6:0]),
+    .funct3        (InstrD_o[14:12]),
+    .funct7b5      (InstrD_o[30]),
+    .RegWriteD     (RegWriteD),
+    .MemWriteD     (MemWriteD),
+    .ResultSrcD    (ResultSrcD),
+    .ALUControlD   (ALUControlD),
+    .ALUSrcD       (ALUSrcD),
+    .ImmSrcD       (ImmSrcD),
+    .JumpD         (JumpD),
+    .BranchD       (BranchD)
+);
 
-    
-    sign_extend MySignExtend(
-        .instr        (InstrD_o[31:0]),
-        .ImmSrc       (ImmSrcD),
-        .ExtImm       (ExtImmD_o)
-    );
+reg_fetch FReg(
+    .clk        (clk),
+    .en         (Fen_i),
+    .rst        (Frst_i),
+    .InstrF     (InstrF),
+    .PCPlus4F   (PCPlus4F_i),
+    .PCF        (PCF_i),
+    .PCPlus4D   (PCPlus4D_o),
+    .PCD        (PCD_o),
+    .InstrD     (InstrD_o)
+);
 
-    reg_dec_control DReg(
+sign_extend MySignExtend(
+    .instr        (InstrD_o[31:0]),
+    .ImmSrc       (ImmSrcD),
+    .ExtImm       (ExtImmD_o)
+);
+
+reg_dec_control DReg(
     //inputs - D
     .clk(clk),
     .en(Den_i),
@@ -102,6 +106,7 @@ module control_top #(
     .ALUControlD(ALUControlD),
     .ALUSrcD(ALUSrcD),
     .funct3D(InstrD_o[14:12]),
+    .ImmSrcD(ImmSrcD), 
 
     //outputs - E
     .RegWriteE(RegWriteE),
@@ -111,7 +116,9 @@ module control_top #(
     .BranchE(BranchE),
     .ALUControlE(ALUControlE_o),
     .ALUSrcE(ALUSrcE_o),
-    .funct3E(funct3E)
+    .funct3E(funct3E),
+    .ImmSrcE(ImmSrcE_o)
+
 );
 
 reg_execute_control EREG(

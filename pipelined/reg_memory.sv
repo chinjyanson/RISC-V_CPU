@@ -1,3 +1,7 @@
+/*
+	Function: Pipeline register between Memory Access and WriteBack Stage
+*/
+
 module reg_memory #(
     parameter DATA_WIDTH =32
 )(  

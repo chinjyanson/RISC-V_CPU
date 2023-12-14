@@ -24,6 +24,7 @@ VL_MODULE(Vcpu) {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
+<<<<<<< HEAD
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
     VL_OUT(a0,31,0);
@@ -36,6 +37,7 @@ VL_MODULE(Vcpu) {
     CData/*1:0*/ cpu__DOT__ResultSrcW;
     CData/*2:0*/ cpu__DOT__ALUControlE;
     CData/*0:0*/ cpu__DOT__ALUSrcE;
+    CData/*2:0*/ cpu__DOT__ImmSrcE;
     CData/*1:0*/ cpu__DOT__PCSrcE;
     CData/*4:0*/ cpu__DOT__Rs1E;
     CData/*4:0*/ cpu__DOT__Rs2E;
@@ -43,10 +45,12 @@ VL_MODULE(Vcpu) {
     CData/*4:0*/ cpu__DOT__RdW;
     CData/*4:0*/ cpu__DOT__RdE;
     CData/*6:0*/ cpu__DOT__OpcodeE;
+    CData/*0:0*/ cpu__DOT__Den;
     CData/*0:0*/ cpu__DOT__Fen;
     CData/*1:0*/ cpu__DOT__FowardAE;
     CData/*1:0*/ cpu__DOT__FowardBE;
     CData/*0:0*/ cpu__DOT__PCrst;
+    CData/*0:0*/ cpu__DOT__Drst;
     CData/*2:0*/ cpu__DOT__control__DOT__ALUControlD;
     CData/*2:0*/ cpu__DOT__control__DOT__RegWriteE;
     CData/*1:0*/ cpu__DOT__control__DOT__ResultSrcE;
@@ -55,6 +59,9 @@ VL_MODULE(Vcpu) {
     CData/*0:0*/ cpu__DOT__control__DOT__BranchE;
     CData/*2:0*/ cpu__DOT__control__DOT__funct3E;
     CData/*1:0*/ cpu__DOT__control__DOT__ResultSrcM;
+    CData/*0:0*/ cpu__DOT__hazard__DOT__StallHazard__DOT__A;
+    CData/*0:0*/ cpu__DOT__hazard__DOT__StallHazard__DOT__B;
+    CData/*0:0*/ cpu__DOT__hazard__DOT__StallHazard__DOT__Flip;
     SData/*14:0*/ cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls;
     IData/*31:0*/ cpu__DOT__InstrD;
     IData/*31:0*/ cpu__DOT__ExtImmD;
@@ -63,24 +70,24 @@ VL_MODULE(Vcpu) {
     IData/*31:0*/ cpu__DOT__ALUResultE;
     IData/*31:0*/ cpu__DOT__PCF;
     IData/*31:0*/ cpu__DOT__pc__DOT__next_PC;
-    IData/*31:0*/ cpu__DOT__alu__DOT__RD1E;
-    IData/*31:0*/ cpu__DOT__alu__DOT__RD2E;
-    IData/*31:0*/ cpu__DOT__alu__DOT__PCE;
-    IData/*31:0*/ cpu__DOT__alu__DOT__PCPlus4E;
-    IData/*31:0*/ cpu__DOT__alu__DOT__SrcAE;
-    IData/*31:0*/ cpu__DOT__alu__DOT__SrcBE;
-    IData/*31:0*/ cpu__DOT__alu__DOT__WriteDataE;
-    IData/*31:0*/ cpu__DOT__alu__DOT__ExtImmE;
-    IData/*31:0*/ cpu__DOT__alu__DOT__ALUResultM;
-    IData/*31:0*/ cpu__DOT__alu__DOT__WriteDataM;
-    IData/*31:0*/ cpu__DOT__alu__DOT__PCPlus4M;
-    IData/*31:0*/ cpu__DOT__alu__DOT__PCPlus4W;
-    IData/*31:0*/ cpu__DOT__alu__DOT__ReadDataW;
-    IData/*31:0*/ cpu__DOT__alu__DOT__ALUResultW;
-    IData/*31:0*/ cpu__DOT__alu__DOT__ResultW;
+    IData/*31:0*/ cpu__DOT__data__DOT__RD1E;
+    IData/*31:0*/ cpu__DOT__data__DOT__RD2E;
+    IData/*31:0*/ cpu__DOT__data__DOT__PCE;
+    IData/*31:0*/ cpu__DOT__data__DOT__PCPlus4E;
+    IData/*31:0*/ cpu__DOT__data__DOT__SrcAE;
+    IData/*31:0*/ cpu__DOT__data__DOT__SrcBE;
+    IData/*31:0*/ cpu__DOT__data__DOT__WriteDataE;
+    IData/*31:0*/ cpu__DOT__data__DOT__ExtImmE;
+    IData/*31:0*/ cpu__DOT__data__DOT__ALUResultM;
+    IData/*31:0*/ cpu__DOT__data__DOT__WriteDataM;
+    IData/*31:0*/ cpu__DOT__data__DOT__PCPlus4M;
+    IData/*31:0*/ cpu__DOT__data__DOT__PCPlus4W;
+    IData/*31:0*/ cpu__DOT__data__DOT__ReadDataW;
+    IData/*31:0*/ cpu__DOT__data__DOT__ALUResultW;
+    IData/*31:0*/ cpu__DOT__data__DOT__ResultW;
     CData/*7:0*/ cpu__DOT__control__DOT__InstrMem__DOT__rom_array[256];
-    IData/*31:0*/ cpu__DOT__alu__DOT__register__DOT__reg_array[256];
-    IData/*31:0*/ cpu__DOT__alu__DOT__data__DOT__data_mem_register[256];
+    IData/*31:0*/ cpu__DOT__data__DOT__register__DOT__reg_array[256];
+    IData/*31:0*/ cpu__DOT__data__DOT__data__DOT__data_mem_register[256];
     
     // LOCAL VARIABLES
     // Internals; generally not touched by application code
@@ -93,6 +100,20 @@ VL_MODULE(Vcpu) {
     // Internals; generally not touched by application code
     Vcpu__Syms* __VlSymsp;  // Symbol table
     
+=======
+    VL_IN8(&clk,0,0);
+    VL_IN8(&rst,0,0);
+    VL_OUT(&a0,31,0);
+
+    // CELLS
+    // Public to allow access to /* verilator public */ items.
+    // Otherwise the application code can consider these internals.
+
+    // Root instance pointer to allow access to model internals,
+    // including inlined /* verilator public_flat_* */ items.
+    Vcpu___024root* const rootp;
+
+>>>>>>> ad2adb8537f4c680262bcc5aa0e0e75868ada94b
     // CONSTRUCTORS
   private:
     VL_UNCOPYABLE(Vcpu);  ///< Copying not allowed

@@ -1,3 +1,8 @@
+/*
+	Function: This unit generates the control signals from the 7 bit opcode.
+	Determines the type of instruction
+*/
+
 module maindecoder #(
     parameter  OP_WIDTH = 7
 ) (
@@ -21,28 +26,27 @@ always_comb
     case (op)
         // RegWrite_ResultSrc_MemWrite_Jump_Branch_ALUSrc_ImmSrc_ALUOp
         7'b0000011:begin
-            controls = 15'b000_01_00_0_0_1_000_00; // lw
+            controls = 15'b001_01_00_0_0_1_000_00; // lw (default to lw)
             case(funct3)
                 3'b000: controls = {{3'b011}, controls [11:0]}; //lb
                 3'b001: controls = {{3'b010}, controls [11:0]}; //lh
-                3'b010: controls = {{3'b001}, controls [11:0]}; //lw
                 3'b100: controls = {{3'b111}, controls [11:0]}; //lbu
                 3'b101: controls = {{3'b110}, controls [11:0]}; //lhu
                 default: controls = controls; 
             endcase
         end
         7'b0100011: begin
-            controls = 15'b000_00_00_0_0_1_010_00; // sw
+            controls = 15'b000_00_01_0_0_1_010_00; // sw (default to sw)
             case(funct3)
                 3'b000: controls = {controls[14:10],{2'b11}, controls[7:0]}; //sb
                 3'b001: controls = {controls[14:10],{2'b10}, controls[7:0]}; //sh
-                3'b010: controls = {controls[14:10],{2'b01}, controls[7:0]}; //sw
                 default : controls = controls;
             endcase
         end
+      
         7'b0110011: controls = 15'b001_00_00_0_0_0_xxx_10; // R-type
-        7'b1100011: controls = 15'b000_00_00_0_1_0_010_01; // B-type (beq)
-        7'b0010011: controls = 15'b001_00_00_0_0_0_000_10; // I-type (ALUSrc is 1 - double check)
+        7'b1100011: controls = 15'b000_00_00_0_1_0_010_01; // B-type (beq) - why does ALUOp have to be 01? - that goes into substraction
+        7'b0010011: controls = 15'b001_00_00_0_0_1_000_10; // I-type (ALUSrc is 1 - double check)
         7'b0110111: controls = 15'b001_00_00_0_0_1_100_11; // lui (ALUOp used to be 00 but now set to 11)
         7'b1101111: controls = 15'b001_10_00_1_0_0_011_00; // jal - changed jump to 0 and branch to 1
         7'b1100111: controls = 15'b001_10_00_1_0_1_000_00; // jalr

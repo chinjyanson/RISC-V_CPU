@@ -23,6 +23,7 @@ module cpu #(
     logic [DATA_WIDTH-1:0]          ExtImmD;
     logic [DATA_WIDTH-1:0]          PCD;
     logic [DATA_WIDTH-1:0]          PCPlus4D;
+    logic [2:0]                     ImmSrcE;
 
 
     //output internal logic for alu module 
@@ -68,6 +69,7 @@ control_top control(
     .clk(clk),
     .PCF_i(PCF),                    //32b
     .PCPlus4F_i(PCPlus4F),
+    .ImmSrcE_o(ImmSrcE),
     .InstrD_o(InstrD),//32b
     .RegWriteW_o(RegWriteW),
     .RegWriteM_o(RegWriteM), //1b  ==> edited to 3 bits
@@ -87,7 +89,7 @@ control_top control(
 );
 
 
-alu_top alu(
+datapath data(
     .clk(clk),
     .Den_i(Den),
     .Drst_i(Drst),
@@ -131,6 +133,7 @@ hazard_unit hazard(
     .RegWriteW_i(RegWriteW),
     .opcodeE_i(OpcodeE),
     .PCSrcE_i(PCSrcE),
+    .ImmSrcE_i(ImmSrcE),
     .FowardAE_o(FowardAE),
     .FowardBE_o(FowardBE),
     .Den_o(Den),

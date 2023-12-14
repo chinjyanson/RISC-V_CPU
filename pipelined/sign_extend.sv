@@ -1,3 +1,7 @@
+/*
+    Function: Used for extend the immediation for use in immediate-type instructions
+*/
+
 module sign_extend #(
     parameter DATA_WIDTH = 32,
     parameter IMM_WIDTH = 3

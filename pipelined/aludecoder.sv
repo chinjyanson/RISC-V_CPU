@@ -1,3 +1,8 @@
+/*
+	Function: Receives control signal from the Main Decoder Unit and 
+	determines the type of operation that has to be performed by the ALU
+*/
+
 module aludecoder #(
     parameter CONTROL_WIDTH = 3
 )(
@@ -19,8 +24,8 @@ assign RtypeSub = funct7b5 & opb5; //TRUE for R-type subtract
             default: // made it a default but in theory just ALUOp = 2'b10
                 case (funct3)
                     3'b000: ALUControl = (RtypeSub) ? 3'b001 : 3'b000; // takes into account case where RtypeSub gives add or addi or sub
-                    3'b001: ALUControl = 3'b100; // ssl, slli (not sure if needed)
-                    3'b010: ALUControl = 3'b101; // set less than
+                    3'b001: ALUControl = 3'b101; // ssl, slli 
+                    // 3'b010: ALUControl = 3'b101; // set less than
                     3'b110: ALUControl = 3'b011; // or
                     3'b111: ALUControl = 3'b010; // and 
                                                     //need to add something for lui
