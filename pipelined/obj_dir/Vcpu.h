@@ -24,7 +24,6 @@ VL_MODULE(Vcpu) {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-<<<<<<< HEAD
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
     VL_OUT(a0,31,0);
@@ -86,34 +85,20 @@ VL_MODULE(Vcpu) {
     IData/*31:0*/ cpu__DOT__data__DOT__ALUResultW;
     IData/*31:0*/ cpu__DOT__data__DOT__ResultW;
     CData/*7:0*/ cpu__DOT__control__DOT__InstrMem__DOT__rom_array[256];
-    IData/*31:0*/ cpu__DOT__data__DOT__register__DOT__reg_array[256];
+    IData/*31:0*/ cpu__DOT__data__DOT__register__DOT__reg_array[32];
     IData/*31:0*/ cpu__DOT__data__DOT__data__DOT__data_mem_register[256];
     
     // LOCAL VARIABLES
     // Internals; generally not touched by application code
     CData/*5:0*/ __Vtableidx1;
     CData/*0:0*/ __Vclklast__TOP__clk;
-    CData/*0:0*/ __Vm_traceActivity[2];
+    CData/*0:0*/ __Vm_traceActivity[3];
     static CData/*2:0*/ __Vtable1_cpu__DOT__control__DOT__ALUControlD[64];
     
     // INTERNAL VARIABLES
     // Internals; generally not touched by application code
     Vcpu__Syms* __VlSymsp;  // Symbol table
     
-=======
-    VL_IN8(&clk,0,0);
-    VL_IN8(&rst,0,0);
-    VL_OUT(&a0,31,0);
-
-    // CELLS
-    // Public to allow access to /* verilator public */ items.
-    // Otherwise the application code can consider these internals.
-
-    // Root instance pointer to allow access to model internals,
-    // including inlined /* verilator public_flat_* */ items.
-    Vcpu___024root* const rootp;
-
->>>>>>> ad2adb8537f4c680262bcc5aa0e0e75868ada94b
     // CONSTRUCTORS
   private:
     VL_UNCOPYABLE(Vcpu);  ///< Copying not allowed
@@ -156,9 +141,10 @@ VL_MODULE(Vcpu) {
   public:
     static void _eval_initial(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _eval_settle(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
-    static void _initial__TOP__2(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
+    static void _initial__TOP__3(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp);
-    static void _settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
+    static void _sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp);
+    static void _settle__TOP__4(Vcpu__Syms* __restrict vlSymsp) VL_ATTR_COLD;
   private:
     static void traceChgSub0(void* userp, VerilatedVcd* tracep);
     static void traceChgTop0(void* userp, VerilatedVcd* tracep);
