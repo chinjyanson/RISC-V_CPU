@@ -14,6 +14,6 @@
 | sign_extend.sv             |                    |         x          |                    |                    |
 | Testbench                  |                    |                    |                    |          x         |
 | Troubleshooting            |         p          |        p           |          p         |          x         |
-| Readme files               |         x          |                    |                    |                    |
+| Readme files               |         x          |                    |                    |          p         |
 
 > Note: `x` = full responsibility, `p` = partial responsibility
