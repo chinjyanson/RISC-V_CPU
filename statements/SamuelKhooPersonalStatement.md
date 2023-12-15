@@ -130,8 +130,12 @@ Aside from this, I made changes to the control unit from the single cycle, the c
 
 ### Restyling/Miscellanous Developement
 A large portion of my contribtions were also on miscellanous components with minor changes on port widths, restyling for clarity, organising files for ease of tracing and including different comments to explain the function of a module to allow for other members to easily understand the function of the module. This including adding the _i and _o to the input and output ports of different modules as well as formatting the port and parameter sections of a module to achieve a unified style across our CPU. Some examples of this are shown below: 
-
-
+- [Example of restyling](https://github.com/vishesh32/RISC-V-Team1/commit/46032425739ae6ab26cd36ac6bdc4f3a326db596)
+- [Example of reformatting](https://github.com/vishesh32/RISC-V-Team1/commit/a80cd1f020f241408510ee485a1c847a923b5a53)
+- [Example of adding comments for clarity](https://github.com/vishesh32/RISC-V-Team1/commit/7548caf7ad57d462d3724947a5455a391613a72f)
+- [Example of adding _o and _ i](https://github.com/vishesh32/RISC-V-Team1/commit/5d87ec413f5d2de9ceaeb800607fa378e7a1708d)
+- [Example of reorganising files to prevent confusion](https://github.com/vishesh32/RISC-V-Team1/commit/d037ae67f569aeab43d1283df92efbab34b2f7ba)
+The changes were well received within my team and led to an improved workflow by reducing confusion and the time taken to search for variables and files. 
 ### Conclusions and Evaluations
 
 ## Review
