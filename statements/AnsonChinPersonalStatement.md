@@ -1,6 +1,7 @@
 # Chin Jun Yen (Anson) Personal Statement 
 
 ## Single Cycle Processor 
+![single](pro.png)
 
 ### Introduction
 Within this part of the project, I was primarily tasked with figuring out most of the ALU and RegFile operations, I occasionally worked with Bruno (duasob) to figure out the appropriate logic between Control Unit. I also helped debug the working test folder alot. 
@@ -99,6 +100,7 @@ I also ran the different data mem files and collected images and data with Vishe
 - I organised the structure of the repository
 
 ## Pipelined Processor
+![pipelined](/img/pipelined.jpg)
 For Pipelined Processor, I was primarily focused on the hazard unit and debugging. For the hazard unit, I initially wrote my logic like so: 
 ```
 always-comb begin
