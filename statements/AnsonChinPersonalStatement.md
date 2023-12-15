@@ -1,7 +1,7 @@
 # Chin Jun Yen (Anson) Personal Statement 
 
 ## Single Cycle Processor 
-![single](pro.png)
+![single](/img/pro.png)
 
 ### Introduction
 I was primarily tasked with figuring out most of the ALU and RegFile operations, I occasionally worked with Bruno (duasob) to figure out the appropriate logic between Control Unit. 
@@ -38,7 +38,6 @@ I had initially wrote my ALU in Lab 4 when designing a reduced RISC-V architectu
 - [Finishing ALU_top.sv file](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/06f4e2aefb3499e4651b3a129d9ab2ab6f63004e)
 - [Changed ALU operations to suit the new instructions](https://github.com/vishesh32/RISC-V-Team1/commit/690fd0438bfb9e7dc2e17c22f9194c5ea6815491)
 - [New architecture for ALU_top, added data_mem and mux4](https://github.com/vishesh32/RISC-V-Team1/commit/251aa52d09a5efadf68209dec9f10d0415f0d3f8)
-- []
 
 
 ### Register File
@@ -150,15 +149,19 @@ To wrap up a great term so far, I am really happy with what I have learnt in thi
 
 ### What I learnt 
 #### How to use github
-From writing in this repo to gitignores to dealing with merge conflicts and branching, I feel like this project has really taught me the ins and outs of using github. 
+From writing in this repo to gitignores to dealing with merge conflicts and branching, I feel like this project has really taught me the ins and outs of using github. Another important note to top this off was making meaningful commits, which admittedly could still use a little help.
 
 #### How to debug efficiently
-I feel that the sequential logic required for debugging pipelining was definitely difficult 
+I feel that the sequential logic required for debugging pipelining was definitely difficult, but i feel much more capable and quick to spot an error using GTKwave
 
 #### Balancing workload between team members
-I think this project really emphazed more the importance of teamwork than any other group project up till now. 
+I think this project really emphazed more the importance of teamwork than any other group project up till now. That is because since everything was so sequential and connected, and that we had to separately work on our parts, communication was important to understand what the other sections are doing. Debugging the pipeline was evidence to this.
+
+#### A better understanding of Computer Architecture 
+I feel confident in understand how the pieces of the puzzle fit together in RISC V now
 
 ### What I could do better 
 - As a team one thing that could have been better was co author credits, alot of times we would work together on a feature on one laptop, but the commits never included everyone, only the person committing. 
-- 
+- I could have also improved on my styling, sometimes my code is difficult to read because I don't format it correctly
+- We could have made better diagams, especially for hazard handling and pipelining, because we were solely dependant on communication
 
