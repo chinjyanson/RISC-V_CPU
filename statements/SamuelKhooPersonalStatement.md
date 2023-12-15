@@ -116,23 +116,51 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 The core concept of our pipelined cpu developed upon our existing single cycle with the use of the architecture diagram provided within Lecture 8 (Pipelining) and information found within the Sarah Harris and David Harris textbook, these were used as reference but not directly copied. We then added modifications to their designs and made some changes to our components to take into account factors like loading half the word, loading the last 8 bits and different lengths of storing words. The images whichwe used as reference are shown below:
 
 ![Lecture 8 Pipelining Diagram](/img//pipelined.jpg)
+- The pipeline registers seem to combine both control unit and data path pipelining registers, I decided to split them up but retain the same clk cycle/signal to ensure that they work in time. This is to reduce the confusion of having a large number of different inputs and outputs for each pipeline register. 
 
-![Sarah Harris and David Harris Textbook]()
+![Sarah Harris and David Harris Textbook](/img//textbook.jpg)
+- You can see the new hazard unit signals that were missing in the architecture/diagram given in the original lecture. 
+
 I reworked many components within this section of our project as we realised that there were certain errors and misorganisation within our single cycle that would hinder our pipelined development, I worked closely with Bruno to create pipelining registers and ensured that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
 - [Example of a control unit pipeline register](https://github.com/vishesh32/RISC-V-Team1/commit/a29efa27d9dcdf7a0953806c3e3b9c14ae40f641)
 - [Example of a data path pipeline register](https://github.com/vishesh32/RISC-V-Team1/commit/81214bc940dbf3314fa11de5b38f1f9a238df7b3)
 - [Datapath top module](https://github.com/vishesh32/RISC-V-Team1/commit/104245d1ebe89f35dd544b5c80f983f610b8b9cc)
 - [Controller top module](https://github.com/vishesh32/RISC-V-Team1/commit/bead218ee0735f435d95a3c69ae8dc6be4eb9044)
 - [Top RISCV file draft](https://github.com/vishesh32/RISC-V-Team1/commit/bd0264c0bc639c614dfc2eb1adbea6710c489caf)
-These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. I also worked with Anson and Bruno to create a hazard unit draft, this was then broken down into further sub modules to trace and debug however, the overall logic and signals still remain the same. 
+These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. I also worked with Anson and Bruno to create a hazard unit draft, this was then broken down by Bruno into further sub modules to trace and debug however, the overall logic and signals still remain the same. 
 - [New hazard unit draft](https://github.com/vishesh32/RISC-V-Team1/commit/1887fae085c100c83dc7e0fd9ec2c8d7ff8e5062)
 
+```
+// if ((RegWriteM!= 3'b0)||(RegWriteW!= 3'b0))begin
+//     if(Rs1E == RdM) 
+//         FowardAE = 2'b10;
+//     else 
+//         FowardAE = (Rs1E == RdW) ? 2'b01 : 2'b00;
+    
 
+//     //FowardBE
+//     if(Rs2E == RdM) 
+//         FowardBE = 2'b10;
+//     else 
+//         FowardBE = (Rs2E == RdW) ? 2'b01 : 2'b00;
+    
+// end else begin
+//     FowardAE = 2'b00;
+//     FowardBE = 2'b00;
+// end
+```
+Above we have a now commented out piece of code which has been rewritten more efficiently, but this handles the forwarding signals which control the hazard handling 3 wide muxes.
 
 Aside from this, I made changes to the control unit from the single cycle, the control unit had previously combined the aludecoder and the main decoder together, making it difficult to debug and sometimes hard to trace errors. To resolve this, I wrote split both decoders up and created a new controller (top control file). This was well received by all members within my team and I felt that it made it much easier to trace any errors and make changes. The changes made are shown below:
 - [New ALU decoder]()
 - [New Main decoder]()
 - [Control unit working with decoders]()
+
+One of the key references which I referred to outside of the files which had been previously written by Bruno was the slides from Lecture 7 which is shown here:
+
+![Lecture 7 Decoder Slide]()
+
+The alu decoder and main decoder were then later further modified in conjuction with Bruno to add extra instructions I had missed and to reduce the need for further muxes and extra unnecessary signals which would complicate the existing design
 
 ### Restyling/Miscellanous Developement
 A large portion of my contribtions were also on miscellanous components with minor changes on port widths, restyling for clarity, organising files for ease of tracing and including different comments to explain the function of a module to allow for other members to easily understand the function of the module. This including adding the _i and _o to the input and output ports of different modules as well as formatting the port and parameter sections of a module to achieve a unified style across our CPU. Some examples of this are shown below: 
