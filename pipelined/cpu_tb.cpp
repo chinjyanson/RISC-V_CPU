@@ -53,7 +53,7 @@ int main(int argc, char **argv, char **env) {
 
         if(clock){ 
                        std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
-                        outputFile << simcyc << " " << top->a0 << '\n';
+                        //outputFile << simcyc << " " << top->a0 << '\n';
 
                         clockcount++; }
 

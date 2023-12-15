@@ -24,7 +24,7 @@ module data_mem #(
 
     initial begin
         $display("Loading ROM");
-        $readmemh("datarom.mem", data_mem_register, START_ADDRESS);
+        $readmemh("gaussian.mem", data_mem_register, START_ADDRESS);
      end
 
     logic [17:0] add =  A[31:0];
