@@ -2,6 +2,19 @@
 
 ## Single Cycle Processor
 
+### Summary of my main contributions
+- Wrote, tested and debugged Single Cycle control module.
+- Helped with the debugging of the Single Cycle Design.
+- Wrote, tested and debugged Hazard Unit.
+- Wrote and connected Pipeline Registers.
+- Debugged Pipelined Design.
+
+This Personal Statement is distributed with the following structure:
+• Single Cycle CPU
+• Pipelined CPU
+• If I were to do it again
+• What I have learned
+
 ### Introduction
 For this first section of the project, I was mainly involved in the Control Section, with special focus on the Control Unit instructions and the Sign Extender. I additionally was significantly involved in debugging and helped with some miscellaneous tasks.
 In this section of the project, progress was slower than anticipated due to a series of unexpected challenges. The need for extensive debugging of various errors significantly impeded our ability to advance at the desired pace.
@@ -78,6 +91,161 @@ to fit Little Endian Addressing
     - [Python Script - Words to bytes](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/26790233c4c6e1883cf98b9fe9b7fbb13d2068b7)
 
 ## Pipelining
+For this second section of the project, I implemented the 2 new sections need: 
+- Pipeline Registers
+- Hazard Unit . 
+I also initially renamed, and rewired all the signals to fit the starting diagram, which 
+would later be greatly modified and improved.
 
+![pipelined](pipelined.jpg)
 
+Additionally, I greatly contributed to debugging efforts with Vishesh, and helped 
+Samuel with some specific issues for the improved Control Unit.
 
+### Pipeline Registers 
+Initially I implemented a single pipeline register per stage, with the thought that 1 was 
+simpler than 2. But each single register had a very large number of signals, and I 
+later decided to have registers both in control and in data. This was suggested by 
+Samuel, and it turned out to be much cleaner and easier to debug.
+The pipelining process very was time consuming, but relatively straight forward. 
+Having a special label in each signal for the different cycles importantly decreased 
+debugging time and confusion. 
+- [Freg](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/009bf1eaafb51359a63a555d26bf9a86a6fcbeec)
+- [Wiring 1](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/0fd04426abfd7518fbb5c0fb1aa0a1ad00eda1c1)
+- [Dreg](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/cde1c066b335c0c87a36d75755ba65f3a83ed19b)
+- [Ereg](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/3498956f0990207ed4e655b2043cc02c515cf19b)
+- [Wreg](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/2c46d6fa612d581b0c166c84e5bddded659c76da)
+- [Separate Registers in Control and Data](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/00e38bbfe15e397dae57fa8b022b063303ae2bc6)
+
+### Hazard Unit
+I was also in charge of the logic for both data (divided into stall and forward), and 
+control hazards. For simplification purposes, each section was divided into its own 
+module, inside the hazard unit. 
+- [Module Creation](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/b7749837c6c3849c09427c18a9596e436d76dea3)
+- [Initial Forward and Stall Units](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/35aafbf6250ee00b89374778b27894b049db0144)
+- [Hazard Control](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d5efce9f1bbb1f3eb2a22ccfcfe27a487f384385)
+- [Wiring 1](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/33c9b00514c2054ed761444feb61624c9ce27b74)
+- [Rst/Flush Signals](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/f6f1b2fa4f7ad0b4072a9c08f5e4e886cd33698c)
+- [Not hazard if Zero](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/362a922ca187f69ff2a1a4ae853635666d1fe460)
+- [Improved hazard Unit](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/ffca89cbbd4b4376f6f3d5942ac3d6c5485ebb1b)
+- [Improved hazard stall](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/dde6d5f3ff09d9034e1cc68c1f721804e12cf6d5)
+- [Corrected hazard stall](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/a3fae947d1e87687594b2405088e6f8af4233133)
+
+#### Data Hazards
+We need take into account the type of the instruction, for both Stalls and 
+Forwards to prevent mistaking an immediate for a register. We do this by 
+reading ImmSrc (delayed by one cycle), and adjusting our logic to the 
+appropriate logic:
+![img1](bruno1.png)
+Stall:
+```
+assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
+assign B = (A)&&(ImmSrcE!=3'b000);
+assign PCen = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
+assign Fen  = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
+assign Drst  = !(((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
+```
+Forward
+```
+assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
+assign B = (A)&&(ImmSrcE!=3'b000);
+
+assign FowardAE = ((RegWriteM) || (RegWriteW&&A)) ? (((Rs1E == RdM)&&(Rs1E!=5'b0))? 2'b10 : (((Rs1E == RdW)&&(Rs1E  != 5'b0)) ? 2'b01 : 2'b00)) : 2'b00;
+assign FowardBE = ((RegWriteM) || (RegWriteW&&B)) ? (((Rs2E == RdM)&&(Rs2E!=5'b0)) ? 2'b10 : (((Rs2E == RdW)&&(Rs2E != 5'b0)) ? 2'b01 : 2'b00)) : 2'b00;
+
+```
+
+Forwarding: There are mainly two points to note. In case of conflict, we need 
+to prioritize forwards from M to the ones from W, as they contain the latest, 
+corrected data to forward. And, we need to make sure that the register we 
+where writing to is different from zero (reading from zero never results in a 
+hazard).
+![img2](bruno2.png)
+
+Stalling: this module is very straightforward. We use “opcode” to detect a 
+load instruction, and use RdE and Rs1D/Rs2D to detect a match. When that 
+happens, we want to stall PCreg and Decreg, and flush the content in the 
+Execute register.
+
+#### Control Hazards:
+Also very simple. Whenever we branch or jump (PCSrc !=0), we need to Flush the 
+content of the Fetch and Decode registers.
+```
+assign Frst = (PCSrcE != 2'b0) ? 1 : 0;
+assign Drst = (PCSrcE != 2'b0) ? 1 : 0;
+```
+
+### Control Unit
+Samuel greatly cleaned and improved the control unit, I fixed specific issues such as:
+
+LBU instruction: In Single Cycle, for all the Load instructions, we took the whole 32 
+bits from DataMem and we wrote the appropriate extension to RegWrite according to 
+WE3. This was no longer possible in pipelining due to Forwarding Hazards. We 
+solved this by getting rid of all the (unused) load instructions, and SW instruction. 
+This allowed us to set WE3 in RegiterFile back to 1, and we used the extra bit in 
+RegMem to implement LBU correctly.
+
+LUI instruction: small modifications where needed in ALU and ALUdecoder to 
+correctly implement this instruction.
+- [LUI in ALU and ALUdecoder](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/fafbd1101bb423987224f288050e2d2b3705a6ce)
+
+PCSrcE logic: implemented logic to determine the correct Branch/Jump. We need 
+to take into account the correct Branch instruction (BNE/BEQ) and adjust ZeroOP 
+accordingly. I also used ALUSrcE to differentiate between JAL and JALR instruction 
+without the need for additional logic.
+```
+assign ZeroOp = ZeroE_i ^ funct3E[0]; // flip the Zero input if BNE
+
+always_comb
+    if (JumpE)      PCSrcE_o = ALUSrcE_o ? 2'b10: 2'b01 ; //choose between JAL and JALR without extra logic
+    else PCSrcE_o = (BranchE & ZeroOp) ? 2'b01 : 2'b00;
+```
+- [Initial PCSrcE logic](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d0200ea5f6bc5a4f4f9d8affa304f1450ee1c708)
+
+Store and Load instructions: added cases to identify the separate Store and Load 
+instructions (that were later not included) to the new and improved control_top.
+- [Store and Load](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/8d65682cc29ffa8cba8c69ee9e6d73afa185a612)
+
+### Debugging
+This was undoubtedly the most tedious and time consuming contribution to this 
+section. The initial logic had multiple issues, and finding those specific errors was not 
+easy. 
+Vishesh, who mainly debugged Single Cycle, made this process a lot easier as 
+multiple issues where repeated in both sections (such as Data Memory being word 
+addressed, instead of byte addressed).
+
+- [Debug 1](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/4aa25ff3a87266d9daadd5c65949c5438bc23df8) - syntax errors
+- [Debug 2](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/9c783802bcc7d2eeba3b44668bd32d01ece776c9) - Fixed 54 various errors
+- [Debug 3](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/99a35a97144e334eed66a035cdede3818545d225) - Fixed multiple syntax and wiring errors
+- [Debug 4](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/e9d25729eba150552333bec1b9e4c0ac1653c812) - Stall hazard errors
+- [Debug 5](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/0a8c811314abaa4e6a9a5157425ce836848b01f5) - Issues with JAL
+- [Debug 6](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/5549c4a14c75f9e6c38bae284dde9a2d2b1bd558) - Incorrect wiring to RegFile A3
+- [Debug 7](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/c137ad57e79baafbf7134aac8fb11ac4b1fc6caf) - Corrected control for I type instructions
+- [Debug 8](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/200b652a0ad7c520aebf310bc4cd309ab96b8cf7) - Zero has to be constant 0.
+- [Debug 9](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/eeb03f3968d7c0fe007c33d3af2796ea5a0b072d) - Fix LBU
+- [Debug 10](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/2c54ef389c285219b5301eaa878303c9f7dbf845) - Fix RegWrite
+
+### If I were to do it again
+In general, I am pleased with the approach taken. Maybe I could have researched
+the specific modules before writing them, instead of trying to figure them out by 
+myself – that would have saved me multiple hours debugging. But I fundamentally 
+think that running into problems and having to work out a solution has been a key 
+aspect of the learning process. 
+If I had to change something, I would have focused more on communicating with my 
+team. At times we were working on the same things at the same time, which reduced 
+our efficiency as a Team. But overall, we maintained a great relation, and are 
+pleased with the end result. 
+
+### What I have learned
+
+This was a project that, although at times seemed tedious and endless, was overall
+very enjoyable. There where multiple creative opportunities and design decisions 
+that kept it very dynamic and engaging. 
+Undoubtedly, I feel I have a very deep understanding of the fundamentals of System 
+Verilog, CPU design and logic, and GIT hub. The latter was an especially helpful 
+lesson, that I have already starting using more frequently for parallel personal 
+projects. 
+Another very important learning point was communicating and working as a Team. I 
+learned the importance of task distribution, efficient communication and 
+As a conclusion, I am very happy about this project. I think it was very well 
+structured, so that you could get out of it as much effort as you invested. 
