@@ -57,6 +57,31 @@ always_ff @(posedge clk) begin
 end
 ```
 
+### Register File and Instruction Mem
+For these components, I worked closely with their creators to refine certain parts and modified their styling to ensure ease of understand. Bruno and I also ensured that these components would be functional with our control unit and data memory. This involved changing the clock detecting edge to be negative on our register file (read and write on different edges) and reorganising logic as seen in the commit and code snippet below:
+- [Reorganised regfile.sv](https://github.com/vishesh32/RISC-V-Team1/commit/0eff28f042d5ece8a8a160522d1007df79a89b40)
+```
+always @(negedge clk) begin
+    if (A3 != 0) begin
+        case (WE3)
+            3'b001: reg_array[A3] <= WD3; // write
+            3'b010: reg_array[A3] <= {{16{WD3[15]}}, WD3[15:0]}; // lh - sign extend
+            3'b011: reg_array[A3] <= {{24{WD3[7]}}, WD3[7:0]}; // lb - sign extend
+            3'b111: reg_array[A3] <= {{24'b0}, WD3[7:0]};   //  lbu - zero extend
+            3'b110: reg_array[A3] <= {16'b0, WD3[15:0]}; // lhu - zero extend
+            default: reg_array[A3] <= reg_array[A3];
+        endcase
+    end
+```
+
+For instruction mem, I mainly rewrote the parameters and modified the input and output logic as well as the size of the array. I had originally directly assigned the instruction output to be an address in the rom array, however, after discussing with Bruno, we came to the conclusion of implementing a single assign instruction to account for all 4 different parts (this is best demonstrated in the code snippet below)
+- [New instruction mem](https://github.com/vishesh32/RISC-V-Team1/commit/e31e78940a98fd20bc7fe8a1b3df8d07b401541e)
+```
+logic [ADDRESS_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
+// this is the core idea of splitting into 4, 8 bit width parts
+assign Instr_o = {{rom_array[addr_i+3]}, {rom_array[addr_i+2]}, {rom_array[addr_i+1]}, {rom_array[addr_i]}};
+```
+
 ### Debugging
 Throughout the development of the single cycle CPU, I also made numerous bug fixes and a plethora of reorganisation. This included adding in functional branch logic, fixing ALU instructions, ensuring that the right opcodes corresponded with the right instructions and similar alternatives. During the debugging process, I worked both Vishesh and Anson to review error messages and warning thrown as well as inspecting the GTKWave sheets to trace the data in registers and different wires. Evidence demonstrating this is hyperlinked below:
 - [Debugging sizing error in regfile](https://github.com/vishesh32/RISC-V-Team1/commit/5ff7372e4a08abd6bcdda4dd846755f4b275f957)
@@ -66,15 +91,24 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 - [Fixed misdeclaration of bits](https://github.com/vishesh32/RISC-V-Team1/commit/1731b61a9ade405087ab320799c796d4e8933eef)
 - [Further debugging of R-type instructions](https://github.com/vishesh32/RISC-V-Team1/commit/8cfc5f7b21506f4a5561cdc0dcf4e22912592ebb)
 
+
+### Restyling
+
 ## Pipelining
 I reworked many components within this section of our project as we realised that there were certain errors and misorganisation within our single cycle that would hinder our pipelined development, I worked closely with Bruno to create pipelining registers and ensured that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
 - [Example of a control unit pipeline register]()
 - [Example of a data path pipeline register]()
 - [Datapath top module]()
-- [Controller top module]()
-These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. 
+- [Controller top module](https://github.com/vishesh32/RISC-V-Team1/commit/bead218ee0735f435d95a3c69ae8dc6be4eb9044)
+- [Top RISCV file draft](https://github.com/vishesh32/RISC-V-Team1/commit/bd0264c0bc639c614dfc2eb1adbea6710c489caf)
+These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. I also worked with Anson and Bruno to create a hazard unit draft, this was then broken down into further sub modules to trace and debug however, the overall logic and signals still remain the same. 
+- [New hazard unit draft](https://github.com/vishesh32/RISC-V-Team1/commit/1887fae085c100c83dc7e0fd9ec2c8d7ff8e5062)
+
 
 Aside from this, I made changes to the control unit from the single cycle, the control unit had previously combined the aludecoder and the main decoder together, making it difficult to debug and sometimes hard to trace errors. To resolve this, I wrote split both decoders up and created a new controller (top control file). This was well received by all members within my team and I felt that it made it much easier to trace any errors and make changes. The changes made are shown below:
 - [New ALU decoder]()
 - [New Main decoder]()
 - [Control unit working with decoders]()
+
+
+### Conclusions and Evaluations
