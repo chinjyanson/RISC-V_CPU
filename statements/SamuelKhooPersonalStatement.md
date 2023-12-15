@@ -174,7 +174,7 @@ case (ALUOp)
 ```
 
 - [New Main decoder](https://github.com/vishesh32/RISC-V-Team1/commit/66650eb3dd9e239fbbbfe08e9f8c900d1ed16726)
-Within this module I decides to reduce the complexity by. This concept was later further developed by both Bruno and myself to split the load and store instructions to have specific controls and 3 bit wide regwrites or memwrites which could control their respective components to ensure that the correct instruction was performed. The code snippet below demonstrates the multi assignment all in 1 line. 
+Within this module I decides to reduce the complexity by having large multi one line assignment. The core idea was instead of having numerous assignments for each opcode that would be long and tedious, I would just assign them all in one line, splitting the bit values/signal values up with an _ this would allow for swift changing of any values, accelerating the debugging process and it would made it easier to trace/follow. This would then be assigned to the values using the following assign command:  ``` assign {RegWrite, ResultSrc, MemWrite, Jump, Branch, ALUSrc, ImmSrc, ALUOp} = controls; ``` This concept was later further developed by both Bruno and myself to split the load and store instructions to have specific controls and 3 bit wide regwrites or memwrites which could control their respective components to ensure that the correct instruction was performed. The code snippet below demonstrates the multi assignment all in 1 line. 
 ```
 case (op)
     // RegWrite_ResultSrc_MemWrite_Jump_Branch_ALUSrc_ImmSrc_ALUOp
@@ -198,7 +198,6 @@ case (op)
     default: controls = 13'bx_xx_xx_x_x_x_xxx_xx; // instr not implemented
 endcase
 ```
-The core idea was instead of having numerous assignments for each opcode that would be long and tedious, I would just assign them all in one line, splitting the bit values/signal values up with an _ this would allow for swift changing of any values, accelerating the debugging process and it would made it easier to trace/follow. This would then be assigned to the values using the following assign command:  ``` assign {RegWrite, ResultSrc, MemWrite, Jump, Branch, ALUSrc, ImmSrc, ALUOp} = controls; ```
 
 - [Final Versions of Decoders](https://github.com/vishesh32/RISC-V-Team1/commit/52f900875a3972f0b533fa75009af298a702f29c)
 - [Control unit working with decoders](https://github.com/vishesh32/RISC-V-Team1/commit/ac0f60d0a88b4e21338ea48971ad2e648419253b)
@@ -218,7 +217,7 @@ always_comb
     else PCSrcE_o = (BranchE & ZeroOp) ? 2'b01 : 2'b00;
 
 ```
-This is just one of the numerous other changes which I made to reduce the need for extra logic and to simplify the design to allow for a functional pipelining. These components were verified by Vishesh who worked primarily in testing as well as via analysing GTKWave graphs with Bruno. 
+This is just one of the numerous other changes which I made to reduce the need for extra logic and to simplify the design to allow for a functional pipelining. These components were then verified by Vishesh who worked primarily in testing as well as via analysing GTKWave graphs with Bruno. 
 
 ### Restyling/Miscellanous Developement
 A large portion of my contribtions were also on miscellanous components with minor changes on port widths, restyling for clarity, organising files for ease of tracing and including different comments to explain the function of a module to allow for other members to easily understand the function of the module. This including adding the _i and _o to the input and output ports of different modules as well as formatting the port and parameter sections of a module to achieve a unified style across our CPU. Some examples of this are shown below: 
