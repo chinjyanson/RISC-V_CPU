@@ -149,15 +149,19 @@ To wrap up a great term so far, I am really happy with what I have learnt in thi
 
 ### What I learnt 
 #### How to use github
-From writing in this repo to gitignores to dealing with merge conflicts and branching, I feel like this project has really taught me the ins and outs of using github. 
+From writing in this repo to gitignores to dealing with merge conflicts and branching, I feel like this project has really taught me the ins and outs of using github. Another important note to top this off was making meaningful commits, which admittedly could still use a little help.
 
 #### How to debug efficiently
-I feel that the sequential logic required for debugging pipelining was definitely difficult 
+I feel that the sequential logic required for debugging pipelining was definitely difficult, but i feel much more capable and quick to spot an error using GTKwave
 
 #### Balancing workload between team members
-I think this project really emphazed more the importance of teamwork than any other group project up till now. 
+I think this project really emphazed more the importance of teamwork than any other group project up till now. That is because since everything was so sequential and connected, and that we had to separately work on our parts, communication was important to understand what the other sections are doing. Debugging the pipeline was evidence to this.
+
+#### A better understanding of Computer Architecture 
+I feel confident in understand how the pieces of the puzzle fit together in RISC V now
 
 ### What I could do better 
 - As a team one thing that could have been better was co author credits, alot of times we would work together on a feature on one laptop, but the commits never included everyone, only the person committing. 
-- 
+- I could have also improved on my styling, sometimes my code is difficult to read because I don't format it correctly
+- We could have made better diagams, especially for hazard handling and pipelining, because we were solely dependant on communication
 
