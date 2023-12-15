@@ -39,7 +39,22 @@ Following the completion of the PC module, I was rotated onto working on the dat
 - [Implementing different load instructions](https://github.com/vishesh32/RISC-V-Team1/commit/c389c01ad1b840522539c9a7e5a7b442de2bff70)
 Throughout the pipeline development process, I would realise that this implementation would cause errors where incorrect data was being sent and fed back to the register file. This would be debugged by both myself and Bruno. The updated version of the data mem would include a 2 bit wide Write Enable/MemWrite (which is needed to differentiate between the different load instructions). This is shown in the code snippet below:
 ```
-
+always_ff @(posedge clk) begin
+    case(WE) // this could be done cleaner
+    2'b01: 
+    begin //word write
+        data_mem_register[add] <= WD[7:0];
+        data_mem_register[add+1] <= WD[15:8];
+        data_mem_register[add+2] <= WD[23:16];
+        data_mem_register[add+3] <= WD[31:24];
+    end
+    2'b11:
+    begin //write byte
+        data_mem_register[A] <=  WD[7:0];
+    end
+    default: data_mem_register[A] <= data_mem_register[A];
+    endcase
+end
 ```
 
 ### Debugging
