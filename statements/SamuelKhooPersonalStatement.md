@@ -102,8 +102,6 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 - [Further debugging of R-type instructions](https://github.com/vishesh32/RISC-V-Team1/commit/8cfc5f7b21506f4a5561cdc0dcf4e22912592ebb)
 
 
-### Restyling
-
 ## Pipelining
 I reworked many components within this section of our project as we realised that there were certain errors and misorganisation within our single cycle that would hinder our pipelined development, I worked closely with Bruno to create pipelining registers and ensured that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
 - [Example of a control unit pipeline register]()
@@ -119,6 +117,9 @@ Aside from this, I made changes to the control unit from the single cycle, the c
 - [New ALU decoder]()
 - [New Main decoder]()
 - [Control unit working with decoders]()
+
+### Restyling/Miscellanous Developement
+A large portion of my contribtions were also on miscellanous components with minor changes on port widths, restyling for clarity, organising files for ease of tracing and including different comments to explain the function of a module to allow for other members to easily understand the function of the module. This including adding the _i and _o to the input and output ports of different modules as well as formatting the port and parameter sections of a module to achieve a unified style across our CPU. Some examples of this are shown below: 
 
 
 ### Conclusions and Evaluations
@@ -137,3 +138,10 @@ Lastly learning to communicate and plan as a team was vital and I definitely saw
 To conclude, this project was a unique learning experience where I gained profound insight into the material covered in lectures and built upon the skills from the previous labs I had completed. The networking and collaborative skills I developed within this project will also be valuable in future endeavours and projects. 
 
 ## What I Would Change
+If I was to undertake this project again, I would definitely have planned the outline and developments of modules before splitting up the components for seperate members. This would have saved us a large amount of time involved in rewriting components from single cycle to pipeline where our implementation was previously correct but almost impossible to pipeline efficiently. 
+
+Aside from this, I would have definitely tried to establish a clear structure and Verilog file style with a clear file and port naming to prevent confusion upon joining the modules together. This was also another aspect within our project that led to confusion and time wasted debugging minor errors. 
+
+I would also focus on being more proactive in engaging in communication with my teammates early within the project, as early on in the project I often spent a large amount of time trying to understand the files written by my other teammates insteads of directly taking the initiative to contact them to explain and debug a problem with me. This greatly changed during the second part of our project and had a notable impact on the efficiency of debugging problems and achieving a successful result. 
+
+Ultimately, I would have definitely completed more research into components and using the resources available to us online to develop the RISC-V CPU instead of attempting to create my own protocol and modules from scratch without a reference. We did make use of a textbook and resources noted by other groups to our advantage towards the end of our project but I felt that this was discovered a little late. 
