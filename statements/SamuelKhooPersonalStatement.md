@@ -113,14 +113,20 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 
 
 ## Pipelining
+The core concept of our pipelined cpu developed upon our existing single cycle with the use of the architecture diagram provided within Lecture 8 (Pipelining) and information found within the Sarah Harris and David Harris textbook, these were used as reference but not directly copied. We then added modifications to their designs and made some changes to our components to take into account factors like loading half the word, loading the last 8 bits and different lengths of storing words. The images whichwe used as reference are shown below:
+
+![Lecture 8 Pipelining Diagram](/img//pipelined.jpg)
+
+![Sarah Harris and David Harris Textbook]()
 I reworked many components within this section of our project as we realised that there were certain errors and misorganisation within our single cycle that would hinder our pipelined development, I worked closely with Bruno to create pipelining registers and ensured that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
-- [Example of a control unit pipeline register]()
-- [Example of a data path pipeline register]()
-- [Datapath top module]()
+- [Example of a control unit pipeline register](https://github.com/vishesh32/RISC-V-Team1/commit/a29efa27d9dcdf7a0953806c3e3b9c14ae40f641)
+- [Example of a data path pipeline register](https://github.com/vishesh32/RISC-V-Team1/commit/81214bc940dbf3314fa11de5b38f1f9a238df7b3)
+- [Datapath top module](https://github.com/vishesh32/RISC-V-Team1/commit/104245d1ebe89f35dd544b5c80f983f610b8b9cc)
 - [Controller top module](https://github.com/vishesh32/RISC-V-Team1/commit/bead218ee0735f435d95a3c69ae8dc6be4eb9044)
 - [Top RISCV file draft](https://github.com/vishesh32/RISC-V-Team1/commit/bd0264c0bc639c614dfc2eb1adbea6710c489caf)
 These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. I also worked with Anson and Bruno to create a hazard unit draft, this was then broken down into further sub modules to trace and debug however, the overall logic and signals still remain the same. 
 - [New hazard unit draft](https://github.com/vishesh32/RISC-V-Team1/commit/1887fae085c100c83dc7e0fd9ec2c8d7ff8e5062)
+
 
 
 Aside from this, I made changes to the control unit from the single cycle, the control unit had previously combined the aludecoder and the main decoder together, making it difficult to debug and sometimes hard to trace errors. To resolve this, I wrote split both decoders up and created a new controller (top control file). This was well received by all members within my team and I felt that it made it much easier to trace any errors and make changes. The changes made are shown below:
@@ -135,7 +141,9 @@ A large portion of my contribtions were also on miscellanous components with min
 - [Example of adding comments for clarity](https://github.com/vishesh32/RISC-V-Team1/commit/7548caf7ad57d462d3724947a5455a391613a72f)
 - [Example of adding _o and _ i](https://github.com/vishesh32/RISC-V-Team1/commit/5d87ec413f5d2de9ceaeb800607fa378e7a1708d)
 - [Example of reorganising files to prevent confusion](https://github.com/vishesh32/RISC-V-Team1/commit/d037ae67f569aeab43d1283df92efbab34b2f7ba)
-The changes were well received within my team and led to an improved workflow by reducing confusion and the time taken to search for variables and files. 
+The changes were well received within my team and led to an improved workflow by reducing confusion and the time taken to search for variables and files. The new styling and formatting of the System Verilog files were intended to match those of industry standard and keep the project as professional as possible. 
+
+
 ### Conclusions and Evaluations
 
 ## Review
