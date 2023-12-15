@@ -22,12 +22,12 @@ module data_mem #(
 
     initial begin
         $display("Loading ROM");
-        $readmemh("pdf(f1)", data_mem_register, START_ADDRESS);
+        $readmemh("gaussian.mem", data_mem_register, START_ADDRESS);
      end
 
-    logic [17:0]    add = A[31:0];
-    logic [15:0]    data16 = WD[15:0];
-    logic [7:0]     data8 = WD[7:0];
+    logic [17:0]    add = A_i[31:0];
+    logic [15:0]    data16 = WD_i[15:0];
+    logic [7:0]     data8 = WD_i[7:0];
 
     always_ff @(posedge clk) begin
         case(WE_i) // this could be done cleaner
