@@ -16,7 +16,8 @@ module data_mem #(
         01 - write all word (32 bits)
         10 - write half word (16 bits)
         11 - write last byte (8 bits)
-    */   
+    */
+
     logic [ADDRESS_WIDTH-1:0]  data_mem_register [2**17:0]; //we set our reg file which will be filled with initial values
 
 
@@ -48,13 +49,7 @@ module data_mem #(
         
     end 
 
-// always_comb begin
-//     if (WE) begin
-//         $display("here");
-//         $display()
-//     end
-// end
-    //WE = 10 for lbu
+    // assign the RD to half the word or resultant data_mem_register
     assign RD = (WE==2'b10) ?  {24'b0, data_mem_register[add]} :{data_mem_register[add+3], data_mem_register[add+2], data_mem_register[add+1], data_mem_register[add]}; //we read and output the [A] register value
 
 endmodule

@@ -37,11 +37,19 @@ end
 Following the completion of the PC module, I was rotated onto working on the data memory module which primarly handled write instructions of different length and storing data. This was initially relatively confusing and I worked with Bruno to develop this module to match the existing instruction codes. 
 - [First draft of the datamem file](https://github.com/vishesh32/RISC-V-Team1/commit/58a03747ecc7961354f11ed2454cb3b9907342db)
 - [Implementing different load instructions](https://github.com/vishesh32/RISC-V-Team1/commit/c389c01ad1b840522539c9a7e5a7b442de2bff70)
-Throughout the pipeline development process, I would realise that this implementation would cause errors where incorrect data was being sent and fed back to the register file. This would be debugged by both myself and Bruno.  
+Throughout the pipeline development process, I would realise that this implementation would cause errors where incorrect data was being sent and fed back to the register file. This would be debugged by both myself and Bruno. The updated version of the data mem would include a 2 bit wide Write Enable/MemWrite (which is needed to differentiate between the different load instructions). This is shown in the code snippet below:
+```
+
+```
 
 ### Debugging
 Throughout the development of the single cycle CPU, I also made numerous bug fixes and a plethora of reorganisation. This included adding in functional branch logic, fixing ALU instructions, ensuring that the right opcodes corresponded with the right instructions and similar alternatives. During the debugging process, I worked both Vishesh and Anson to review error messages and warning thrown as well as inspecting the GTKWave sheets to trace the data in registers and different wires. Evidence demonstrating this is hyperlinked below:
-
+- [Debugging sizing error in regfile](https://github.com/vishesh32/RISC-V-Team1/commit/5ff7372e4a08abd6bcdda4dd846755f4b275f957)
+- [Debugging negedge clock in regfile](https://github.com/vishesh32/RISC-V-Team1/commit/ad2adb8537f4c680262bcc5aa0e0e75868ada94b)
+- [Debugging lui instruction](https://github.com/vishesh32/RISC-V-Team1/commit/9a23e9b43b975b82262243949680b0667e7a6d99)
+- [Debugging the ImmSrc to 3 wide](https://github.com/vishesh32/RISC-V-Team1/commit/e4497dfd35dd1d1710fb21b7332aa8ea9c254514)
+- [Fixed misdeclaration of bits](https://github.com/vishesh32/RISC-V-Team1/commit/1731b61a9ade405087ab320799c796d4e8933eef)
+- [Further debugging of R-type instructions](https://github.com/vishesh32/RISC-V-Team1/commit/8cfc5f7b21506f4a5561cdc0dcf4e22912592ebb)
 
 ## Pipelining
 I worked on reformatting most components within this section of our project, I also worked closely with Bruno to create pipelining registers and ensure that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
