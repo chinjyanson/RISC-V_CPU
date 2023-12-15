@@ -208,7 +208,7 @@ One of the key references which I referred to outside of the files which had bee
 ![Aludecoder Inspiration](/img//aludecoder.png)
 ![Maindecoder Inspiration](/img//maindecoder.png)
 
-The top level control unit file was then later further modified in conjuction with Bruno to implement extra logic I had missed and to reduce the need for further muxes and extra unnecessary signals which would complicate the existing design. One implementation which I wrote independently was to detect the difference between a JAL and JALR and also to flip the Zero bit if the input given was a BNE instruction for a branch instruction. This is shown in the code snippet below: 
+I would also extensively work upon developing the draft of the top level control unit file and other top level files in conjuction with Bruno to implement extra logic I had missed and to reduce the need for further muxes and extra unnecessary signals which would complicate the existing design. One implementation which I wrote independently was to detect the difference between a JAL and JALR and also to flip the Zero bit if the input given was a BNE instruction for a branch instruction. This is shown in the code snippet below: 
 ```
 assign ZeroOp = ZeroE_i ^ funct3E[0]; // flip the Zero input if BNE
 
