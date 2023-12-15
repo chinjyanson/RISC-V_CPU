@@ -77,7 +77,7 @@ I mainly implement the instruction memory through setting up the Makefile provid
 ```
 $ make reference // do not run make Makefile (an error that happened)
 ```
-
+Here is an example of the waveform produced by GTKWave. Notice how it increments by: 1, 3, 7...
 ![wave](/img/gtkwavef1.png)
 
 - [Making the F1 Program through assembly code](https://github.com/vishesh32/RISC-V-Team1/commit/a00343487c6cf87d0d8e36b34d373588a307f7be#diff-6a703220991bb4034518d084a3fd94caf53c2d1a9a0c177ea610cca8d93bf7d0)
