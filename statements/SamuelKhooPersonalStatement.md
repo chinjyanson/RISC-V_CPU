@@ -94,7 +94,7 @@ always @(negedge clk) begin
     end
 ```
 
-For instruction mem, I mainly rewrote the parameters and modified the input and output logic as well as the size of the array. I had originally directly assigned the instruction output to be an address in the rom array, however, after discussing with Bruno, we came to the conclusion of implementing a single assign instruction to account for all 4 different parts (this is best demonstrated in the code snippet below)
+For instruction mem, there were fewer changes compared to the reduced RISC-V processor. I mainly rewrote the parameters and modified the input and output logic as well as the size of the array. I had originally directly assigned the instruction output to be an address in the rom array, however, after discussing with Bruno, we came to the conclusion of implementing a single assign instruction to account for all 4 different parts (this is best demonstrated in the code snippet below)
 - [New instruction mem](https://github.com/vishesh32/RISC-V-Team1/commit/e31e78940a98fd20bc7fe8a1b3df8d07b401541e)
 ```
 logic [ADDRESS_WIDTH-1:0] rom_array [2**ADDRESS_WIDTH-1:0];
