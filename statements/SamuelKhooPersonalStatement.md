@@ -1,5 +1,8 @@
 # Samuel Khoo Ing Shin Personal Statement 
 
+
+### Structure
+
 ## Single Cycle Processor
 
 ### Introduction
