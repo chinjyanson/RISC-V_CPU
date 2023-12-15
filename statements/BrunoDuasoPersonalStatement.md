@@ -1,6 +1,6 @@
 # Bruno Duaso Personal Statement
 
-## Single Cycle Processor
+
 
 ### Summary of my main contributions
 - Wrote, tested and debugged Single Cycle control module.
@@ -9,11 +9,14 @@
 - Wrote and connected Pipeline Registers.
 - Debugged Pipelined Design.
 
-This Personal Statement is distributed with the following structure:
-• Single Cycle CPU
-• Pipelined CPU
-• If I were to do it again
-• What I have learned
+### Structure 
+My personal statement is distributed with the following structure:
+- Single Cycle CPU.
+- Pipelined CPU.
+- If I were to do it again.
+- What I have learned.
+
+## Single Cycle Processor
 
 ### Introduction
 For this first section of the project, I was mainly involved in the Control Section, with special focus on the Control Unit instructions and the Sign Extender. I additionally was significantly involved in debugging and helped with some miscellaneous tasks.
@@ -21,13 +24,13 @@ In this section of the project, progress was slower than anticipated due to a se
 
 ### Control Unit 
 Most of the implementations in this module required a very complete knowledge of 
-the CPU behaviour. To implement most of the instructions I was required to modify 
-modules from PC and ALU. Samuel (SamuelKhoo2003) helped with the completion 
+the CPU logic. To implement most of the instructions I was required to modify 
+modules from PC and ALU. Samuel also helped with the completion 
 of this module. Basic instructions (BNE, ADDI) where already implemented in the Lab 4 - A Reduced 
-RISC-V CPU. In total, I implemented:
-- Control Unit admits additional instructions:
+RISC-V CPU. In total, I added:
+- **General Changes**: additional instructions (SSLI):
     - [New instructions added to Control Unit](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/834a18358ae1cdf8cfb0cc98112358d2e530cdae)
--  Jump and link instructions JAL / JALR: These instructions required 
+-  **Jump and link instructions** JAL / JALR: These instructions required 
 modifications in ALU and PC in order to write the PC value into the 
 register, and write it back to PC:
     - [ADDED JAL, JALR, +2 cntrl out](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/f00e40925f5c2686d410f8778971ad76006569e1)
@@ -38,15 +41,11 @@ register, and write it back to PC:
 
 ![Figure 1](/img/pro.png)
 
--  Load instructions (LB, LH, LW, LBU, LHU): these new instructions 
-required additional control bits, to differentiate the ways in which we 
-can write back the register file. WE3 was converted to 3 bits in order to solve this problem.
+-  **Load instructions** (LB, LH, LW, LBU, LHU): these new instructions required additional control bits, to differentiate the ways in which we can write back the register file. WE3 was converted to 3 bits in order to solve this problem, as we read the entire 32 bits from Data Memory, and wrote the appropriate sign extension into the Reg File.
     - [LW, LH, LB instructions](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d9299d782632e35403d4cb4d405620e68370cdff)
     - [Sign Extension for LB/LH](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/26790233c4c6e1883cf98b9fe9b7fbb13d2068b7)
     - [LBU and LHU instructions - 3'WE3](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/aaf010785579db06aff0df9faa1af513572a3f84)
-- Store instructions (SB, SH, SW): similarly, we need to differentiate 
-between the types of stores into the DataMemory. MemWrite was 
-converted to 2 bits in order to solve this problem.
+- **Store instructions** (SB, SH, SW): similarly, we need to differentiate between the types of stores into the Data Memory. Mem Write was converted to 2 bits in order to solve this problem.
     - [SB/SH/SW in Control Unit](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/66006e98c32fdff92796b562c4da508c88b55ed0)
     - [Implement byte/half WE data mem](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/5a435b5dee0bca728deb4ccc6681a21f37b07e95)
     - [Updated all instructions with Mem/RegWrt](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/c4428907503a7c99c9b2d555d98924eae0937573)
@@ -78,23 +77,25 @@ Pipelined Section
 - [Debug 4](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/80f14e17dd5b1aff3a132fce4b430e3f41113b66) - Fixed errors in Sign Extend
 - [Debug 5](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/3b338939df220d7765b8d59b01f6e053c6bd171b) - Fixed lengths of PC wires
 - [Debug 6](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/8c52a1892f3e2972dcda567db35c0f98d9d8f0f1) - Fixed various minor errors 
+- [Debug 7](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/a34c6926ed1dc4926eb638c6ddcb68f65f84aeb5) - Corrected Data Mem to include Little Endian Addressing
+- [Debug 8](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/555be0d29cbe00211881d412652ff59d9df27441) - Fix Store instructions.
 
 ### Miscellaneous Contributions
 
-- Created Figure 1: having an image reference of the new module 
+- **Created Figure 1** (shown above):having an image reference of the new module 
 configuration for the JAL/JALR instructions helped to implement the 
 changes and avoid errors in the wiring.
-- Coded F1 light sequence code, which was later modified by Vishesh.
-- Coded Python Script to separate word instructions into bytes, in the 
+- **Coded F1 light sequence code**, which was later modified and implemented by Vishesh and Anson.
+- **Coded Python Script** to separate word instructions into bytes, in the 
 correct order to be fetched into the InstrMem. I also modified InstrMem 
 to fit Little Endian Addressing
     - [Python Script - Words to bytes](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/26790233c4c6e1883cf98b9fe9b7fbb13d2068b7)
 
-## Pipelining
+## Pipelined Processor
 For this second section of the project, I implemented the 2 new sections need: 
 - Pipeline Registers
-- Hazard Unit . 
-I also initially renamed, and rewired all the signals to fit the starting diagram, which 
+- Hazard Unit  
+I also initially renamed and rewired all the signals to fit the starting diagram, which 
 would later be greatly modified and improved.
 
 ![pipelined](pipelined.jpg)
@@ -104,12 +105,12 @@ Samuel with some specific issues for the improved Control Unit.
 
 ### Pipeline Registers 
 Initially I implemented a single pipeline register per stage, with the thought that 1 was 
-simpler than 2. But each single register had a very large number of signals, and I 
-later decided to have registers both in control and in data. This was suggested by 
+simpler than 2. But each single register had a very large number of signals, so I 
+opted to have separate registers for control and data. This was suggested by 
 Samuel, and it turned out to be much cleaner and easier to debug.
 The pipelining process very was time consuming, but relatively straight forward. 
 Having a special label in each signal for the different cycles importantly decreased 
-debugging time and confusion. 
+debugging time and confusion. Here are the main commits of these implementations: 
 - [Freg](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/009bf1eaafb51359a63a555d26bf9a86a6fcbeec)
 - [Wiring 1](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/0fd04426abfd7518fbb5c0fb1aa0a1ad00eda1c1)
 - [Dreg](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/cde1c066b335c0c87a36d75755ba65f3a83ed19b)
@@ -120,7 +121,7 @@ debugging time and confusion.
 ### Hazard Unit
 I was also in charge of the logic for both data (divided into stall and forward), and 
 control hazards. For simplification purposes, each section was divided into its own 
-module, inside the hazard unit. 
+module, inside the hazard unit. Here are the main commits for this module: 
 - [Module Creation](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/b7749837c6c3849c09427c18a9596e436d76dea3)
 - [Initial Forward and Stall Units](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/35aafbf6250ee00b89374778b27894b049db0144)
 - [Hazard Control](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d5efce9f1bbb1f3eb2a22ccfcfe27a487f384385)
@@ -132,10 +133,7 @@ module, inside the hazard unit.
 - [Corrected hazard stall](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/a3fae947d1e87687594b2405088e6f8af4233133)
 
 #### Data Hazards
-We need take into account the type of the instruction, for both Stalls and 
-Forwards to prevent mistaking an immediate for a register. We do this by 
-reading ImmSrc (delayed by one cycle), and adjusting our logic to the 
-appropriate logic:
+Aside from detecting a match between registers, and an intention to write back, we need take into account the type of the instruction, for both Stalls and Forwards to prevent mistaking an immediate for a register. We do this by reading ImmSrc (delayed by one cycle), and appropiately adjusting our logic:
 
 ![img1](/img/bruno1.png)
 
@@ -147,7 +145,7 @@ assign PCen = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0
 assign Fen  = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
 assign Drst  = !(((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
 ```
-Forward
+ Forward
 ```
 assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
 assign B = (A)&&(ImmSrcE!=3'b000);
@@ -157,21 +155,19 @@ assign FowardBE = ((RegWriteM) || (RegWriteW&&B)) ? (((Rs2E == RdM)&&(Rs2E!=5'b0
 
 ```
 
-Forwarding: There are mainly two points to note. In case of conflict, we need 
-to prioritize forwards from M to the ones from W, as they contain the latest, 
-corrected data to forward. And, we need to make sure that the register we 
-where writing to is different from zero (reading from zero never results in a 
+ - **Forwarding**: There are mainly two points to note. In case of conflict, we need 
+to prioritize forwards from M to the ones from W, as they contain the latest, corrected data to forward. 
+And, we need to make sure that the register where the hazard is caused is different from zero (reading from zero never results in a 
 hazard).
 
 ![img2](/img/bruno2.png)
 
-Stalling: this module is very straightforward. We use “opcode” to detect a 
-load instruction, and use RdE and Rs1D/Rs2D to detect a match. When that 
-happens, we want to stall PCreg and Decreg, and flush the content in the 
-Execute register.
+- **Stalling**: this module is very straightforward. We use `opcode` to detect a 
+load instruction, and use `RdE` and `Rs1D`/`Rs2D` to detect a match. When that 
+happens, we want to stall ``PCreg`` and ``Decreg``, and flush the content in the execute register.
 
 #### Control Hazards:
-Also very simple. Whenever we branch or jump (PCSrc !=0), we need to Flush the 
+Also very simple. Whenever we branch or jump `(PCSrc !=0)`, we need to Flush the 
 content of the Fetch and Decode registers.
 ```
 assign Frst = (PCSrcE != 2'b0) ? 1 : 0;
@@ -181,20 +177,20 @@ assign Drst = (PCSrcE != 2'b0) ? 1 : 0;
 ### Control Unit
 Samuel greatly cleaned and improved the control unit, I fixed specific issues such as:
 
-LBU instruction: In Single Cycle, for all the Load instructions, we took the whole 32 
-bits from DataMem and we wrote the appropriate extension to RegWrite according to 
-WE3. This was no longer possible in pipelining due to Forwarding Hazards. We 
+**LBU instruction**: In Single Cycle, for all the Load instructions, we took the whole 32 
+bits from ``DataMem`` and we wrote the appropriate extension to ``RegWrite`` according to 
+``WE3``. This was no longer possible in pipelining due to Forwarding Hazards. We 
 solved this by getting rid of all the (unused) load instructions, and SW instruction. 
-This allowed us to set WE3 in RegiterFile back to 1, and we used the extra bit in 
+This allowed us to set ``WE3`` in ``RegiterFile`` back to 1, and we used the extra bit in 
 RegMem to implement LBU correctly.
 
-LUI instruction: small modifications where needed in ALU and ALUdecoder to 
+**LUI instruction**: small modifications where needed in ``ALU`` and ``ALUdecoder`` to 
 correctly implement this instruction.
 - [LUI in ALU and ALUdecoder](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/fafbd1101bb423987224f288050e2d2b3705a6ce)
 
-PCSrcE logic: implemented logic to determine the correct Branch/Jump. We need 
-to take into account the correct Branch instruction (BNE/BEQ) and adjust ZeroOP 
-accordingly. I also used ALUSrcE to differentiate between JAL and JALR instruction 
+**PCSrcE logic**: implemented logic to determine the correct ``Branch``/``Jump``. We need 
+to take into account the correct Branch instruction ``(BNE/BEQ)`` and adjust ``ZeroOP`` 
+accordingly. I also used ``ALUSrcE`` to differentiate between ``JAL`` and ``JALR`` instruction 
 without the need for additional logic.
 ```
 assign ZeroOp = ZeroE_i ^ funct3E[0]; // flip the Zero input if BNE
@@ -205,7 +201,7 @@ always_comb
 ```
 - [Initial PCSrcE logic](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d0200ea5f6bc5a4f4f9d8affa304f1450ee1c708)
 
-Store and Load instructions: added cases to identify the separate Store and Load 
+**Store and Load instructions**: added cases to identify the separate Store and Load 
 instructions (that were later not included) to the new and improved control_top.
 - [Store and Load](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/8d65682cc29ffa8cba8c69ee9e6d73afa185a612)
 
@@ -247,7 +243,8 @@ that kept it very dynamic and engaging.
 Undoubtedly, I feel I have a very deep understanding of the fundamentals of System 
 Verilog, CPU design and logic, and GIT hub. The latter was an especially helpful 
 lesson, that I have already starting using more frequently for parallel personal 
-projects. 
+projects. Additionally, I learned Markodown language, which I now frequently use 
+to take notes in Obsidian.
 Another very important learning point was communicating and working as a Team. I 
 learned the importance of task distribution, efficient communication and 
 As a conclusion, I am very happy about this project. I think it was very well 
