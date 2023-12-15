@@ -13,7 +13,7 @@ Our folder was structured slightly differently since we didn't use any branching
     - `statements` refers to our teams Personal Statements
 
 ## Joint Statement
-As team we have successfully designed and built a single cycle and a pipelined version and we have all gone really far as a team. We've met up regularly across the week to properly discuss our design and architecture and we are happy with what we have produced.
+As team we have successfully designed and built a single cycle and a pipelined version with a working hazard unit and detection and we have all gone really far as a team. We've met up regularly across the week to properly discuss our design and architecture and we are happy with what we have produced.
 
 To highlight why we have structured this repo through folders instead of branches, is because it was simpler to commmit to just one branch and that it was easier to coordinate with. 
 

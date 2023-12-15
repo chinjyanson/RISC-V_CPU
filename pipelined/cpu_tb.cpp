@@ -3,8 +3,10 @@
 #include "Vcpu.h"
 #include <iostream>
 #include <fstream>
+#include "vbuddy.cpp"
 
-#define MAX_SIM_CYC 250000
+
+#define MAX_SIM_CYC 10000000
 
 
 
@@ -27,6 +29,10 @@ int main(int argc, char **argv, char **env) {
     if (!outputFile.is_open()){
         std::cout << "Error opening file" << std::endl;
     }
+
+        //init Vbuddy
+    if (vbdOpen()!=1) return(-1);
+    vbdHeader("Ref Prog");
     
 
     // initialize simulation inputs
@@ -52,9 +58,11 @@ int main(int argc, char **argv, char **env) {
                         clockcount++; }
 
 
+        if(simcyc > 190000 && (simcyc % 4 == 0)){
+            vbdPlot(int(top->a0), 0, 255);
+            vbdCycle(simcyc);
+        }
                         
-
-
 
         clock = !clock;
         //std::cout << "clock1: " << clock << std::endl;
@@ -62,9 +70,17 @@ int main(int argc, char **argv, char **env) {
 
         }
 
+        
+        // either simulation finished, or 'q' is pressed
+        if ((Verilated::gotFinish()) || (vbdGetkey()=='q')){
+            break;
+        }
+
+
     }
 
     outputFile.close();
+    vbdClose();
     tfp->close(); 
     exit(0);
 
