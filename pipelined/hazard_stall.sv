@@ -33,6 +33,7 @@ logic Flip;
 
 assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
 assign B = (A)&&(ImmSrcE!=3'b000);
+
 assign PCen = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
 assign Fen  = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
 assign Drst  = !(((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
