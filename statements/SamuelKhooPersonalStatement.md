@@ -42,7 +42,17 @@ always_comb begin
     endcase
 end
 ```
+This was then used within the PC top module as shown below: 
+```
+mux3 pc_mux(
+    .control    (PCSrc_i),
+    .input0     (PCPlus4F_o),
+    .input1     (PCTarget_i),
+    .input2     (ALUResultE_i),
+    .out        (next_PC)
+);
 
+```
 ### Data Mem
 Following the completion of the PC module, I was rotated onto working on the data memory module which primarly handled write instructions of different length and storing data. This was initially relatively confusing and I worked with Bruno to develop this module to match the existing instruction codes. 
 - [First draft of the datamem file](https://github.com/vishesh32/RISC-V-Team1/commit/58a03747ecc7961354f11ed2454cb3b9907342db)
