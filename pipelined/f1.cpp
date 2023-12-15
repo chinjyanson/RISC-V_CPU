@@ -2,8 +2,12 @@
 #include "verilated_vcd_c.h"
 #include "Vcpu.h"
 #include <iostream>
-#include <fstream>
 #include "vbuddy.cpp"
+#include <chrono>
+#include <thread>
+
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono; // nanoseconds, system_clock, seconds
 
 
 #define MAX_SIM_CYC 10000000
@@ -23,16 +27,11 @@ int main(int argc, char **argv, char **env) {
     top->trace (tfp, 99);
     tfp->open ("cpu.vcd");
 
-    std::ofstream outputFile;
-    outputFile.open("output.txt");
 
-    if (!outputFile.is_open()){
-        std::cout << "Error opening file" << std::endl;
-    }
 
         //init Vbuddy
     if (vbdOpen()!=1) return(-1);
-    vbdHeader("Ref Prog");
+    vbdHeader("F1 Prog");
     
 
     // initialize simulation inputs
@@ -51,21 +50,14 @@ int main(int argc, char **argv, char **env) {
         top->clk = !top->clk;
         top->eval ();
 
-        if(clock){ 
-                       std::cout << std::hex << "clock: " << clockcount << " top: " << top->a0 <<std::endl; 
-                        //outputFile << simcyc << " " << top->a0 << '\n';
-
-                        clockcount++; }
 
 
-        if(simcyc > 190000 && (simcyc % 4 == 0)){
-            vbdPlot(int(top->a0), 0, 255);
-            vbdCycle(simcyc);
-        }
+
+        //for f1 
+         vbdBar(top->a0 & 0xFF);
+            sleep_for(nanoseconds(40000000));  //delay for f1 lights
                         
 
-        clock = !clock;
-        //std::cout << "clock1: " << clock << std::endl;
                    
 
         }
@@ -79,7 +71,6 @@ int main(int argc, char **argv, char **env) {
 
     }
 
-    outputFile.close();
     vbdClose();
     tfp->close(); 
     exit(0);
