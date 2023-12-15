@@ -16,7 +16,7 @@
 | sign_extend.sv             |                    |         x          |                    |                    |
 | Testbench                  |                    |                    |                    |          x         |
 | Troubleshooting            |         p          |         x          |          p         |          x         |
-| Readme files               |         x          |                    |                    |                    |
+| Readme files               |         x          |                    |                    |          p         |
 
 
 

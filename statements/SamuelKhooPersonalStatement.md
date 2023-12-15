@@ -1,5 +1,15 @@
 # Samuel Khoo Ing Shin Personal Statement 
 
+### Overview Of My Contributions
+Within the single cycle I contributed primarily to the program counter, data memory and instruction memory files, with further work on debugging and organising files, as well as connecting components together. 
+In the pipelining section of the project, I worked on writing a new aludecoder and a new maindecoder, as well as working to create top files to connect everything together. Aside from this I also worked on developing and debugging the pipelining registers and the hazard unit. 
+
+### Structure
+Below are hyperlinks which relate to the different sections within my personal statement. 
+- [Single Cycle CPU](#single-cycle-processor)
+- [Pipelined CPU](#pipelining)
+- [Conclusions and Evaluation](#conclusions-and-evaluations)
+
 ## Single Cycle Processor
 
 ### Introduction
@@ -32,7 +42,17 @@ always_comb begin
     endcase
 end
 ```
+This was then used within the PC top module as shown below: 
+```
+mux3 pc_mux(
+    .control    (PCSrc_i),
+    .input0     (PCPlus4F_o),
+    .input1     (PCTarget_i),
+    .input2     (ALUResultE_i),
+    .out        (next_PC)
+);
 
+```
 ### Data Mem
 Following the completion of the PC module, I was rotated onto working on the data memory module which primarly handled write instructions of different length and storing data. This was initially relatively confusing and I worked with Bruno to develop this module to match the existing instruction codes. 
 - [First draft of the datamem file](https://github.com/vishesh32/RISC-V-Team1/commit/58a03747ecc7961354f11ed2454cb3b9907342db)
@@ -92,8 +112,6 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 - [Further debugging of R-type instructions](https://github.com/vishesh32/RISC-V-Team1/commit/8cfc5f7b21506f4a5561cdc0dcf4e22912592ebb)
 
 
-### Restyling
-
 ## Pipelining
 I reworked many components within this section of our project as we realised that there were certain errors and misorganisation within our single cycle that would hinder our pipelined development, I worked closely with Bruno to create pipelining registers and ensured that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
 - [Example of a control unit pipeline register]()
@@ -110,5 +128,34 @@ Aside from this, I made changes to the control unit from the single cycle, the c
 - [New Main decoder]()
 - [Control unit working with decoders]()
 
-
+### Restyling/Miscellanous Developement
+A large portion of my contribtions were also on miscellanous components with minor changes on port widths, restyling for clarity, organising files for ease of tracing and including different comments to explain the function of a module to allow for other members to easily understand the function of the module. This including adding the _i and _o to the input and output ports of different modules as well as formatting the port and parameter sections of a module to achieve a unified style across our CPU. Some examples of this are shown below: 
+- [Example of restyling](https://github.com/vishesh32/RISC-V-Team1/commit/46032425739ae6ab26cd36ac6bdc4f3a326db596)
+- [Example of reformatting](https://github.com/vishesh32/RISC-V-Team1/commit/a80cd1f020f241408510ee485a1c847a923b5a53)
+- [Example of adding comments for clarity](https://github.com/vishesh32/RISC-V-Team1/commit/7548caf7ad57d462d3724947a5455a391613a72f)
+- [Example of adding _o and _ i](https://github.com/vishesh32/RISC-V-Team1/commit/5d87ec413f5d2de9ceaeb800607fa378e7a1708d)
+- [Example of reorganising files to prevent confusion](https://github.com/vishesh32/RISC-V-Team1/commit/d037ae67f569aeab43d1283df92efbab34b2f7ba)
+The changes were well received within my team and led to an improved workflow by reducing confusion and the time taken to search for variables and files. 
 ### Conclusions and Evaluations
+
+## Review
+All in all this project was an eye opening experience for me, being my first collaborative software project that involved more than 2 members, I discovered the difficulties when working in a large team in terms of coordination. This eventually developed over time and I believe that the overall team dynamic greatly improved towards the final stages of our project. 
+
+There were numerous times where incorrect naming of input and output ports and inconsistent declaration of port widths caused confusing errors and warnings which led to hours of debugging. Nevertheless, being able to recognise these errors and make the correct changes to finally see the desired output was highly fulfilling. 
+
+Learning to organise my verilog files and write them in a style which is easily understood by my teammates to allow for ease of debugging was also a new skill which I developed throughout this project. I enjoyed the continuous development of the CPU, focusing on the completion of single cycle, followed by implementations of pipelining which then evolved into completed hazard handling with pipelining. This "growth" of our CPU was interesting to see and I enjoyed seeing the different components change and discussing different implementations of modules to allow for the completion of each stage. 
+
+Through this project, I feel that my understand of the RISC-V cpu has greatly deepened and I now have a degree of confidence in writing System Verilog files and analysing CPU designs and logic. Aside from this learning more about correctly detailing my git commits was also important for future collaborative projects and further developed upon my existing knowledge from personal and past group projects. Additionally learning to document my files and explaining my System Verilog files and attmepting to join my modules with other members taught me to efficiently converse my ideas and break down complex components to avoid being overwhelmed. 
+
+Lastly learning to communicate and plan as a team was vital and I definitely saw this aspect of the project growing greatly for all members within the team as we understood each others work flow and worked on more problems together. 
+
+To conclude, this project was a unique learning experience where I gained profound insight into the material covered in lectures and built upon the skills from the previous labs I had completed. The networking and collaborative skills I developed within this project will also be valuable in future endeavours and projects. 
+
+## What I Would Change
+If I was to undertake this project again, I would definitely have planned the outline and developments of modules before splitting up the components for seperate members. This would have saved us a large amount of time involved in rewriting components from single cycle to pipeline where our implementation was previously correct but almost impossible to pipeline efficiently. 
+
+Aside from this, I would have definitely tried to establish a clear structure and Verilog file style with a clear file and port naming to prevent confusion upon joining the modules together. This was also another aspect within our project that led to confusion and time wasted debugging minor errors. 
+
+I would also focus on being more proactive in engaging in communication with my teammates early within the project, as early on in the project I often spent a large amount of time trying to understand the files written by my other teammates insteads of directly taking the initiative to contact them to explain and debug a problem with me. This greatly changed during the second part of our project and had a notable impact on the efficiency of debugging problems and achieving a successful result. 
+
+Ultimately, I would have definitely completed more research into components and using the resources available to us online to develop the RISC-V CPU instead of attempting to create my own protocol and modules from scratch without a reference. We did make use of a textbook and resources noted by other groups to our advantage towards the end of our project but I felt that this was discovered a little late. 
