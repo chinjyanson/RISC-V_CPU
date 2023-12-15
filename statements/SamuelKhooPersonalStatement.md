@@ -205,7 +205,9 @@ The core idea was instead of having numerous assignments for each opcode that wo
 
 
 One of the key references which I referred to outside of the files which had been previously written by Bruno was the slides from Lecture 7 which is shown here:
-![Lecture 7 Decoder Slide]()
+![Lecture 7 Decoder Slide](/img//breakdownofdecoder.png)
+![Aludecoder Inspiration](/img//aludecoder.png)
+![Maindecoder Inspiration](/img//maindecoder.png)
 
 The top level control unit file was then later further modified in conjuction with Bruno to implement extra logic I had missed and to reduce the need for further muxes and extra unnecessary signals which would complicate the existing design. One implementation which I wrote independently was to detect the difference between a JAL and JALR and also to flip the Zero bit if the input given was a BNE instruction for a branch instruction. This is shown in the code snippet below: 
 ```
