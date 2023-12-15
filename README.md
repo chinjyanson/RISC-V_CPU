@@ -75,8 +75,8 @@ _loop2:                         # repeat till all lights on
 
 > Note: that this testing instruction is only valid for the `test/pdf` folder
 >
->       gaussian.mem is loaded into the data array by default.
->       to edit the data array change line 25 in `test/pdf/data_mem.sv`
+> gaussian.mem is loaded into the data array by default.
+> to edit the data array change line 25 in `test/pdf/data_mem.sv`
 
 To run the pdf reference program:
 ```
