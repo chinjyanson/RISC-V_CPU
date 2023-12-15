@@ -130,7 +130,7 @@ I reworked many components within this section of our project as we realised tha
 The simplified top level control file made it much simpler to trace the different logics and control unit pipelining registers, I also made a tentative draft for the implementation of a pipelining in our datapath, however, we chose not to fully implement this design as we felt that it would be relatively difficult to debug and could be a source of small errors that were difficult to spot. Instead we took some ideas of splitting the components chronologically and multideclaration of logic and used these within our final design. 
 - [Draft top datapath with pipeline registers](https://github.com/vishesh32/RISC-V-Team1/commit/104245d1ebe89f35dd544b5c80f983f610b8b9cc)
 
-These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. I also worked with Anson and Bruno to create a hazard unit draft, this was then broken down by Bruno into further sub modules to trace and debug however, the overall logic and signals still remain the same. 
+All the components mentioned above were then modified to varying extents to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. I also worked with Anson and Bruno to create a hazard unit draft, this was then broken down by Bruno into further sub modules to trace and debug however, the overall logic and signals still remain the same. 
 - [New hazard unit draft](https://github.com/vishesh32/RISC-V-Team1/commit/1887fae085c100c83dc7e0fd9ec2c8d7ff8e5062)
 
 ```
