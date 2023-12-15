@@ -1,8 +1,8 @@
 |File Name                   | Anson Chin         | Bruno Duaso        | Samuel Khoo        | Vishesh Mongia     |
 |----------------------------|--------------------|--------------------|--------------------|--------------------|
-| alu_top.sv                 |         x          |         p          |                    |                    |
+| alu_top.sv                 |         x          |         p          |         p           |                    |
 | alu.sv                     |         x          |                    |                    |                    |
-| control_top.sv             |                    |         x          |                    |                    |
+| control_top.sv             |                    |         x          |         p          |                    |
 | control_unit.sv            |                    |         x          |         p          |                    | 
 | cpu.sv                     |         p          |         p          |         p          |          x         |
 | data_mem.sv                |                    |                    |         x          |          p         |
