@@ -74,11 +74,42 @@ This concludes our development of the RISC-V Single cycle processor. The skills 
 - Created testbenches to debug and test modules
 - Used Vbuddy to visualise F1 and PDF programs
 
+Half of our team went ahead to begin the creation of the pipelined processor whilst I was debugging the single cycle processor. This allowed us to cover ground and not feel stuck in debugging. Once the initial foundation had been layed I used our high level diagram to confirm that wires had been definied and joined appropriately. 
 
+[Fixing minor code errors quickly due to experience](https://github.com/vishesh32/RISC-V-Team1/commit/e79e2b4de667d5c756442bca5409ffb41e78965d)
+
+[Adding missing logic by comparing to high level diagram](https://github.com/vishesh32/RISC-V-Team1/commit/692c27514057384293e6ac6a3736455910d6f950)
+
+[Thoroughly checking inputs and outputs to avoid errors like the ones made in single cycle](https://github.com/vishesh32/RISC-V-Team1/commit/b3accf69d8ad685b33301ee015646a039b770f75)
+
+Fixing the code didnt feel as tedious now as I knew what I was looking out for, I was also much more comfortable with the SystemVerilog syntax. I felt as if this was really when I was working at a high level and to a standard which assist our team to complete the pipelined processor.
+
+[Adding missing logic](https://github.com/vishesh32/RISC-V-Team1/commit/c1f8316229534b896e11b33aa16f31d23c562a51)
+
+Our control unit had many new additions and so I had to be very careful with checking each pin. At this stage I also organised the order in which we defined the pin connections in the control_top file so that comparing it to the diagram and lower submodules was easier. This sped up the debugging process in the long run.
+
+[Confirming functionality of control_top and editing pipeline registers for clarity](https://github.com/vishesh32/RISC-V-Team1/commit/c41840d489fe9ef51a6e1223e4e0f0403918c99f)
+
+[Confirming ALU functionality and fixing incorrect wiring](https://github.com/vishesh32/RISC-V-Team1/commit/152d4d61bac6b8521d9d7ca36d3e678161bb5e63)
+
+[Removing extra pins which werent necessary](https://github.com/vishesh32/RISC-V-Team1/commit/95705e2d42598a13517b0fd3ca13b5f62e73af1a)
+
+
+Due to our design choices we commonly had logic as if-else statements in the main section of modules, not within an always_ff or comb block. This meant that I had to refactor all if-else statements into the ternary ? : operator to remove errors whilst keeping the same functionality.
+
+[Replacing if-else constructs with ternary operators](https://github.com/vishesh32/RISC-V-Team1/commit/5058a7b8147cc4feade0f36bc6e0cc53e5c7d119#diff-2a9a7a63d223b4274a102bbb824f596b66dd98f769cf4c557a1213f9b5fdd23e)
+
+By this stage of the project I had figured out how to use gitignore and the testbenching was very similar to the single cycle, although the narrowing of errors was much harder. GTKwave was extremely helpful with a new technique I had learnt to quickly open .vcd files with an .gtkw overlay. 
+
+```
+$ gtkwave RISC-V-Team1/pipelined/cpu.vcd -a debug.gtkw
+
+```
+This allowed me to always open the vcd file in the same area with the same waveform showing, really speeding up troubleshooting between modifications of our design.
 
 ## What I have learned
 
-I have built up a variety of soft skills involving debugging program but also have learnt how to use many new types of software such as GTKwave, verilator and Git but also become more comfortable with using a Linux environment with bash scripting. This project has had an impact in my general understanding of programming and utilising my own device fully.
+I have built up a variety of soft skills involving debugging program but also have learnt how to use many new types of software such as GTKwave, Verilator and Git but also become more comfortable with using a Linux environment with bash scripting. This project has had an impact in my general understanding of programming and utilising my own device fully.
 
 In my eyes this is a very important milestone in understanding instruction set architecture and makes me glad I picked EIE. I found myself actually enjoying this task more than any other assignments as it directly correlates to how things are done in reality and in the knowing that the knowledge I have picked up is extremely useful.#
 
