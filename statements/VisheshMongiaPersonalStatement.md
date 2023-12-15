@@ -55,7 +55,7 @@ Our F1 program worked as expected from the start but our Reference program had e
 
 
 ### Waveform issue
-![Deformed Gaussian wave](img/oldgaussianpdf.jpeg)
+![Deformed Gaussian wave](/img/oldgaussianpdf.jpeg)
 
 We were missing plots on the wave resulting in it looking very sparse. This was a result of byte addressing not working correctly.
 
@@ -95,7 +95,7 @@ Fixing the code didnt feel as tedious now as I knew what I was looking out for, 
 Our control unit had many new additions and so I had to be very careful with checking each pin. At this stage I also organised the order in which we defined the pin connections in the control_top file so that comparing it to the diagram and lower submodules was easier. This sped up the debugging process in the long run.
 
 ### High level diagram
-![The diagram I used to consolidate our layout](img/pipelined.jpg)
+![The diagram I used to consolidate our layout](/img/pipelined.jpg)
 
 [Confirming functionality of control_top and editing pipeline registers for clarity](https://github.com/vishesh32/RISC-V-Team1/commit/c41840d489fe9ef51a6e1223e4e0f0403918c99f)
 
