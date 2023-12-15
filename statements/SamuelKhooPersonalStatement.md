@@ -1,7 +1,14 @@
 # Samuel Khoo Ing Shin Personal Statement 
 
+### Overview Of My Contributions
+Within the single cycle I contributed primarily to the program counter, data memory and instruction memory files, with further work on debugging and organising files, as well as connecting components together. 
+In the pipelining section of the project, I worked on writing a new aludecoder and a new maindecoder, as well as working to create top files to connect everything together. Aside from this I also worked on developing and debugging the pipelining registers and the hazard unit. 
 
 ### Structure
+Below are hyperlinks which relate to the different sections within my personal statement. 
+- [Single Cycle CPU](#single-cycle-processor)
+- [Pipelined CPU](#pipelining)
+- [Conclusions and Evaluation](#conclusions-and-evaluations)
 
 ## Single Cycle Processor
 
@@ -115,3 +122,18 @@ Aside from this, I made changes to the control unit from the single cycle, the c
 
 
 ### Conclusions and Evaluations
+
+## Review
+All in all this project was an eye opening experience for me, being my first collaborative software project that involved more than 2 members, I discovered the difficulties when working in a large team in terms of coordination. This eventually developed over time and I believe that the overall team dynamic greatly improved towards the final stages of our project. 
+
+There were numerous times where incorrect naming of input and output ports and inconsistent declaration of port widths caused confusing errors and warnings which led to hours of debugging. Nevertheless, being able to recognise these errors and make the correct changes to finally see the desired output was highly fulfilling. 
+
+Learning to organise my verilog files and write them in a style which is easily understood by my teammates to allow for ease of debugging was also a new skill which I developed throughout this project. I enjoyed the continuous development of the CPU, focusing on the completion of single cycle, followed by implementations of pipelining which then evolved into completed hazard handling with pipelining. This "growth" of our CPU was interesting to see and I enjoyed seeing the different components change and discussing different implementations of modules to allow for the completion of each stage. 
+
+Through this project, I feel that my understand of the RISC-V cpu has greatly deepened and I now have a degree of confidence in writing System Verilog files and analysing CPU designs and logic. Aside from this learning more about correctly detailing my git commits was also important for future collaborative projects and further developed upon my existing knowledge from personal and past group projects. Additionally learning to document my files and explaining my System Verilog files and attmepting to join my modules with other members taught me to efficiently converse my ideas and break down complex components to avoid being overwhelmed. 
+
+Lastly learning to communicate and plan as a team was vital and I definitely saw this aspect of the project growing greatly for all members within the team as we understood each others work flow and worked on more problems together. 
+
+To conclude, this project was a unique learning experience where I gained profound insight into the material covered in lectures and built upon the skills from the previous labs I had completed. The networking and collaborative skills I developed within this project will also be valuable in future endeavours and projects. 
+
+## What I Would Change
