@@ -11,41 +11,41 @@
 
 ### Structure 
 My personal statement is distributed with the following structure:
-- Single Cycle CPU.
-- Pipelined CPU.
-- If I were to do it again.
-- What I have learned.
+- [Single Cycle CPU.](#single-cycle-processor)
+- [Pipelined CPU.](#pipelined-processor)
+- [If I were to do it again.](#if-i-were-to-do-it-again)
+- [What I have learned.](#what-i-have-learned)
 
 ## Single Cycle Processor
 
 ### Introduction
-For this first section of the project, I was mainly involved in the Control Section, with special focus on the Control Unit instructions and the Sign Extender. I additionally was significantly involved in debugging and helped with some miscellaneous tasks.
+For this first section of the project, I was mainly involved in the Control Section, with special focus on the [Control Unit](#control-unit) instructions and the [Sign Extender](#sign-extend). I additionally was significantly involved in [debugging](#debugging) and helped with some [miscellaneous tasks](#miscellaneous-contributions).
 In this section of the project, progress was slower than anticipated due to a series of unexpected challenges. The need for extensive debugging of various errors significantly impeded our ability to advance at the desired pace.
 
 ### Control Unit 
 Most of the implementations in this module required a very complete knowledge of 
 the CPU logic. To implement most of the instructions I was required to modify 
-modules from PC and ALU. Samuel also helped with the completion 
-of this module. Basic instructions (BNE, ADDI) where already implemented in the Lab 4 - A Reduced 
-RISC-V CPU. In total, I added:
-- **General Changes**: additional instructions (SSLI):
+modules from ``PC`` and ``ALU``. Samuel also helped with the completion 
+of this module. Basic instructions (``BNE``, ``ADDI``) where already implemented in the **Lab 4 - A Reduced RISC-V CPU**.
+In total, I added:
+- **General Changes**: additional instructions (``SSLI``):
     - [New instructions added to Control Unit](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/834a18358ae1cdf8cfb0cc98112358d2e530cdae)
--  **Jump and link instructions** JAL / JALR: These instructions required 
-modifications in ALU and PC in order to write the PC value into the 
-register, and write it back to PC:
+-  **Jump and link instructions** '``JAL / JALR``': These instructions required 
+modifications in ``ALU`` and ``PC`` in order to write the ``PC`` value into the 
+register, and write it back to ``PCReg``:
     - [ADDED JAL, JALR, +2 cntrl out](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/f00e40925f5c2686d410f8778971ad76006569e1)
     - [Added MUX4 for Memory](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/2a8dd21c2977ef0172c853b4370f74465fd29e6c)
     - [resultMux takes PCPlus4](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/ae0b251e55ad688e03a4163cf2f253ded6abd965)
     - [Added MUX4 for PC](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d2e969b386d929fbc350fc50698d395cf4109e84)
     - [Connected PCPlus4 & ALUResult](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/caa5ceaf9cf0ee306d6b7fc1b26452550e29f91f)
-
+### Figure 1
 ![Figure 1](/img/pro.png)
 
--  **Load instructions** (LB, LH, LW, LBU, LHU): these new instructions required additional control bits, to differentiate the ways in which we can write back the register file. WE3 was converted to 3 bits in order to solve this problem, as we read the entire 32 bits from Data Memory, and wrote the appropriate sign extension into the Reg File.
+-  **Load instructions** (``LB, LH, LW, LBU, LHU``): these new instructions required additional control bits, to differentiate the ways in which we can write back the register file. WE3 was converted to 3 bits in order to solve this problem, as we read the entire 32 bits from Data Memory, and wrote the appropriate sign extension into the Reg File.
     - [LW, LH, LB instructions](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/d9299d782632e35403d4cb4d405620e68370cdff)
     - [Sign Extension for LB/LH](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/26790233c4c6e1883cf98b9fe9b7fbb13d2068b7)
     - [LBU and LHU instructions - 3'WE3](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/aaf010785579db06aff0df9faa1af513572a3f84)
-- **Store instructions** (SB, SH, SW): similarly, we need to differentiate between the types of stores into the Data Memory. Mem Write was converted to 2 bits in order to solve this problem.
+- **Store instructions** (``SB, SH, SW``): similarly, we need to differentiate between the types of stores into the Data Memory. Mem Write was converted to 2 bits in order to solve this problem.
     - [SB/SH/SW in Control Unit](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/66006e98c32fdff92796b562c4da508c88b55ed0)
     - [Implement byte/half WE data mem](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/5a435b5dee0bca728deb4ccc6681a21f37b07e95)
     - [Updated all instructions with Mem/RegWrt](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/c4428907503a7c99c9b2d555d98924eae0937573)
@@ -53,8 +53,7 @@ register, and write it back to PC:
 
 ### Sign Extend
 
-This module did not require a large number of changes from the version in the Lab 4 - A Reduced RISC-V CPU, and implementations were made in collaboration with 
-Samuel. Initially the controls did not match the ones provided in the lectures, which 
+This module did not require a large number of changes from the version in the **Lab 4 - A Reduced RISC-V CPU**, and implementations were made in collaboration with Samuel. Initially the controls did not match the ones provided in the lectures, which 
 caused confusion in the control outputs – this was later modified to have a standard 
 model.
 
@@ -64,7 +63,7 @@ model.
 
 ### Debugging
 
-I additionally helped Vishesh (vishesh32) testing, debugging, and fixing various 
+I additionally helped Vishesh testing, debugging, and fixing various 
 issues. A significant portion of these errors were caused by the fact that we had 2 
 separate folders – for development and for testing – and very often these folders
 were not updated correctly between each other. This was later corrected in the 
@@ -82,19 +81,19 @@ Pipelined Section
 
 ### Miscellaneous Contributions
 
-- **Created Figure 1** (shown above):having an image reference of the new module 
-configuration for the JAL/JALR instructions helped to implement the 
+- **Created Figure 1** ([shown above](#figure-1)):having an image reference of the new module 
+configuration for the ``JAL/JALR`` instructions helped to implement the 
 changes and avoid errors in the wiring.
 - **Coded F1 light sequence code**, which was later modified and implemented by Vishesh and Anson.
 - **Coded Python Script** to separate word instructions into bytes, in the 
-correct order to be fetched into the InstrMem. I also modified InstrMem 
+correct order to be fetched into the ``InstrMem``. I also modified InstrMem 
 to fit Little Endian Addressing
     - [Python Script - Words to bytes](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/26790233c4c6e1883cf98b9fe9b7fbb13d2068b7)
 
 ## Pipelined Processor
 For this second section of the project, I implemented the 2 new sections need: 
-- Pipeline Registers
-- Hazard Unit  
+- [Pipeline Registers](#pipeline-registers)
+- [Hazard Unit](#hazard-unit) 
 I also initially renamed and rewired all the signals to fit the starting diagram, which 
 would later be greatly modified and improved.
 
@@ -119,8 +118,8 @@ debugging time and confusion. Here are the main commits of these implementations
 - [Separate Registers in Control and Data](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/00e38bbfe15e397dae57fa8b022b063303ae2bc6)
 
 ### Hazard Unit
-I was also in charge of the logic for both data (divided into stall and forward), and 
-control hazards. For simplification purposes, each section was divided into its own 
+I was also in charge of the logic for both [data](#data-hazards) (divided into stall and forward), and 
+[control hazards](#control-hazards). For simplification purposes, each section was divided into its own 
 module, inside the hazard unit. Here are the main commits for this module: 
 - [Module Creation](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/b7749837c6c3849c09427c18a9596e436d76dea3)
 - [Initial Forward and Stall Units](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/35aafbf6250ee00b89374778b27894b049db0144)
@@ -145,7 +144,7 @@ assign PCen = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0
 assign Fen  = (((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
 assign Drst  = !(((opcodeE == 7'd3) && ((RdE == Rs1D)&&A  || (RdE == Rs2D)&&B))? 0 : 1);
 ```
- Forward
+Forward
 ```
 assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
 assign B = (A)&&(ImmSrcE!=3'b000);
@@ -156,7 +155,7 @@ assign FowardBE = ((RegWriteM) || (RegWriteW&&B)) ? (((Rs2E == RdM)&&(Rs2E!=5'b0
 ```
 
  - **Forwarding**: There are mainly two points to note. In case of conflict, we need 
-to prioritize forwards from M to the ones from W, as they contain the latest, corrected data to forward. 
+to prioritize forwards from ``M`` to the ones from ``W``, as they contain the latest, corrected data to forward. 
 And, we need to make sure that the register where the hazard is caused is different from zero (reading from zero never results in a 
 hazard).
 
