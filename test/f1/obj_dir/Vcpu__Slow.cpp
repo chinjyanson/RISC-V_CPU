@@ -7,254 +7,50 @@
 
 //==========
 
-void Vcpu::eval_step() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vcpu::eval\n"); );
-    Vcpu__Syms* __restrict vlSymsp = this->__VlSymsp;  // Setup global symbol table
+VL_CTOR_IMP(Vcpu) {
+    Vcpu__Syms* __restrict vlSymsp = __VlSymsp = new Vcpu__Syms(this, name());
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
-#ifdef VL_DEBUG
-    // Debug assertions
-    _eval_debug_assertions();
-#endif  // VL_DEBUG
-    // Initialize
-    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
-    // Evaluate till stable
-    int __VclockLoop = 0;
-    QData __Vchange = 1;
-    do {
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
-        vlSymsp->__Vm_activity = true;
-        _eval(vlSymsp);
-        if (VL_UNLIKELY(++__VclockLoop > 100)) {
-            // About to fail, so enable debug to see what's not settling.
-            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
-            int __Vsaved_debug = Verilated::debug();
-            Verilated::debug(1);
-            __Vchange = _change_request(vlSymsp);
-            Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("cpu.sv", 1, "",
-                "Verilated model didn't converge\n"
-                "- See DIDNOTCONVERGE in the Verilator manual");
-        } else {
-            __Vchange = _change_request(vlSymsp);
-        }
-    } while (VL_UNLIKELY(__Vchange));
+    // Reset internal values
+    
+    // Reset structure values
+    _ctor_var_reset();
 }
 
-void Vcpu::_eval_initial_loop(Vcpu__Syms* __restrict vlSymsp) {
-    vlSymsp->__Vm_didInit = true;
-    _eval_initial(vlSymsp);
-    vlSymsp->__Vm_activity = true;
-    // Evaluate till stable
-    int __VclockLoop = 0;
-    QData __Vchange = 1;
-    do {
-        _eval_settle(vlSymsp);
-        _eval(vlSymsp);
-        if (VL_UNLIKELY(++__VclockLoop > 100)) {
-            // About to fail, so enable debug to see what's not settling.
-            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
-            int __Vsaved_debug = Verilated::debug();
-            Verilated::debug(1);
-            __Vchange = _change_request(vlSymsp);
-            Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("cpu.sv", 1, "",
-                "Verilated model didn't DC converge\n"
-                "- See DIDNOTCONVERGE in the Verilator manual");
-        } else {
-            __Vchange = _change_request(vlSymsp);
-        }
-    } while (VL_UNLIKELY(__Vchange));
+void Vcpu::__Vconfigure(Vcpu__Syms* vlSymsp, bool first) {
+    if (false && first) {}  // Prevent unused
+    this->__VlSymsp = vlSymsp;
+    if (false && this->__VlSymsp) {}  // Prevent unused
+    Verilated::timeunit(-12);
+    Verilated::timeprecision(-12);
 }
 
-VL_INLINE_OPT void Vcpu::_sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_sequent__TOP__2\n"); );
+Vcpu::~Vcpu() {
+    VL_DO_CLEAR(delete __VlSymsp, __VlSymsp = NULL);
+}
+
+void Vcpu::_initial__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_initial__TOP__1\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Variables
-    CData/*4:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
-    IData/*31:0*/ __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
-    IData/*17:0*/ __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
+    WData/*95:0*/ __Vtemp1[3];
     // Body
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 = 0U;
-    __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 = 0U;
-    vlTOPp->cpu__DOT__pc__DOT__PC = ((IData)(vlTOPp->rst)
-                                      ? 0U : vlTOPp->cpu__DOT__pc__DOT__next_PC);
-    if ((1U == (IData)(vlTOPp->cpu__DOT__MemWrite))) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound1 
-            = (0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2);
-        if ((0x20000U >= (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o))) {
-            __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 
-                = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound1;
-            __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 = 1U;
-            __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0 
-                = (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o);
-        }
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound2 
-            = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
-                        >> 8U));
-        if ((0x20000U >= (0x3ffffU & ((IData)(1U) + vlTOPp->cpu__DOT__ALUResult_o)))) {
-            __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 
-                = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound2;
-            __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 = 1U;
-            __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1 
-                = (0x3ffffU & ((IData)(1U) + vlTOPp->cpu__DOT__ALUResult_o));
-        }
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound3 
-            = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
-                        >> 0x10U));
-        if ((0x20000U >= (0x3ffffU & ((IData)(2U) + vlTOPp->cpu__DOT__ALUResult_o)))) {
-            __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 
-                = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound3;
-            __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 = 1U;
-            __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2 
-                = (0x3ffffU & ((IData)(2U) + vlTOPp->cpu__DOT__ALUResult_o));
-        }
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound4 
-            = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
-                        >> 0x18U));
-        if ((0x20000U >= (0x3ffffU & ((IData)(3U) + vlTOPp->cpu__DOT__ALUResult_o)))) {
-            __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3 
-                = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound4;
-            __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3 = 1U;
-            __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3 
-                = (0x3ffffU & ((IData)(3U) + vlTOPp->cpu__DOT__ALUResult_o));
-        }
-    } else {
-        if ((2U == (IData)(vlTOPp->cpu__DOT__MemWrite))) {
-            vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound5 
-                = (0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2);
-            if ((0x20000U >= (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o))) {
-                __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 
-                    = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound5;
-                __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 = 1U;
-                __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4 
-                    = (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o);
-            }
-            vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound6 
-                = (0xffU & (vlTOPp->cpu__DOT__alu__DOT__regOp2 
-                            >> 8U));
-            if ((0x20000U >= (0x3ffffU & ((IData)(1U) 
-                                          + vlTOPp->cpu__DOT__ALUResult_o)))) {
-                __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5 
-                    = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound6;
-                __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5 = 1U;
-                __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5 
-                    = (0x3ffffU & ((IData)(1U) + vlTOPp->cpu__DOT__ALUResult_o));
-            }
-        } else {
-            if ((3U == (IData)(vlTOPp->cpu__DOT__MemWrite))) {
-                vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound7 
-                    = (0xffU & vlTOPp->cpu__DOT__alu__DOT__regOp2);
-                if ((0x20000U >= (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o))) {
-                    __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 
-                        = vlTOPp->cpu__DOT__alu__DOT__data__DOT____Vlvbound7;
-                    __Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 = 1U;
-                    __Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6 
-                        = (0x3ffffU & vlTOPp->cpu__DOT__ALUResult_o);
-                }
-            }
-        }
-    }
-    if ((0U != (0x1fU & (vlTOPp->cpu__DOT__Instr >> 7U)))) {
-        __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 
-            = ((4U & (IData)(vlTOPp->cpu__DOT__RegWrite))
-                ? ((2U & (IData)(vlTOPp->cpu__DOT__RegWrite))
-                    ? ((1U & (IData)(vlTOPp->cpu__DOT__RegWrite))
-                        ? (0xffU & vlTOPp->cpu__DOT__alu__DOT__Result)
-                        : (0xffffU & vlTOPp->cpu__DOT__alu__DOT__Result))
-                    : vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
-                   [(0x1fU & (vlTOPp->cpu__DOT__Instr 
-                              >> 7U))]) : ((2U & (IData)(vlTOPp->cpu__DOT__RegWrite))
-                                            ? ((1U 
-                                                & (IData)(vlTOPp->cpu__DOT__RegWrite))
-                                                ? (
-                                                   (0xffffff00U 
-                                                    & ((- (IData)(
-                                                                  (1U 
-                                                                   & (vlTOPp->cpu__DOT__alu__DOT__Result 
-                                                                      >> 7U)))) 
-                                                       << 8U)) 
-                                                   | (0xffU 
-                                                      & vlTOPp->cpu__DOT__alu__DOT__Result))
-                                                : (
-                                                   (0xffff0000U 
-                                                    & ((- (IData)(
-                                                                  (1U 
-                                                                   & (vlTOPp->cpu__DOT__alu__DOT__Result 
-                                                                      >> 0xfU)))) 
-                                                       << 0x10U)) 
-                                                   | (0xffffU 
-                                                      & vlTOPp->cpu__DOT__alu__DOT__Result)))
-                                            : ((1U 
-                                                & (IData)(vlTOPp->cpu__DOT__RegWrite))
-                                                ? vlTOPp->cpu__DOT__alu__DOT__Result
-                                                : vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
-                                               [(0x1fU 
-                                                 & (vlTOPp->cpu__DOT__Instr 
-                                                    >> 7U))])));
-        __Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 = 1U;
-        __Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0 
-            = (0x1fU & (vlTOPp->cpu__DOT__Instr >> 7U));
-    }
-    vlTOPp->cpu__DOT__PC = vlTOPp->cpu__DOT__pc__DOT__next_PC;
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v0;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v1;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v2;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v3;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v4;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v5;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6) {
-        vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vdlyvdim0__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__data__DOT__data_mem_register__v6;
-    }
-    if (__Vdlyvset__cpu__DOT__alu__DOT__register__DOT__reg_array__v0) {
-        vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array[__Vdlyvdim0__cpu__DOT__alu__DOT__register__DOT__reg_array__v0] 
-            = __Vdlyvval__cpu__DOT__alu__DOT__register__DOT__reg_array__v0;
-    }
+    VL_WRITEF("Loading ROM\n");
+    __Vtemp1[0U] = 0x2e6d656dU;
+    __Vtemp1[1U] = 0x61726f6dU;
+    __Vtemp1[2U] = 0x646174U;
+    VL_READMEM_N(true, 8, 131073, 0, VL_CVT_PACK_STR_NW(3, __Vtemp1)
+                 , vlTOPp->cpu__DOT__alu__DOT__data__DOT__data_mem_register
+                 , 0x10000U, ~0ULL);
+    VL_WRITEF("Loading rom.\n");
+    VL_READMEM_N(true, 8, 256, 0, std::string("f1.mem")
+                 , vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
+                 , 0, ~0ULL);
+}
+
+void Vcpu::_settle__TOP__3(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_settle__TOP__3\n"); );
+    Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
+    // Body
     vlTOPp->a0 = vlTOPp->cpu__DOT__alu__DOT__register__DOT__reg_array
         [0xaU];
     vlTOPp->cpu__DOT__Instr = ((vlTOPp->cpu__DOT__control__DOT__InstrMem__DOT__rom_array
@@ -906,41 +702,74 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
                                                   + vlTOPp->cpu__DOT__pc__DOT__PC)));
 }
 
-void Vcpu::_eval(Vcpu__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval\n"); );
+void Vcpu::_eval_initial(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval_initial\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    if (((IData)(vlTOPp->clk) & (~ (IData)(vlTOPp->__Vclklast__TOP__clk)))) {
-        vlTOPp->_sequent__TOP__2(vlSymsp);
-        vlTOPp->__Vm_traceActivity[1U] = 1U;
-    }
-    // Final
+    vlTOPp->_initial__TOP__1(vlSymsp);
+    vlTOPp->__Vm_traceActivity[1U] = 1U;
+    vlTOPp->__Vm_traceActivity[0U] = 1U;
     vlTOPp->__Vclklast__TOP__clk = vlTOPp->clk;
 }
 
-VL_INLINE_OPT QData Vcpu::_change_request(Vcpu__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_change_request\n"); );
+void Vcpu::final() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::final\n"); );
+    // Variables
+    Vcpu__Syms* __restrict vlSymsp = this->__VlSymsp;
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
-    // Body
-    return (vlTOPp->_change_request_1(vlSymsp));
 }
 
-VL_INLINE_OPT QData Vcpu::_change_request_1(Vcpu__Syms* __restrict vlSymsp) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_change_request_1\n"); );
+void Vcpu::_eval_settle(Vcpu__Syms* __restrict vlSymsp) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval_settle\n"); );
     Vcpu* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    // Change detection
-    QData __req = false;  // Logically a bool
-    return __req;
+    vlTOPp->_settle__TOP__3(vlSymsp);
+    vlTOPp->__Vm_traceActivity[1U] = 1U;
+    vlTOPp->__Vm_traceActivity[0U] = 1U;
 }
 
-#ifdef VL_DEBUG
-void Vcpu::_eval_debug_assertions() {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_eval_debug_assertions\n"); );
+void Vcpu::_ctor_var_reset() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu::_ctor_var_reset\n"); );
     // Body
-    if (VL_UNLIKELY((clk & 0xfeU))) {
-        Verilated::overWidthError("clk");}
-    if (VL_UNLIKELY((rst & 0xfeU))) {
-        Verilated::overWidthError("rst");}
+    clk = VL_RAND_RESET_I(1);
+    rst = VL_RAND_RESET_I(1);
+    a0 = VL_RAND_RESET_I(32);
+    cpu__DOT__RegWrite = VL_RAND_RESET_I(3);
+    cpu__DOT__MemWrite = VL_RAND_RESET_I(2);
+    cpu__DOT__Instr = VL_RAND_RESET_I(32);
+    cpu__DOT__ALUctrl = VL_RAND_RESET_I(3);
+    cpu__DOT__Zero = VL_RAND_RESET_I(1);
+    cpu__DOT__ALUResult_o = VL_RAND_RESET_I(32);
+    cpu__DOT__Resultsrc = VL_RAND_RESET_I(2);
+    cpu__DOT__ImmOp = VL_RAND_RESET_I(32);
+    cpu__DOT__PCsrc = VL_RAND_RESET_I(2);
+    cpu__DOT__PC = VL_RAND_RESET_I(32);
+    cpu__DOT__pc__DOT__next_PC = VL_RAND_RESET_I(32);
+    cpu__DOT__pc__DOT__PC = VL_RAND_RESET_I(32);
+    cpu__DOT__pc__DOT__pc_mux__DOT__input3 = VL_RAND_RESET_I(32);
+    cpu__DOT__control__DOT__ImmSrc = VL_RAND_RESET_I(3);
+    { int __Vi0=0; for (; __Vi0<256; ++__Vi0) {
+            cpu__DOT__control__DOT__InstrMem__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(8);
+    }}
+    cpu__DOT__alu__DOT__SrcA = VL_RAND_RESET_I(32);
+    cpu__DOT__alu__DOT__SrcB = VL_RAND_RESET_I(32);
+    cpu__DOT__alu__DOT__Result = VL_RAND_RESET_I(32);
+    cpu__DOT__alu__DOT__regOp2 = VL_RAND_RESET_I(32);
+    { int __Vi0=0; for (; __Vi0<32; ++__Vi0) {
+            cpu__DOT__alu__DOT__register__DOT__reg_array[__Vi0] = VL_RAND_RESET_I(32);
+    }}
+    { int __Vi0=0; for (; __Vi0<131073; ++__Vi0) {
+            cpu__DOT__alu__DOT__data__DOT__data_mem_register[__Vi0] = VL_RAND_RESET_I(8);
+    }}
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound1 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound2 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound3 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound4 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound5 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound6 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__data__DOT____Vlvbound7 = VL_RAND_RESET_I(8);
+    cpu__DOT__alu__DOT__resultMux__DOT__input3 = VL_RAND_RESET_I(32);
+    { int __Vi0=0; for (; __Vi0<2; ++__Vi0) {
+            __Vm_traceActivity[__Vi0] = VL_RAND_RESET_I(1);
+    }}
 }
-#endif  // VL_DEBUG
