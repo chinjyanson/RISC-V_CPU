@@ -99,8 +99,8 @@ would later be greatly modified and improved.
 
 ![pipelined](/img//pipelined.jpg)
 
-Additionally, I greatly contributed to debugging efforts with Vishesh, and helped 
-Samuel with some specific issues for the improved Control Unit.
+Additionally, I greatly contributed to [debugging](#debugging-1) efforts with Vishesh, and helped 
+Samuel with some specific issues for the improved [Control Unit](#control-unit-1).
 
 ### Pipeline Registers 
 Initially I implemented a single pipeline register per stage, with the thought that 1 was 
