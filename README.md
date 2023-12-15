@@ -13,7 +13,7 @@ Our folder was structured slightly differently since we didn't use any branching
     - `statements` refers to our teams Personal Statements
 
 ## Joint Statement
-As team we have successfully designed and built a single cycle and a pipelined version with a working hazard unit and detection and we have all gone really far as a team. We've met up regularly across the week to properly discuss our design and architecture and we are happy with what we have produced.
+As team we have successfully designed and built a single cycle and a pipelined version and we have all gone really far as a team. We've met up regularly across the week to properly discuss our design and architecture and we are happy with what we have produced.
 
 To highlight why we have structured this repo through folders instead of branches, is because it was simpler to commmit to just one branch and that it was easier to coordinate with. 
 
@@ -73,12 +73,23 @@ _loop2:                         # repeat till all lights on
 
 ## How to run test file
 
-> Note: that this testing instruction is only valid for the `test` folder
+### PDF Program
+
+
+Gaussian.mem is loaded into the data array by default.
+To edit the data array change line 25 in `test/pdf/data_mem.sv`
+
+> Note: that this testing instruction is only valid for the `test/pdf` folder
+
 
 To run the pdf reference program:
 ```
 $ source ./pdf.sh
 ```
+
+### F1 Program
+
+> Note: that this testing instruction is only valid for the `test/f1` folder
 To run the F1 program:
 ```
 $ source ./f1.sh
