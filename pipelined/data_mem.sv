@@ -28,7 +28,6 @@ module data_mem #(
      end
 
     logic [17:0] add =  A[31:0];
-    logic [15:0] data16 = WD[15:0];
 
 
     always_ff @(posedge clk) begin

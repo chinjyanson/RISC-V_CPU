@@ -32,7 +32,6 @@ always_comb begin
 
     if ((Rs2E == RdM) & (RegWriteM) & (Rs2E != 0))
         ForwardBE = 2'b10; 
-
     else if ((Rs2E == RdW) & (RegWriteW) & (Rs2E != 0))
         ForwardBE = 2'b01; 
     

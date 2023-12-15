@@ -39,7 +39,22 @@ Following the completion of the PC module, I was rotated onto working on the dat
 - [Implementing different load instructions](https://github.com/vishesh32/RISC-V-Team1/commit/c389c01ad1b840522539c9a7e5a7b442de2bff70)
 Throughout the pipeline development process, I would realise that this implementation would cause errors where incorrect data was being sent and fed back to the register file. This would be debugged by both myself and Bruno. The updated version of the data mem would include a 2 bit wide Write Enable/MemWrite (which is needed to differentiate between the different load instructions). This is shown in the code snippet below:
 ```
-
+always_ff @(posedge clk) begin
+    case(WE) // this could be done cleaner
+    2'b01: 
+    begin //word write
+        data_mem_register[add] <= WD[7:0];
+        data_mem_register[add+1] <= WD[15:8];
+        data_mem_register[add+2] <= WD[23:16];
+        data_mem_register[add+3] <= WD[31:24];
+    end
+    2'b11:
+    begin //write byte
+        data_mem_register[A] <=  WD[7:0];
+    end
+    default: data_mem_register[A] <= data_mem_register[A];
+    endcase
+end
 ```
 
 ### Debugging
@@ -52,4 +67,14 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 - [Further debugging of R-type instructions](https://github.com/vishesh32/RISC-V-Team1/commit/8cfc5f7b21506f4a5561cdc0dcf4e22912592ebb)
 
 ## Pipelining
-I worked on reformatting most components within this section of our project, I also worked closely with Bruno to create pipelining registers and ensure that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
+I reworked many components within this section of our project as we realised that there were certain errors and misorganisation within our single cycle that would hinder our pipelined development, I worked closely with Bruno to create pipelining registers and ensured that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
+- [Example of a control unit pipeline register]()
+- [Example of a data path pipeline register]()
+- [Datapath top module]()
+- [Controller top module]()
+These were then modified to suit the extra signals and implemented as submodules in larger files during our debugging and testing process. 
+
+Aside from this, I made changes to the control unit from the single cycle, the control unit had previously combined the aludecoder and the main decoder together, making it difficult to debug and sometimes hard to trace errors. To resolve this, I wrote split both decoders up and created a new controller (top control file). This was well received by all members within my team and I felt that it made it much easier to trace any errors and make changes. The changes made are shown below:
+- [New ALU decoder]()
+- [New Main decoder]()
+- [Control unit working with decoders]()
