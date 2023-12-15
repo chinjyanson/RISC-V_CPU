@@ -32,9 +32,7 @@ module datapath #(
     output  logic [4:0]             Rs2E,
     output  logic [4:0]             RdE,
     output  logic [4:0]             RdM, 
-    output  logic [4:0]             RdW,
-
-    output  logic                   a0 // debug output
+    output  logic [4:0]             RdW
 
 );
 
@@ -111,8 +109,7 @@ regfile rf(
     .A2_i(Rs2D),
     .A3_i(RdD),
     .RD1D(RD1D),
-    .RD2D(RD2D),
-    .a0(a0) // debug output
+    .RD2D(RD2D)
 );
 
 sign_extend ext(

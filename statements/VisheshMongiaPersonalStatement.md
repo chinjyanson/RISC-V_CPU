@@ -54,6 +54,12 @@ We were now ready for the final testing of the single cycle and so I created two
 Our F1 program worked as expected from the start but our Reference program had errors in the PDF array being created. This error was extremely difficult to trace as we were certain all our instructions worked. The problem was that the PDF array had many 0's stored where it should have been incremented, resulting in a poor plot onto our Vbuddy. Using the Vbuddy to always visualise the waveform was quite tedious so I started using c++ fstream to output the a0 and pdf array. This meant that I had to add an extra debug output in the data_mem.sv. Over time I corrected a sequence of errors related to our byte addressing in the data memory. This experience assisted me further in debugging the pipelined outputs as that was much more complicated to figure out using just GTKwave.
 
 
+### Waveform issue
+![Deformed Gaussian wave](/img/oldgaussianpdf.jpeg)
+
+We were missing plots on the wave resulting in it looking very sparse. This was a result of byte addressing not working correctly.
+
+
 [Adding extra debug output in data_mem.sv to output into a txt file](https://github.com/vishesh32/RISC-V-Team1/commit/9de16006144ae5cd6d0baf685f668e9ad2091b82#diff-31daeb11b62db69aa0502be4a304a132ba9bf9a4629491d219ec76bf2d746217)
 
 [Fixing first byte addressing error](https://github.com/vishesh32/RISC-V-Team1/commit/abd7312baead78132a8efb9f787bccfb50df613e#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
@@ -88,6 +94,9 @@ Fixing the code didnt feel as tedious now as I knew what I was looking out for, 
 
 Our control unit had many new additions and so I had to be very careful with checking each pin. At this stage I also organised the order in which we defined the pin connections in the control_top file so that comparing it to the diagram and lower submodules was easier. This sped up the debugging process in the long run.
 
+### High level diagram
+![The diagram I used to consolidate our layout](/img/pipelined.jpg)
+
 [Confirming functionality of control_top and editing pipeline registers for clarity](https://github.com/vishesh32/RISC-V-Team1/commit/c41840d489fe9ef51a6e1223e4e0f0403918c99f)
 
 [Confirming ALU functionality and fixing incorrect wiring](https://github.com/vishesh32/RISC-V-Team1/commit/152d4d61bac6b8521d9d7ca36d3e678161bb5e63)
@@ -99,7 +108,7 @@ Due to our design choices we commonly had logic as if-else statements in the mai
 
 [Replacing if-else constructs with ternary operators](https://github.com/vishesh32/RISC-V-Team1/commit/5058a7b8147cc4feade0f36bc6e0cc53e5c7d119#diff-2a9a7a63d223b4274a102bbb824f596b66dd98f769cf4c557a1213f9b5fdd23e)
 
-By this stage of the project I had figured out how to use gitignore and the testbenching was very similar to the single cycle, although the narrowing of errors was much harder. GTKwave was extremely helpful with a new technique I had learnt to quickly open .vcd files with an .gtkw overlay. 
+By this stage of the project I had figured out how to use gitignore and the testbenching was very similar to the single cycle, although the narrowing of errors was much harder. GTKwave was extremely helpful with a new technique I had learnt to quickly open .vcd files with a .gtkw overlay. 
 
 ```
 $ gtkwave RISC-V-Team1/pipelined/cpu.vcd -a debug.gtkw
@@ -111,6 +120,6 @@ This allowed me to always open the vcd file in the same area with the same wavef
 
 I have built up a variety of soft skills involving debugging program but also have learnt how to use many new types of software such as GTKwave, Verilator and Git but also become more comfortable with using a Linux environment with bash scripting. This project has had an impact in my general understanding of programming and utilising my own device fully.
 
-In my eyes this is a very important milestone in understanding instruction set architecture and makes me glad I picked EIE. I found myself actually enjoying this task more than any other assignments as it directly correlates to how things are done in reality and in the knowing that the knowledge I have picked up is extremely useful.#
+In my eyes this is a very important milestone in understanding instruction set architecture and makes me glad I picked EIE. I found myself actually enjoying this task more than any other assignments as it directly correlates to how things are done in reality and in the knowing that the knowledge I have picked up is extremely useful.
 
 One thing to work on in the future would definitely be how we are organised as a team, to maximise our efficiency as I found sometimes we did duplicate tasks or overwrote changes in merges. We could have attempted the further cache challenge if we had used the initial few days to really draw up a plan. After doing this project me and my team understand how long the final stage of testing and debugging actually takes, in the future I will make sure to account for unexpected problems in order to achieve higher.

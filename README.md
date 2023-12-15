@@ -90,10 +90,36 @@ $ source ./pdf.sh
 ### F1 Program
 
 > Note: that this testing instruction is only valid for the `test/f1` folder
+
+
 To run the F1 program:
 ```
 $ source ./f1.sh
 ```
+
+### Pipelined programs
+
+The pipelined processor is loaded to run the reference program with the gaussian.mem input.
+
+To change to the f1 program edit /pipelined/instr_mem.sv line 17 to "f1.mem"
+
+To change the pdf input edit /pipelined/data_mem.sv line 27
+
+Then go to the directory:
+```
+cd RISC-V-Team1/pipelined
+```
+
+To run the F1 program:
+```
+$ source ./f1.sh
+```
+
+To run the pdf reference program:
+```
+$ source ./pdf.sh
+```
+
 
 
 ## Evidence and Results of Program
