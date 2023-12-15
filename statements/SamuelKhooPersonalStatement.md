@@ -53,3 +53,6 @@ Throughout the development of the single cycle CPU, I also made numerous bug fix
 
 ## Pipelining
 I worked on reformatting most components within this section of our project, I also worked closely with Bruno to create pipelining registers and ensure that we were able to achieve hazard handling. Building upon Bruno's initial pipelining ideas, I took the initiative to split the pipelining registers into control unit and datapath pipeline registers, this would allow for clarity and ease of modification. This is shown in the code sample and commits below:
+
+
+Aside from this, I made changes to the control unit from the single cycle, the control unit had previously combined the aludecoder and the main decoder together, making it difficult to debug and sometimes hard to trace errors. To resolve this, I wrote split both decoders up and created a new controller (top control file).
