@@ -19,6 +19,7 @@ My personal statement is distributed with the following structure:
 - Created F1 lights program which is used in the final submission
 - Created testbenches to debug and test modules
 - Used Vbuddy to visualise F1 and PDF programs
+- Editing the final layout for the submission
 
 We started this project by forking our initial lab 4 repo which saved time in the short term in order to fast track our progress. I soon found out that the teams initial SystemVerilog code was quite messy and convoluted due to our inexperience. This meant that my earlier debugs were more oriented towards making our code clearer by adding _i and _o to respective inputs and outputs and organising our wires between modules. This process got me into the correct frame of mind, understanding verilog errors and utilising GTKwave to find potential errors.
 
@@ -34,15 +35,42 @@ Once all the errors and warnings thrown by the compiler were sorted, this next s
 [ALUResult_o wire was missing](https://github.com/vishesh32/RISC-V-Team1/commit/ee3688a3077f39d4556329badb9a380c97852d14)
 
 
+I edited the given PDF.asm reference program in order to create the F1 lights program. I felt this was the correct choice to implement our code as the PDF program had a clear structure and forever loop that made sense to utilise. I removed majority of the loops in the reference program and had an init loop and the main program forever loop. 
+
+[F1 Program creation](https://github.com/vishesh32/RISC-V-Team1/commit/ba90b9c932143bd153683d2fccdc1d1fc76d6c3f#diff-8b74cc38b225d9f95005d274e5ff13668225b1cc4c05484bdb5a5b4a59537291)
 
 
+We were now ready for the final testing of the single cycle and so I created two separate testbenches, one for the F1 program and another for the reference. Currently these are split into two folders within the test folder for clarity. I used additional c++ libraries - "chrono" and "thread" - in order to create a time delay between the activation of each F1 light.
+
+[Testbench for F1 program](https://github.com/vishesh32/RISC-V-Team1/commit/3038b23fe0a94ad7e4facc1f02c4a1179d1cac00#diff-e859aa56ca8c1855ffce026b76ec795abe12a25407466697dcc655fc43b00e33)
+
+[Testbench for reference program](https://github.com/vishesh32/RISC-V-Team1/commit/43a4b6f1dc5ff7042e805b6d4d1c9882f3ba43e3#diff-997feeff3adda4cd164da68da920683e8039fa54fa0a5f9b7415b386d026bbdc)
 
 
+Our F1 program worked as expected from the start but our Reference program had errors in the PDF array being created. This error was extremely difficult to trace as we were certain all our instructions worked. The problem was that the PDF array had many 0's stored where it should have been incremented, resulting in a poor plot onto our Vbuddy. Using the Vbuddy to always visualise the waveform was quite tedious so I started using c++ fstream to output the a0 and pdf array. This meant that I had to add an extra debug output in the data_mem.sv. Over time I corrected a sequence of errors related to our byte addressing in the data memory. This experience assisted me further in debugging the pipelined outputs as that was much more complicated to figure out using just GTKwave.
 
 
+[Adding extra debug output in data_mem.sv to output into a txt file](https://github.com/vishesh32/RISC-V-Team1/commit/9de16006144ae5cd6d0baf685f668e9ad2091b82#diff-31daeb11b62db69aa0502be4a304a132ba9bf9a4629491d219ec76bf2d746217)
+[Fixing first byte addressing error](https://github.com/vishesh32/RISC-V-Team1/commit/abd7312baead78132a8efb9f787bccfb50df613e#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
+[Fixing the loading of the sample sine.mem data](https://github.com/vishesh32/RISC-V-Team1/commit/e40d133ff82b5acb28266b42195326ec2e90a55e#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
+[Adding fstream to testbench](https://github.com/vishesh32/RISC-V-Team1/commit/4a883e60798b898b1f5c6a94a4c547e49e69d206#diff-997feeff3adda4cd164da68da920683e8039fa54fa0a5f9b7415b386d026bbdc)
+[Final data_mem.sv byte addressing fix](https://github.com/vishesh32/RISC-V-Team1/commit/475e0d7ed38c7020f4834b2989b4bd2ea33054cd#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
 
+This concluding our development of the RISC-V Single cycle processor. The skills I built up in this part of the project assisted me throughout this project.
 
 ## Pipelined Processor
 
+### Summary of contributions:
+- Created top cpu.sv file and connected submodules 
+- Debugged and organised single cycle processor
+- Created F1 lights program which is used in the final submission
+- Created testbenches to debug and test modules
+- Used Vbuddy to visualise F1 and PDF programs
 
 ## What I have learned
+
+I have built up a variety of soft skills involving debugging program but also have learnt how to use many new types of software such as GTKwave, verilator and Git but also become more comfortable with using a Linux environment with bash scripting. This project has had an impact in my general understanding of programming and utilising my own device fully.
+
+In my eyes this is a very important milestone in understanding instruction set architecture and makes me glad I picked EIE. I found myself actually enjoying this task more than any other assignments as it directly correlates to how things are done in reality and in the knowing that the knowledge I have picked up is extremely useful.#
+
+One thing to work on in the future would definitely be how we are organised as a team, to maximise our efficiency as I found sometimes we did duplicate tasks or overwrote changes in merges. We could have attempted the further cache challenge if we had used the initial few days to really draw up a plan. After doing this project me and my team understand how long the final stage of testing and debugging actually takes, in the future I will make sure to account for unexpected problems in order to achieve higher.
