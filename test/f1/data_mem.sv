@@ -22,7 +22,7 @@ module data_mem #(
 
     initial begin
         $display("Loading ROM");
-        $readmemh("sine.mem", data_mem_register, START_ADDRESS);
+        $readmemh("datarom.mem", data_mem_register, START_ADDRESS);
      end
 
     logic [17:0]    add = A_i[31:0];
