@@ -73,16 +73,21 @@ _loop2:                         # repeat till all lights on
 
 ## How to run test file
 
+### PDF Program
+
+
+Gaussian.mem is loaded into the data array by default.
+To edit the data array change line 25 in `test/pdf/data_mem.sv`
+
 > Note: that this testing instruction is only valid for the `test/pdf` folder
->
-<small>
-> Gaussian.mem is loaded into the data array by default.
-> To edit the data array change line 25 in `test/pdf/data_mem.sv`
+
 
 To run the pdf reference program:
 ```
 $ source ./pdf.sh
 ```
+
+### F1 Program
 
 > Note: that this testing instruction is only valid for the `test/f1` folder
 To run the F1 program:
