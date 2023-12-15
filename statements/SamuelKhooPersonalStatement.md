@@ -1,8 +1,8 @@
 # Samuel Khoo Ing Shin Personal Statement 
 
 ### Overview Of My Contributions
-Within the single cycle I contributed primarily to the program counter, data memory and instruction memory files, with further work on debugging and organising files, as well as connecting components together. 
-In the pipelining section of the project, I worked on writing a new aludecoder and a new maindecoder, as well as working to create top files to connect everything together. Aside from this I also worked on developing and debugging the pipelining registers and the hazard unit. 
+Within the **single cycle** I contributed primarily to the program counter, data memory and instruction memory files, with further work on debugging and organising files, as well as connecting components together. 
+In the **pipelining** section of the project, I worked on writing a new aludecoder and a new maindecoder, as well as working to create top files to connect everything together. Aside from this I also worked on developing and debugging the pipelining registers and the hazard unit. 
 
 ### Structure
 Below are hyperlinks which relate to the different sections within my personal statement. 
