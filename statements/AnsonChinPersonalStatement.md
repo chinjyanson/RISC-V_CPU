@@ -7,8 +7,6 @@ Within this part of the project, I was primarily tasked with figuring out most o
 
 We initially started slower than planned but our teamwork improved throughout the course of this project. 
 
-> Side note: I tend to commit in large goes in the beginning so apologies that I can separate that out more
-
 ### ALU 
 For the ALU section, I implemented 7 arithmetic functions to perform ADD, SUB, AND, OR, XOR ,SLL, SRL and of course their respective immediate operations. There were no set instructions that I needed to implement but the case for ALUctrl was decided between me and Bruno (who was working on the control unit). 
 
@@ -79,11 +77,13 @@ I mainly implement the instruction memory through setting up the Makefile provid
 ```
 $ make reference // do not run make Makefile (an error that happened)
 ```
-
+<br />
+![gtkwave](/img/gtkwavef1.png)
+<br />
 - [Making the F1 Program through assembly code](https://github.com/vishesh32/RISC-V-Team1/commit/a00343487c6cf87d0d8e36b34d373588a307f7be#diff-6a703220991bb4034518d084a3fd94caf53c2d1a9a0c177ea610cca8d93bf7d0)
 
 ### Debugging 
-Alongside Vishesh, I helped debug multiple issues encountered in the beginning of testing single cycle. We ran into multiple issues consisting of but not limited to: jnwsjdjwefjenfejbfejfnaewbfewjdnejnejbfnasd caejfbsedeawjdbsadjsebfdasejfdbaseljfbsljfnsljcanbsfahjfbaec lakejdblsedneasjkdnaljkdbasdjaselkjdnasld
+Alongside Vishesh, I helped debug multiple issues encountered in the beginning of testing single cycle. We ran into multiple issues but some of the most common ones included: mixing of input and output signals (hence why we named everything with `_i` and `_o`) and also some occasional logic errors
 
 We primarily used GTKWave to debug and follow the errors across the architecture. 
 Here are some of the more significant debug commits:
@@ -92,7 +92,6 @@ Here are some of the more significant debug commits:
 - [Running MakeFile and preparing for tests](https://github.com/vishesh32/RISC-V-Team1/commit/df3e4bb448b23b8db5c5b919cb340c01854ba2dc#diff-9467a9f7dcf429b4d4506e1f0d7519077a6086dff06fab9357deb5c36d842049)
 - [Fixed iput and output logic outside of ALU](https://github.com/vishesh32/RISC-V-Team1/commit/35fa00d75fced7d91624b05a9936b5ca7c09d6b7)
 
-
 I also ran the different data mem files and collected images and data with Vishesh, modifying the testbench to create a desired plot on vbuddy (since we ran into a problem where the cycles didn't allow us to get a good view of the plot).
 
 ### Miscellaneous Contributions
@@ -100,7 +99,34 @@ I also ran the different data mem files and collected images and data with Vishe
 - I organised the structure of the repository
 
 ## Pipelined Processor
-For Pipelined Processor, I was involved in almost everything, primarily focused on debugging and the hazard unit. 
+For Pipelined Processor, I was primarily focused on the hazard unit and debugging. For the hazard unit, I initially wrote my logic like so: 
+```
+always-comb begin
+    ForwardAE = 2'b00;
+    ForwardBE = 2'b00;
+
+    if ((Rs1E == RdM) & (RegWriteM) & (Rs1E != 0)) 
+        ForwardAE = 2'b10; 
+    else if ((Rs1E == RdW) & (RegWriteW) & (Rs1E != 0))
+        ForwardAE = 2'b01; 
+
+    if ((Rs2E == RdM) & (RegWriteM) & (Rs2E != 0))
+        ForwardBE = 2'b10; 
+
+    else if ((Rs2E == RdW) & (RegWriteW) & (Rs2E != 0))
+        ForwardBE = 2'b01; 
+end
+```
+We begin by initializing `ForwardAE` and `ForwardBE` to be = 0 since there is no need for forwarding in the beginning. Then we decide if there is forwarding required for `Rs1E` by checking if Rs1E matches the destination registers(RdM or RdW) of an instruction in the Memory or Write Back stage. If Rs1E == RdM then we should set ForwardAE = 2'b10 (meaning forwarding from memory), else set ForwardAE = 2'b01 which means forwarding from Write Back. We do the same thing for Rs2E. 
+Then we still need to Stall and Flush:
+```
+assign lwStall = ((RdE == Rs1D) | (RdE == Rs2D));
+assign StallF = lwStall;
+assign StallD = lwStall;
+assign FlushE = lwStall | PCSrcE;
+assign FlushD = PCSrcE;
+```
+For this section, I set that load word stall (lwStall) should be True when there is a load instruction in the execute stage, where it is trying to read a register that is being written to by an instruction in the decode stage. We also assign `StallF` and `StallD` if lwStall is True, because if there is a load hazard, both the Fetch and Decode registers will be stalled as well. And finally `FlushE` is True when their is either a load hazard OR a branch instruction because either would need to flush execute stage. And `FlushD` is only true when branching.
 
 Some meaningful commits include:
 - [Created Register File and Processor Topfile](https://github.com/vishesh32/RISC-V-Team1/commit/36a1e5086ff274c1f2b71f8fc6163daeb5647ad9#diff-32f0fcbc20f0ad67a7045785b75b8ae72ca57e810b6167d59716f05b7310f567)
