@@ -136,7 +136,9 @@ We need take into account the type of the instruction, for both Stalls and
 Forwards to prevent mistaking an immediate for a register. We do this by 
 reading ImmSrc (delayed by one cycle), and adjusting our logic to the 
 appropriate logic:
-![img1](bruno1.png)
+
+![img1](/img/bruno1.png)
+
 Stall:
 ```
 assign A = ((ImmSrcE!=3'b100)&&(ImmSrcE!=3'b011));
@@ -160,7 +162,8 @@ to prioritize forwards from M to the ones from W, as they contain the latest,
 corrected data to forward. And, we need to make sure that the register we 
 where writing to is different from zero (reading from zero never results in a 
 hazard).
-![img2](bruno2.png)
+
+![img2](/img/bruno2.png)
 
 Stalling: this module is very straightforward. We use “opcode” to detect a 
 load instruction, and use RdE and Rs1D/Rs2D to detect a match. When that 

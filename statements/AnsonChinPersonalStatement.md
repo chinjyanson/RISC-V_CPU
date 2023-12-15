@@ -1,7 +1,7 @@
 # Chin Jun Yen (Anson) Personal Statement 
 
 ## Single Cycle Processor 
-![single](pro.png)
+![single](/img/pro.png)
 
 ### Introduction
 I was primarily tasked with figuring out most of the ALU and RegFile operations, I occasionally worked with Bruno (duasob) to figure out the appropriate logic between Control Unit. 
@@ -38,7 +38,6 @@ I had initially wrote my ALU in Lab 4 when designing a reduced RISC-V architectu
 - [Finishing ALU_top.sv file](https://github.com/chinjyanson/Reduced_RISC-V-Team1/commit/06f4e2aefb3499e4651b3a129d9ab2ab6f63004e)
 - [Changed ALU operations to suit the new instructions](https://github.com/vishesh32/RISC-V-Team1/commit/690fd0438bfb9e7dc2e17c22f9194c5ea6815491)
 - [New architecture for ALU_top, added data_mem and mux4](https://github.com/vishesh32/RISC-V-Team1/commit/251aa52d09a5efadf68209dec9f10d0415f0d3f8)
-- []
 
 
 ### Register File
