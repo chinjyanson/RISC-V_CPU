@@ -97,7 +97,7 @@ For this second section of the project, I implemented the 2 new sections need:
 I also initially renamed and rewired all the signals to fit the starting diagram, which 
 would later be greatly modified and improved.
 
-![pipelined](pipelined.jpg)
+![pipelined](/img//pipelined.jpg)
 
 Additionally, I greatly contributed to debugging efforts with Vishesh, and helped 
 Samuel with some specific issues for the improved Control Unit.
@@ -238,13 +238,18 @@ pleased with the end result.
 
 This was a project that, although at times seemed tedious and endless, was overall
 very enjoyable. There where multiple creative opportunities and design decisions 
-that kept it very dynamic and engaging. 
+that kept it very dynamic and engaging. The project was structured in such a way that 
+you could learn from it as much as the effort invested, which maintained me hungry for improvements
+and additions, as you could actively see your effort being transformed into progress.
+
 Undoubtedly, I feel I have a very deep understanding of the fundamentals of System 
 Verilog, CPU design and logic, and GIT hub. The latter was an especially helpful 
 lesson, that I have already starting using more frequently for parallel personal 
 projects. Additionally, I learned Markodown language, which I now frequently use 
 to take notes in Obsidian.
-Another very important learning point was communicating and working as a Team. I 
-learned the importance of task distribution, efficient communication and 
+
+Another very important learning point was communicating and working as a team. I 
+learned the importance of task distribution and efficient communication. 
+
 As a conclusion, I am very happy about this project. I think it was very well 
-structured, so that you could get out of it as much effort as you invested. 
+structured, and I truly learned and engaged with the material covered.
