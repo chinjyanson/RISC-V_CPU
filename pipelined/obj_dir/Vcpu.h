@@ -105,10 +105,6 @@ VL_MODULE(Vcpu) {
     // Internals; generally not touched by application code
     Vcpu__Syms* __VlSymsp;  // Symbol table
     
-<<<<<<< HEAD
->>>>>>> 4e4b29378367b897096cff4f032a383244cf1fff
-=======
->>>>>>> eeb03f3968d7c0fe007c33d3af2796ea5a0b072d
     // CONSTRUCTORS
   private:
     VL_UNCOPYABLE(Vcpu);  ///< Copying not allowed

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#define MAX_SIM_CYC 100000
+#define MAX_SIM_CYC 250000
 
 
 

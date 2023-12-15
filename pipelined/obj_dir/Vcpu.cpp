@@ -675,10 +675,6 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__1(Vcpu__Syms* __restrict vlSymsp) {
                                | (3U & (IData)(vlTOPp->cpu__DOT__control__DOT__ControlUnit__DOT__maindec__DOT__controls))));
     vlTOPp->cpu__DOT__control__DOT__ALUControlD = vlTOPp->__Vtable1_cpu__DOT__control__DOT__ALUControlD
         [vlTOPp->__Vtableidx1];
-<<<<<<< HEAD
->>>>>>> 4e4b29378367b897096cff4f032a383244cf1fff
-=======
->>>>>>> eeb03f3968d7c0fe007c33d3af2796ea5a0b072d
 }
 
 VL_INLINE_OPT void Vcpu::_sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
@@ -690,8 +686,7 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
     IData/*31:0*/ __Vdlyvval__cpu__DOT__data__DOT__register__DOT__reg_array__v0;
     // Body
     __Vdlyvset__cpu__DOT__data__DOT__register__DOT__reg_array__v0 = 0U;
-    if (((0U != (IData)(vlTOPp->cpu__DOT__RdW)) & (0U 
-                                                   != vlTOPp->cpu__DOT__data__DOT__ResultW))) {
+    if (((0U != (IData)(vlTOPp->cpu__DOT__RdW)) & (IData)(vlTOPp->cpu__DOT__RegWriteW))) {
         __Vdlyvval__cpu__DOT__data__DOT__register__DOT__reg_array__v0 
             = vlTOPp->cpu__DOT__data__DOT__ResultW;
         __Vdlyvset__cpu__DOT__data__DOT__register__DOT__reg_array__v0 = 1U;
@@ -703,7 +698,7 @@ VL_INLINE_OPT void Vcpu::_sequent__TOP__2(Vcpu__Syms* __restrict vlSymsp) {
             = __Vdlyvval__cpu__DOT__data__DOT__register__DOT__reg_array__v0;
     }
     vlTOPp->a0 = vlTOPp->cpu__DOT__data__DOT__register__DOT__reg_array
-        [6U];
+        [0xaU];
 }
 
 void Vcpu::_eval(Vcpu__Syms* __restrict vlSymsp) {
