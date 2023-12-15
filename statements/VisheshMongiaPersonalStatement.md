@@ -24,14 +24,18 @@ My personal statement is distributed with the following structure:
 We started this project by forking our initial lab 4 repo which saved time in the short term in order to fast track our progress. I soon found out that the teams initial SystemVerilog code was quite messy and convoluted due to our inexperience. This meant that my earlier debugs were more oriented towards making our code clearer by adding _i and _o to respective inputs and outputs and organising our wires between modules. This process got me into the correct frame of mind, understanding verilog errors and utilising GTKwave to find potential errors.
 
 [Organising our top file](https://github.com/vishesh32/RISC-V-Team1/commit/68ab86416fa8fdee26f721dac506706ee60bb87a#diff-a5b41f44cfd3cb4f925de3fba8bf2366f03d587af431da1f2a968f6d1f142e7c) 
+
 [Renaming inputs/outputs](https://github.com/vishesh32/RISC-V-Team1/commit/ff227ca86d1d32d87d62c8945060bac88d7e2456)
+
 [Fixing overlooked errors](https://github.com/vishesh32/RISC-V-Team1/commit/669c8329cf2fb342263f5a69cf980751736d20af#diff-e48e3546c80833f34c5470360580103750305bdcf2e9193510eb8d7f2bbde4c0)
 
 
 Once all the errors and warnings thrown by the compiler were sorted, this next stage of debugging really tested my understanding of how each submodule interacts with another. The types of problems now were rooted deep into the code, more often than not being a very small logical or wiring error. These initially were difficult to trace but going through the lectures and other resources aided me to understand what output we expected at each point of the datapath, allowing me to find the bug usually in places where the code seemed correct.
 
 [Similar wire names caused our ALU to fail, the fix being a simple wire swap](https://github.com/vishesh32/RISC-V-Team1/commit/40fb9a01b181969fc3bcd5cecaf08c212c2f22c7)
+
 [Zero register was editable causing the F1 program to fail](https://github.com/vishesh32/RISC-V-Team1/commit/7b76e8eabcef086eafbc0161d783de015912eaf0#diff-bb57bdecb9a66f37a77e7de626aa400f6dd06d72694f9f7a7869177c73050ccd)
+
 [ALUResult_o wire was missing](https://github.com/vishesh32/RISC-V-Team1/commit/ee3688a3077f39d4556329badb9a380c97852d14)
 
 
@@ -51,21 +55,26 @@ Our F1 program worked as expected from the start but our Reference program had e
 
 
 [Adding extra debug output in data_mem.sv to output into a txt file](https://github.com/vishesh32/RISC-V-Team1/commit/9de16006144ae5cd6d0baf685f668e9ad2091b82#diff-31daeb11b62db69aa0502be4a304a132ba9bf9a4629491d219ec76bf2d746217)
+
 [Fixing first byte addressing error](https://github.com/vishesh32/RISC-V-Team1/commit/abd7312baead78132a8efb9f787bccfb50df613e#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
+
 [Fixing the loading of the sample sine.mem data](https://github.com/vishesh32/RISC-V-Team1/commit/e40d133ff82b5acb28266b42195326ec2e90a55e#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
+
 [Adding fstream to testbench](https://github.com/vishesh32/RISC-V-Team1/commit/4a883e60798b898b1f5c6a94a4c547e49e69d206#diff-997feeff3adda4cd164da68da920683e8039fa54fa0a5f9b7415b386d026bbdc)
+
 [Final data_mem.sv byte addressing fix](https://github.com/vishesh32/RISC-V-Team1/commit/475e0d7ed38c7020f4834b2989b4bd2ea33054cd#diff-039cbe711c4af51a6b8aeefc96864f1d3387634f62327fb18489c33c4c6ff7e1)
 
-This concluding our development of the RISC-V Single cycle processor. The skills I built up in this part of the project assisted me throughout this project.
+
+This concludes our development of the RISC-V Single cycle processor. The skills I built up in this part of the project assisted me in the next stage of creating the pipelined processor. I found that many similar types of errors were repeated throughout the codebase, and as a result I was much faster at spotting these.
 
 ## Pipelined Processor
 
 ### Summary of contributions:
-- Created top cpu.sv file and connected submodules 
-- Debugged and organised single cycle processor
-- Created F1 lights program which is used in the final submission
+- Debugged pipelined processor
 - Created testbenches to debug and test modules
 - Used Vbuddy to visualise F1 and PDF programs
+
+
 
 ## What I have learned
 
