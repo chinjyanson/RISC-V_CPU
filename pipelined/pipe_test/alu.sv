@@ -4,7 +4,7 @@ module alu (
     input logic [31:0] SrcBE,
 
     output logic ZeroE,
-    output logic [31:0] ALUResultE,
+    output logic [31:0] ALUResultE
 );
 
 always_comb begin

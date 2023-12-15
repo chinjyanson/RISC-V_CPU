@@ -42,7 +42,8 @@ maindecoder maindec(
     .RegWrite (RegWriteD),
     .Jump (JumpD),
     .ALUOp (ALUOpD), 
-    .ImmSrc (ImmSrcD)
+    .ImmSrc (ImmSrcD),
+    .funct3 (funct3)
 );
 
 // alu decoder
