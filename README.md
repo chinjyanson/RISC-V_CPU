@@ -1,2 +1,5 @@
 # Reduced_RISC-V
-samuel test
+
+![Single Cycle Processor](/images/single-cycle.png)
+
+
